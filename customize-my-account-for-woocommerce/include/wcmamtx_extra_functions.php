@@ -56,6 +56,78 @@ if (!function_exists('wcmamtx_review_reminder_div')) {
 }
 
 
+
+/**
+ * License activation reminder.
+ *
+ * @since 1.0.0
+ * @param string .
+ * @return string
+ */
+
+if (!function_exists('wcmamtx_get_menu_shortcode_content')) {
+
+
+	function wcmamtx_get_menu_shortcode_content($items,$item) {
+
+		$frontend_url = get_permalink(get_option('woocommerce_myaccount_page_id'));
+
+		$wcmamtx_plugin_options = (array) get_option('wcmamtx_plugin_options');
+
+
+
+		$nav_header_widget_text = isset($item->title) ? $item->title : esc_html__('My Account','customize-my-account-for-woocommerce');
+
+
+
+
+		$widget_show_enabled    = isset($wcmamtx_plugin_options['nav_header_widget']) ? $wcmamtx_plugin_options['nav_header_widget'] : "no";
+
+
+
+
+		if ( !is_user_logged_in() ) {
+
+			$show_only_logged_in    = isset($wcmamtx_plugin_options['show_only_logged_in']) ? $wcmamtx_plugin_options['show_only_logged_in'] : "no";
+
+			if ($show_only_logged_in == "yes") {
+				return $items;
+			}
+
+
+			$nav_header_widget_text_logout = isset($wcmamtx_plugin_options['nav_header_widget_text_logout']) ? $wcmamtx_plugin_options['nav_header_widget_text_logout'] : esc_html__('Log In','customize-my-account-for-woocommerce');
+
+
+			$Menu_link = '<li class="menu-item menu-item-type-post_type menu-item-object-page wcmamtx_menu wcmamtx_menu_logged_out"><a class="menu-link nav-top-link" aria-expanded="true" aria-haspopup="menu"  href="'.$frontend_url.'">'.$nav_header_widget_text_logout.'</a>';
+
+			$items .= $Menu_link;
+
+			echo  $items;
+
+		} 
+
+
+
+
+
+		$Menu_link  = '<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children wcmamtx_menu wcmamtx_menu_logged_in"><a class="menu-link" href="'.$frontend_url.'">'.$nav_header_widget_text.'<i class="fa fa-chevron-down wcmamtx_nav_chevron"></i></a>';
+
+		$Menu_link .= '<ul class="sub-menu nav-dropdown nav-dropdown-default" style="">';
+
+		$Menu_link .= wcmamtx_get_my_account_menu_plain_li();
+
+		$Menu_link .= '</ul></li>';
+
+
+
+		$items .= $Menu_link;
+
+		echo  $items;
+	}
+
+}
+
+
 /**
  * Get account menu item classes.
  *

@@ -46,7 +46,7 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
 
     }
 
-    public function wcmamtx_add_menu_items( $items, $args ) {
+    public function wcmamtx_add_menu_items( $items, $item ) {
 
         $frontend_url = get_permalink(get_option('woocommerce_myaccount_page_id'));
 

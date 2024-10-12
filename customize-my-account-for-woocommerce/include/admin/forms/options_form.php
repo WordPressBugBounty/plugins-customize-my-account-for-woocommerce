@@ -60,6 +60,7 @@ $core_fields       = 'dashboard,edit-address,edit-account,customer-logout,downlo
 		<td>
 			<input type="checkbox" data-toggle="toggle"  data-on="<?php echo esc_html__('Yes','customize-my-account-for-woocommerce'); ?>" data-off="<?php echo esc_html__('No','customize-my-account-for-woocommerce'); ?>" class="wcmamtx_show_nav_header_widget" name="<?php  echo esc_html__($this->wcmamtx_plugin_options_key); ?>[nav_header_widget]" value="yes" <?php if (isset($plugin_options['nav_header_widget']) && ($plugin_options['nav_header_widget'] == "yes")) { echo 'checked'; } ?>>
 			
+			<?php echo esc_html__('Alternatively you can enable it from ','customize-my-account-for-woocommerce'); ?> <a target="_blank" href="nav-menus.php"><?php echo esc_html__('Appearance/Menu','customize-my-account-for-woocommerce'); ?></a>
 		</td>
 	</tr>
 

@@ -1,5 +1,58 @@
 <?php
-/*
+
+/**
+ *  Menu items - Add "Custom sub-menu" in menu item render output
+ *  if menu item has class "menu-item-target"
+ */
+add_filter( 'walker_nav_menu_start_el', 'sysbasics_menu_item_custom_output', 10, 4 );
+function sysbasics_menu_item_custom_output( $item_output, $item, $depth, $args ) {
+
+    $menu_item_classes = $item->classes;
+
+    //print_r($item);
+
+    if ( !in_array( 'customize-my-account-for-woocommerce-dropdown', $menu_item_classes )) {
+        return $item_output;
+    }
+
+    ob_start(); 
+
+    $frontend_url = get_permalink(get_option('woocommerce_myaccount_page_id'));
+
+
+    $wcmamtx_plugin_options = (array) get_option('wcmamtx_plugin_options');
+
+    $nav_header_widget_text = isset($wcmamtx_plugin_options['nav_header_widget_text']) ? $wcmamtx_plugin_options['nav_header_widget_text'] : esc_html__('My Account','customize-my-account-for-woocommerce');
+
+     ?>
+    <ul class="custom-sub-menu">
+        <?php 
+
+      
+
+
+
+            //$items = wcmamtx_get_my_account_menu();
+
+            wcmamtx_get_menu_shortcode_content($items,$item); 
+
+          
+
+            ?>
+
+
+        </li>
+    </ul>
+    <?php
+
+    $custom_sub_menu_html = ob_get_clean();
+
+    // Append after <a> element of the menu item targeted
+    $item_output = $custom_sub_menu_html;
+
+    return $item_output;
+}
+
 if ( !class_exists('wcmamtx_nav_metabox')) {
     class wcmamtx_nav_metabox {
         public function add_nav_menu_meta_boxes() {
@@ -9,36 +62,51 @@ if ( !class_exists('wcmamtx_nav_metabox')) {
                 array( $this, 'wcmamtx_nav_menu_link'),
                 'nav-menus',
                 'side',
-                'low'
+                'high'
             );
+
+            add_action( 'wp_nav_menu_item_custom_fields', array( $this, 'menu_item_custom_fields' ), 10, 2 );
+            add_action( 'wp_update_nav_menu_item', array( $this, 'save_menu_item_custom_fields' ), 10, 2 );
+            
+
+            add_shortcode( 'wcmamtx_nav_shortcode', array( $this, 'wcmamtx_nav_shortcode_function' ));
+        }
+
+
+
+
+        public function wcmamtx_nav_shortcode_function() {
+           return  'hello worldS';
+        }
+
+        public function save_menu_item_custom_fields( $menu_id, $menu_item_db_id ) {
+            if ( isset( $_REQUEST['wcmamtx-currency-nonce'] ) && wp_verify_nonce( sanitize_key( $_REQUEST['wcmamtx-currency-nonce'] ), 'wcmamtx-currency-check-nonce' ) ) {
+                $is_show_flag_in_menu_item            = isset( $_POST['show-flag'] ) ? sanitize_text_field( $_POST['show-flag'] ) : 0;
+                $is_show_currency_name_in_menu_item   = isset( $_POST['show-currency-name'] ) ? sanitize_text_field( $_POST['show-currency-name'] ) : 0;
+                $is_show_currency_symbol_in_menu_item = isset( $_POST['show-currency-symbol'] ) ? sanitize_text_field( $_POST['show-currency-symbol'] ) : 0;
+                $is_show_currency_code_in_menu_item   = isset( $_POST['show-currency-code'] ) ? sanitize_text_field( $_POST['show-currency-code'] ) : 0;
+                $menu_item_size                       = isset( $_POST['menu-item-size'] ) ? sanitize_text_field( $_POST['menu-item-size'] ) : 'small';
+
+                update_option( 'wcmamtx_currency_show_flag_in_menu_item', $is_show_flag_in_menu_item );
+                update_option( 'wcmamtx_currency_show_currency_name_in_menu_item', $is_show_currency_name_in_menu_item );
+                update_option( 'wcmamtx_currency_show_currency_symbol_in_menu_item', $is_show_currency_symbol_in_menu_item );
+                update_option( 'wcmamtx_currency_show_currency_code_in_menu_item', $is_show_currency_code_in_menu_item );
+                update_option( 'wcmamtx_currency_menu_item_size', $menu_item_size );
+            }
+
+        }
+
+        public function menu_item_custom_fields( $item_id, $item ) {
+            if ( 'wcmamtx_nav_link' === $item->post_name || 'SysBasics My Account Navigation' === $item->post_title ) {
+
+                include 'menuItemCustomFields.php';
+            }
         }
         
-        public function wcmamtx_nav_menu_link() {?>
-            <div id="posttype-wl-login" class="posttypediv">
-                <div id="tabs-panel-wishlist-login" class="tabs-panel tabs-panel-active">
-                    <ul id ="wishlist-login-checklist" class="categorychecklist form-no-clear">
-                        <li>
-                            <label class="menu-item-title">
-                                <input type="checkbox" class="menu-item-checkbox" name="menu-item[-1][menu-item-object-id]" value="-1" > 
-                                <?php echo __('SysBasics My Account Navigation','customize-my-account-for-woocommerce'); ?>
-                            </label>
-                            <input type="hidden" class="menu-item-type" name="menu-item[-1][menu-item-type]" value="custom">
-                            <input type="hidden" class="menu-item-title" name="menu-item[-1][menu-item-title]" value="<?php echo __('My Account Widget','customize-my-account-for-woocommerce'); ?>">
-                            
-                            <input type="hidden" class="menu-item-url" name="menu-item[-1][menu-item-url]" value="<?php bloginfo('wpurl'); ?>/wp-login.php">
-                            <input type="hidden" class="menu-item-classes" name="menu-item[-1][menu-item-classes]" value="wl-login-pop">
-                        </li>
-                    </ul>
-                </div>
-                <p class="button-controls">
-                    
-                    <span class="add-to-menu">
-                        <input type="submit" class="button-secondary submit-add-to-menu right" value="Add to Menu" name="add-post-type-menu-item" id="submit-posttype-wl-login">
-                        <span class="spinner"></span>
-                    </span>
-                </p>
-            </div>
-        <?php }
+        public function wcmamtx_nav_menu_link() {
+
+            include 'menuitem.php';
+        }
     }
 }
 
@@ -46,7 +114,7 @@ $custom_nav = new wcmamtx_nav_metabox;
 
 add_action('admin_init', array($custom_nav, 'add_nav_menu_meta_boxes'));
 	
-*/
+
 if (!class_exists('wcmamtx_add_settings_page_class')) {
 
 class wcmamtx_add_settings_page_class {

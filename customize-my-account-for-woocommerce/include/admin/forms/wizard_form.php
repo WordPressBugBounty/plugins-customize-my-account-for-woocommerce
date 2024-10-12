@@ -47,7 +47,9 @@
           		</div>
 
           		<div class="col-md-6">
-          			<p class="mb-4 dashlinks_p"><span id="enteredFirstName"><?php echo esc_html__( 'Your chosen Endpoints/links you can show on My Account menu widget, you can simply inject widget into your any menu location your theme supports.' ,'customize-my-account-for-woocommerce'); ?></span></p>
+          			<p class="mb-4 dashlinks_p"><span id="enteredFirstName"><?php echo esc_html__( 'Your chosen Endpoints/links you can show on My Account menu widget, you can simply inject widget into your any menu location your theme supports.' ,'customize-my-account-for-woocommerce'); ?></span>
+                  <?php echo esc_html__('Alternatively you can enable it from ','customize-my-account-for-woocommerce'); ?> <a target="_blank" href="nav-menus.php"><?php echo esc_html__('Appearance/Menu','customize-my-account-for-woocommerce'); ?></a>
+                </p>
 
           			<a target="_blank" href="<?php echo wcmamtx_redirect_URL; ?>&tab=wcmamtx_plugin_options" type="button" class="btn btn-warning wcmactx_wizard_action_button"><?php echo esc_html__( 'Enable Menu widget' ,'customize-my-account-for-woocommerce'); ?></a>
           		</div>
