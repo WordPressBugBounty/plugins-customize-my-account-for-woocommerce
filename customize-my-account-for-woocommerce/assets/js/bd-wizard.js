@@ -22,6 +22,3 @@ $('.actions a[href="#finish"]').on('click', function(event) {
 });
 
 //Form control
-
-
-

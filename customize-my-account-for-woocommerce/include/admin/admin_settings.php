@@ -57,6 +57,7 @@ class wcmamtx_add_settings_page_class {
 	private $wcmamtx_notices_settings_page = 'wcmamtx_advanced_settings';
 	private $wcmamtx_order_settings_page   = 'wcmamtx_order_settings';
 	private $wcmamtx_order_actions_page    = 'wcmamtx_order_actions';
+    private $wcmamtx_wizard_page           = 'wcmamtx_wizard_settings';
 	private $wcmamtx_plugin_settings_tab   = array();
 	
 
@@ -696,7 +697,21 @@ class wcmamtx_add_settings_page_class {
 
 		    	wp_enqueue_script( 'wcmamtxadmin', ''.wcmamtx_PLUGIN_URL.'assets/js/admin.js',array('jquery-ui-accordion'), '1.0.0', true );
 
-		    }
+		    } else if (isset($current_tab) && ($current_tab == "wcmamtx_wizard_settings")) {
+
+                wp_enqueue_style( 'wcmamtx-bdwizard', ''.wcmamtx_PLUGIN_URL.'assets/css/bd-wizard.css');
+
+                
+
+                wp_enqueue_script( 'wcmamtxsteps', ''.wcmamtx_PLUGIN_URL.'assets/js/jquery.steps.min.js',array('wcmtx_steps_jquery'), '1.0.0', true );
+
+                wp_enqueue_script( 'wcmamtxstepsbdwizard', ''.wcmamtx_PLUGIN_URL.'assets/js/bd-wizard.js',array('wcmtx_steps_jquery'), '1.0.0', true );
+
+
+
+               
+
+            }
 
 		    wp_enqueue_script( 'wcmamtx-dashicons', ''.wcmamtx_PLUGIN_URL.'assets/js/dashicons-picker.js');
 
@@ -747,13 +762,11 @@ class wcmamtx_add_settings_page_class {
 
 		$this->wcmamtx_plugin_settings_tab[$this->wcmamtx_notices_settings_page] = esc_html__( 'Endpoints' ,'customize-my-account-for-woocommerce');
 
-		$this->wcmamtx_plugin_settings_tab[$this->wcmamtx_order_settings_page] = esc_html__( 'Order Columns' ,'customize-my-account-for-woocommerce');
-
-		$this->wcmamtx_plugin_settings_tab[$this->wcmamtx_order_actions_page] = esc_html__( 'Order Actions' ,'customize-my-account-for-woocommerce');
+		$this->wcmamtx_plugin_settings_tab[$this->wcmamtx_order_settings_page] = esc_html__( 'Order Columns & Actions' ,'customize-my-account-for-woocommerce');
 
         $this->wcmamtx_plugin_settings_tab[$this->wcmamtx_plugin_options_key] = esc_html__( 'Settings' ,'customize-my-account-for-woocommerce');
 
-         
+        $this->wcmamtx_plugin_settings_tab[$this->wcmamtx_wizard_page] = esc_html__( 'Setup Wizard' ,'customize-my-account-for-woocommerce');
        
 
 		
@@ -772,11 +785,7 @@ class wcmamtx_add_settings_page_class {
 		add_settings_field( 'order_option', '', array( $this, 'linked_product_swatches_order' ), $this->wcmamtx_order_settings_page, 'wcmamtx_order_section' );
 
 
-		register_setting( $this->wcmamtx_order_actions_page, $this->wcmamtx_order_actions_page );
 
-		add_settings_section( 'wcmamtx_order_actions', '', '', $this->wcmamtx_order_actions_page );
-
-		add_settings_field( 'order_actions', '', array( $this, 'linked_product_swatches_order_actions' ), $this->wcmamtx_order_actions_page, 'wcmamtx_order_actions' );
 
 
 		register_setting( $this->wcmamtx_plugin_options_key, $this->wcmamtx_plugin_options_key );
@@ -787,11 +796,22 @@ class wcmamtx_add_settings_page_class {
 
 
         
-		
+		register_setting( $this->wcmamtx_wizard_page, $this->wcmamtx_wizard_page );
+
+        add_settings_section( 'wcmamtx_wizard_section', '', '', $this->wcmamtx_wizard_page );
+
+        add_settings_field( 'wizard_option', '', array( $this, 'wcmamtx_wizard_page' ), $this->wcmamtx_wizard_page, 'wcmamtx_wizard_section' );
 
 		
 
 	}
+
+
+    public function wcmamtx_wizard_page() {
+
+        include ('forms/wizard_form.php');
+
+    }
 
 
 
@@ -927,107 +947,117 @@ class wcmamtx_add_settings_page_class {
 
 	public function plugin_options_page() {
 		$tab = isset( $_GET['tab'] ) ? sanitize_text_field($_GET['tab']) : sanitize_text_field($this->wcmamtx_notices_settings_page);
-		$current_tab = isset($_GET['tab']) ? sanitize_text_field($_GET['tab']) : $tab;
+        $current_tab = isset($_GET['tab']) ? sanitize_text_field($_GET['tab']) : $tab;
         $dt_type = wcmamtx_get_version_type();
-		
-		?>
-		<div class="wrap">
-		   <?php $this->wcmamtx_options_tab_wrap(); ?>
-			<form method="post" action="options.php">
-				<?php wp_nonce_field( 'update-options' ); ?>
-				<?php settings_fields( $tab ); ?>
-				<?php do_settings_sections( $tab ); ?>
+        
+        ?>
+        <div class="wrap">
+           <?php $this->wcmamtx_options_tab_wrap(); ?>
+            <form method="post" action="options.php">
+                <?php wp_nonce_field( 'update-options' ); ?>
+                <?php settings_fields( $tab ); ?>
+                <?php do_settings_sections( $tab ); ?>
 
-				<div class="wcmamtx_buttons_section">
-				    
-				    <?php if (isset($current_tab) && ($current_tab == "wcmamtx_advanced_settings")) { ?>
-				        <div class="wcmamtx_add_section_div">
-				            <button type="button" href="#" data-toggle="modal" data-target="#wcmamtx_example_modal" data-etype="endpoint" id="wcmamtx_add_endpoint" class="btn btn-sm btn-primary wcmamtx_add_group">
-				            	<span class="dashicons dashicons-insert"></span>
-				            	<?php echo esc_html__( 'Add Endpoint' ,'customize-my-account-for-woocommerce'); ?>
-				            </button>
+                <div class="wcmamtx_buttons_section">
+                    
+                    <?php if (isset($current_tab) && ($current_tab == "wcmamtx_advanced_settings") && ($current_tab != "wcmamtx_wizard_settings") ) { ?>
+                        <div class="wcmamtx_add_section_div">
+                            <button type="button" href="#" data-toggle="modal" data-target="#wcmamtx_example_modal" data-etype="endpoint" id="wcmamtx_add_endpoint" class="btn btn-sm btn-primary wcmamtx_add_group ">
+                                <span class="dashicons dashicons-insert"></span>
+                                <?php echo esc_html__( 'Add Endpoint' ,'customize-my-account-for-woocommerce'); ?>
+                            </button>
 
-				            <button type="button" href="#" data-toggle="modal" data-target="#wcmamtx_example_modal3" data-etype="link" id="wcmamtx_add_link" class="btn btn-sm btn-primary wcmamtx_add_group">
-				            	<span class="dashicons dashicons-insert"></span>
-				            	<?php echo esc_html__( 'Add Link' ,'customize-my-account-for-woocommerce'); ?>
-				            </button>
+                            <button type="button" href="#" data-toggle="modal" data-target="#wcmamtx_example_modal3" data-etype="link" id="wcmamtx_add_link" class="btn btn-sm btn-primary wcmamtx_add_group">
+                                <span class="dashicons dashicons-insert"></span>
+                                <?php echo esc_html__( 'Add Link' ,'customize-my-account-for-woocommerce'); ?>
+                            </button>
 
-				            <button type="button" href="#" data-toggle="modal" data-target="#wcmamtx_example_modal2" data-etype="group" id="wcmamtx_add_group" class="btn btn-sm btn-primary wcmamtx_add_group ">
-				            	<span class="dashicons dashicons-insert"></span>
-				            	<?php echo esc_html__( 'Add Group' ,'customize-my-account-for-woocommerce'); ?>
-				            </button>
-				            
-				        </div>
-				       
-				    <?php } ?>
+                            <button type="button" href="#" data-toggle="modal" data-target="#wcmamtx_example_modal2" data-etype="group" id="wcmamtx_add_group" class="btn btn-sm btn-primary wcmamtx_add_group ">
+                                <span class="dashicons dashicons-insert"></span>
+                                <?php echo esc_html__( 'Add Group' ,'customize-my-account-for-woocommerce'); ?>
+                            </button>
+                            
+                        </div>
+                       
+                    <?php } ?>
 
                     <div class="wcmamtx_submit_section_div">
 
-				        <input type="submit" name="submit" id="submit" class="btn btn-sm btn-success wcmamtx_submit_button" value="<?php echo esc_html__( 'Save Changes' ,'customize-my-account-for-woocommerce'); ?>">
+                        <?php if (isset($current_tab)  && ($current_tab != "wcmamtx_wizard_settings")) {  ?>
 
-				        <?php if (isset($current_tab) && ($current_tab == "wcmamtx_advanced_settings")) { ?>
+                            <input type="submit" name="submit" id="submit" class="btn btn-sm btn-success wcmamtx_submit_button" value="<?php echo esc_html__( 'Save Changes' ,'customize-my-account-for-woocommerce'); ?>">
 
-				            <input type="button" href="#" name="submit" id="wcmamtx_reset_tabs_button" class="btn-sm btn btn-danger wcmamtx_reset_tabs_button" value="<?php echo esc_html__( 'Restore Default' ,'customize-my-account-for-woocommerce'); ?>">
+                        <?php }  ?>
+
+                        <?php if (isset($current_tab) && ($current_tab == "wcmamtx_advanced_settings") && ($current_tab != "wcmamtx_wizard_settings")) { ?>
+
+                            <input type="button" href="#" name="submit" id="wcmamtx_reset_tabs_button" class="btn-sm btn btn-danger wcmamtx_reset_tabs_button" value="<?php echo esc_html__( 'Restore Default' ,'customize-my-account-for-woocommerce'); ?>">
                            
 
-				            
-				        <?php } elseif (isset($current_tab) && ($current_tab == "wcmamtx_order_settings")) {  ?>
+                            
+                        <?php } elseif (isset($current_tab) && ($current_tab == "wcmamtx_order_settings") && ($current_tab != "wcmamtx_wizard_settings")) {  ?>
 
-				        	    <input type="button" href="#" name="submit" id="wcmamtx_reset_order_button" class="btn btn-sm btn-danger wcmamtx_reset_order_button" value="<?php echo esc_html__( 'Restore Default' ,'customize-my-account-for-woocommerce'); ?>">
+                                <input type="button" href="#" name="submit" id="wcmamtx_reset_order_button" class="btn btn-sm btn-danger wcmamtx_reset_order_button" value="<?php echo esc_html__( 'Restore Default' ,'customize-my-account-for-woocommerce'); ?>">
 
-				        <?php } ?>
+                        <?php } ?>
 
-				        <?php
+                        <?php
                          $frontend_url = get_permalink(get_option('woocommerce_myaccount_page_id'));
 
                          if (($tab == "wcmamtx_order_settings") || ($tab == "wcmamtx_order_actions")) {
-                         	 $frontend_url =  wc_get_account_endpoint_url( 'orders' );
+                             $frontend_url =  wc_get_account_endpoint_url( 'orders' );
                          }
 
-				        ?>
+                        ?>
 
-				        <a type="button" target="_blank" href="<?php echo $frontend_url; ?>" name="submit" id="wcmamtx_frontend_link" class="btn btn-sm btn-primary wcmamtx_frontend_link" >
-				        	<span class="dashicons dashicons-welcome-view-site"></span>
-				        	<?php echo esc_html__( 'Frontend' ,'customize-my-account-for-woocommerce'); ?>
-				        </a>
+                        <?php if (isset($current_tab)  && ($current_tab != "wcmamtx_wizard_settings")) {  ?>
 
-				       
+                            <a type="button" target="_blank" href="<?php echo $frontend_url; ?>" name="submit" id="wcmamtx_frontend_link" class="btn btn-sm btn-primary wcmamtx_frontend_link" >
+                               <span class="dashicons dashicons-welcome-view-site"></span>
+                               <?php echo esc_html__( 'Frontend' ,'customize-my-account-for-woocommerce'); ?>
+                           </a>
+
+                       <?php } ?>
+
+                       
 
                         <?php do_action( 'wcmamtx_add_author_links' ); ?>
-				    </div>
+                    </div>
 
-				    
-				</div>
-				
-			</form>
+                    
+                </div>
+                
+            </form>
 
-			<div class="modal fade" id="wcmamtx_example_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
+            <div class="modal fade" id="wcmamtx_example_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
 
-						<div class="modal-body">
+                        <div class="modal-body">
 
                             <?php 
+
                             $allowed_to_add = get_option('wcmamtx_endpoint_allowed_to_add',02);
 
+                            
                             if ($allowed_to_add > 0 ) {
                             ?>
 
-							<form action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" method="post" id="nds_add_user_meta_form" >			
+                            <form action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" method="post" id="nds_add_user_meta_form" >          
                                  
                                 <p><?php echo esc_html__( 'Free version allows upto 02 Endpoints' ,'customize-my-account-for-woocommerce'); ?></p>
 
-								<input type="hidden" name="action" value="nds_form_response_endpoint">
-								<input type="hidden" name="wcmamtx_add_endpoint_nonce" value="<?php echo wp_create_nonce( 'wcmamtx_nonce_hidden' ); ?>" />			
-								<div class="form-group">
-									
-									
-									<input class="form-control" required id="sdfsd-user_meta_key" type="text" name="<?php echo "nds"; ?>[label]" value="" placeholder="<?php echo esc_html__('Enter Label','customize-my-account-for-woocommerce'); ?>" /><br>
-									<input type="hidden" class="form-control" nonce="<?php echo wp_create_nonce( 'wcmamtx_nonce_hidden' ); ?>" name="<?php echo "nds"; ?>[row_type]" id="wcmamtx_hidden_endpoint_type" value="">
-								</div>
+                                <input type="hidden" name="action" value="nds_form_response_endpoint">
+                                <input type="hidden" name="wcmamtx_add_endpoint_nonce" value="<?php echo wp_create_nonce( 'wcmamtx_nonce_hidden' ); ?>" />          
+                                <div class="form-group">
+                                    
+                                    
+                                    <input class="form-control" required id="sdfsd-user_meta_key" type="text" name="<?php echo "nds"; ?>[label]" value="" placeholder="<?php echo esc_html__('Enter Label','customize-my-account-for-woocommerce'); ?>" /><br>
+                                    <input type="hidden" class="form-control" nonce="<?php echo wp_create_nonce( 'wcmamtx_nonce_hidden' ); ?>" name="<?php echo "nds"; ?>[row_type]" id="wcmamtx_hidden_endpoint_type" value="">
+                                </div>
 
-								<button type="button" class="btn btn-secondary" data-dismiss="modal"><?php echo esc_html__( 'Close' ,'customize-my-account-for-woocommerce'); ?></button>
-								<button type="submit" name="submit"  class="btn btn-primary wcmamtx_new_end_point"><?php echo esc_html__( 'Add' ,'customize-my-account-for-woocommerce'); ?>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal"><?php echo esc_html__( 'Close' ,'customize-my-account-for-woocommerce'); ?></button>
+                                <button type="submit" name="submit"  class="btn btn-primary wcmamtx_new_end_point"><?php echo esc_html__( 'Add' ,'customize-my-account-for-woocommerce'); ?>
 
                                 </button>
                             </form>
@@ -1192,25 +1222,37 @@ class wcmamtx_add_settings_page_class {
 
 
         </div>
-		<?php
+        <?php
 	}
 
 
 	
 	public function wcmamtx_options_tab_wrap() {
 
-		$current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : sanitize_text_field($this->wcmamtx_notices_settings_page);
+$current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : sanitize_text_field($this->wcmamtx_notices_settings_page);
 
-        echo '<a target="_blank" class="btn wcmamtx_docs_buton btn-success" href="https://www.sysbasics.com/knowledge-base/category/woocommerce-customize-my-account-pro/"><span class="wcmamtx_docs_icon dashicons dashicons-welcome-learn-more"></span>Documentation</a>';
-        echo '<a target="_blank" class="btn wcmamtx_support_buton btn-warning" href="https://www.sysbasics.com/go/customize-free-help/"><span class="wcmamtx_docs_icon dashicons dashicons-admin-generic"></span>Support</a>';
+        if (isset($current_tab)  && ($current_tab != "wcmamtx_wizard_settings")) {
+
+            echo '<a target="_blank" class="btn wcmamtx_docs_buton btn-success" href="https://www.sysbasics.com/knowledge-base/category/woocommerce-customize-my-account-pro/"><span class="wcmamtx_docs_icon dashicons dashicons-welcome-learn-more"></span>'.esc_html__( 'Documentation' ,'customize-my-account-for-woocommerce').'</a>';
+            echo '<a target="_blank" class="btn wcmamtx_support_buton btn-warning" href="https://www.sysbasics.com/go/customize-free-help/"><span class="wcmamtx_docs_icon dashicons dashicons-admin-generic"></span>'.esc_html__( 'Support' ,'customize-my-account-for-woocommerce').'</a>';
+        } else {
+
+            echo '<a class="btn wcmamtx_exit_setup btn-danger" href="?page=' . esc_html__($this->wcmamtx_notices_settings_page) . '&wcmamtx_disable_wizard=yes"><span class="wcmamtx_docs_icon dashicons dashicons-controls-forward"></span>'.esc_html__( 'Skip Quick Setup Wizard' ,'customize-my-account-for-woocommerce').'</a>';
+
+        }
 
 
         ?>
+
+
+        <?php if (isset($current_tab)  && ($current_tab != "wcmamtx_wizard_settings")) {  ?>
 
             <a type="button" href="#" data-toggle="modal" data-target="#wcmamtx_upgrade_modal"  class="btn btn-primary wcmamtx_pro_link nav-wrap" >
                 <span class="dashicons dashicons-lock"></span>
                 <?php echo esc_html__( 'Upgrade to pro' ,'customize-my-account-for-woocommerce'); ?>
             </a>
+
+        <?php  } ?>
 
             <div class="modal fade" id="wcmamtx_upgrade_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
@@ -1242,17 +1284,40 @@ class wcmamtx_add_settings_page_class {
         <?php
 
 
-        echo '<h2 class="nav-tab-wrapper">';
+        $current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : sanitize_text_field($this->wcmamtx_notices_settings_page);
 
-		foreach ( $this->wcmamtx_plugin_settings_tab as $tab_key => $tab_caption ) {
+        $disable_wizard = isset( $_GET['wcmamtx_disable_wizard'] ) ? $_GET['wcmamtx_disable_wizard'] : 'no';
 
-			$active = $current_tab == $tab_key ? 'nav-tab-active' : '';
+        if (isset($disable_wizard)  && ($disable_wizard == "yes")) {
+            update_option('wcmamtx_disable_wizard','yes');
+        }
 
-			echo '<a class="nav-tab ' . esc_html__($active) . '" href="?page=' . esc_html__($this->wcmamtx_notices_settings_page) . '&tab=' . esc_html__($tab_key) . '">' . esc_html__($tab_caption) . '</a>';	
+        if (isset($current_tab)  && ($current_tab != "wcmamtx_wizard_settings")) {
 
-		}
+            echo '<h2 class="nav-tab-wrapper">';
 
-		echo '</h2>';
+            foreach ( $this->wcmamtx_plugin_settings_tab as $tab_key => $tab_caption ) {
+
+               $active = $current_tab == $tab_key ? 'nav-tab-active' : '';
+
+               echo '<a class="nav-tab ' . esc_html__($active) . ' '.$tab_key.' " href="?page=' . esc_html__($this->wcmamtx_notices_settings_page) . '&tab=' . esc_html__($tab_key) . '">' . esc_html__($tab_caption) . '</a>'; 
+
+            }
+
+            echo '</h2>';
+
+        } else if (isset($current_tab)  && ($current_tab == "wcmamtx_wizard_settings")) {
+
+            echo '<h2 class="nav-tab-wrapper">';
+
+            $active = $current_tab == 'wcmamtx_wizard_settings' ? 'nav-tab-active' : '';
+
+            echo '<a class="nav-tab ' . esc_html__($active) . '" href="?page=' . esc_html__($this->wcmamtx_notices_settings_page) . '&tab=wcmamtx_wizard_settings">' . esc_html__('Quick Setup Wizard','customize-my-account-for-woocommerce') . '</a>'; 
+
+            echo '</h2>';
+
+        }
+
 
 	}
 

@@ -3,7 +3,7 @@
     Plugin Name: Customize My Account for WooCommerce
     Plugin URI: https://sysbasics.com
     Description: Customize My account page. Add/Edit/Remove Endpoints.
-    Version: 2.5.0
+    Version: 2.5.1
     Author: SysBasics
     Author URI: https://sysbasics.com
     Domain Path: /languages
@@ -36,6 +36,22 @@ if( !defined( 'pro_url' ) )
     define( 'pro_url', 'https://sysbasics.com/go/customize/' );
 
 $mt_type = 'specific';
+
+
+$disable_wizard = get_option('wcmamtx_disable_wizard');
+
+
+if (isset($disable_wizard) && ($disable_wizard == "yes")) {
+
+    define( 'wcmamtx_redirect_URL',"admin.php?page=wcmamtx_advanced_settings" );
+
+} else {
+
+    define( 'wcmamtx_redirect_URL', "admin.php?page=wcmamtx_advanced_settings&tab=wcmamtx_wizard_settings" );
+
+}
+
+
 
 add_action( 'before_woocommerce_init', function() {
     if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
@@ -168,7 +184,13 @@ if (!function_exists('wcmamtx_admin_plugin_redirect')) {
 
         if (get_option('wcmamtx_do_activation_redirect', false)) {
             delete_option('wcmamtx_do_activation_redirect');
-            wp_redirect("admin.php?page=wcmamtx_advanced_settings");
+
+            
+
+           
+            wp_redirect("".wcmamtx_redirect_URL."");
+           
+           
             //wp_redirect() does not exit automatically and should almost always be followed by exit.
             exit;
         }
