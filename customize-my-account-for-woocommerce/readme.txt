@@ -32,13 +32,12 @@ Customize your default my account page. Reorder them , hide existing core endpoi
 
 <h2> Customize My Account for WooCommerce features </h2>
 - Modify existing endpoints.
+- Add My Account navigation widget to any menu.
 - Add custom links to your my account pages.
 - Drag and drop UI.
 - Modify WooCommerce My account Navigation background color
 - Modify WooCommerce My account Navigation text color
 - Modify WooCommerce My account menu item background color
-- Easily Customize WooCommerce My Account Navigation CSS Parameters like background , font color , link color or padding, fontsize etc using frontend live customizer.
-- Compatible with Elementor , Elementor Pro and Jetwoobuilder
 - Easily Create new custom my account page using Customize My Account widgets for free elementor widgets. 
 
 <h3> Customize My Account for WooCommerce free version features </h3>
