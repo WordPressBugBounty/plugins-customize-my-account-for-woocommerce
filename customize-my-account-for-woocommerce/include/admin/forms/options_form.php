@@ -29,7 +29,6 @@ $core_fields       = 'dashboard,edit-address,edit-account,customer-logout,downlo
 
 <table class="widefat wcmamtx_options_table">
 
-
 	<tr>
 		<td><label><?php echo esc_html__('Default My Account tab','customize-my-account-for-woocommerce'); ?></label> <br />
 		</td>
@@ -54,7 +53,6 @@ $core_fields       = 'dashboard,edit-address,edit-account,customer-logout,downlo
 			</select>
 		</td>
 	</tr>
-
 
 	<tr>
 		<td><label><?php echo esc_html__('Show My Account widget on navigation menu','customize-my-account-for-woocommerce'); ?></label> <br />

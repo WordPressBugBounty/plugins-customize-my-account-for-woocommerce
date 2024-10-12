@@ -608,7 +608,7 @@ if (!function_exists('wcmamtx_show_limit_info')) {
 		<div class="wcmamtx_notice_div">
 
 			<div class="wcmamtx_notice_div_uppertext">
-				
+				<?php echo esc_html__( 'Free version of plugin only supports 2 endpoint and 2 groups.Pro Version supports unlimited number of endpoints and groups.','customize-my-account-for-woocommerce'); ?>
 
 			</div>
 

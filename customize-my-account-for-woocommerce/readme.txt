@@ -3,10 +3,10 @@ Contributors: phppoet
 Tags: woocommerce my account,customize,myaccount,endpoints,elementor woocommerce
 Requires at least: 4.0
 Tested up to: 6.6.2
-WC Tested up to: 9.2.3
+WC Tested up to: 9.3.3
 WC Requires at least: 4.0
 Requires PHP: 5.2
-Stable tag: 2.4.2
+Stable tag: 2.5.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -97,6 +97,10 @@ Learn more about how [Appsero collects and uses this data](https://Appsero.com/p
 
 
 == Changelog ==
+
+Version 2.5.0 - 12 October 2024
+
+- Enhancement - Possiblity to try 02 endpoint and 02 groups.
 
 Version 2.4.2 - 13 Sept 2024
 
