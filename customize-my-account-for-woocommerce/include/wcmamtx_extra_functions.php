@@ -452,7 +452,7 @@ if ( ! function_exists( 'wcmamtx_get_my_account_menu_plain_li' ) ) {
 
 							if (($should_show == "yes") && ($is_visible == "yes")) {
 
-								$out .= '<li class="menu-item menu-item-type-post_type menu-item-object-page"><a class="menu-link sub-menu-link" href="' . esc_url( wc_get_account_endpoint_url( $mkey ) ) . '"><span>' . esc_html( $liname ) . '</span></a></li>';
+								$out .= '<li class="menu-item menu-item-type-post_type menu-item-object-page"><a class="menu-link sub-menu-link" href="' . wcmamtx_get_account_endpoint_url( $mkey ) . '"><span>' . esc_html( $liname ) . '</span></a></li>';
 							}
 						}
 						$out .='</ul>';
@@ -466,7 +466,7 @@ if ( ! function_exists( 'wcmamtx_get_my_account_menu_plain_li' ) ) {
 				} else {
 
 					if ($parent == "none") {
-						$out .= '<li class="menu-item menu-item-type-post_type menu-item-object-page"><a class="menu-link" href="' . esc_url( wc_get_account_endpoint_url( $key ) ) . '"><span>' . esc_html( $name ) . '</span></a></li>';
+						$out .= '<li class="menu-item menu-item-type-post_type menu-item-object-page"><a class="menu-link" href="' . wcmamtx_get_account_endpoint_url( $key ) . '"><span>' . esc_html( $name ) . '</span></a></li>';
 					}
 
 				} 
@@ -1267,7 +1267,7 @@ if ( ! function_exists( 'wcmamtx_get_my_account_menu' ) ) {
 
 							if (($should_show == "yes") && ($is_visible == "yes")) {
 
-								$out .= '<li class="' . wc_get_account_menu_item_classes( $mkey ) . '"><a href="' . esc_url( wc_get_account_endpoint_url( $mkey ) ) . '"><span>' . esc_html( $liname ) . '</span></a></li>';
+								$out .= '<li class="' . wc_get_account_menu_item_classes( $mkey ) . '"><a href="' . wcmamtx_get_account_endpoint_url( $mkey ) . '"><span>' . esc_html( $liname ) . '</span></a></li>';
 							}
 						}
 						$out .='</ul>';
@@ -1281,7 +1281,7 @@ if ( ! function_exists( 'wcmamtx_get_my_account_menu' ) ) {
 				} else {
 
 					if ($parent == "none") {
-						$out .= '<li class="' . wc_get_account_menu_item_classes( $key ) . '"><a href="' . esc_url( wc_get_account_endpoint_url( $key ) ) . '"><span>' . esc_html( $name ) . '</span></a></li>';
+						$out .= '<li class="' . wc_get_account_menu_item_classes( $key ) . '"><a href="' . wcmamtx_get_account_endpoint_url( $mkey ) . '"><span>' . esc_html( $name ) . '</span></a></li>';
 					}
 
 				} 

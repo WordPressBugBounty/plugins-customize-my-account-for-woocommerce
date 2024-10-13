@@ -178,7 +178,7 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
             ?>
                 <div class="wcmamtx_dashboard_link <?php echo esc_attr( $key ); ?>-link">
                     
-                    <a href="<?php echo esc_url( wc_get_account_endpoint_url( $key ) ); ?>">
+                    <a href="<?php echo wcmamtx_get_account_endpoint_url( $key ); ?>">
                         
                         <p class="wcmtx_icon_src">
                             <?php wcmamtx_get_account_menu_li_icon_html($icon_source,$value,$key); ?>
