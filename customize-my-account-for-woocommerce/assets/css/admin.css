@@ -519,3 +519,8 @@ img.label-icon-default-links {
 a.btn.btn-warning.wcmactx_wizard_action_button {
     width: 100%;
 }
+span.wcmamtx_pro_version_text {
+    color: red;
+    margin-left: 90px;
+    /* padding-top: 40px !important; */
+}

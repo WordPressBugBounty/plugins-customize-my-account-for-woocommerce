@@ -656,6 +656,10 @@ if (!function_exists('wcmamtx_load_pro_reminder_div')) {
 					<span class="dashicons dashicons-lock"></span>
 					<?php echo esc_html__( 'Pro Version Page' ,'customize-my-account-for-woocommerce'); ?>
 				</a>
+
+				<br><br>
+
+                            <p><span class="wcmamtx_pro_version_text2"><a target="_blank" href="https://www.sysbasics.com/sysbasics-woocommerce-customize-my-account-pro-07-day-trial/"><?php echo esc_html__( 'Try Pro Version Free for 07 days' ,'customize-my-account-for-woocommerce'); ?></a></span></p>
 			</div>
 		</div>
 
@@ -694,6 +698,10 @@ if (!function_exists('wcmamtx_show_limit_info')) {
 					<span class="dashicons dashicons-lock"></span>
 					<?php echo esc_html__( 'Pro Version Page' ,'customize-my-account-for-woocommerce'); ?>
 				</a>
+
+				<br><br>
+
+                            <p><span class="wcmamtx_pro_version_text"><a target="_blank" href="https://www.sysbasics.com/sysbasics-woocommerce-customize-my-account-pro-07-day-trial/"><?php echo esc_html__( 'Try Pro Version Free for 07 days' ,'customize-my-account-for-woocommerce'); ?></a></span></p>
 			</div>
 		</div>
 

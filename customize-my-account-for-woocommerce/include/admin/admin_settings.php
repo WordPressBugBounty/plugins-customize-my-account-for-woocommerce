@@ -1338,7 +1338,9 @@ $current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : sanitize_text_field($this-
                                 <?php echo esc_html__( 'Visit Pro Version Demo' ,'customize-my-account-for-woocommerce'); ?>
                             </a>
 
+                            <br><br>
 
+                            <p><span class="wcmamtx_pro_version_text"><a target="_blank" href="https://www.sysbasics.com/sysbasics-woocommerce-customize-my-account-pro-07-day-trial/"><?php echo esc_html__( 'Try Pro Version Free for 07 days' ,'customize-my-account-for-woocommerce'); ?></a></span></p>
 
                         </div>
                         <div class="modal-footer">
