@@ -1,12 +1,12 @@
 === Customize My Account for WooCommerce ===
 Contributors: phppoet
-Tags: woocommerce my account,customize,myaccount,endpoints,elementor woocommerce
+Tags: Tags: customize my account,endpoints
 Requires at least: 4.0
 Tested up to: 6.6.2
 WC Tested up to: 9.3.3
 WC Requires at least: 4.0
 Requires PHP: 5.2
-Stable tag: 2.5.5
+Stable tag: 2.5.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -20,17 +20,38 @@ Customize My Account for WooCommerce Plugins helps you to Manage Core Endpoints 
 
 Customize your default my account page. Reorder them , hide existing core endpoints. You will also be able to change the default endpoint. 
 
-<p><a href="https://sysbasics.com/go/customize/" title="Customize My Account for WooCommerce pro" rel="nofollow">Upgrade to pro</a></p>
-
-<p>Check <a href="https://sysbasics.com/go/customize-demo/" title="Customize My Account for WooCommerce pro" rel="nofollow">Live Demo</a> for Pro version features</p>
-
-<p>Check our <a href="https://sysbasics.com" title="WooCommerce Premium Plugins" rel="nofollow">Premium Plugins</a></p>
-
-<p>Missing a feature or Want to inform us about bug ? <a href="https://bitbucket.org/woomatrix/woomatrix-main/issues/new" rel="nofollow">Contact us here</a></p>
 
 
 
-<h2> Customize My Account for WooCommerce features </h2>
+
+<h2>Main Features of customize my account for WooCommerce plugin:</h2>
+- Add new endpoints in the My Account page, visible to your users , and choose what the content will be using third party shortcodes. You can use third party
+subscription , royalty , coupons , wallet related shortcodes.
+- Create Specific endpoints , links , groups into my account page that are visible only specific roles or users;
+- Choose and customize the layout of the My Account page so to make it more usable and modern;
+- Hide/show existing endpoitns without using any extra code. 
+- Add icons to your existings my account page endpoints. Optionally you can display them as dashboard links and most importantly show them inside 
+My account widget. 
+
+
+<h2>Modify the default WooCommerce endpoints</h2>
+- THis is the most important feature of this plugin just after activation using checkboxes you exclude/include/rename existing endpoints. set icons to existing and new endpoint/links. Plugin support three types of library as of now for icons. Font Awesome, Dashicons and you can also upload your own icon. 
+Plugin also seamlessly integrates itself with third party endpoints. It recognises the existing endpoint. Best part is that you can even reorder/rename that
+third party endpoint. In certain cases if you want this plugin to take over third party endpoint, just hide the existing third party endpoint by unchecking
+the checkbox then create new endpoint with same slug and it will work fine. For example you have Rewards Endpoint that are sourced from any other plugin which has revwards slud. in that case if you want full control as other endpoints just hide existing endpoint and add new endpoint with rewards slug and it will just work fine. 
+
+
+<h2>Make your Dashboard Pretty with Dashboard links</h2>
+
+Plugin upon activation ads dashboard links or you may call it banner to your dashboard page. Most importantly you can manage the order of those dashboard links and you can also exclude certain endpoints from being included in dashboard links. Certain themes do have this feature inbuilt , in those case we
+have provided you option to disable this feature completely. It works on most possible scenarios with wider theme compatibility. 
+
+
+<h3>My Account navigation widget menu</h3>
+
+- Plugin has inbuilt my account navigation widget menu feature where you can include existing endpoint links and display them into any menu of your site. Plugin also support navigation widget under appearance/menu field. 
+
+<h3> Customize My Account for WooCommerce Other features </h3>
 - Modify existing endpoints.
 - Add My Account navigation widget to any menu.
 - Add custom links to your my account pages.
@@ -66,23 +87,8 @@ Customize your default my account page. Reorder them , hide existing core endpoi
 
 
 
-<p><a href="https://sysbasics.com/go/customize/" title="Customize My Account for WooCommerce pro" rel="nofollow">Upgrade to pro</a></p>
-
-<p>Check <a href="https://sysbasics.com/go/customize-demo/" title="Customize My Account for WooCommerce pro" rel="nofollow">Live Demo</a> for Pro version features</p>
 
 
-
-== Customize Dokan Dashboard Endpoints features ==
-- Add new endpoint to your dokan dashboard
-- Hide existing dokan dashboard endpoints
-- Shortcode support
-- Modify icon of existing dokan dashboard enpoints
-- Add new link in dokan dashbaord
-
-
-
-<p>check <a href="https://www.sysbasics.com/product/customize-dokan-dashboard-endpoints-pro/" >Customize Dokan Dashboard Endpoints Pro
-</a></p>
 == Upgrade Notice ==
 
 ## Privacy Policy
@@ -97,8 +103,9 @@ Learn more about how [Appsero collects and uses this data](https://Appsero.com/p
 
 == Changelog ==
 
-Version 2.5.0 - 12 October 2024
+Version 2.5.7 - 14 October 2024
 
+- 2.5.7 - Updated description on wp.org plugin. 
 - 2.5.5 - dashboard links not working after restoring endpoints.
 - Enhancement - Possiblity to try 02 endpoint and 02 groups.
 
@@ -191,12 +198,12 @@ Version 2.0.13 - 14 December 2023
 
 == Screenshots ==
 
-1. Customize My Account for WooCommerce Backend
-2. Customize My Account for WooCommerce Elementor
-3. Customize My Account for WooCommerce Each Endpoint
-4. Customize My Account for WooCommerce Customizer
-5. Customize My Account for WooCommerce Free
-6. Customize My Account for WooCommerce Frontend
+1. customize my account for woocommerce dashboard links
+2. customize my account for woocommerce navigation menu widget
+3. customize my account for woocommerce Each Endpoint
+4. customize my account for woocommerce Customizer
+5. customize my account for woocommerce Free
+6. customize my account for woocommerce Frontend
 7.
 8.
 
