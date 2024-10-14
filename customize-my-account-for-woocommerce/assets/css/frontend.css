@@ -318,3 +318,8 @@ a.woocommerce-MyAccount-navigation-link_a i.fa {
 .theme-oceanwp a.woocommerce-MyAccount-navigation-link_a::before {
     display: none !important;
 }
+
+.theme-neve i.fa {
+    margin-top: 5px;
+    margin-left: 5px;
+}
