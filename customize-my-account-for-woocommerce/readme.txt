@@ -16,7 +16,7 @@ Customize My Account for WooCommerce Plugins helps you to Manage Core Endpoints 
 
 == Description ==
 
-<h3>Customize My Account for WooCommerce</h3>
+<h2>Customize My Account for WooCommerce</h2>
 
 Customize your default my account page. Reorder them , hide existing core endpoints. You will also be able to change the default endpoint. 
 
@@ -24,7 +24,7 @@ Customize your default my account page. Reorder them , hide existing core endpoi
 
 
 
-<h2>Main Features of customize my account for WooCommerce plugin:</h2>
+<h3>Main Features of customize my account for WooCommerce plugin:</h3>
 - Add new endpoints in the My Account page, visible to your users , and choose what the content will be using third party shortcodes. You can use third party
 subscription , royalty , coupons , wallet related shortcodes.
 - Create Specific endpoints , links , groups into my account page that are visible only specific roles or users;
@@ -34,14 +34,14 @@ subscription , royalty , coupons , wallet related shortcodes.
 My account widget. 
 
 
-<h2>Modify the default WooCommerce endpoints</h2>
+<h3>Modify the default WooCommerce endpoints</h3>
 - THis is the most important feature of this plugin just after activation using checkboxes you exclude/include/rename existing endpoints. set icons to existing and new endpoint/links. Plugin support three types of library as of now for icons. Font Awesome, Dashicons and you can also upload your own icon. 
 Plugin also seamlessly integrates itself with third party endpoints. It recognises the existing endpoint. Best part is that you can even reorder/rename that
 third party endpoint. In certain cases if you want this plugin to take over third party endpoint, just hide the existing third party endpoint by unchecking
 the checkbox then create new endpoint with same slug and it will work fine. For example you have Rewards Endpoint that are sourced from any other plugin which has revwards slud. in that case if you want full control as other endpoints just hide existing endpoint and add new endpoint with rewards slug and it will just work fine. 
 
 
-<h2>Make your Dashboard Pretty with Dashboard links</h2>
+<h3>Make your Dashboard Pretty with Dashboard links</h3>
 
 Plugin upon activation ads dashboard links or you may call it banner to your dashboard page. Most importantly you can manage the order of those dashboard links and you can also exclude certain endpoints from being included in dashboard links. Certain themes do have this feature inbuilt , in those case we
 have provided you option to disable this feature completely. It works on most possible scenarios with wider theme compatibility. 
@@ -51,7 +51,12 @@ have provided you option to disable this feature completely. It works on most po
 
 - Plugin has inbuilt my account navigation widget menu feature where you can include existing endpoint links and display them into any menu of your site. Plugin also support navigation widget under appearance/menu field. 
 
-<h3> Customize My Account for WooCommerce Other features </h3>
+
+<h3>ACF forms in WooCommerce My Account</h3>
+
+Using third party plugin <a href="https://wordpress.org/plugins/acf-frontend-form-element/">Frontend Admin by DynamiApps</a> You can create dynamic forms within your woocommerce my account page. possible use case scenario like having profile edit form inside endpoint, guest posting form , recipe submission form etc. Possibilities are endless with this.
+
+<h2> Customize My Account for WooCommerce Other features </h2>
 - Modify existing endpoints.
 - Add My Account navigation widget to any menu.
 - Add custom links to your my account pages.
@@ -61,7 +66,7 @@ have provided you option to disable this feature completely. It works on most po
 - Modify WooCommerce My account menu item background color
 - Easily Create new custom my account page using Customize My Account widgets for free elementor widgets. 
 
-<h3> Customize My Account for WooCommerce free version features </h3>
+<h2> Customize My Account for WooCommerce free version features </h2>
 - Show/hide woocommerce core endpoints
 - Reorder core woocommerce my account endpoints
 - Add extra class to core endpoint
