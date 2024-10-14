@@ -228,11 +228,21 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
     public function wcmamtx_modify_post_content($content) {
         global $post;
 
+        global $wp;
+        
+        $current_url = home_url( $wp->request );
+
+        if (strpos($current_url,'lost-password') !== false) {
+            return $content;
+        } 
+
         if ($post === null) {
 
             return $content;
 
         }
+
+
 
         $post_id = $post->ID;
 

@@ -3,7 +3,7 @@
     Plugin Name: SysBasics Customize My Account for WooCommerce
     Plugin URI: https://sysbasics.com
     Description: Customize My account page. Add/Edit/Remove Endpoints.
-    Version: 2.5.11
+    Version: 2.5.12
     Author: SysBasics
     Author URI: https://sysbasics.com
     Domain Path: /languages
