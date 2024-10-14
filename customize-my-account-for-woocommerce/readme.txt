@@ -1,16 +1,16 @@
 === SysBasics Customize My Account for WooCommerce ===
 Contributors: phppoet
-Tags: Tags: customize my account,endpoints
+Tags: Tags: customize myaccount , endpoints
 Requires at least: 4.0
 Tested up to: 6.6.2
 WC Tested up to: 9.3.3
 WC Requires at least: 4.0
 Requires PHP: 5.2
-Stable tag: 2.5.9
+Stable tag: 2.5.11
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Customize My Account for WooCommerce Plugins helps you to Manage Core Endpoints as well as add new Endpoint,Groups and Links into your my account page
+SysBasics Customize My Account for WooCommerce Plugin add dashboard links , my account navigation menu and lets you manage My Account endpoints.
 
 
 
@@ -22,8 +22,6 @@ Customize your default my account page. Reorder them , hide existing core endpoi
 
 
 
-
-
 <h3>Main Features of customize my account for WooCommerce plugin:</h3>
 - Add new endpoints in the My Account page, visible to your users , and choose what the content will be using third party shortcodes. You can use third party
 subscription , royalty , coupons , wallet related shortcodes.
@@ -32,10 +30,10 @@ subscription , royalty , coupons , wallet related shortcodes.
 - Hide/show existing endpoitns without using any extra code. 
 - Add icons to your existings my account page endpoints. Optionally you can display them as dashboard links and most importantly show them inside 
 My account widget. 
-
+- Compatible with WPML and WPML sticky links.
 
 <h3>Modify the default WooCommerce endpoints</h3>
-- THis is the most important feature of this plugin just after activation using checkboxes you exclude/include/rename existing endpoints. set icons to existing and new endpoint/links. Plugin support three types of library as of now for icons. Font Awesome, Dashicons and you can also upload your own icon. 
+- This is the most important feature of this plugin just after activation using checkboxes you exclude/include/rename existing endpoints. set icons to existing and new endpoint/links. Plugin support three types of library as of now for icons. Font Awesome, Dashicons and you can also upload your own icon. 
 Plugin also seamlessly integrates itself with third party endpoints. It recognises the existing endpoint. Best part is that you can even reorder/rename that
 third party endpoint. In certain cases if you want this plugin to take over third party endpoint, just hide the existing third party endpoint by unchecking
 the checkbox then create new endpoint with same slug and it will work fine. For example you have Rewards Endpoint that are sourced from any other plugin which has revwards slud. in that case if you want full control as other endpoints just hide existing endpoint and add new endpoint with rewards slug and it will just work fine. 
@@ -43,18 +41,32 @@ the checkbox then create new endpoint with same slug and it will work fine. For 
 
 <h3>Make your Dashboard Pretty with Dashboard links</h3>
 
-Plugin upon activation ads dashboard links or you may call it banner to your dashboard page. Most importantly you can manage the order of those dashboard links and you can also exclude certain endpoints from being included in dashboard links. Certain themes do have this feature inbuilt , in those case we
+- Plugin upon activation ads dashboard links or you may call it banner to your dashboard page. Most importantly you can manage the order of those dashboard links and you can also exclude certain endpoints from being included in dashboard links. Certain themes do have this feature inbuilt , in those case we
 have provided you option to disable this feature completely. It works on most possible scenarios with wider theme compatibility. 
 
+
+<h3>My Account navigation widget menu</h3>
+
+- Plugin has inbuilt my account navigation widget menu feature where you can include existing endpoint links and display them into any menu of your site. Plugin also support navigation widget under appearance/menu field.
 
 <h3>My Account navigation widget menu</h3>
 
 - Plugin has inbuilt my account navigation widget menu feature where you can include existing endpoint links and display them into any menu of your site. Plugin also support navigation widget under appearance/menu field. 
 
 
+
+<h3>Redirect default dashboard to endpoint</h3>
+
+- Using simple option you can replace default page from dashboard to orders , downloads or something else. you can even create custom endpoint and send users there upon login. This feature is useful specially if you don't like the default dashboard. Using elementor you can create clone template of dashboard or other endpoint and replace that with new cloned template. 
+
+<h3>Override endpoints using elementor</h3>
+
+- This plugin is even charm with free plugin elementor where you can create cloned template of existing endpoints and replace existing endpoints with cloned endpoints usind elementor's drag and drop feature. 
+
+
 <h3>ACF forms in WooCommerce My Account</h3>
 
-Using third party plugin <a href="https://wordpress.org/plugins/acf-frontend-form-element/">Frontend Admin by DynamiApps</a> You can create dynamic forms within your woocommerce my account page. possible use case scenario like having profile edit form inside endpoint, guest posting form , recipe submission form etc. Possibilities are endless with this.
+- Using third party plugin <a href="https://wordpress.org/plugins/acf-frontend-form-element/">Frontend Admin by DynamiApps</a> You can create dynamic forms within your woocommerce my account page. possible use case scenario like having profile edit form inside endpoint, guest posting form , recipe submission form etc. Possibilities are endless with this.
 
 <h2> Customize My Account for WooCommerce Other features </h2>
 - Modify existing endpoints.
@@ -108,8 +120,10 @@ Learn more about how [Appsero collects and uses this data](https://Appsero.com/p
 
 == Changelog ==
 
-Version 2.5.8 - 14 October 2024
+Version 2.5.11 - 14 October 2024
 
+- 2.5.11 - Added hook wcmamtx_my_account_nav_widget_text to override My Account text.
+- 2.5.10 - Fixed issue with previous update.
 - 2.5.8 - Css issue fix with neve theme.
 - 2.5.7 - Updated description on wp.org plugin. 
 - 2.5.5 - dashboard links not working after restoring endpoints.
@@ -204,10 +218,10 @@ Version 2.0.13 - 14 December 2023
 
 == Screenshots ==
 
-1. customize my account for woocommerce dashboard links
-2. customize my account for woocommerce navigation menu widget
-3. customize my account for woocommerce Each Endpoint
-4. customize my account for woocommerce Customizer
+1. customize my account for woocommerce
+2. customize my account for woocommerce
+3. customize my account for woocommerce
+4. customize my account for woocommerce
 5. customize my account for woocommerce Free
 6. customize my account for woocommerce Frontend
 7.
@@ -216,25 +230,7 @@ Version 2.0.13 - 14 December 2023
 
 == Frequently Asked Questions ==
 
-= How to override endpoint url? =
 
-Plugin has inbuilt hook which you can use to override my account endpoint url. Only use this if your setup is somehow not returning correct endpoint url. 
-
-<pre>
-add_filter('wcmamtx_override_endpoint_url','wcmamtx_override_endpoint_url',10,2);
-
-function wcmamtx_override_endpoint_url($core_url,$key) {
-	
-	$new_url = ''.site_url().'/my-account/'.$key.'/';
-	
-	if ($key== "customer-logout") {
-		$new_url = wp_nonce_url($new_url);
-	}
-	return $new_url;
-}
-</pre>
-
-You may use <a href="https://wordpress.org/plugins/code-snippets/">Code Snippets</a> plugin to inject any extra php code. 
 
 = Is plugin compatible with WPML ? =
 
@@ -255,6 +251,30 @@ Yes
 = Can plugin used without elementor or with other page builders ? =
 
 Yes
+
+= Is it possible to override MY Account text in wicget with something like hello,username ? =
+
+yes. First make sure you have version 2.5.11 or higher then you can use below given hook to modify default text
+
+<pre>
+add_filter('wcmamtx_my_account_nav_widget_text','wcmamtx_my_account_nav_widget_text_function',10,1);
+
+function wcmamtx_my_account_nav_widget_text_function($default_text) {
+    
+    if ( !is_user_logged_in() ) {
+            return $default_text;
+    }
+    
+    $current_user = wp_get_current_user();
+    
+    $user_name= $current_user->display_name; 
+    $default_text = 'Hello , '.ucfirst($user_name).'';
+    return $default_text;
+}
+
+</pre>
+
+use above give php code snippet . you may use code snippets plugin to inject any extra php code.
 
 == Installation ==
 

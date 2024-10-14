@@ -46,13 +46,15 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
 
     }
 
-    public function wcmamtx_add_menu_items( $items, $item ) {
+    public function wcmamtx_add_menu_items( $items, $args ) {
 
         $frontend_url = get_permalink(get_option('woocommerce_myaccount_page_id'));
 
         $wcmamtx_plugin_options = (array) get_option('wcmamtx_plugin_options');
 
         $nav_header_widget_text = isset($wcmamtx_plugin_options['nav_header_widget_text']) ? $wcmamtx_plugin_options['nav_header_widget_text'] : esc_html__('My Account','customize-my-account-for-woocommerce-pro');
+
+        $nav_header_widget_text = apply_filters('wcmamtx_my_account_nav_widget_text',$nav_header_widget_text);
 
 
         
