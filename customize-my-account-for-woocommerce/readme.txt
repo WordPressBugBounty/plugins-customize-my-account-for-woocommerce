@@ -6,7 +6,7 @@ Tested up to: 6.6.2
 WC Tested up to: 9.3.3
 WC Requires at least: 4.0
 Requires PHP: 5.2
-Stable tag: 2.5.11
+Stable tag: 2.5.10
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -120,9 +120,8 @@ Learn more about how [Appsero collects and uses this data](https://Appsero.com/p
 
 == Changelog ==
 
-Version 2.5.11 - 14 October 2024
+Version 2.5.10 - 14 October 2024
 
-- 2.5.11 - Added hook wcmamtx_my_account_nav_widget_text to override My Account text.
 - 2.5.10 - Fixed issue with previous update.
 - 2.5.8 - Css issue fix with neve theme.
 - 2.5.7 - Updated description on wp.org plugin. 
@@ -251,30 +250,6 @@ Yes
 = Can plugin used without elementor or with other page builders ? =
 
 Yes
-
-= Is it possible to override MY Account text in wicget with something like hello,username ? =
-
-yes. First make sure you have version 2.5.11 or higher then you can use below given hook to modify default text
-
-<pre>
-add_filter('wcmamtx_my_account_nav_widget_text','wcmamtx_my_account_nav_widget_text_function',10,1);
-
-function wcmamtx_my_account_nav_widget_text_function($default_text) {
-    
-    if ( !is_user_logged_in() ) {
-            return $default_text;
-    }
-    
-    $current_user = wp_get_current_user();
-    
-    $user_name= $current_user->display_name; 
-    $default_text = 'Hello , '.ucfirst($user_name).'';
-    return $default_text;
-}
-
-</pre>
-
-use above give php code snippet . you may use code snippets plugin to inject any extra php code.
 
 == Installation ==
 
