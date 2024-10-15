@@ -1,5 +1,86 @@
 <?php
 
+
+/**
+ * Get account menu item classes.
+ *
+ * @since 1.0.0
+ * @param string $endpoint Endpoint.
+ * @return string
+ */
+
+if (!function_exists('wcmamtx_placeholder_img_src')) {
+
+	function sysbasics_menu_item_custom_output( $item_output, $item, $depth, $args ) {
+
+		$menu_item_classes = $item->classes;
+
+    //print_r($item);
+
+		if ( !in_array( 'customize-my-account-for-woocommerce-dropdown', $menu_item_classes )) {
+			return $item_output;
+		}
+
+		if ( !is_user_logged_in() ) {
+
+            $show_only_logged_in    = isset($wcmamtx_plugin_options['show_only_logged_in']) ? $wcmamtx_plugin_options['show_only_logged_in'] : "no";
+
+            if ($show_only_logged_in == "yes") {
+                return $items;
+            }
+
+
+            $nav_header_widget_text_logout = isset($wcmamtx_plugin_options['nav_header_widget_text_logout']) ? $wcmamtx_plugin_options['nav_header_widget_text_logout'] : esc_html__('Log In','customize-my-account-for-woocommerce');
+
+
+            $Menu_link = '<li class="menu-item menu-item-type-post_type menu-item-object-page wcmamtx_menu wcmamtx_menu_logged_out"><a class="menu-link nav-top-link" aria-expanded="true" aria-haspopup="menu"  href="'.$frontend_url.'">'.$nav_header_widget_text_logout.'</a>';
+
+            $items .= $Menu_link;
+
+            return $items;
+        
+        } 
+
+		ob_start(); 
+
+		$frontend_url = get_permalink(get_option('woocommerce_myaccount_page_id'));
+
+
+		$wcmamtx_plugin_options = (array) get_option('wcmamtx_plugin_options');
+
+		$nav_header_widget_text = isset($wcmamtx_plugin_options['nav_header_widget_text']) ? $wcmamtx_plugin_options['nav_header_widget_text'] : esc_html__('My Account','customize-my-account-for-woocommerce');
+
+		?>
+		<ul class="custom-sub-menu">
+			<?php 
+
+
+
+
+
+            //$items = wcmamtx_get_my_account_menu();
+
+			wcmamtx_get_menu_shortcode_content($items,$item); 
+
+
+
+			?>
+
+
+		</li>
+	</ul>
+	<?php
+
+	$custom_sub_menu_html = ob_get_clean();
+
+    // Append after <a> element of the menu item targeted
+	$item_output = $custom_sub_menu_html;
+
+	return $item_output;
+     }
+}
+
+
 /**
  * Get account menu item classes.
  *

@@ -6,7 +6,7 @@ Tested up to: 6.6.2
 WC Tested up to: 9.3.3
 WC Requires at least: 4.0
 Requires PHP: 5.2
-Stable tag: 2.5.12
+Stable tag: 2.5.14
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -120,8 +120,10 @@ Learn more about how [Appsero collects and uses this data](https://Appsero.com/p
 
 == Changelog ==
 
-Version 2.5.12 - 14 October 2024
+Version 2.5.14 - 15 October 2024
 
+- 2.5.14 - Fix- Bug with previous release. 
+- 2.5.13 - Fix- My account navigation widget now showing on certain themes.
 - 2.5.12 - Plugin breaking password reset functinality.
 - 2.5.11 - Added hook wcmamtx_my_account_nav_widget_text to override My Account text.
 - 2.5.10 - Fixed issue with previous update.

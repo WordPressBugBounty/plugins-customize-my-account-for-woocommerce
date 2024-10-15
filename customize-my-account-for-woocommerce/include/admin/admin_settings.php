@@ -4,60 +4,16 @@
  *  Menu items - Add "Custom sub-menu" in menu item render output
  *  if menu item has class "menu-item-target"
  */
-add_filter( 'walker_nav_menu_start_el', 'sysbasics_menu_item_custom_output', 10, 4 );
-function sysbasics_menu_item_custom_output( $item_output, $item, $depth, $args ) {
-
-    $menu_item_classes = $item->classes;
-
-    //print_r($item);
-
-    if ( !in_array( 'customize-my-account-for-woocommerce-dropdown', $menu_item_classes )) {
-        return $item_output;
-    }
-
-    ob_start(); 
-
-    $frontend_url = get_permalink(get_option('woocommerce_myaccount_page_id'));
-
-
-    $wcmamtx_plugin_options = (array) get_option('wcmamtx_plugin_options');
-
-    $nav_header_widget_text = isset($wcmamtx_plugin_options['nav_header_widget_text']) ? $wcmamtx_plugin_options['nav_header_widget_text'] : esc_html__('My Account','customize-my-account-for-woocommerce');
-
-     ?>
-    <ul class="custom-sub-menu">
-        <?php 
-
-      
+add_filter( 'walker_nav_menu_start_el', 'sysbasics_menu_item_custom_output', 100, 4 );
 
 
 
-            //$items = wcmamtx_get_my_account_menu();
 
-            wcmamtx_get_menu_shortcode_content($items,$item); 
-
-          
-
-            ?>
-
-
-        </li>
-    </ul>
-    <?php
-
-    $custom_sub_menu_html = ob_get_clean();
-
-    // Append after <a> element of the menu item targeted
-    $item_output = $custom_sub_menu_html;
-
-    return $item_output;
-}
-
-if ( !class_exists('wcmamtx_nav_metabox')) {
-    class wcmamtx_nav_metabox {
+if ( !class_exists('wcmamtx_nav_metabox_free')) {
+    class wcmamtx_nav_metabox_free {
         public function add_nav_menu_meta_boxes() {
             add_meta_box(
-                'wcmamtx_nav_link',
+                'wcmamtx_nav_link_free',
                 __('SysBasics My Account Navigation','customize-my-account-for-woocommerce'),
                 array( $this, 'wcmamtx_nav_menu_link'),
                 'nav-menus',
@@ -69,15 +25,13 @@ if ( !class_exists('wcmamtx_nav_metabox')) {
             add_action( 'wp_update_nav_menu_item', array( $this, 'save_menu_item_custom_fields' ), 10, 2 );
             
 
-            add_shortcode( 'wcmamtx_nav_shortcode', array( $this, 'wcmamtx_nav_shortcode_function' ));
+           
         }
 
 
 
 
-        public function wcmamtx_nav_shortcode_function() {
-           return  'hello worldS';
-        }
+
 
         public function save_menu_item_custom_fields( $menu_id, $menu_item_db_id ) {
             if ( isset( $_REQUEST['wcmamtx-currency-nonce'] ) && wp_verify_nonce( sanitize_key( $_REQUEST['wcmamtx-currency-nonce'] ), 'wcmamtx-currency-check-nonce' ) ) {
@@ -97,7 +51,7 @@ if ( !class_exists('wcmamtx_nav_metabox')) {
         }
 
         public function menu_item_custom_fields( $item_id, $item ) {
-            if ( 'wcmamtx_nav_link' === $item->post_name || 'SysBasics My Account Navigation' === $item->post_title ) {
+            if ( 'wcmamtx_nav_link_free' === $item->post_name || 'SysBasics My Account Navigation' === $item->post_title ) {
 
                 include 'menuItemCustomFields.php';
             }
@@ -110,7 +64,7 @@ if ( !class_exists('wcmamtx_nav_metabox')) {
     }
 }
 
-$custom_nav = new wcmamtx_nav_metabox;
+$custom_nav = new wcmamtx_nav_metabox_free;
 
 add_action('admin_init', array($custom_nav, 'add_nav_menu_meta_boxes'));
 	
