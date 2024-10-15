@@ -110,7 +110,7 @@ $core_fields       = 'dashboard,edit-address,edit-account,customer-logout,downlo
 		</td>
 	</tr>
 
-	<tr lass="nav_header_widget_tr" style="<?php if (isset($plugin_options['nav_header_widget']) && ($plugin_options['nav_header_widget'] == "yes")) { echo 'display:table-row;'; } else { echo 'display:none;'; } ?>">
+	<tr class="nav_header_widget_tr" style="<?php if (isset($plugin_options['nav_header_widget']) && ($plugin_options['nav_header_widget'] == "yes")) { echo 'display:table-row;'; } else { echo 'display:none;'; } ?>">
 		<td><label><?php echo esc_html__('Show widget only for logged in','customize-my-account-for-woocommerce'); ?></label> <br />
 		</td>
 		<td>
