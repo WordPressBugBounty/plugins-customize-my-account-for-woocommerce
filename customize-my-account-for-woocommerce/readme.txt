@@ -22,7 +22,7 @@ Customize your default my account page. Reorder them , hide existing core endpoi
 
 
 
-<h3>Main Features of customize my account for WooCommerce plugin:</h3>
+<h3>Main Features of Customize My Account for WooCommerce plugin:</h3>
 - Add new endpoints in the My Account page, visible to your users , and choose what the content will be using third party shortcodes. You can use third party
 subscription , royalty , coupons , wallet related shortcodes.
 - Create Specific endpoints , links , groups into my account page that are visible only specific roles or users;
