@@ -49,9 +49,6 @@ have provided you option to disable this feature completely. It works on most po
 
 - Plugin has inbuilt my account navigation widget menu feature where you can include existing endpoint links and display them into any menu of your site. Plugin also support navigation widget under appearance/menu field.
 
-<h3>My Account navigation widget menu</h3>
-
-- Plugin has inbuilt my account navigation widget menu feature where you can include existing endpoint links and display them into any menu of your site. Plugin also support navigation widget under appearance/menu field. 
 
 
 
