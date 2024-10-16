@@ -997,7 +997,7 @@ class wcmamtx_add_settings_page_class {
                     
                     <?php if (isset($current_tab) && ($current_tab == "wcmamtx_advanced_settings") && ($current_tab != "wcmamtx_wizard_settings") ) { ?>
                         <div class="wcmamtx_add_section_div">
-                            <button type="button" href="#" data-toggle="modal" data-target="#wcmamtx_example_modal" data-etype="endpoint" id="wcmamtx_add_endpoint" class="btn btn-sm btn-primary wcmamtx_add_group ">
+                            <button type="button" href="#" data-toggle="modal" data-target="#wcmamtx_example_modal" data-etype="endpoint" id="wcmamtx_add_endpoint" class="btn btn-sm btn-primary wcmamtx_add_group wcmamtx_disabled ">
                                 <span class="dashicons dashicons-insert"></span>
                                 <?php echo esc_html__( 'Add Endpoint' ,'customize-my-account-for-woocommerce'); ?>
                             </button>
@@ -1007,7 +1007,7 @@ class wcmamtx_add_settings_page_class {
                                 <?php echo esc_html__( 'Add Link' ,'customize-my-account-for-woocommerce'); ?>
                             </button>
 
-                            <button type="button" href="#" data-toggle="modal" data-target="#wcmamtx_example_modal2" data-etype="group" id="wcmamtx_add_group" class="btn btn-sm btn-primary wcmamtx_add_group ">
+                            <button type="button" href="#" data-toggle="modal" data-target="#wcmamtx_example_modal2" data-etype="group" id="wcmamtx_add_group" class="btn btn-sm btn-primary wcmamtx_add_group wcmamtx_disabled">
                                 <span class="dashicons dashicons-insert"></span>
                                 <?php echo esc_html__( 'Add Group' ,'customize-my-account-for-woocommerce'); ?>
                             </button>
@@ -1070,37 +1070,7 @@ class wcmamtx_add_settings_page_class {
 
                         <div class="modal-body">
 
-                            <?php 
-
-                            $allowed_to_add = get_option('wcmamtx_endpoint_allowed_to_add',02);
-
-                            
-                            if ($allowed_to_add > 0 ) {
-                            ?>
-
-                            <form action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" method="post" id="nds_add_user_meta_form" >          
-                                 
-                                <p><?php echo esc_html__( 'Free version allows upto 02 Endpoints' ,'customize-my-account-for-woocommerce'); ?></p>
-
-                                <input type="hidden" name="action" value="nds_form_response_endpoint">
-                                <input type="hidden" name="wcmamtx_add_endpoint_nonce" value="<?php echo wp_create_nonce( 'wcmamtx_nonce_hidden' ); ?>" />          
-                                <div class="form-group">
-                                    
-                                    
-                                    <input class="form-control" required id="sdfsd-user_meta_key" type="text" name="<?php echo "nds"; ?>[label]" value="" placeholder="<?php echo esc_html__('Enter Label','customize-my-account-for-woocommerce'); ?>" /><br>
-                                    <input type="hidden" class="form-control" nonce="<?php echo wp_create_nonce( 'wcmamtx_nonce_hidden' ); ?>" name="<?php echo "nds"; ?>[row_type]" id="wcmamtx_hidden_endpoint_type" value="">
-                                </div>
-
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal"><?php echo esc_html__( 'Close' ,'customize-my-account-for-woocommerce'); ?></button>
-                                <button type="submit" name="submit"  class="btn btn-primary wcmamtx_new_end_point"><?php echo esc_html__( 'Add' ,'customize-my-account-for-woocommerce'); ?>
-
-                                </button>
-                            </form>
-                            <?php } else { 
-
-                                wcmamtx_show_limit_info();
-
-                            } ?>
+                            <?php  wcmamtx_load_pro_reminder_div(); ?>
 
                         </div>
                         <div class="modal-footer">
@@ -1116,36 +1086,7 @@ class wcmamtx_add_settings_page_class {
 
                         <div class="modal-body">
 
-                            <?php 
-                            $allowed_to_add = get_option('wcmamtx_groups_allowed_to_add',02);
-
-                            if ($allowed_to_add > 0 ) {
-                            ?>
-
-                            <form action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" method="post" id="nds_add_user_meta_form" > 
-
-                                <p><?php echo esc_html__( 'Free version allows upto 02 Groups' ,'customize-my-account-for-woocommerce'); ?></p>         
-
-
-                                <input type="hidden" name="action" value="nds_form_response_endpoint">
-                                <input type="hidden" name="wcmamtx_add_endpoint_nonce" value="<?php echo wp_create_nonce( 'wcmamtx_nonce_hidden' ); ?>" />          
-                                <div class="form-group">
-                                    
-                                    
-                                    <input class="form-control" required id="sdfsd-user_meta_key" type="text" name="<?php echo "nds"; ?>[label]" value="" placeholder="<?php echo esc_html__('Enter Label','customize-my-account-for-woocommerce'); ?>" /><br>
-                                    <input type="hidden" class="form-control" nonce="<?php echo wp_create_nonce( 'wcmamtx_nonce_hidden' ); ?>" name="<?php echo "nds"; ?>[row_type]" id="wcmamtx_hidden_endpoint_type" value="">
-                                </div>
-
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal"><?php echo esc_html__( 'Close' ,'customize-my-account-for-woocommerce'); ?></button>
-                                <button type="submit" name="submit"  class="btn btn-primary wcmamtx_new_end_point"><?php echo esc_html__( 'Add' ,'customize-my-account-for-woocommerce'); ?>
-
-                                </button>
-                            </form>
-                            <?php } else { 
-
-                                wcmamtx_show_limit_info();
-
-                            } ?>
+                             <?php  wcmamtx_load_pro_reminder_div(); ?>
 
                         </div>
                         <div class="modal-footer">

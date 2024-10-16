@@ -6,7 +6,7 @@ Tested up to: 6.6.2
 WC Tested up to: 9.3.3
 WC Requires at least: 4.0
 Requires PHP: 5.2
-Stable tag: 2.6.0
+Stable tag: 2.6.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -120,8 +120,9 @@ Learn more about how [Appsero collects and uses this data](https://Appsero.com/p
 
 == Changelog ==
 
-Version 2.6.0 - 16 October 2024
+Version 2.6.1 - 16 October 2024
 
+- Version 2.6.1 - Llimitation in feature.
 - Enahncement - Inbuilt support for avatar change.
 
 Version 2.5.15 - 16 October 2024
