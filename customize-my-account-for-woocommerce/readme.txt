@@ -6,7 +6,7 @@ Tested up to: 6.6.2
 WC Tested up to: 9.3.3
 WC Requires at least: 4.0
 Requires PHP: 5.2
-Stable tag: 2.5.15
+Stable tag: 2.6.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,9 +49,9 @@ have provided you option to disable this feature completely. It works on most po
 
 - Plugin has inbuilt my account navigation widget menu feature where you can include existing endpoint links and display them into any menu of your site. Plugin also support navigation widget under appearance/menu field.
 
-<h3>My Account navigation widget menu</h3>
+<h3>Allow WooCommerce users to change avatar</h3>
 
-- Plugin has inbuilt my account navigation widget menu feature where you can include existing endpoint links and display them into any menu of your site. Plugin also support navigation widget under appearance/menu field. 
+- Pugin by default upon activation displays nice gravtar on my account page where optionally you can allow them to change the avatar by uploading png/jpg file. you can even adjust the dimension of avatar for users.  
 
 
 
@@ -119,6 +119,10 @@ Learn more about how [Appsero collects and uses this data](https://Appsero.com/p
 
 
 == Changelog ==
+
+Version 2.6.0 - 16 October 2024
+
+- Enahncement - Inbuilt support for avatar change.
 
 Version 2.5.15 - 16 October 2024
 

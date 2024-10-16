@@ -79,6 +79,7 @@ class wcmamtx_add_settings_page_class {
 	private $wcmamtx_notices_settings_page = 'wcmamtx_advanced_settings';
 	private $wcmamtx_order_settings_page   = 'wcmamtx_order_settings';
 	private $wcmamtx_order_actions_page    = 'wcmamtx_order_actions';
+    private $wcmamtx_avatar_settings_page  = 'wcmamtx_avatar_settings';
     private $wcmamtx_wizard_page           = 'wcmamtx_wizard_settings';
 	private $wcmamtx_plugin_settings_tab   = array();
 	
@@ -786,6 +787,8 @@ class wcmamtx_add_settings_page_class {
 
 		$this->wcmamtx_plugin_settings_tab[$this->wcmamtx_order_settings_page] = esc_html__( 'Order Columns & Actions' ,'customize-my-account-for-woocommerce');
 
+        $this->wcmamtx_plugin_settings_tab[$this->wcmamtx_avatar_settings_page] = esc_html__( 'User Avatar' ,'customize-my-account-for-woocommerce');
+
         $this->wcmamtx_plugin_settings_tab[$this->wcmamtx_plugin_options_key] = esc_html__( 'Settings' ,'customize-my-account-for-woocommerce');
 
         $this->wcmamtx_plugin_settings_tab[$this->wcmamtx_wizard_page] = esc_html__( 'Setup Wizard' ,'customize-my-account-for-woocommerce');
@@ -806,7 +809,13 @@ class wcmamtx_add_settings_page_class {
 
 		add_settings_field( 'order_option', '', array( $this, 'linked_product_swatches_order' ), $this->wcmamtx_order_settings_page, 'wcmamtx_order_section' );
 
+        
 
+        register_setting( $this->wcmamtx_avatar_settings_page, $this->wcmamtx_avatar_settings_page );
+
+        add_settings_section( 'wcmamtx_avatar_section', '', '', $this->wcmamtx_avatar_settings_page );
+
+        add_settings_field( 'avatar_option', '', array( $this, 'wcmamtx_avatar_page' ), $this->wcmamtx_avatar_settings_page, 'wcmamtx_avatar_section' );
 
 
 
@@ -833,6 +842,10 @@ class wcmamtx_add_settings_page_class {
 
         include ('forms/wizard_form.php');
 
+    }
+
+    public function wcmamtx_avatar_page() {
+        include ('forms/avatar_form.php');
     }
 
 

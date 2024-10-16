@@ -11,7 +11,7 @@ do_action( 'woocommerce_before_account_navigation' );
 
 $wcmamtx_tabs   =  (array) get_option('wcmamtx_advanced_settings');
 
-$items = wc_get_account_menu_items();
+$items          =  wc_get_account_menu_items();
 
 $core_fields    = 'dashboard,orders,downloads,edit-address,edit-account,customer-logout';
 
@@ -112,6 +112,21 @@ if (isset($menu_position) && ($menu_position != '')) {
     }
 }
 
+$show_avatar = 'yes';
+
+$avatar_settings = (array) get_option( 'wcmamtx_avatar_settings' );
+
+if (isset($avatar_settings['disable_avatar']) && ($avatar_settings['disable_avatar'] == "yes")) {
+
+    $show_avatar = 'no';
+} else {
+    $show_avatar = 'yes';
+}
+
+
+if ($show_avatar == 'yes') {
+    echo do_shortcode('[sysBasics-user-avatar]');
+}
 
 
 ?>

@@ -63,8 +63,20 @@ var $vas = jQuery.noConflict();
           return false;
           
       });
-        
+
+
+
+    $vas('.wcmamtx_upload_avatar').on('click', function() {
+       $vas('#mywcmamtx_modal').show();
     });
+    
+
+    $vas('.wcmamtx_modal_close').on('click', function() {
+       $vas('#mywcmamtx_modal').hide();
+    });
+
+    
+});
 
  
 })( jQuery );
