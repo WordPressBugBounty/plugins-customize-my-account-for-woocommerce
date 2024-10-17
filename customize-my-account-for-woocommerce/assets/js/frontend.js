@@ -66,8 +66,10 @@ var $vas = jQuery.noConflict();
 
 
 
-    $vas('.wcmamtx_upload_avatar').on('click', function() {
+    $vas('.wcmamtx_upload_avatar').on('click', function(event) {
+       event.preventDefault();
        $vas('#mywcmamtx_modal').show();
+       return false;
     });
     
 
