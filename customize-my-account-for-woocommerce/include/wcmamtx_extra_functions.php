@@ -17,7 +17,7 @@ if (!function_exists('wcmamtx_placeholder_img_src')) {
 
     //print_r($item);
 
-		if ( !in_array( 'customize-my-account-for-woocommerce-dropdown', $menu_item_classes )) {
+		if ( is_array($menu_item_classes) &&  !in_array( 'customize-my-account-for-woocommerce-dropdown', $menu_item_classes ) ) {
 			return $item_output;
 		}
 
