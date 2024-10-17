@@ -370,7 +370,7 @@ span.wcmamtx_modal_close:focus {
 
 .wcmamtx_upload_div img {
     margin-right: 30px;
-    border-radius: 20%;
+    border-radius: 10%;
 }
 
 .wcmamtx_modal-content img {
@@ -404,4 +404,23 @@ span.wcmamtx_modal_close:focus {
     max-width: 40%;
     width: 40%;
     font-size: 13px;
+}
+
+.wcmamtx_upload_div {
+  position: relative;
+  top: 0;
+  left: 0;
+}
+.wcmamtx_upload_div .avatar {
+  position: relative;
+  top: 0;
+  left: 0;
+  border: 1px red solid;
+}
+.wcmamtx_upload_div .camera {
+    position: absolute;
+    bottom: 25px;
+    left: 30px;
+    border: 1px green solid;
+    background-color: white;
 }

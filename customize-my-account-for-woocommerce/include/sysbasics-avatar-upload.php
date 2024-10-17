@@ -386,31 +386,32 @@ class wcmamtx_upload_avatar_tab {
 	        $avatar_size = isset($avatar_settings['avatar_size']) ? $avatar_settings['avatar_size'] : "96";
 
 
+	
+
 			echo get_avatar( $profileuser->ID ,$avatar_size);
 
-			?>
-			<span><?php echo esc_html__( 'Hello ', 'customize-my-account-for-woocommerce' );  echo ucfirst($profileuser->display_name); ?> </span>
-			<br/>
 
-			<?php
+            ?>
 
-			$allow_avatar_change = 'no';
+           
+
+            <?php
+
+			$allow_avatar_change = 'yes';
 
 			$avatar_settings = (array) get_option( 'wcmamtx_avatar_settings' );
 
 			if (isset($avatar_settings['allow_avatar_change']) && ($avatar_settings['allow_avatar_change'] == "yes")) {
 
-				$allow_avatar_change = 'yes';
-			} else {
 				$allow_avatar_change = 'no';
+			} else {
+				$allow_avatar_change = 'yes';
 			}
 
 			?>
 
 			<?php if (isset($allow_avatar_change) && ($allow_avatar_change == 'yes')) { ?>
-				<a class="wcmamtx_upload_avatar" href="#">
-					<?php echo esc_html__( 'Change avatar', 'customize-my-account-for-woocommerce' ); ?>
-				</a>
+				 <a href="#" class="wcmamtx_upload_avatar"><img class="camera" src="<?php echo wcmamtx_PLUGIN_URL; ?>assets/images/camera.svg" height="20" width="20"></a>
 			<?php } ?>
 		</div>	
 
