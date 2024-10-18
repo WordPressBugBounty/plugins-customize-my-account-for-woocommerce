@@ -6,7 +6,7 @@ Tested up to: 6.6.2
 WC Tested up to: 9.3.3
 WC Requires at least: 4.0
 Requires PHP: 5.2
-Stable tag: 2.6.5
+Stable tag: 2.6.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -128,8 +128,10 @@ Learn more about how [Appsero collects and uses this data](https://Appsero.com/p
 
 == Changelog ==
 
-Version 2.6.5 - 18 October 2024
+Version 2.6.7 - 18 October 2024
 
+- Version 2.6.7 - Removed 07 day trial link.
+- Version 2.6.6 - Keep avatar feature disabled by default.
 - Version 2.6.5 - Fix debug error
 - Version 2.6.4 - Minor jquery bug fix.
 - Version 2.6.3 - Enhancement related to avatar display.

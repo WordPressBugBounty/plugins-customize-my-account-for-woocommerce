@@ -397,15 +397,15 @@ class wcmamtx_upload_avatar_tab {
 
             <?php
 
-			$allow_avatar_change = 'yes';
+			$allow_avatar_change = 'no';
 
 			$avatar_settings = (array) get_option( 'wcmamtx_avatar_settings' );
 
 			if (isset($avatar_settings['allow_avatar_change']) && ($avatar_settings['allow_avatar_change'] == "yes")) {
 
-				$allow_avatar_change = 'no';
-			} else {
 				$allow_avatar_change = 'yes';
+			} else {
+				$allow_avatar_change = 'no';
 			}
 
 			?>

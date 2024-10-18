@@ -112,15 +112,15 @@ if (isset($menu_position) && ($menu_position != '')) {
     }
 }
 
-$show_avatar = 'yes';
+$show_avatar = 'no';
 
 $avatar_settings = (array) get_option( 'wcmamtx_avatar_settings' );
 
 if (isset($avatar_settings['disable_avatar']) && ($avatar_settings['disable_avatar'] == "yes")) {
 
-    $show_avatar = 'no';
-} else {
     $show_avatar = 'yes';
+} else {
+    $show_avatar = 'no';
 }
 
 
