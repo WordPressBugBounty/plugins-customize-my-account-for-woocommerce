@@ -19,10 +19,9 @@ class wcmamtx_upload_avatar_tab {
 	public function __construct() {
 
 		// Text domain
-		add_action( 'init', array( $this, 'load_textdomain' ) );
+	
 
-		// Actions
-		add_action( 'admin_init',				 array( $this, 'admin_init'               )        );
+		
 		add_action( 'show_user_profile',		 array( $this, 'edit_user_profile'        )        );
 		add_action( 'edit_user_profile',		 array( $this, 'edit_user_profile'        )        );
 		add_action( 'personal_options_update',	 array( $this, 'edit_user_profile_update' )        );
@@ -38,48 +37,10 @@ class wcmamtx_upload_avatar_tab {
 		add_filter( 'avatar_defaults',			 array( $this, 'avatar_defaults'          )        );
 	}
 
-	/**
-	 * Loads the plugin language files.
-	 *
-	 * @since 1.0.1
-	 */
-	public function load_textdomain() {
-		$domain = 'customize-my-account-for-woocommerce';
-		$locale = apply_filters( 'plugin_locale', get_locale(), $domain );
-		load_textdomain( $domain, WP_LANG_DIR . '/' . $domain . '/' . $domain . '-' . $locale . '.mo' );
-		load_plugin_textdomain( $domain, false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
-	}
 
-	/**
-	 * Start the admin engine.
-	 *
-	 * @since 1.0.0
-	 */
-	public function admin_init() {
 
-		// Register/add the Discussion setting to restrict avatar upload capabilites
-		register_setting( 'discussion', 'wcmamtx_upload_avatar_tab_caps', array( $this, 'sanitize_options' ) );
-		add_settings_field( 'basic-user-avatars-caps', esc_html__( 'Local Avatar Permissions', 'customize-my-account-for-woocommerce' ), array( $this, 'avatar_settings_field' ), 'discussion', 'avatars' );
-	}
 
-	/**
-	 * Discussion settings option
-	 *
-	 * @since 1.0.0
-	 * @param array $args [description]
-	 */
-	public function avatar_settings_field( $args ) {
-		$options = get_option( 'wcmamtx_upload_avatar_tab_caps' );
 
-		$wcmamtx_upload_avatar_tab_caps = ! empty( $options['wcmamtx_upload_avatar_tab_caps'] ) ? 1 : 0;
-
-		?>
-		<label for="wcmamtx_upload_avatar_tab_caps">
-			<input type="checkbox" name="wcmamtx_upload_avatar_tab_caps" id="wcmamtx_upload_avatar_tab_caps" value="1" <?php checked( $wcmamtx_upload_avatar_tab_caps, 1 ); ?>/>
-			<?php esc_html_e( 'Only allow users with file upload capabilities to upload local avatars (Authors and above)', 'customize-my-account-for-woocommerce' ); ?>
-		</label>
-		<?php
-	}
 
 	/**
 	 * Sanitize the Discussion settings option
@@ -264,19 +225,10 @@ class wcmamtx_upload_avatar_tab {
 					// File upload input
 					echo '<input type="file" name="basic-user-avatar" id="basic-local-avatar" />';
 
-					if ( empty( $profileuser->basic_user_avatar ) ) {
-						echo '<p class="description">' . esc_html__( 'No local avatar is set. Use the upload field to add a local avatar.', 'customize-my-account-for-woocommerce' ) . '</p>';
-					} else {
-						echo '<p><input type="checkbox" name="basic-user-avatar-erase" id="basic-user-avatar-erase" value="1" /><label for="basic-user-avatar-erase">' . esc_html__( 'Delete local avatar', 'customize-my-account-for-woocommerce' ) . '</label></p>';
-						echo '<p class="description">' . esc_html__( 'Replace the local avatar by uploading a new avatar, or erase the local avatar (falling back to a gravatar) by checking the delete option.', 'customize-my-account-for-woocommerce' ) . '</p>';
-					}
+					
 
 				} else {
-					if ( empty( $profileuser->basic_user_avatar ) ) {
-						echo '<p class="description">' . esc_html__( 'No local avatar is set. Set up your avatar at Gravatar.com.', 'customize-my-account-for-woocommerce' ) . '</p>';
-					} else {
-						echo '<p class="description">' . esc_html__( 'You do not have media management permissions. To change your local avatar, contact the site administrator.', 'customize-my-account-for-woocommerce' ) . '</p>';
-					}	
+					
 				}
 				?>
 				</td>
@@ -326,7 +278,7 @@ class wcmamtx_upload_avatar_tab {
 				switch ( $avatar['error'] ) {
 				case 'File type does not meet security guidelines. Try another.' :
 					add_action( 'user_profile_update_errors', function( $error = 'avatar_error' ){
-						esc_html__("Please upload a valid image file for the avatar.","basic-user-avatars");
+						
 					} );
 					break;
 				default :
@@ -397,15 +349,15 @@ class wcmamtx_upload_avatar_tab {
 
             <?php
 
-			$allow_avatar_change = 'no';
+			$allow_avatar_change = 'yes';
 
 			$avatar_settings = (array) get_option( 'wcmamtx_avatar_settings' );
 
 			if (isset($avatar_settings['allow_avatar_change']) && ($avatar_settings['allow_avatar_change'] == "yes")) {
 
-				$allow_avatar_change = 'yes';
-			} else {
 				$allow_avatar_change = 'no';
+			} else {
+				$allow_avatar_change = 'yes';
 			}
 
 			?>
@@ -456,21 +408,15 @@ class wcmamtx_upload_avatar_tab {
 				echo '<p><input type="file" name="basic-user-avatar" id="basic-local-avatar" /></p>';
 
 				if ( empty( $profileuser->basic_user_avatar ) ) {
-					echo '<p class="description">' . apply_filters( 'bu_avatars_no_avatar_set_text',esc_html__( 'No local avatar is set. Use the upload field to add a local avatar.', 'customize-my-account-for-woocommerce' ), $profileuser ) . '</p>';
+					
 				} else {
-					echo '<p><input type="checkbox" name="basic-user-avatar-erase" id="basic-user-avatar-erase" value="1" /> <label for="basic-user-avatar-erase">' . apply_filters( 'bu_avatars_delete_avatar_text', esc_html__( 'Restore Gravatar', 'customize-my-account-for-woocommerce' ), $profileuser ) . '</label></p>';					
-					echo '<p class="description">' . apply_filters( 'bu_avatars_replace_avatar_text', esc_html__( 'By Default Gravatar is chosen as avatar, you can replace it with local avatar or you can delete local avatar as well.', 'customize-my-account-for-woocommerce' ), $profileuser ) . '</p>';
+					echo '<p><input type="checkbox" name="basic-user-avatar-erase" id="basic-user-avatar-erase" value="1" /> <label for="basic-user-avatar-erase">' . apply_filters( 'bu_avatars_delete_avatar_text', esc_html__( 'Restore Default', 'customize-my-account-for-woocommerce' ), $profileuser ) . '</label></p>';					
+					
 				}
 
 				echo '<input type="submit" name="manage_avatar_submit" class="wcmamtx_update_avatar_btn" value="' . apply_filters( 'bu_avatars_update_button_text', esc_attr__( 'Update Avatar', 'customize-my-account-for-woocommerce' ) ) . '" />';
 
-			} else {
-				if ( empty( $profileuser->basic_user_avatar ) ) {
-					echo '<p class="description">' . apply_filters( 'bu_avatars_no_avatar_set_text', esc_html__( 'No local avatar is set. Set up your avatar at Gravatar.com.', 'customize-my-account-for-woocommerce' ), $profileuser ) . '</p>';
-				} else {
-					echo '<p class="description">' . apply_filters( 'bu_avatars_permissions_text', esc_html__( 'You do not have media management permissions. To change your local avatar, contact the site administrator.', 'customize-my-account-for-woocommerce' ), $profileuser ) . '</p>';
-				}	
-			}
+			} 
 			?>
 
 			
@@ -508,20 +454,9 @@ class wcmamtx_upload_avatar_tab {
 					// File upload input
 					echo '<br /><input type="file" name="basic-user-avatar" id="basic-local-avatar" /><br />';
 
-					if ( empty( $profileuser->basic_user_avatar ) ) {
-						echo '<span class="description" style="margin-left:0;">' . apply_filters( 'bu_avatars_no_avatar_set_text', esc_html__( 'No local avatar is set. Use the upload field to add a local avatar.', 'customize-my-account-for-woocommerce' ), $profileuser ) . '</span>';
-					} else {
-						echo '<input type="checkbox" name="basic-user-avatar-erase" id="basic-user-avatar-erase" value="1" style="width:auto" /> <label for="basic-user-avatar-erase">' . apply_filters( 'bu_avatars_delete_avatar_text', __( 'Delete local avatar', 'customize-my-account-for-woocommerce' ), $profileuser ) . '</label><br />';
-						echo '<span class="description" style="margin-left:0;">' . apply_filters( '', esc_html__( 'Replace the local avatar by uploading a new avatar, or erase the local avatar (falling back to a gravatar) by checking the delete option.', 'customize-my-account-for-woocommerce' ), $profileuser ) . '</span>';
-					}
 
-				} else {
-					if ( empty( $profileuser->basic_user_avatar ) ) {
-						echo '<span class="description" style="margin-left:0;">' . apply_filters( 'bu_avatars_no_avatar_set_text', esc_html__( 'No local avatar is set. Set up your avatar at Gravatar.com.', 'customize-my-account-for-woocommerce' ), $profileuser ) . '</span>';
-					} else {
-						echo '<span class="description" style="margin-left:0;">' . apply_filters( 'bu_avatars_permissions_text', esc_html__( 'You do not have media management permissions. To change your local avatar, contact the site administrator.', 'customize-my-account-for-woocommerce' ), $profileuser ) . '</span>';
-					}	
-				}
+
+				} 
 
 			echo '</fieldset>';
 		echo '</div>';

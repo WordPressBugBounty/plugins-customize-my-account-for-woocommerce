@@ -1,16 +1,16 @@
 === SysBasics Customize My Account for WooCommerce ===
 Contributors: phppoet
-Tags: Tags: customize myaccount , endpoints
+Tags: woocommerce, my account, customize, endpoints, user avatar
 Requires at least: 4.0
 Tested up to: 6.6.2
 WC Tested up to: 9.3.3
 WC Requires at least: 4.0
 Requires PHP: 5.2
-Stable tag: 2.6.9
+Stable tag: 2.6.10
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-SysBasics Customize My Account for WooCommerce Plugin add dashboard links , my account navigation menu and lets you manage My Account endpoints.
+SysBasics Customize My Account for WooCommerce Plugin add dashboard links , WooCommerce user avatar and lets you manage My Account endpoints.
 
 == Description ==
 
@@ -128,8 +128,9 @@ Learn more about how [Appsero collects and uses this data](https://Appsero.com/p
 
 == Changelog ==
 
-Version 2.6.9 - 20 October 2024
+Version 2.6.10 - 20 October 2024
 
+- Version 2.6.10 - Enhancement - Avatar CSS.
 - Version 2.6.9 - Enhancement - Avatar CSS.
 - Version 2.6.8 - Enhancement - Avatar CSS
 - Version 2.6.7 - Removed 07 day trial link.
