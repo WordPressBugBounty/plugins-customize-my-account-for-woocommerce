@@ -33,7 +33,7 @@ $avatar_settings = (array) get_option( 'wcmamtx_avatar_settings' );
 		<td>
 			
 
-			<input type="range" min="96" max="250" value="<?php if (isset($avatar_settings['avatar_size']) ) { echo $avatar_settings['avatar_size']; } else { echo '96'; } ?>" name="<?php  echo esc_html__($this->wcmamtx_avatar_settings_page); ?>[avatar_size]">
+			<input type="range" min="96" max="250" value="<?php if (isset($avatar_settings['avatar_size']) ) { echo $avatar_settings['avatar_size']; } else { echo '250'; } ?>" name="<?php  echo esc_html__($this->wcmamtx_avatar_settings_page); ?>[avatar_size]">
 			
 	</tr>
 

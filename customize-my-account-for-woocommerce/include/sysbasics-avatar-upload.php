@@ -335,7 +335,7 @@ class wcmamtx_upload_avatar_tab {
 
 	        $avatar_settings = (array) get_option( 'wcmamtx_avatar_settings' );
 
-	        $avatar_size = isset($avatar_settings['avatar_size']) ? $avatar_settings['avatar_size'] : "96";
+	        $avatar_size = isset($avatar_settings['avatar_size']) ? $avatar_settings['avatar_size'] : "250";
 
 
 	
