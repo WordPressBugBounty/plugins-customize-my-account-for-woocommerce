@@ -1,69 +1,47 @@
 <?php
 
 
+
+function wcmamtx_upload_avatar_tab_uninstall() {
+	$wcmamtx_upload_avatar_tab = new wcmamtx_upload_avatar_tab;
+	$users = get_users();
+
+	foreach ( $users as $user )
+		$wcmamtx_upload_avatar_tab->avatar_delete( $user->user_id );
+
+	delete_option( 'wcmamtx_upload_avatar_tab_caps' );
+}
+register_uninstall_hook( __FILE__, 'wcmamtx_upload_avatar_tab_uninstall' );
+
+
+
 class wcmamtx_upload_avatar_tab {
 
-	/**
-	 * User ID
-	 *
-	 * @since 1.0.0
-	 * @var int
-	 */
+
 	private $user_id_being_edited;
 
-	/**
-	 * Initialize all the things
-	 *
-	 * @since 1.0.0
-	 */
+
 	public function __construct() {
 
-		// Text domain
-	
-
-		
-		add_action( 'show_user_profile',		 array( $this, 'edit_user_profile'        )        );
-		add_action( 'edit_user_profile',		 array( $this, 'edit_user_profile'        )        );
-		add_action( 'personal_options_update',	 array( $this, 'edit_user_profile_update' )        );
-		add_action( 'edit_user_profile_update',	 array( $this, 'edit_user_profile_update' )        );
-		add_action( 'bbp_user_edit_after_about', array( $this, 'bbpress_user_profile'     )        );
-
-		// Shortcode
-		add_shortcode( 'sysBasics-user-avatar',	 array( $this, 'shortcode'                )        );
-
-		// Filters
-		add_filter( 'get_avatar_data',			 array( $this, 'get_avatar_data'               ), 10, 2 );
+		add_filter( 'get_avatar_data',			 array( $this, 'wcmamtx_get_avatar_data'               ), 10, 2 );
 		add_filter( 'get_avatar',				 array( $this, 'get_avatar'               ), 10, 6 );
 		add_filter( 'avatar_defaults',			 array( $this, 'avatar_defaults'          )        );
+		add_action( 'personal_options_update',	 array( $this, 'edit_user_profile_update' )        );
+		add_action( 'edit_user_profile_update',	 array( $this, 'edit_user_profile_update' )        );
+		
+		add_shortcode( 'sysBasics-user-avatar',	 array( $this, 'wcmamtx_shortcode'));
+
+		
 	}
 
 
-
-
-
-
-	/**
-	 * Sanitize the Discussion settings option
-	 *
-	 * @since 1.0.0
-	 * @param array $input
-	 * @return array
-	 */
 	public function sanitize_options( $input ) {
 		$new_input['wcmamtx_upload_avatar_tab_caps'] = empty( $input ) ? 0 : 1;
 		return $new_input;
 	}
 
-	/**
-	 * Filter the normal avatar data and show our avatar if set.
-	 *
-	 * @since 1.0.6
-	 * @param array $args        Arguments passed to get_avatar_data(), after processing.
-	 * @param mixed $id_or_email The avatar to retrieve. Accepts a user_id, Gravatar MD5 hash,
-	 *                           user email, WP_User object, WP_Post object, or WP_Comment object.
-	 * @return array             The filtered avatar data.
-	 */
-	public function get_avatar_data( $args, $id_or_email ) {
+
+	public function wcmamtx_get_avatar_data( $args, $id_or_email ) {
 		if ( ! empty( $args['force_default'] ) ) {
 			return $args;
 		}
@@ -72,7 +50,6 @@ class wcmamtx_upload_avatar_tab {
 
 		$return_args = $args;
 
-		// Determine if we received an ID or string. Then, set the $user_id variable.
 		if ( is_numeric( $id_or_email ) && 0 < $id_or_email ) {
 			$user_id = (int) $id_or_email;
 		} elseif ( is_object( $id_or_email ) && isset( $id_or_email->user_id ) && 0 < $id_or_email->user_id ) {
@@ -94,7 +71,7 @@ class wcmamtx_upload_avatar_tab {
 		$user_avatar_url = null;
 
 		// Get the user's local avatar from usermeta.
-		$local_avatars = get_user_meta( $user_id, 'basic_user_avatar', true );
+		$local_avatars = get_user_meta( $user_id, 'sysbasics_user_avatar', true );
 
 		if ( empty( $local_avatars ) || empty( $local_avatars['full'] ) ) {
 			// Try to pull avatar from WP User Avatar.
@@ -102,18 +79,14 @@ class wcmamtx_upload_avatar_tab {
 			if ( ! empty( $wp_user_avatar_id ) ) {
 				$wp_user_avatar_url = wp_get_attachment_url( intval( $wp_user_avatar_id ) );
 				$local_avatars = array( 'full' => $wp_user_avatar_url );
-				update_user_meta( $user_id, 'basic_user_avatar', $local_avatars );
+				update_user_meta( $user_id, 'sysbasics_user_avatar', $local_avatars );
 			} else {
 				// We don't have a local avatar, just return.
 				return $args;
 			}	
 		}
 
-		/**
-		 * Filter the default avatar size during upload.
-		 * @param $size int The default avatar size. Default 96.
-		 * @param $args array The default avatar args available at the time of this filter.
-		 */
+
 		$size = apply_filters( 'wcmamtx_upload_avatar_tab_default_size', (int) $args['size'], $args );
 
 		// Generate a new size
@@ -137,7 +110,7 @@ class wcmamtx_upload_avatar_tab {
 			}
 
 			// Save updated avatar sizes
-			update_user_meta( $user_id, 'basic_user_avatar', $local_avatars );
+			update_user_meta( $user_id, 'sysbasics_user_avatar', $local_avatars );
 
 		} elseif ( substr( $local_avatars[ $size ], 0, 4 ) != 'http' ) {
 			$local_avatars[ $size ] = home_url( $local_avatars[ $size ] );
@@ -154,100 +127,22 @@ class wcmamtx_upload_avatar_tab {
 			$return_args['found_avatar'] = true;
 		}
 
-		/**
-		 * Allow filtering the avatar data that we are overriding.
-		 *
-		 * @since 1.0.6
-		 *
-		 * @param array $return_args The list of user avatar data arguments.
-		 */
-		return apply_filters( 'basic_user_avatar_data', $return_args );
+
+		return apply_filters( 'sysbasics_user_avatar_data', $return_args );
 	}
 
-	/**
-	 * Add a backwards compatible hook to further filter our customized avatar HTML.
-	 *
-	 * @since 1.0.0
-	 * 
-	 * @param string $avatar      HTML for the user's avatar.
-	 * @param mixed  $id_or_email The avatar to retrieve. Accepts a user_id, Gravatar MD5 hash,
-	 *                            user email, WP_User object, WP_Post object, or WP_Comment object.
-	 * @param int    $size        Square avatar width and height in pixels to retrieve.
-	 * @param string $default     URL for the default image or a default type. Accepts '404', 'retro', 'monsterid',
-	 *                            'wavatar', 'indenticon', 'mystery', 'mm', 'mysteryman', 'blank', or 'gravatar_default'.
-	 * @param string $alt         Alternative text to use in the avatar image tag.
-	 * @param array  $args        Arguments passed to get_avatar_data(), after processing.
-	 * @return string             The filtered avatar HTML.
-	 */
+
 	public function get_avatar( $avatar, $id_or_email, $size = 96, $default = '', $alt = false, $args = array() ) {
-		/**
-		 * Filter to further customize the avatar HTML.
-		 * 
-		 * @since 1.0.0
-		 * @param string $avatar HTML for the user's avatar.
-		 * @param mixed  $id_or_email The avatar to retrieve. Accepts a user_id, Gravatar MD5 hash,
-	 	 *                            user email, WP_User object, WP_Post object, or WP_Comment object.
-	 	 * @return string The filtered avatar HTML.
-		 * @deprecated since 1.0.6
-		 */
-		return apply_filters( 'basic_user_avatar', $avatar, $id_or_email );
+
+		return apply_filters( 'sysbasics_user_avatar', $avatar, $id_or_email );
 	}
 
-	/**
-	 * Form to display on the user profile edit screen
-	 *
-	 * @since 1.0.0
-	 * @param object $profileuser
-	 * @return
-	 */
-	public function edit_user_profile( $profileuser ) {
 
-		// bbPress will try to auto-add this to user profiles - don't let it.
-		// Instead we hook our own proper function that displays cleaner.
-		if ( function_exists( 'is_bbpress') && is_bbpress() )
-			return;
-		?>
 
-		<h2><?php _e( 'Avatar', 'customize-my-account-for-woocommerce' ); ?></h2>
-		<table class="form-table">
-			<tr>
-				<th><label for="basic-user-avatar"><?php esc_html_e( 'Upload Avatar', 'customize-my-account-for-woocommerce' ); ?></label></th>
-				<td style="width: 50px;" valign="top">
-					<?php echo get_avatar( $profileuser->ID ); ?>
-				</td>
-				<td>
-				<?php
-				$options = get_option( 'wcmamtx_upload_avatar_tab_caps' );
-				if ( empty( $options['wcmamtx_upload_avatar_tab_caps'] ) || current_user_can( 'upload_files' ) ) {
-					// Nonce security ftw
-					wp_nonce_field( 'basic_user_avatar_nonce', '_basic_user_avatar_nonce', false );
-					
-					// File upload input
-					echo '<input type="file" name="basic-user-avatar" id="basic-local-avatar" />';
-
-					
-
-				} else {
-					
-				}
-				?>
-				</td>
-			</tr>
-		</table>
-		<script type="text/javascript">var form = document.getElementById('your-profile');form.encoding = 'multipart/form-data';form.setAttribute('enctype', 'multipart/form-data');</script>
-		<?php
-	}
-
-	/**
-	 * Update the user's avatar setting
-	 *
-	 * @since 1.0.0
-	 * @param int $user_id
-	 */
 	public function edit_user_profile_update( $user_id ) {
 
 		// Check for nonce otherwise bail
-		if ( ! isset( $_POST['_basic_user_avatar_nonce'] ) || ! wp_verify_nonce( $_POST['_basic_user_avatar_nonce'], 'basic_user_avatar_nonce' ) )
+		if ( ! isset( $_POST['_sysbasics_user_avatar_nonce'] ) || ! wp_verify_nonce( $_POST['_sysbasics_user_avatar_nonce'], 'sysbasics_user_avatar_nonce' ) )
 			return;
 
 		if ( ! empty( $_FILES['basic-user-avatar']['name'] ) ) {
@@ -276,26 +171,26 @@ class wcmamtx_upload_avatar_tab {
 			// Handle failures
 			if ( empty( $avatar['file'] ) ) {  
 				switch ( $avatar['error'] ) {
-				case 'File type does not meet security guidelines. Try another.' :
+					case 'File type does not meet security guidelines. Try another.' :
 					add_action( 'user_profile_update_errors', function( $error = 'avatar_error' ){
 						
 					} );
 					break;
-				default :
+					default :
 					add_action( 'user_profile_update_errors', function( $error = 'avatar_error' ){
 						// No error let's bail.
 						if ( empty( $avatar['error'] ) ) {
 							return;
 						}
 
-						"<strong>".esc_html__("There was an error uploading the avatar:","basic-user-avatars")."</strong> ". esc_attr( $avatar['error'] );
+						"<strong>".esc_html__("There was an error uploading the avatar:","customize-my-account-for-woocommerce")."</strong> ". esc_attr( $avatar['error'] );
 					} );
 				}
 				return;
 			}
 
 			// Save user information (overwriting previous)
-			update_user_meta( $user_id, 'basic_user_avatar', array( 'full' => $avatar['url'] ) );
+			update_user_meta( $user_id, 'sysbasics_user_avatar', array( 'full' => $avatar['url'] ) );
 
 		} elseif ( ! empty( $_POST['basic-user-avatar-erase'] ) ) {
 			// Nuke the current avatar
@@ -303,16 +198,13 @@ class wcmamtx_upload_avatar_tab {
 		}
 	}
 
-	/**
-	 * Enable avatar management on the frontend via this shortocde.
-	 *
-	 * @since 1.0.0
-	 */
-	function shortcode() {
 
-		// Don't bother if the user isn't logged in
-		if ( ! is_user_logged_in() )
+	function wcmamtx_shortcode() {
+
+
+		if ( ! is_user_logged_in() ) {
 			return;
+		}
 
 		$user_id     = get_current_user_id();
 		$profileuser = get_userdata( $user_id );
@@ -321,33 +213,19 @@ class wcmamtx_upload_avatar_tab {
 			$this->edit_user_profile_update( $user_id );
 		}
 
-
-
 		?>
 
-
-
 		<div class="wcmamtx_upload_div">
+			<?php
 
+			$avatar_settings = (array) get_option( 'wcmamtx_avatar_settings' );
 
+			$avatar_size = isset($avatar_settings['avatar_size']) ? $avatar_settings['avatar_size'] : "250";
 
-	     <?php
-
-	        $avatar_settings = (array) get_option( 'wcmamtx_avatar_settings' );
-
-	        $avatar_size = isset($avatar_settings['avatar_size']) ? $avatar_settings['avatar_size'] : "250";
-
-
-	
 
 			echo get_avatar( $profileuser->ID ,$avatar_size);
 
 
-            ?>
-
-           
-
-            <?php
 
 			$allow_avatar_change = 'yes';
 
@@ -359,11 +237,9 @@ class wcmamtx_upload_avatar_tab {
 			} else {
 				$allow_avatar_change = 'yes';
 			}
-
-			?>
-
-			<?php if (isset($allow_avatar_change) && ($allow_avatar_change == 'yes')) { ?>
-				 <a href="#" class="wcmamtx_upload_avatar"><img class="camera" src="<?php echo wcmamtx_PLUGIN_URL; ?>assets/images/camera.svg" height="20" width="20"></a>
+            
+            if (isset($allow_avatar_change) && ($allow_avatar_change == 'yes')) { ?>
+				<a href="#" class="wcmamtx_upload_avatar"><img class="camera" src="<?php echo wcmamtx_PLUGIN_URL; ?>assets/images/camera.svg" height="20" width="20"></a>
 			<?php } ?>
 		</div>	
 
@@ -381,111 +257,61 @@ class wcmamtx_upload_avatar_tab {
 		?>
 		<!-- Trigger/Open The wcmamtx_modal -->
 
+		<!-- The wcmamtx_modal -->
+		<div id="mywcmamtx_modal" class="wcmamtx_modal">
 
+			<!-- wcmamtx_modal content -->
+			<div class="wcmamtx_modal-content">
+				<span class="wcmamtx_modal_close">&times;</span>
+				<form id="basic-user-avatar-form" method="post" enctype="multipart/form-data">
+					<?php
+					echo get_avatar( $profileuser->ID,$avatar_size);
 
-	
+					?>
 
-			<!-- The wcmamtx_modal -->
-			<div id="mywcmamtx_modal" class="wcmamtx_modal">
+					<?php
 
-				<!-- wcmamtx_modal content -->
-				<div class="wcmamtx_modal-content">
-					<span class="wcmamtx_modal_close">&times;</span>
-                    		<form id="basic-user-avatar-form" method="post" enctype="multipart/form-data">
-			<?php
-			echo get_avatar( $profileuser->ID,$avatar_size);
-
-			?>
-
-											<?php
-
-			$options = get_option( 'wcmamtx_upload_avatar_tab_caps' );
-			if ( empty( $options['wcmamtx_upload_avatar_tab_caps'] ) || current_user_can( 'upload_files' ) ) {
+					$options = get_option( 'wcmamtx_upload_avatar_tab_caps' );
+					if ( empty( $options['wcmamtx_upload_avatar_tab_caps'] ) || current_user_can( 'upload_files' ) ) {
 				// Nonce security ftw
-				wp_nonce_field( 'basic_user_avatar_nonce', '_basic_user_avatar_nonce', false );
-				
+						wp_nonce_field( 'sysbasics_user_avatar_nonce', '_sysbasics_user_avatar_nonce', false );
+
 				// File upload input
-				echo '<p><input type="file" name="basic-user-avatar" id="basic-local-avatar" /></p>';
+						echo '<p><input type="file" name="basic-user-avatar" id="basic-local-avatar" /></p>';
 
-				if ( empty( $profileuser->basic_user_avatar ) ) {
-					
-				} else {
-					echo '<p><input type="checkbox" name="basic-user-avatar-erase" id="basic-user-avatar-erase" value="1" /> <label for="basic-user-avatar-erase">' . apply_filters( 'bu_avatars_delete_avatar_text', esc_html__( 'Restore Default', 'customize-my-account-for-woocommerce' ), $profileuser ) . '</label></p>';					
-					
-				}
+						if ( empty( $profileuser->sysbasics_user_avatar ) ) {
 
-				echo '<input type="submit" name="manage_avatar_submit" class="wcmamtx_update_avatar_btn" value="' . apply_filters( 'bu_avatars_update_button_text', esc_attr__( 'Update Avatar', 'customize-my-account-for-woocommerce' ) ) . '" />';
+						} else {
+							echo '<p><input type="checkbox" name="basic-user-avatar-erase" id="basic-user-avatar-erase" value="1" /> <label for="basic-user-avatar-erase">' . apply_filters( 'bu_avatars_delete_avatar_text', esc_html__( 'Restore Default', 'customize-my-account-for-woocommerce' ), $profileuser ) . '</label></p>';					
 
-			} 
-			?>
+						}
 
-			
+						echo '<input type="submit" name="manage_avatar_submit" class="wcmamtx_update_avatar_btn" value="' . apply_filters( 'bu_avatars_update_button_text', esc_attr__( 'Update Avatar', 'customize-my-account-for-woocommerce' ) ) . '" />';
 
-		</form>
-				</div>
+					} 
+					?>
 
-			</div>      
+
+
+				</form>
+			</div>
+
+		</div>      
 		<?php
 	}
 
-	/**
-	 * Form to display on the bbPress user profile edit screen
-	 *
-	 * @since 1.0.0
-	 */
-	public function bbpress_user_profile() {
-
-		if ( !bbp_is_user_home_edit() )
-			return;
-
-		$user_id     = get_current_user_id();
-		$profileuser = get_userdata( $user_id );
-
-		echo '<div>';
-			echo '<label for="basic-local-avatar">' . esc_html__( 'Avatar', 'customize-my-account-for-woocommerce' ) . '</label>';
- 			echo '<fieldset class="bbp-form avatar">';
-
-	 			echo get_avatar( $profileuser->ID );
-				$options = get_option( 'wcmamtx_upload_avatar_tab_caps' );
-				if ( empty( $options['wcmamtx_upload_avatar_tab_caps'] ) || current_user_can( 'upload_files' ) ) {
-					// Nonce security ftw
-					wp_nonce_field( 'basic_user_avatar_nonce', '_basic_user_avatar_nonce', false );
-					
-					// File upload input
-					echo '<br /><input type="file" name="basic-user-avatar" id="basic-local-avatar" /><br />';
 
 
 
-				} 
 
-			echo '</fieldset>';
-		echo '</div>';
-		?>
-		<script type="text/javascript">var form = document.getElementById('bbp-your-profile');form.encoding = 'multipart/form-data';form.setAttribute('enctype', 'multipart/form-data');</script>
-		<?php
-	}
-
-	/**
-	 * Remove the custom get_avatar hook for the default avatar list output on 
-	 * the Discussion Settings page.
-	 *
-	 * @since 1.0.0
-	 * @param array $avatar_defaults
-	 * @return array
-	 */
 	public function avatar_defaults( $avatar_defaults ) {
 		remove_action( 'get_avatar', array( $this, 'get_avatar' ) );
 		return $avatar_defaults;
 	}
 
-	/**
-	 * Delete avatars based on user_id
-	 *
-	 * @since 1.0.0
-	 * @param int $user_id
-	 */
+
 	public function avatar_delete( $user_id ) {
-		$old_avatars = get_user_meta( $user_id, 'basic_user_avatar', true );
+		$old_avatars = get_user_meta( $user_id, 'sysbasics_user_avatar', true );
 		$upload_path = wp_upload_dir();
 
 		if ( is_array( $old_avatars ) ) {
@@ -495,18 +321,10 @@ class wcmamtx_upload_avatar_tab {
 			}
 		}
 
-		delete_user_meta( $user_id, 'basic_user_avatar' );
+		delete_user_meta( $user_id, 'sysbasics_user_avatar' );
 	}
 
-	/**
-	 * File names are magic
-	 *
-	 * @since 1.0.0
-	 * @param string $dir
-	 * @param string $name
-	 * @param string $ext
-	 * @return string
-	 */
+
 	public function unique_filename_callback( $dir, $name, $ext ) {
 		$user = get_user_by( 'id', (int) $this->user_id_being_edited );
 		$name = $base_name = sanitize_file_name( strtolower( $user->display_name ) . '_avatar' );
@@ -522,19 +340,3 @@ class wcmamtx_upload_avatar_tab {
 	}
 }
 $wcmamtx_upload_avatar_tab = new wcmamtx_upload_avatar_tab;
-
-/**
- * During uninstallation, remove the custom field from the users and delete the local avatars
- *
- * @since 1.0.0
- */
-function wcmamtx_upload_avatar_tab_uninstall() {
-	$wcmamtx_upload_avatar_tab = new wcmamtx_upload_avatar_tab;
-	$users = get_users();
-
-	foreach ( $users as $user )
-		$wcmamtx_upload_avatar_tab->avatar_delete( $user->user_id );
-
-	delete_option( 'wcmamtx_upload_avatar_tab_caps' );
-}
-register_uninstall_hook( __FILE__, 'wcmamtx_upload_avatar_tab_uninstall' );
