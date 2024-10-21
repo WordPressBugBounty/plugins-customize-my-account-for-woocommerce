@@ -2256,6 +2256,53 @@ $current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : sanitize_text_field($this-
                     </td>
                 </tr>
 
+                <?php if ($key == "dashboard") { ?>
+
+                    <tr>
+                        <td>
+                            <label class=" wcmamtx_accordion_label"><?php echo esc_html__('Hide hello, Username text','customize-my-account-for-woocommerce'); ?></label>
+                        </td>
+                        <td>
+                            <input type="checkbox" data-toggle="toggle" data-on="<?php  echo esc_html__('Yes','customize-my-account-for-woocommerce'); ?>" data-off="<?php  echo esc_html__('No','customize-my-account-for-woocommerce'); ?>" data-size="sm" class="wcmamtx_accordion_input wcmamtx_accordion_checkbox checkmark" ype="checkbox" name="wcmamtx_advanced_settings[<?php echo $key; ?>][hide_dashboard_hello]" value="01" <?php if (isset($value['hide_dashboard_hello']) && ($value['hide_dashboard_hello'] == "01")) { echo 'checked'; } ?>>
+
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label class=" wcmamtx_accordion_label"><?php echo esc_html__('Hide introductory text','customize-my-account-for-woocommerce'); ?></label>
+                        </td>
+                        <td>
+                            <input type="checkbox" data-toggle="toggle" data-on="<?php  echo esc_html__('Yes','customize-my-account-for-woocommerce'); ?>" data-off="<?php  echo esc_html__('No','customize-my-account-for-woocommerce'); ?>" data-size="sm" class="wcmamtx_accordion_input wcmamtx_accordion_checkbox checkmark" ype="checkbox" name="wcmamtx_advanced_settings[<?php echo $key; ?>][hide_intro_hello]" value="01" <?php if (isset($value['hide_intro_hello']) && ($value['hide_intro_hello'] == "01")) { echo 'checked'; } ?>>
+                            
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label class="wcmamtx_accordion_label wcmamtx_custom_content_label"><?php  echo esc_html__('Custom Content before dashboard links','customize-my-account-for-woocommerce'); ?></label>
+                        </td>
+                        <td>    
+
+                            <?php 
+                            $editor_content = isset($value['content_dash']) ? $value['content_dash'] : "";
+
+                            
+
+                            $editor_id      = 'wcmamtx_content_'.$key.'';
+                            $editor_name    = ''.esc_html__($this->wcmamtx_notices_settings_page).'['.$key.'][content_dash]';
+
+                            wp_editor( $editor_content, $editor_id, $settings = array(
+                                'textarea_name' => $editor_name,
+                                'editor_height' => 180, // In pixels, takes precedence and has no default value
+                                'textarea_rows' => 16
+                            ) ); 
+                            ?>
+                        </td>
+                    </tr>
+
+                <?php } ?>
+
 
                 <tr>
                     <td>

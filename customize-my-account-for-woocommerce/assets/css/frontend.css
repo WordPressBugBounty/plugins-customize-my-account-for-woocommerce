@@ -424,3 +424,14 @@ span.wcmamtx_modal_close:focus {
     background-color: white;
 }
 
+.wcmamtx_dashboard_link {
+    background-color: #e9e9ef;
+    border: 1px solid #ac9d9d;
+    border-radius: 5%;
+}
+
+div.wcmtx-my-account-links a:hover {
+    border: 1px solid #eadddd;
+    background-color: white;
+    border-radius: 5%;
+}

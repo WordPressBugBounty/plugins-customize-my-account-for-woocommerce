@@ -6,7 +6,7 @@ Tested up to: 6.6.2
 WC Tested up to: 9.3.3
 WC Requires at least: 4.0
 Requires PHP: 5.2
-Stable tag: 2.7.5
+Stable tag: 2.7.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,6 +71,10 @@ have provided you option to disable this feature completely. It works on most po
 
 - This plugin is even charm with free plugin elementor where you can create cloned template of existing endpoints and replace existing endpoints with cloned endpoints usind elementor's drag and drop feature. 
 
+<h3>Change From your account dashboard text</h3>
+
+- WooCommerce displays "Change From your account dashboard text" at the begining of dashboard content after "Hello , username" text which could be very irritating for many. Using this plugin you can simply hide  "Hello , username" text plus you can hide entire intro text "From your account dashboard you can view your ..." and you can also add new custom html or plan content just as a replacement of that text. Just visit the settings of dashboard endpoint and you should be able to find three toggle to enable or disable any. 
+
 
 <h3>ACF forms in WooCommerce My Account</h3>
 
@@ -129,8 +133,9 @@ Learn more about how [Appsero collects and uses this data](https://Appsero.com/p
 == Changelog ==
 
 
-Version 2.7.5 - 21 October 2024 
+Version 2.7.6 - 21 October 2024 
 
+- 2.7.6 - Ability to hide default dashboard text.
 - 2.7.5 - Fix - Icon get removed while adding endpoint.
 - 2.7.4 - Hide dashboard links by default on woodmart theme.
 - 2.7.3 - CSS improvement for avatar.

@@ -12,7 +12,7 @@
  * happen. When this occurs the version of the template file will be bumped and
  * the readme will list any important changes.
  *
- * @see     https://docs.woocommerce.com/document/template-structure/
+ * @see     https://woocommerce.com/document/template-structure/
  * @package WooCommerce\Templates
  * @version 4.4.0
  */
@@ -26,7 +26,17 @@ $allowed_html = array(
 		'href' => array(),
 	),
 );
+
+$advanced_settings = (array) get_option( 'wcmamtx_advanced_settings' );
+
+$hide_dashboard_hello = isset($advanced_settings['dashboard']['hide_dashboard_hello']) ? $advanced_settings['dashboard']['hide_dashboard_hello'] : 00;
+
+
+if ($hide_dashboard_hello != 01) {
+
 ?>
+
+
 
 <p>
 	<?php
@@ -39,6 +49,15 @@ $allowed_html = array(
 	?>
 </p>
 
+<?php } 
+
+$hide_intro_hello = isset($advanced_settings['dashboard']['hide_intro_hello']) ? $advanced_settings['dashboard']['hide_intro_hello'] : 00;
+
+
+
+if ($hide_intro_hello != 01) {
+
+?>
 <p>
 	<?php
 	/* translators: 1: Orders URL 2: Address URL 3: Account URL. */
@@ -55,6 +74,14 @@ $allowed_html = array(
 	);
 	?>
 </p>
+
+<?php } 
+
+$content_dash = isset($advanced_settings['dashboard']['content_dash']) ? $advanced_settings['dashboard']['content_dash'] : "";
+
+echo $content_dash;
+
+?>
 
 <?php
 	/**

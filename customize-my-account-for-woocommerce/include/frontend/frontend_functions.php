@@ -694,6 +694,8 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
          
         if ( strstr($template, 'navigation.php') ) {
             $template = wcmamtx_plugin_path() . '/templates/myaccount/navigation.php';
+        } else if ( strstr($template, 'dashboard.php') ) {
+            $template = wcmamtx_plugin_path() . '/templates/myaccount/dashboard.php';
         }
 
 
