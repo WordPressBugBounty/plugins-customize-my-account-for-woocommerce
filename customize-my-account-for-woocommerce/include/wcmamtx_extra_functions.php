@@ -245,6 +245,10 @@ if (!function_exists('wcmamtx_get_account_menu_item_classes')) {
 			   $extra_li_class = 'wcmamtx_custom_icon';
 			break;
 
+			default:
+			   $extra_li_class = 'wcmamtx_custom_icon';
+			break;
+
 		}
         
         

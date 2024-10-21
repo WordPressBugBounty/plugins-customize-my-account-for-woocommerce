@@ -107,7 +107,7 @@ li.woocommerce-MyAccount-navigation-link .dashicons{
 }
 
 
-.theme-astra.woocommerce-account li.woocommerce-MyAccount-navigation-link {
+.theme-astra.woocommerce-account ul.wcmamtx_vertical li.woocommerce-MyAccount-navigation-link {
     margin-left: -40px;
     border: 0px !important;
     font-size: 16px;
@@ -467,4 +467,31 @@ span.wcmamtx_intro_text2 a {
     padding: 5px;
     border-radius: 5px;
     color: #ffffff;
+}
+
+ul.wcmamtx_vertical_menu {
+    display: flex;
+}
+
+ul.wcmamtx_vertical_menu img {
+    height: 20px;
+    width: 20px;
+}
+
+ul.wcmamtx_vertical_menu li.woocommerce-MyAccount-navigation-link {
+    margin-left: 0px; 
+
+}
+
+ul.wcmamtx_vertical_menu img {
+    float: right;
+    width: 18px;
+    height: 18px;
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
+ul.wcmamtx_vertical_menu a.woocommerce-MyAccount-navigation-link_a i.fa {
+    margin-top: 5px;
+    margin-left: 5px;
 }

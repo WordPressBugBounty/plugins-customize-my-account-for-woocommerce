@@ -54,6 +54,17 @@ $core_fields       = 'dashboard,edit-address,edit-account,customer-logout,downlo
 		</td>
 	</tr>
 
+
+	<tr>
+		<td><label><?php echo esc_html__('Enable Horizontal Menu','customize-my-account-for-woocommerce'); ?></label> <br />
+		</td>
+		<td>
+			<input type="checkbox" data-toggle="toggle"  data-on="<?php echo esc_html__('Yes','customize-my-account-for-woocommerce'); ?>" data-off="<?php echo esc_html__('No','customize-my-account-for-woocommerce'); ?>" class="wcmamtx_show_nav_header_widget" name="<?php  echo esc_html__($this->wcmamtx_plugin_options_key); ?>[horizontal_menu]" value="yes" <?php if (isset($plugin_options['horizontal_menu']) && ($plugin_options['horizontal_menu'] == "yes")) { echo 'checked'; } ?>>
+			
+			
+		</td>
+	</tr>
+
 	<tr>
 		<td><label><?php echo esc_html__('Show My Account widget on navigation menu','customize-my-account-for-woocommerce'); ?></label> <br />
 		</td>

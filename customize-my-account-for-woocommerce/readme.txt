@@ -6,7 +6,7 @@ Tested up to: 6.6.2
 WC Tested up to: 9.3.3
 WC Requires at least: 4.0
 Requires PHP: 5.2
-Stable tag: 2.7.7
+Stable tag: 2.7.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -133,8 +133,9 @@ Learn more about how [Appsero collects and uses this data](https://Appsero.com/p
 == Changelog ==
 
 
-Version 2.7.7 - 22 October 2024 
+Version 2.7.8 - 22 October 2024 
 
+- 2.7.8 - Horizontal menu support.
 - 2.7.7 - Support for username/logout after avatar.
 - 2.7.6 - Ability to hide default dashboard text.
 - 2.7.5 - Fix - Icon get removed while adding endpoint.
