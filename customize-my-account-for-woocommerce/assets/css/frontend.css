@@ -324,6 +324,10 @@ a.woocommerce-MyAccount-navigation-link_a i.fa {
     margin-left: 5px;
 }
 
+.theme-woodmart .wcmtx-my-account-links.wcmtx-grid {
+    display: none;
+}
+
 /* The wcmamtx_modal (background) */
 .wcmamtx_modal {
   display: none; /* Hidden by default */
