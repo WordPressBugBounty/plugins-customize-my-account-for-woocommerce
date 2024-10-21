@@ -395,7 +395,7 @@ class wcmamtx_add_settings_page_class {
                 $new_row_values[$key]['icon']                = isset($value['icon']) ? $value['icon'] : "";
                 $new_row_values[$key]['content']             = isset($value['content']) ? $value['content'] : "";
                 $new_row_values[$key]['show']                = isset($value['show']) ? $value['show'] : "yes";
-
+                $new_row_values[$key]['upload_icon']         = isset($value['upload_icon']) ? $value['upload_icon'] : "";
 
             }
 
@@ -417,6 +417,7 @@ class wcmamtx_add_settings_page_class {
                 $new_row_values[$key2]['icon_source']         = isset($value2['icon_source']) ? $value2['icon_source'] : "default";
                 $new_row_values[$key2]['icon']                = isset($value2['icon']) ? $value2['icon'] : "";
                 $new_row_values[$key2]['show']                = isset($value2['show']) ? $value2['show'] : "yes";
+                $new_row_values[$key2]['upload_icon']         = isset($value2['upload_icon']) ? $value2['upload_icon'] : "";
                 
 
                 if (isset($value2['wcmamtx_type']) && ($value2['wcmamtx_type'] == "link")) {
