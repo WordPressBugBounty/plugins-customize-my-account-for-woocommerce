@@ -435,3 +435,36 @@ div.wcmtx-my-account-links a:hover {
     background-color: white;
     border-radius: 5%;
 }
+
+span.wcmamtx_intro_text1 {
+    height: 20%;
+    max-height: 20%;
+    width: 20%;
+    margin-left: 35%;
+    font-weight: bold;
+    font-style: italic;
+}
+
+span.wcmamtx_intro_text2 {
+    height: 20%;
+    max-height: 20%;
+    width: 20%;
+    margin-left: 35%;
+    font-weight: bold;
+    font-style: italic;
+    float: left;
+}
+
+.wcmamtx_intro_text {
+    width: 100%;
+    height: 60px;
+    min-height: 60px;
+}
+
+span.wcmamtx_intro_text2 a {
+    font-size: 12px;
+    background-color: #d0c6c6;
+    padding: 5px;
+    border-radius: 5px;
+    color: #ffffff;
+}

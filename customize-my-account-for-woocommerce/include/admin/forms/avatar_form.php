@@ -37,5 +37,13 @@ $avatar_settings = (array) get_option( 'wcmamtx_avatar_settings' );
 			
 	</tr>
 
+	<tr>
+		<td><label><?php echo esc_html__('Hide username, login text after avatar','customize-my-account-for-woocommerce'); ?></label> <br />
+		</td>
+		<td>
+			<input type="checkbox" data-toggle="toggle"  data-on="<?php echo esc_html__('Yes','customize-my-account-for-woocommerce'); ?>" data-off="<?php echo esc_html__('No','customize-my-account-for-woocommerce'); ?>" class="wcmamtx_show_avatar_checkbox" name="<?php  echo esc_html__($this->wcmamtx_avatar_settings_page); ?>[intro_text_hello]" value="yes" <?php if (isset($avatar_settings['intro_text_hello']) && ($avatar_settings['intro_text_hello'] == "yes")) { echo 'checked'; } ?>>
+			
+	</tr>
+
 </table>
 

@@ -137,6 +137,50 @@ if (isset($menu_position) && ($menu_position != '')) {
         echo do_shortcode('[sysBasics-user-avatar]');
     }
 
+    $intro_text_hello = "yes";
+
+    
+
+    if (isset($avatar_settings['intro_text_hello']) && ($avatar_settings['intro_text_hello'] == "yes")) {
+
+        $intro_text_hello = 'no';
+    } else {
+        $intro_text_hello = 'yes';
+    }
+    
+
+    if ($intro_text_hello == "yes") { 
+
+        global $current_user;
+        wp_get_current_user();
+
+        $allowed_html = array(
+            'a' => array(
+                'href' => array(),
+            ),
+        );
+
+
+        ?>
+
+        <div class="wcmamtx_intro_text">
+            <span class="wcmamtx_intro_text1"><?php echo ucfirst($current_user->user_login); ?></span>
+            
+            <span class="wcmamtx_intro_text2">
+                <?php
+                printf(
+                    /* translators: 1: user display name 2: logout url */
+                    wp_kses( __( '<a href="%1$s">Log out</a>', 'customize-my-account-for-woocommerce' ), $allowed_html ),
+                    esc_url( wc_logout_url() ),
+
+                );
+                ?>
+            </span>
+        </div>
+
+        <?php
+    }
+
     ?>
    
 	<ul>
