@@ -469,9 +469,7 @@ span.wcmamtx_intro_text2 a {
     color: #ffffff;
 }
 
-ul.wcmamtx_vertical_menu {
-    display: flex;
-}
+
 
 ul.wcmamtx_vertical_menu img {
     height: 20px;
@@ -494,4 +492,98 @@ ul.wcmamtx_vertical_menu img {
 ul.wcmamtx_vertical_menu a.woocommerce-MyAccount-navigation-link_a i.fa {
     margin-top: 5px;
     margin-left: 5px;
+}
+
+ul.wcmamtx_vertical_menu li{
+    margin-left: 10px;
+    padding: 5px;
+    background-color: #f1f0f0;
+}
+
+ul.wcmamtx_vertical_menu li.woocommerce-MyAccount-navigation-link {
+    margin-left: 10px;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+li.woocommerce-MyAccount-navigation-link.active {
+    background-color: #d2d2d2;
+}
+
+ul.wcmamtx_vertical_menu li {
+    list-style: none !important;
+}
+
+ul.wcmamtx_vertical_menu li {
+    min-width: 140px;
+}
+
+ul.wcmamtx_vertical_menu li.wcmamtx_group2  {
+    max-width: 160px;
+}
+
+span.wcmamtx_intro_text2 {
+    min-width: 100px;
+}
+
+ul.wcmamtx_vertical_menu li.is-active {
+    color: white;
+    background-color: #d2d2ff;
+}
+
+.theme-the-fashion-woocommerce ul.wcmamtx_vertical_menu {
+    margin-bottom: 20px;
+}
+
+
+
+li.wcmamtx_group2.open ul.sub-menu {
+    display: block !important;
+}
+
+ul.wcmamtx_vertical_menu li {
+    font-size: 14px;
+}
+
+ul.sub-menu.nav-dropdown.nav-dropdown-default {
+    margin-top: 20px;
+    margin-right: -10px;
+}
+ul.wcmamtx_vertical_menu {
+    max-width: 100%;
+}
+
+ul.wcmamtx_vertical_menu li {
+    font-size: 12px;
+    display: inline-block;
+}
+
+
+
+.theme-astra ul.wcmamtx_vertical_menu li {
+    font-size: 10px;
+    display: inline-block;
+}
+
+
+
+ul.wcmamtx_vertical_menu ul.sub-menu.nav-dropdown.nav-dropdown-default {
+    /* display: none; */
+    position: absolute;
+
+    /* background-color: red; */
+    width: 100%;
+    z-index: 1;
+}
+
+ul.wcmamtx_vertical_menu li.woocommerce-MyAccount-navigation-link {
+    /* margin-left: 10px; */
+    padding: 10px;
+    margin-bottom: 5px;
+    background-color: #eae7e7;
+}
+
+ul.wcmamtx_vertical_menu li.is-active {
+    color: white;
+    background-color: #d8d8ed;
 }
