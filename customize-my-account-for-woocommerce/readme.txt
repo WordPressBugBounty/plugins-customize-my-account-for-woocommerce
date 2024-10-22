@@ -6,7 +6,7 @@ Tested up to: 6.6.2
 WC Tested up to: 9.3.3
 WC Requires at least: 4.0
 Requires PHP: 5.2
-Stable tag: 2.7.10
+Stable tag: 2.7.11
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -137,105 +137,9 @@ Learn more about how [Appsero collects and uses this data](https://Appsero.com/p
 == Changelog ==
 
 
-Version 2.7.10 - 22 October 2024 
+Version 2.7.11 - 22 October 2024 
 
-- 2.7.10 - CSS improvement related to previous release. 
-- 2.7.9 - Theme Compatibility fix with previous release.
-- 2.7.8 - Horizontal menu support.
-- 2.7.7 - Support for username/logout after avatar.
-- 2.7.6 - Ability to hide default dashboard text.
-- 2.7.5 - Fix - Icon get removed while adding endpoint.
-- 2.7.4 - Hide dashboard links by default on woodmart theme.
-- 2.7.3 - CSS improvement for avatar.
-- 2.7.2 - Css improvement for avatar.
-- 2.7.1 - Css improvement for avatar.
-- Fix - Major bugfix release.
-Version 2.6.10 - 20 October 2024
-
-- Version 2.6.10 - Enhancement - Avatar CSS.
-- Version 2.6.9 - Enhancement - Avatar CSS.
-- Version 2.6.8 - Enhancement - Avatar CSS
-- Version 2.6.7 - Removed 07 day trial link.
-- Version 2.6.6 - Keep avatar feature disabled by default.
-- Version 2.6.5 - Fix debug error
-- Version 2.6.4 - Minor jquery bug fix.
-- Version 2.6.3 - Enhancement related to avatar display.
-- Version 2.6.1 - Llimitation in feature.
-- Enahncement - Inbuilt support for avatar change.
-
-Version 2.5.15 - 16 October 2024
-
-- 2.5.15 - Fix- Show widget only for logged in issue. 
-- 2.5.14 - Fix- Bug with previous release. 
-- 2.5.13 - Fix- My account navigation widget now showing on certain themes.
-- 2.5.12 - Plugin breaking password reset functinality.
-- 2.5.11 - Added hook wcmamtx_my_account_nav_widget_text to override My Account text.
-- 2.5.10 - Fixed issue with previous update.
-- 2.5.8 - Css issue fix with neve theme.
-- 2.5.7 - Updated description on wp.org plugin. 
-- 2.5.5 - dashboard links not working after restoring endpoints.
-- Enhancement - Possiblity to try 02 endpoint and 02 groups.
-
-Version 2.4.2 - 13 Sept 2024
-
-
-- Combined order actions and columns.
-- Added quick setup guide.
-
-Version 2.3.3 - 19 June 2024
-
-- Version 2.3.3 - Fix - Endpoint Redirect issue on frontend.
-- Fixed all know bugs.
-- Improved WPML compatibility.
-
-Version 2.2.17 - 25 January 2024
-
-- Version 2.2.17 - (25 January 2024) - Fix - Styling issues with oceanwp theme.
-- Version 2.2.16 - Enhancement - Improved css compatibility with third party themes.
-- Version 2.2.15 - Enhancement - Improved css compatibility with third party themes.
-- Version 2.2.14 - Enhancement - Added reminder notice to review plugin.
-- Version 2.2.13 - Fix - Visibility not working with dashboard links.
-- Version 2.2.12 - Enhancement - Make endpoints visible to specific users or show only to specific users.
-- Version 2.2.11 - Fix - styling issue with woodmart theme.
-- Version 2.2.10 - Fix - Wrong link shown when endpoint key is changed.
-- Version 2.2.9 - Fix - Mobile specific css issue.
-- Version 2.2.8 - Fix - Navigation styling improvement
-- Version 2.2.7 - Fix - styling issues with flatsome theme.
-- Version 2.2.6 - Fix - Styling issues with flatsome theme. 
-- Version 2.2.5 - Fix - removed view order widget. can be reinstroduced post bug fix and through testing.
-- Version 2.2.4 - Fix - Debug error.
-- Version 2.2.3 = Enhancement - Updated readme plugin tags.
-- Version 2.2.2 - Enahncement - Updated readme plugin tags.
-- Version 2.2.1 - Enahncement - User placeholder incase image is not uploaded.
-
-Version 2.2.0 Release date 27 December 2023 
-- Enhancement - Add your own svg/png/jpeg icon for dashboard links and endpoints.
-- Enhancemnt  - Improvement in css for popular themes for navigation.
-- Ehnancement - Improved styling of backend inputs. 
-
-Version 2.1.25 - 27 December 2023
-
-
-* 2.1.25 - 27 December 2023 - Fix - Noicon not working.
-                            - Enhancement - Redirecting users to settings page after activation.
-* 2.1.24 - 26 December 2023 - Fix - Another set of debug errors.
-* 2.1.23 - 26 December 2023 - Fix - Fatal error.
-* 2.1.22 - 26 December 2023 - Updated Appsero SDK as wp.org requirements.
-* 2.1.21 - 26 December 2023 - Added more options to my account menu widget.
-* 2.1.20 - 26 December 2023 - Updated wpml-config.xml
-* 2.1.19 - 26 December 2023 - Enhancement - Option to hide endpoints/links into dashboard links and my account widget menu.
-* 2.1.18 - 26 December 2023 - Fix - Appsero issue.
-* 2.1.17 - 26 December 2023 - Fix - Icon opacity issue.
-* 2.1.16 - 26 December 2023 - Fix - Default theme icons not showing.
-* 2.1.15 - 25 December 2023 - Fix - My Account link visible by default.
-* 2.1.14-  25 December 2023 - Fix - Appsera class conflict.
-* 2.1.13 - 25 December 2023 - Enhancement - Css improvemnt with popular third party themes.
-* 2.1.12 - 25 December 2023 - Fix - Compatibility issues with flatsome theme.
-* 2.1.11 - 15 December 2023 - Fix - Hide submenu for my account widget if user not logged in.
-* 2.1.10 - 15 December 2023 - Enhancement - Styling improvments to popular themes.
-* 2.1.9 - 25 December 2023 - Enhancement - Added compatibility of header my account widget for astra theme.
-* 2.1.8 - 23 December 2023 - Fix - Improved navigation style for astra theme.
-* 2.1.7 - 23 December 2023 - Fix - Order endpoint override not working properly.
+- 2.7.11 - Updated plugin description.
 * Fix - - Bug with previous release.
 
 

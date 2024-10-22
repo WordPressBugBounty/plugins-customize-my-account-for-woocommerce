@@ -29,41 +29,10 @@ $core_fields       = 'dashboard,edit-address,edit-account,customer-logout,downlo
 
 <table class="widefat wcmamtx_options_table">
 
-	<tr>
-		<td><label><?php echo esc_html__('Default My Account tab','customize-my-account-for-woocommerce'); ?></label> <br />
-		</td>
-		<td>
-			<select class="wcmamtx_default_tab_select" name="<?php  echo esc_html__($this->wcmamtx_plugin_options_key); ?>[default_tab]">
-				<?php 
-				foreach($tabs as $tkey=>$tvalue) { 
-                    $stkey = isset($tkey) ? $tkey : $tkey;
-					?>
-					<option value="<?php echo $stkey; ?>" <?php if (isset($plugin_options['default_tab']) && ($plugin_options['default_tab'] == $stkey)) {echo 'selected';} ?>>
-						<?php 
-						if (isset($tvalue['endpoint_name'])) { 
-							echo $tvalue['endpoint_name']; 
-						} else {
-							echo $tvalue;
-						}
-
-						?>
-					</option>  
-				<?php }
-				?>
-			</select>
-		</td>
-	</tr>
 
 
-	<tr>
-		<td><label><?php echo esc_html__('Enable Horizontal Menu','customize-my-account-for-woocommerce'); ?></label> <br />
-		</td>
-		<td>
-			<input type="checkbox" data-toggle="toggle"  data-on="<?php echo esc_html__('Yes','customize-my-account-for-woocommerce'); ?>" data-off="<?php echo esc_html__('No','customize-my-account-for-woocommerce'); ?>" class="wcmamtx_show_nav_header_widget" name="<?php  echo esc_html__($this->wcmamtx_plugin_options_key); ?>[horizontal_menu]" value="yes" <?php if (isset($plugin_options['horizontal_menu']) && ($plugin_options['horizontal_menu'] == "yes")) { echo 'checked'; } ?>>
-			
-			
-		</td>
-	</tr>
+
+
 
 	<tr>
 		<td><label><?php echo esc_html__('Show My Account widget on navigation menu','customize-my-account-for-woocommerce'); ?></label> <br />
@@ -153,14 +122,7 @@ $core_fields       = 'dashboard,edit-address,edit-account,customer-logout,downlo
 		</td>
 	</tr>
 
-	<tr>
-		<td><label><?php echo esc_html__('Disable Dashboard Links','customize-my-account-for-woocommerce'); ?></label> <br />
-		</td>
-		<td>
-			<input type="checkbox" data-toggle="toggle"  data-on="<?php echo esc_html__('Yes','customize-my-account-for-woocommerce'); ?>" data-off="<?php echo esc_html__('No','customize-my-account-for-woocommerce'); ?>" class="" name="<?php  echo esc_html__($this->wcmamtx_plugin_options_key); ?>[disable_dashboard_links]" value="yes" <?php if (isset($plugin_options['disable_dashboard_links']) && ($plugin_options['disable_dashboard_links'] == "yes")) { echo 'checked'; } ?>>
-			<p><?php echo esc_html__('Turn it on if your theme is already displaying dashboard links and you do not want plugin to duplicate it','customize-my-account-for-woocommerce'); ?></p>
-		</td>
-	</tr>
+
 
 
 

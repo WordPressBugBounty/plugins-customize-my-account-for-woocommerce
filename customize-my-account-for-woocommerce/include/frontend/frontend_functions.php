@@ -21,9 +21,9 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
       
       add_filter( 'wpml_sl_blacklist_requests',  array($this,'wpml_sl_blacklist_requests'), 10, 2 );
       add_action( 'init', array($this,'wcmamtx_add_custom_endpoint_page') );
-      add_action( 'woocommerce_account_dashboard', array($this,'wcmamtx_add_myaccount_links'), 10 );
       
-      add_action( 'parse_request', array($this,'wcmamtx_my_account_default_redirect'), 10, 1);
+      
+
       add_filter( 'woocommerce_get_endpoint_url', array( $this, 'wcmamtx_link_url_redirect' ), 10, 4 );
 
       
@@ -31,7 +31,7 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
 
       add_action('the_content', array( $this, 'wcmamtx_modify_post_content' ));
 
-      add_filter( 'woodmart_override_heading_my_account_menu', array( $this, 'wp_nav_menu_items_function' ), 10, 1 );
+      add_filter('woodmart_override_heading_my_account_menu', array( $this, 'wp_nav_menu_items_function' ), 10, 1 );
 
        add_action( 'wp_nav_menu_items', array( $this, 'wcmamtx_add_menu_items' ), 10, 2 );
     }
@@ -584,52 +584,7 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
         return apply_filters( 'woocommerce_get_endpoint_url', $url, $endpoint, $value, $permalink );
     }
 
-    public function wcmamtx_my_account_default_redirect() {
-        global $wp;
 
-        $plugin_options = get_option('wcmamtx_plugin_options');
-
-        $advanced_settings = (array) get_option( 'wcmamtx_advanced_settings' );
-        
-        if (isset($plugin_options) && isset($plugin_options['default_tab']) && ($plugin_options['default_tab'] != "")) {
-            $tab_value_key =  $plugin_options['default_tab'];
-        }
-
-        
-
-
-        if (isset($tab_value_key)) {
-            if (array_key_exists($tab_value_key, $advanced_settings)) {
-
-                $tab_value  = $advanced_settings[''.$tab_value_key.''];
-
-                $tvalue = isset($tab_value['endpoint_key']) ? $tab_value['endpoint_key'] : $tab_value_key;
-
-
-
-                $default_tab    = isset($tvalue) ? $tvalue : "dashboard";
-
-                $accountslug    = 'my-account';
-
-
-                $myaccount_id = get_option( 'woocommerce_myaccount_page_id' );
-                $myaccount_page = get_post($myaccount_id); 
-                $accountslug = $myaccount_page->post_name;
-
-
-                if (is_user_logged_in() && $wp->request === $accountslug && ($default_tab != "dashboard")) {     
-                    $redirect_url = wc_get_account_endpoint_url($default_tab);
-
-                    wp_redirect($redirect_url);
-
-                    exit;
-                }
-
-            }
-
-        }
-
-    }
 
 
     public function wcmamtx_add_custom_endpoint_page() {
