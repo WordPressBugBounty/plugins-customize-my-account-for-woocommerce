@@ -6,7 +6,7 @@ Tested up to: 6.6.2
 WC Tested up to: 9.3.3
 WC Requires at least: 4.0
 Requires PHP: 5.2
-Stable tag: 2.7.11
+Stable tag: 2.7.12
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -30,7 +30,7 @@ Customize your default my account page. Reorder them , hide existing core endpoi
 
 
 
-<h3>Main Features of Customize My Account for WooCommerce plugin:</h3>
+<h3>Main Features of Customize My Account for WooCommerce plugin</h3>
 - Add new endpoints in the My Account page, visible to your users , and choose what the content will be using third party shortcodes. You can use third party
 subscription , royalty , coupons , wallet related shortcodes.
 - Create Specific endpoints , links , groups into my account page that are visible only specific roles or users;
@@ -47,10 +47,10 @@ third party endpoint. In certain cases if you want this plugin to take over thir
 the checkbox then create new endpoint with same slug and it will work fine. For example you have Rewards Endpoint that are sourced from any other plugin which has revwards slud. in that case if you want full control as other endpoints just hide existing endpoint and add new endpoint with rewards slug and it will just work fine. 
 
 
-<h3>Make your Dashboard Pretty with Dashboard links</h3>
+<h3>Make your Dashboard Pretty with Dashboard links (Pro Feature)</h3>
 
-- Plugin upon activation ads dashboard links or you may call it banner to your dashboard page. Most importantly you can manage the order of those dashboard links and you can also exclude certain endpoints from being included in dashboard links. Certain themes do have this feature inbuilt , in those case we
-have provided you option to disable this feature completely. It works on most possible scenarios with wider theme compatibility. 
+-Plugin upon activation ads dashboard links or you may call it banner to your dashboard page. Most importantly you can manage the order of those dashboard links and you can also exclude certain endpoints from being included in dashboard links. Certain themes do have this feature inbuilt , in those case we
+have provided you option to disable this feature completely. It works on most possible scenarios with wider theme compatibility. This feature is part of pro version only.
 
 
 <h3>My Account navigation widget menu</h3>
@@ -63,9 +63,9 @@ have provided you option to disable this feature completely. It works on most po
 
 
 
-<h3>Redirect default dashboard to endpoint</h3>
+<h3>Redirect default dashboard to endpoint (Pro Feature)</h3>
 
-- Using simple option you can replace default page from dashboard to orders , downloads or something else. you can even create custom endpoint and send users there upon login. This feature is useful specially if you don't like the default dashboard. Using elementor you can create clone template of dashboard or other endpoint and replace that with new cloned template. 
+- Using simple option you can replace default page from dashboard to orders , downloads or something else. you can even create custom endpoint and send users there upon login. This feature is useful specially if you don't like the default dashboard. Using elementor you can create clone template of dashboard or other endpoint and replace that with new cloned template.  This feature is part of pro version only.
 
 <h3>Override endpoints using elementor</h3>
 
@@ -75,9 +75,9 @@ have provided you option to disable this feature completely. It works on most po
 
 - WooCommerce displays "Change From your account dashboard text" at the begining of dashboard content after "Hello , username" text which could be very irritating for many. Using this plugin you can simply hide  "Hello , username" text plus you can hide entire intro text "From your account dashboard you can view your ..." and you can also add new custom html or plan content just as a replacement of that text. Just visit the settings of dashboard endpoint and you should be able to find three toggle to enable or disable any. 
 
-<h3>Make WooCommerce My account menu horizontal</h3>
+<h3>Make WooCommerce My account menu horizontal (Pro Feature) </h3>
 
-- WooCommerce by default have vertical menu which is good for most case scenario but in certain cases where menu items are limited users can opt for horizontal menu. Just visit the settings tab and set yes for Enable horizontal menu. This feature is compatible with most of popular themes out there.  
+- WooCommerce by default have vertical menu which is good for most case scenario but in certain cases where menu items are limited users can opt for horizontal menu. Just visit the settings tab and set yes for Enable horizontal menu. This feature is compatible with most of popular themes out there. This feature is part of pro version only.
 
 
 <h3>ACF forms in WooCommerce My Account</h3>
@@ -137,8 +137,9 @@ Learn more about how [Appsero collects and uses this data](https://Appsero.com/p
 == Changelog ==
 
 
-Version 2.7.11 - 22 October 2024 
+Version 2.7.12 - 24 October 2024 
 
+- 2.7.12 - Removed activation wizard.will be added again with accuracy.
 - 2.7.11 - Updated plugin description.
 * Fix - - Bug with previous release.
 
