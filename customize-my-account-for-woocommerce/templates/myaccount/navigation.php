@@ -182,7 +182,7 @@ if ($menu_shape == 'vertical') {
         ?>
 
         <div class="wcmamtx_intro_text">
-            <span class="wcmamtx_intro_text1"><?php echo ucfirst($current_user->user_login); ?></span>
+            <span class="wcmamtx_intro_text1"><?php echo ucfirst($current_user->display_name); ?></span>
             
             <span class="wcmamtx_intro_text2">
                 <?php

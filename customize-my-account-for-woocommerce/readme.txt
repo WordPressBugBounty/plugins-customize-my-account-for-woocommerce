@@ -6,7 +6,7 @@ Tested up to: 6.6.2
 WC Tested up to: 9.3.3
 WC Requires at least: 4.0
 Requires PHP: 5.2
-Stable tag: 2.7.12
+Stable tag: 2.7.13
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -66,6 +66,10 @@ have provided you option to disable this feature completely. It works on most po
 <h3>Redirect default dashboard to endpoint (Pro Feature)</h3>
 
 - Using simple option you can replace default page from dashboard to orders , downloads or something else. you can even create custom endpoint and send users there upon login. This feature is useful specially if you don't like the default dashboard. Using elementor you can create clone template of dashboard or other endpoint and replace that with new cloned template.  This feature is part of pro version only.
+
+<h3>Make WooCommerce My Account Endpoints Ajax Powered (Pro Feature)</h3>
+
+- Using simple option you can make Entire my account endpoints content loaded via Ajax, This could improve end user feel about your site. It does work with custom groups and custom endpoints. Simply visit the settings tab and set yes for Enable Ajax navigation option and you will see smoother loading experience on frontend.Ajax navigation even works with dashboard links and internal my account page links like Edit shipping address and Edit billing address Check our pro version demo for this feature. This feature is part of pro version only.
 
 <h3>Override endpoints using elementor</h3>
 
@@ -137,8 +141,9 @@ Learn more about how [Appsero collects and uses this data](https://Appsero.com/p
 == Changelog ==
 
 
-Version 2.7.12 - 24 October 2024 
+Version 2.7.13 - 26 October 2024 
 
+- 2.7.13 - User user display name instead of username, fix - dashboard intro text settings lost after adding endpoint.
 - 2.7.12 - Removed activation wizard.will be added again with accuracy.
 - 2.7.11 - Updated plugin description.
 * Fix - - Bug with previous release.

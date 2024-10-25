@@ -437,6 +437,14 @@ class wcmamtx_add_settings_page_class {
                 	$new_row_values[$key2]['group_open_default']   = isset($value2['group_open_default']) ? $value2['group_open_default'] : "no";
 
                 }
+
+
+                 if ($key2 == "dashboard") {
+                    $new_row_values[$key2]['hide_dashboard_hello']            = isset($value2['hide_dashboard_hello']) ? $value2['hide_dashboard_hello'] : 00;
+                    $new_row_values[$key2]['hide_intro_hello']                = isset($value2['hide_intro_hello']) ? $value2['hide_intro_hello'] : 00;
+                    $new_row_values[$key2]['content_dash']                    = isset($value2['content_dash']) ? $value2['content_dash'] : "";
+                }
+                
                 
             
 
@@ -1312,14 +1320,18 @@ $current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : sanitize_text_field($this-
 			$key = strtolower($key);
 			$key = str_replace(' ', '_', $key);
 		}
-        
-        ?>
-        <li keyvalue="<?php echo $key; ?>" litype="<?php if (isset($value['wcmamtx_type'])) { echo  $value['wcmamtx_type']; } ?>" class="<?php if (isset($value['show']) && ($value['show'] == "no"))  { echo "wcmamtx_disabled"; } ?> wcmamtx_endpoint <?php echo $key; ?> <?php if (isset($value['wcmamtx_type']) && ($value['wcmamtx_type'] == "group")) { echo 'group'; } ?> <?php if (preg_match('/\b'.$key.'\b/', $core_fields )) { echo "core"; } ?>">
 
-            <?php $this->get_main_li_content($key,$name,$core_fields,$value,$old_value,$third_party); ?>
+   
+        if ($value['wcmamtx_type'] != "group") { ?>
+
+            <li keyvalue="<?php echo $key; ?>" litype="<?php if (isset($value['wcmamtx_type'])) { echo  $value['wcmamtx_type']; } ?>" class="<?php if (isset($value['show']) && ($value['show'] == "no"))  { echo "wcmamtx_disabled"; } ?> wcmamtx_endpoint <?php echo $key; ?> <?php if (isset($value['wcmamtx_type']) && ($value['wcmamtx_type'] == "group")) { echo 'group'; } ?> <?php if (preg_match('/\b'.$key.'\b/', $core_fields )) { echo "core"; } ?>">
+
+                <?php $this->get_main_li_content($key,$name,$core_fields,$value,$old_value,$third_party); ?>
 
 
-        </li> <?php
+            </li> 
+
+        <?php }
         
     }
 
