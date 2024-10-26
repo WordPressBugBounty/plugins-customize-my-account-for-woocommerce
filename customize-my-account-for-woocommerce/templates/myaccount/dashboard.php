@@ -66,20 +66,42 @@ if ($hide_intro_hello != 01) {
 		/* translators: 1: Orders URL 2: Addresses URL 3: Account URL. */
 		$dashboard_desc = __( 'From your account dashboard you can view your <a href="%1$s">recent orders</a>, manage your <a href="%2$s">shipping and billing addresses</a>, and <a href="%3$s">edit your password and account details</a>.', 'customize-my-account-for-woocommerce' );
 	}
+
+
+
 	printf(
 		wp_kses( $dashboard_desc, $allowed_html ),
 		esc_url( wc_get_endpoint_url( 'orders' ) ),
 		esc_url( wc_get_endpoint_url( 'edit-address' ) ),
 		esc_url( wc_get_endpoint_url( 'edit-account' ) )
 	);
+
+
 	?>
 </p>
 
 <?php } 
 
-$content_dash = isset($advanced_settings['dashboard']['content_dash']) ? $advanced_settings['dashboard']['content_dash'] : "";
 
-echo $content_dash;
+
+if (isset($advanced_settings['dashboard'])) {
+
+
+	$content_dash = isset($advanced_settings['dashboard']['content_dash']) ? $advanced_settings['dashboard']['content_dash'] : "";
+
+	echo $content_dash;
+
+} else {
+
+	if ( current_user_can( 'administrator' ) ) {
+
+		echo '<div class="woocommerce-info">'.__( 'You can modify all default text on this page, visit <a href="'.admin_url( '/admin.php?page=wcmamtx_advanced_settings' ).'">Endpoints tab</a>, open dashboard endpoint settings to configure.This text is visible to admins only, once you save your endpoints it will be gone.', 'customize-my-account-for-woocommerce' ).'</div>';
+
+
+
+	}
+
+}
 
 ?>
 

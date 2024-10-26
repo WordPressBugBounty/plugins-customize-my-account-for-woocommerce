@@ -6,7 +6,7 @@ Tested up to: 6.6.2
 WC Tested up to: 9.3.3
 WC Requires at least: 4.0
 Requires PHP: 5.2
-Stable tag: 2.7.13
+Stable tag: 2.7.16
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -141,8 +141,11 @@ Learn more about how [Appsero collects and uses this data](https://Appsero.com/p
 == Changelog ==
 
 
-Version 2.7.13 - 26 October 2024 
+Version 2.7.16 - 26 October 2024 
 
+- 2.7.16 - Fix - removed hide in dashboard links option.
+- 2.7.15 - Fix - Added reminer notice about dashboard default text.
+- 2.7.14 - Fix - Critical bug with previous release.
 - 2.7.13 - User user display name instead of username, fix - dashboard intro text settings lost after adding endpoint.
 - 2.7.12 - Removed activation wizard.will be added again with accuracy.
 - 2.7.11 - Updated plugin description.
