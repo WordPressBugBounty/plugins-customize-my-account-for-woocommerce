@@ -1799,7 +1799,7 @@ $current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : sanitize_text_field($this-
                             <select class="checkout_field_rule_parentfield" name="wcmamtx_order_settings[<?php echo $key; ?>][custom_key]">
                                 
                                 
-                                <optgroup label="<?php echo esc_html__( 'Billing Fields' ,'pcfme'); ?>">
+                                <optgroup label="<?php echo esc_html__( 'Billing Fields' ,'customize-my-account-for-woocommerce'); ?>">
                                     <?php
 
                                     $billing_settings = (array) get_option('pcfme_billing_settings');
@@ -1847,7 +1847,7 @@ $current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : sanitize_text_field($this-
                                     ?>
                                 </optgroup>
 
-                                <optgroup label="<?php echo esc_html__( 'Shipping Fields' ,'pcfme'); ?>">
+                                <optgroup label="<?php echo esc_html__( 'Shipping Fields' ,'customize-my-account-for-woocommerce'); ?>">
                                     <?php
                                     $shipping_settings = (array) get_option('pcfme_shipping_settings');
 
@@ -1906,7 +1906,7 @@ $current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : sanitize_text_field($this-
 
                                 if (count($conditional_fields_dropdown) != 0) { ?>
 
-                                    <optgroup label="<?php echo esc_html__( 'Additional Fields' ,'pcfme'); ?>">
+                                    <optgroup label="<?php echo esc_html__( 'Additional Fields' ,'customize-my-account-for-woocommerce'); ?>">
 
                                         <?php 
 
@@ -2462,6 +2462,25 @@ $current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : sanitize_text_field($this-
                         <input type="text" class="wcmamtx_accordion_input wcmamtx_class_input" name="<?php  echo esc_html__($this->wcmamtx_notices_settings_page); ?>[<?php echo $key; ?>][class]" value="<?php if (isset($value['class'])) { echo $value['class']; } ?>">
                     </td>
                 </tr>
+
+
+
+
+                <?php if ($key == "edit-account") { ?>
+
+                    <tr>
+                        <td>
+                            <label class="wcmamtx_accordion_label"><?php  echo esc_html__('Edit Account fields','customize-my-account-for-woocommerce'); ?></label>
+                        </td>
+                        <td>    
+                            
+                            <a class="btn btn-success" style="color:white;" target="_blank" href="admin.php?page=pcfme_plugin_options&tab=pcfme_additional_settings">
+                                <?php  echo esc_html__('Manage Edit Account Fields','customize-my-account-for-woocommerce'); ?>
+                            </a>
+                        </td>
+                    </tr>
+
+                <?php } ?>
 
                 <?php if ($wcmamtx_type != 'group') { ?>
 

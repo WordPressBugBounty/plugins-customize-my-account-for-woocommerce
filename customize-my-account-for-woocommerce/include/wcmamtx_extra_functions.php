@@ -191,7 +191,7 @@ if (!function_exists('wcmamtx_get_menu_shortcode_content')) {
 
 
 
-		$Menu_link  = '<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children wcmamtx_menu wcmamtx_menu_logged_in"><a class="menu-link" href="'.$frontend_url.'">'.$nav_header_widget_text.'<i class="fa fa-chevron-down wcmamtx_nav_chevron"></i></a>';
+		$Menu_link  = '<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children"><a class="menu-link" href="'.$frontend_url.'">'.$nav_header_widget_text.'<i class="fa fa-chevron-down wcmamtx_nav_chevron"></i></a>';
 
 		$Menu_link .= '<ul class="sub-menu nav-dropdown nav-dropdown-default" style="">';
 

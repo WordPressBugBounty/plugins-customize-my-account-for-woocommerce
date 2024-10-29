@@ -1,12 +1,4 @@
 <?php
-/**
- * Plugin Name: Elementor Addon
- * Description: Simple hello world widgets for Elementor.
- * Version:     1.0.0
- * Author:      Elementor Developer
- * Author URI:  https://developers.elementor.com/
- * Text Domain: elementor-addon
- */
 
 include 'helper.php';
 

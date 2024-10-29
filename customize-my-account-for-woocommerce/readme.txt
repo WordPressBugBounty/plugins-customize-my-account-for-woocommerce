@@ -6,7 +6,7 @@ Tested up to: 6.6.2
 WC Tested up to: 9.3.3
 WC Requires at least: 4.0
 Requires PHP: 5.2
-Stable tag: 2.7.16
+Stable tag: 2.7.18
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -46,6 +46,10 @@ Plugin also seamlessly integrates itself with third party endpoints. It recognis
 third party endpoint. In certain cases if you want this plugin to take over third party endpoint, just hide the existing third party endpoint by unchecking
 the checkbox then create new endpoint with same slug and it will work fine. For example you have Rewards Endpoint that are sourced from any other plugin which has revwards slud. in that case if you want full control as other endpoints just hide existing endpoint and add new endpoint with rewards slug and it will just work fine. 
 
+
+<h3>Manage Custom fields on Edit My Account Page</h3>
+
+-You can hide the existing fields on WooCommerce Edit account page as well as add new fields there, Plugin supports 15 new field type including file upload for that. YOu can collect data from user for this fields plus you can conditionally show/hide these fields based on various conditions. 
 
 <h3>Make your Dashboard Pretty with Dashboard links (Pro Feature)</h3>
 
@@ -141,8 +145,10 @@ Learn more about how [Appsero collects and uses this data](https://Appsero.com/p
 == Changelog ==
 
 
-Version 2.7.16 - 26 October 2024 
+Version 2.7.18 - 29 October 2024 
 
+- 2.7.18 - Enhancement - Added notice to suggest that admins can manage Edit account fields.
+- 2.7.17 - Enhancement - Ability to Modify/add Additional fields on Account Edit section.
 - 2.7.16 - Fix - removed hide in dashboard links option.
 - 2.7.15 - Fix - Added reminer notice about dashboard default text.
 - 2.7.14 - Fix - Critical bug with previous release.
