@@ -52,4 +52,4 @@ $noticerowno3 = 1;
 	</div>
 	</center> <?php
 	
-	$this->show_new_form($conditional_fields_dropdown,$this->additional_settings_key,$country_fields);
+$this->show_new_form($conditional_fields_dropdown,$this->additional_settings_key,$country_fields);

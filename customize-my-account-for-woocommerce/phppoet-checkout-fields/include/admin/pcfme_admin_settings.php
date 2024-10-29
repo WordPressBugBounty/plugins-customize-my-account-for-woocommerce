@@ -1233,10 +1233,14 @@ class pcfme_add_settings_page_class {
 	            	<input type="text" clkey="<?php echo $key; ?>" class="pcfme_label_input" name="<?php echo $slug; ?>[<?php echo $key; ?>][label]" value="<?php 
 	                if (isset($field['label']) && ($field['label'] != '')) { 
 	            	    echo $field['label']; 
+
+	            	    $cpm_lable = $field['label'];
 	            	} elseif ($key == "order_comments") {
                         echo esc_html__('Order notes','customize-my-account-for-woocommerce');
 	            	} else { 
 	            		echo $headlingtext; 
+
+	            		 $cpm_lable = $headlingtext;
 
 	            	} ?>" size="100"></td>
                </tr>
@@ -1364,7 +1368,36 @@ class pcfme_add_settings_page_class {
 			   </tr>
 			   <?php } ?>
 			   
-			   
+			   <tr>
+                <td width="15%"><label for="<?php echo $key; ?>_required"><?php  echo esc_html__('Dashboard notice','customize-my-account-for-woocommerce'); ?></label></td>
+                <td width="85%">
+                	<input type="checkbox" data-toggle="toggle" class="wcmamtx_dash_notice_toggle" data-size="mini" data-on="<?php  echo esc_html__('Yes','customize-my-account-for-woocommerce'); ?>" data-off="<?php  echo esc_html__('No','customize-my-account-for-woocommerce'); ?>" name="<?php echo $slug; ?>[<?php echo $key; ?>][dashboard_notice]" <?php if (isset($field['dashboard_notice']) && ($field['dashboard_notice'] == 1)) { echo "checked";} ?> value="1">
+
+                    <p><?php  echo esc_html__('if set yes customer will see notice on dashboard unless they enter it','customize-my-account-for-woocommerce'); ?></p>
+
+                </td>
+			   </tr>
+
+
+			   <tr class="wcmamtx_dash_notice_tr" style="<?php if (isset($field['dashboard_notice']) && ($field['dashboard_notice'] == 1)) { echo "display:table-row;";} else { echo 'display:none;'; } ?>">
+			   	<?php 
+
+			   			$default_dash_notice = ''.__( 'Kindly Enter required details <a href="{edit_account_link}">'.$cpm_lable.'</a>', 'customize-my-account-for-woocommerce' ).'';
+
+			   			if (isset($field['dash_notice_text']) && ($field['dash_notice_text'] != "")) { 
+			   				$ds_text_default = $field['dash_notice_text']; 
+			   			} else {
+			   				$ds_text_default =  $default_dash_notice;
+			   			}
+			   			?>
+			   	<td width="15%"><label for="<?php echo $key; ?>_required"><?php  echo esc_html__('Dashboard Notice Text','customize-my-account-for-woocommerce'); ?></label></td>
+			   	<td width="85%">
+			   		<textarea name="<?php echo $slug; ?>[<?php echo $key; ?>][dash_notice_text]" rows="4" cols="70"><?php echo $ds_text_default; ?></textarea>
+
+			   		<p><?php  echo esc_html__('{edit_account_link} - your edit account page link','customize-my-account-for-woocommerce'); ?></p>
+
+			   	</td>
+			   </tr>
 			   
 			   
 			   <tr>

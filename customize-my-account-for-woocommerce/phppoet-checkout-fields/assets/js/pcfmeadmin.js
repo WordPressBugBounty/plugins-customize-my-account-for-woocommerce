@@ -59,6 +59,16 @@ jQuery(document).ready(function($) {
     });
 
 
+    $('.wcmamtx_dash_notice_toggle').on("change",function() {
+               
+        if($(this).prop("checked")) {
+            $(this).closest('tr').next('tr').show();
+        } else {
+            $(this).closest('tr').next('tr').hide();
+        }
+    });
+
+
 
 	$(function() {
 		$('.checkout_field_type').on('change',function(){

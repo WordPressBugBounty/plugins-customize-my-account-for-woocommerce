@@ -32,7 +32,59 @@ class pcfme_manage_extrafield_class {
 
         add_filter('woocommerce_save_account_details_required_fields', array($this,'wc_save_account_details_required_fields') );
 
+        add_action( 'woocommerce_account_navigation', array($this,'wcmamtx_display_dash_notice') );
 
+
+
+
+    }
+
+
+	 /**
+      * Function for `woocommerce_account_navigation` action-hook.
+      * 
+      * @return void
+      */
+	 public function wcmamtx_display_dash_notice() {
+
+	 	$all_fields        = (array) get_option('pcfme_additional_settings');
+
+	 	foreach ( $all_fields as $mkey => $mvalue ) {
+
+	 		
+
+	 		$show_dash_field = isset($mvalue['dashboard_notice']) && ($mvalue['dashboard_notice'] == 1) ? "yes" : "no";
+
+
+	 		$field_key = isset($mvalue['field_key']) ? $mvalue['field_key'] : $mkey;
+
+			$default_value = get_user_meta( get_current_user_id(), $field_key, true );
+
+			if ((!isset($default_value) || ($default_value == "")) && ($show_dash_field == "yes")) {
+
+
+				$edit_account_url = wc_customer_edit_account_url();
+
+				$default_dash_notice = ''.__( 'Kindly Enter required details <a href="'.$edit_account_url.'">'.$mvalue['label'].'</a>', 'customize-my-account-for-woocommerce' ).'';
+
+				if (isset($mvalue['dash_notice_text']) && ($mvalue['dash_notice_text'] != "")) { 
+					$ds_text_default2 = $mvalue['dash_notice_text']; 
+				} else {
+					$ds_text_default2 =  $default_dash_notice;
+				}
+
+				$ds_text_default2 = str_replace("{edit_account_link}",$edit_account_url,$ds_text_default2);
+
+				echo '<div class="woocommerce-info">'.$ds_text_default2.'</div>';
+
+			}
+
+
+	 		
+
+	 	}
+
+	    
 	 }
 
 	 public function wc_save_account_details_required_fields($required_fields) {
