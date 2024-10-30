@@ -718,85 +718,79 @@ if (! function_exists('pcfme_easy_checkout_get_field_types')) {
 
 	 	    ),
 	 	    "4"=>array(
-	 		    'type'=>'multiselect',
-	 		    'text'=> __('MultiSelect','customize-my-account-for-woocommerce'),
-	 		    'icon'=> 'fa fa-list'
-
-	 	    ),
-	 	    "5"=>array(
 	 		    'type'=>'radio',
 	 		    'text'=> __('Radio','customize-my-account-for-woocommerce'),
 	 		    'icon'=> 'fa fa-bomb'
 
 	 	    ),
-	 	     "6"=>array(
+	 	     "5"=>array(
 	 		    'type'=>'heading',
 	 		    'text'=> __('Heading','customize-my-account-for-woocommerce'),
 	 		    'icon'=> 'fa fa-minus'
 
 	 	    ),
-	 	     "7"=>array(
+	 	     "6"=>array(
 	 		    'type'=>'email',
 	 		    'text'=> __('Email','customize-my-account-for-woocommerce'),
 	 		    'icon'=> 'fa fa-envelope'
 
 	 	    ),
-	 	     "8"=>array(
+	 	     "7"=>array(
 	 		    'type'=>'number',
 	 		    'text'=> __('Number','customize-my-account-for-woocommerce'),
 	 		    'icon'=> 'fa fa-file'
 
 	 	    ),
-	 	     "9"=>array(
+	 	     "8"=>array(
 	 		    'type'=>'paragraph',
 	 		    'text'=> __('Paragraph','customize-my-account-for-woocommerce'),
 	 		    'icon'=> 'fa fa-file'
 
 	 	    ),
 
-	 	     "10"=>array(
+	 	     "9"=>array(
 	 		    'type'=>'password',
 	 		    'text'=> __('Password','customize-my-account-for-woocommerce'),
 	 		    'icon'=> 'fa fa-clipboard'
 
 	 	    ),
 
-	 	      "11"=>array(
+	 	      "10"=>array(
 	 		    'type'=>'datepicker',
 	 		    'text'=> __('DatePicker','customize-my-account-for-woocommerce'),
 	 		    'icon'=> 'fa fa-calendar'
 
 	 	    ),
 
-	 	      "12"=>array(
+	 	      "11"=>array(
 	 		    'type'=>'timepicker',
 	 		    'text'=> __('TimePicker','customize-my-account-for-woocommerce'),
 	 		    'icon'=> 'fa fa-list'
 
 	 	    ),
 
-	 	     "13"=>array(
+	 	     "12"=>array(
 	 		    'type'=>'datetimepicker',
 	 		    'text'=> __('DateTime','customize-my-account-for-woocommerce'),
 	 		    'icon'=> 'fa fa-calendar'
 
 	 	    ),
 
-	 	     "14"=>array(
+	 	     "13"=>array(
 	 		    'type'=>'daterangepicker',
 	 		    'text'=> __('DateRange','customize-my-account-for-woocommerce'),
 	 		    'icon'=> 'fa fa-calendar'
 
 	 	    ),
 
-	 	      "15"=>array(
+	 	      "14"=>array(
 	 		    'type'=>'datetimerangepicker',
 	 		    'text'=> __('DateTimeRange','customize-my-account-for-woocommerce'),
 	 		    'icon'=> 'fa fa-file'
 
 	 	    ),
 
-	 	      "16"=>array(
+	 	      "15"=>array(
 	 		    'type'=>'hidden_field',
 	 		    'text'=> __('Hidden','customize-my-account-for-woocommerce'),
 	 		    'icon'=> 'fa fa-file'

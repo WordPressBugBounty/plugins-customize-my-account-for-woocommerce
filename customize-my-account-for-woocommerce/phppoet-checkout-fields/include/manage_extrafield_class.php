@@ -1018,10 +1018,10 @@ class pcfme_manage_extrafield_class {
      }
       
 
-     public function pcfmeselect_form_field( $field, $key, $args, $value) {
+public function pcfmeselect_form_field( $field, $key, $args, $value) {
         
 
-
+  
 
 
      	$key = isset($args['field_key']) ? $args['field_key'] : $key;
@@ -1047,13 +1047,7 @@ class pcfme_manage_extrafield_class {
 
      	
 
-     	if ($value == "") {
-     		if (!empty($args['default_option'])) {
 
-     			$value    = $args['default_option'];
-     		}
-     	
-     	} 
      		
 
      	
@@ -1065,7 +1059,7 @@ class pcfme_manage_extrafield_class {
      	if ( ! empty( $args['new_options'] ) ) {
      		foreach ( $args['new_options'] as $option_key => $option_text ) {
 
-     			$option_key = preg_replace('/\s+/', '_', $option_key);
+     			$option_key = preg_replace('/\s+/', '_', $option_text['value']);
 
      			$options .= '<option value="' . $option_text['value'] . '" '. selected( $value, $option_text['value'], false ) . '>' . $option_text['text'] .'</option>';
      		}
