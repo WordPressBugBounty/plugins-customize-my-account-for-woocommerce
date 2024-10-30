@@ -34,9 +34,55 @@ class pcfme_manage_extrafield_class {
 
         add_action( 'woocommerce_account_navigation', array($this,'wcmamtx_display_dash_notice') );
 
+        add_filter( 'manage_users_columns',  array($this,'wcmamtx_new_user_ui_columns') );
+        
+        add_filter( 'manage_users_custom_column', array($this,'wcmamtx_new_user_ui_columns_process_data'), 10, 3 );
+
+    }
 
 
+    public function wcmamtx_new_user_ui_columns($column) {
+    	$all_fields        = (array) get_option('pcfme_additional_settings');
 
+	 	foreach ( $all_fields as $mkey => $mvalue ) {
+
+	 		$show_admin_ui_column = isset($mvalue['show_adminui']) && ($mvalue['show_adminui'] == 1) ? "yes" : "no";
+            
+
+            if ($show_admin_ui_column == "yes") {
+            	$column[$mkey] = $mvalue['label'];
+            }
+            
+	 	}
+
+
+    	return $column;
+    }
+
+    public function wcmamtx_new_user_ui_columns_process_data( $val, $column_name, $user_id ) {
+
+    	$all_fields        = (array) get_option('pcfme_additional_settings');
+
+    	foreach ( $all_fields as $mkey => $mvalue ) {
+
+    		$show_admin_ui_column = isset($mvalue['show_adminui']) && ($mvalue['show_adminui'] == 1) ? "yes" : "no";
+
+
+    		if ($show_admin_ui_column == "yes") {
+    			switch ($column_name) {
+    				case $mkey :
+
+    				$field_key = isset($mvalue['field_key']) ? $mvalue['field_key'] : $mkey;
+    				return get_the_author_meta( $field_key, $user_id );
+    				default:
+    			}
+    		}
+
+    	}
+
+
+    	
+    	return $val;
     }
 
 

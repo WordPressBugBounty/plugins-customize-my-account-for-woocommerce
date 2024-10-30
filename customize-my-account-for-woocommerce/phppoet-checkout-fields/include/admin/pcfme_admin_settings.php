@@ -1379,6 +1379,7 @@ class pcfme_add_settings_page_class {
 			   </tr>
 
 
+
 			   <tr class="wcmamtx_dash_notice_tr" style="<?php if (isset($field['dashboard_notice']) && ($field['dashboard_notice'] == 1)) { echo "display:table-row;";} else { echo 'display:none;'; } ?>">
 			   	<?php 
 
@@ -1398,6 +1399,18 @@ class pcfme_add_settings_page_class {
 
 			   	</td>
 			   </tr>
+
+
+			   <tr>
+			   	<td width="15%"><label for="<?php echo $key; ?>_required"><?php  echo esc_html__('Show in User Admin UI Column','customize-my-account-for-woocommerce'); ?></label></td>
+			   	<td width="85%">
+			   		<input type="checkbox" data-toggle="toggle" class="" data-size="mini" data-on="<?php  echo esc_html__('Yes','customize-my-account-for-woocommerce'); ?>" data-off="<?php  echo esc_html__('No','customize-my-account-for-woocommerce'); ?>" name="<?php echo $slug; ?>[<?php echo $key; ?>][show_adminui]" <?php if (isset($field['show_adminui']) && ($field['show_adminui'] == 1)) { echo "checked";} ?> value="1">
+
+			   		
+
+			   	</td>
+			   </tr>
+
 			   
 			   
 			   <tr>
