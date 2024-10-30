@@ -694,7 +694,7 @@ class pcfme_manage_extrafield_class {
 	    $separater_text = isset($pcfme_extra_settings['separater_text']) ? $pcfme_extra_settings['separater_text'] : esc_html__('to','customize-my-account-for-woocommerce');;
 	    
 
-	    if ( is_checkout() || is_account_page() ) {
+	    if ( is_account_page() ) {
 
 	     
 		 
@@ -1019,6 +1019,10 @@ class pcfme_manage_extrafield_class {
       
 
      public function pcfmeselect_form_field( $field, $key, $args, $value) {
+        
+
+
+
 
      	$key = isset($args['field_key']) ? $args['field_key'] : $key;
 
@@ -1040,36 +1044,35 @@ class pcfme_manage_extrafield_class {
 
      	
      	$options .= '<option value="">'.esc_html__('Choose an Option','customize-my-account-for-woocommerce').'</option>';
+
+     	
+
+     	if ($value == "") {
+     		if (!empty($args['default_option'])) {
+
+     			$value    = $args['default_option'];
+     		}
+     	
+     	} 
      		
 
-     	if (! empty ($args['default_option'])) {
-     		
-     		$value    = $args['default_option'];
-     	}
+     	
 
-     	if ($value == "empty") {
-			$value = "";
-		}
+     	
+     	
 
 
-
-
-     	$fees_class       = '';
-
-		$fees_class       = pcfme_get_fees_class($key);
-
-
-     	if ( ! empty( $args['options'] ) ) {
-     		foreach ( $args['options'] as $option_key => $option_text ) {
+     	if ( ! empty( $args['new_options'] ) ) {
+     		foreach ( $args['new_options'] as $option_key => $option_text ) {
 
      			$option_key = preg_replace('/\s+/', '_', $option_key);
 
-     			$options .= '<option value="' . $option_key . '" '. selected( $value, $option_key, false ) . '>' . $option_text .'</option>';
+     			$options .= '<option value="' . $option_text['value'] . '" '. selected( $value, $option_text['value'], false ) . '>' . $option_text['text'] .'</option>';
      		}
 
      		$field = '<p class="form-row ' . implode( ' ', $args['class'] ) .' " id="' . $key . '_field">
      		<label for="' . $key . '" class="' . implode( ' ', $args['label_class'] ) .'">' . $args['label']. $required . '</label>
-     		<select data-placeholder="'.$args['placeholder'].'" name="' . $key . '" id="' . $key . '" class="select '.$fees_class.' pcfme-singleselect  '. pcfmeinput_conditional_class($key) .'" '.$requiredtext.'>
+     		<select data-placeholder="'.$args['placeholder'].'" name="' . $key . '" id="' . $key . '" class="select pcfme-singleselect  '. pcfmeinput_conditional_class($key) .'" '.$requiredtext.'>
      		' . $options . '
      		</select>
      		</p>' . $after;
@@ -1170,29 +1173,11 @@ class pcfme_manage_extrafield_class {
 			$datepicker_class='pcfme-datepicker';
 		}
 
-		if ($value == "empty") {
-			$value = "";
-		}
+
 
 		$defalt_val = '';
 
-		if (isset($args['enable_default_date'])) {
-
-			$defalt_val          = isset($args['default_date_add']) ? $args['default_date_add'] : 0;
-
-			$pcfme_extra_settings = (array) get_option('pcfme_extra_settings');
-
-			$date_format          = isset($pcfme_extra_settings['datepicker_format']) ? $pcfme_extra_settings['datepicker_format'] : 01;
-
-			$date_format          = pcfme_get_datepicker_format_from_option($date_format);
-
-			$date = date("Y-m-d");
-
-			$mod_date = strtotime($date."+ $defalt_val days");
-
-			$defalt_val = date($date_format,$mod_date);
-
-		}
+        $defalt_val = isset($value) ? $value : $defalt_val;
 
 		$disable_specific_dates = '';
 

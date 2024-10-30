@@ -6,7 +6,7 @@ Tested up to: 6.6.2
 WC Tested up to: 9.3.3
 WC Requires at least: 4.0
 Requires PHP: 5.2
-Stable tag: 2.7.20
+Stable tag: 2.7.21
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -145,8 +145,9 @@ Learn more about how [Appsero collects and uses this data](https://Appsero.com/p
 == Changelog ==
 
 
-Version 2.7.20 - 30 October 2024 
+Version 2.7.21 - 30 October 2024 
 
+- 2.7.21 - Fix - issue with account fields.
 - 2.7.20 - Enhancement - Show submitted field details on user admin ui.
 - 2.7.19 - Enhancement - Display notice if customer do not enter required field.
 - 2.7.18 - Enhancement - Added notice to suggest that admins can manage Edit account fields.

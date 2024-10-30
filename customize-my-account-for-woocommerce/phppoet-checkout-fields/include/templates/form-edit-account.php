@@ -143,9 +143,21 @@ if ( current_user_can( 'administrator' ) ) {
 			$field_key = isset($field['field_key']) ? $field['field_key'] : $key;
 
 			$default_value = get_user_meta( get_current_user_id(), $field_key, true );
+            
 
+            if ($field['type'] == "pcfmeselect ") {
 
-			woocommerce_form_field( $key, $field, $default_value );
+            	$field_html = '';
+
+            	woocommerce_form_field( $field_html, $key, $field, $default_value );
+
+            } else {
+
+            	woocommerce_form_field( $key, $field, $default_value );
+
+            }
+
+			
 		
 
 	}
