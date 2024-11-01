@@ -6,7 +6,7 @@ Tested up to: 6.6.2
 WC Tested up to: 9.3.3
 WC Requires at least: 4.0
 Requires PHP: 5.2
-Stable tag: 2.7.23
+Stable tag: 2.7.25
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -145,8 +145,10 @@ Learn more about how [Appsero collects and uses this data](https://Appsero.com/p
 == Changelog ==
 
 
-Version 2.7.23 - 30 October 2024 
+Version 2.7.25 - 01 November 2024 
 
+- 2.7.25 - Ehnahcement - Dashboard links feature.
+- 2.7.24 - Enhancement - Hook to enable dashboard links.
 - 2.7.23 - Fix - issue with select field.
 - 2.7.22 - Fix - bug that prevent certain field types from working.
 - 2.7.21 - Fix - issue with account fields.

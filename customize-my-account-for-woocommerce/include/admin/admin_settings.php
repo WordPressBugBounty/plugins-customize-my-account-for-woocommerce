@@ -2283,7 +2283,7 @@ $current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : sanitize_text_field($this-
 
                     <tr>
                         <td>
-                            <label class="wcmamtx_accordion_label wcmamtx_custom_content_label"><?php  echo esc_html__('Custom Content before dashboard links','customize-my-account-for-woocommerce'); ?></label>
+                            <label class="wcmamtx_accordion_label wcmamtx_custom_content_label"><?php  echo esc_html__('Custom Content before dashboard','customize-my-account-for-woocommerce'); ?></label>
                         </td>
                         <td>    
 
