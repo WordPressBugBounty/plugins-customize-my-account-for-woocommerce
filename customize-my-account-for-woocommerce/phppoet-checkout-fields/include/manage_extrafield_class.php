@@ -37,6 +37,73 @@ class pcfme_manage_extrafield_class {
         
         add_filter( 'manage_users_custom_column', array($this,'wcmamtx_new_user_ui_columns_process_data'), 10, 3 );
 
+        add_action('woocommerce_register_form',array($this,'wcmamtx_woocommerce_register_form_function'));
+
+        add_action( 'woocommerce_created_customer', array($this,'pcfme_save_registration_fields') );
+
+    }
+
+
+    public function pcfme_save_registration_fields( $customer_id ) {
+          
+	      
+           
+
+		   $additional_fields              = (array) get_option('pcfme_additional_settings');
+		   
+            unset($all_fields[0]);
+		   
+		   foreach ($additional_fields as $additionalkey=>$additional_field) {
+		   	    if ( isset( $_POST[$additionalkey] ) )
+		   		update_user_meta( $customer_id, $additionalkey, sanitize_text_field( $_POST[$additionalkey] ) );
+		   }
+	      	
+	      
+    }
+
+
+
+    public function wcmamtx_woocommerce_register_form_function() {
+
+    	
+
+    	$all_fields    = (array) get_option('pcfme_additional_settings');
+
+    	unset($all_fields[0]);
+
+    	if (isset($all_fields) && (sizeof($all_fields) >= 1)) { 
+
+
+    		foreach ( $all_fields as $key => $field ) {
+
+    			$enable_register = (isset($field['show_register']) && ($field['show_register'] == 1)) ? "yes" : "no";
+
+
+    			if ($enable_register == "yes") {
+
+    				$field_key = isset($field['field_key']) ? $field['field_key'] : $key;
+
+    				$default_value = get_user_meta( get_current_user_id(), $field_key, true );
+
+
+    				if (isset($field['type']) &&  ($field['type'] == "pcpcfmeselect")) {
+
+    					$field_html = '';
+
+    					woocommerce_form_field( $field_html, $key, $field, $default_value );
+
+    				} else {
+
+    					woocommerce_form_field( $key, $field, $default_value );
+
+    				}
+
+    			}
+
+    		}
+    	}
+
+
     }
 
 
@@ -211,7 +278,7 @@ class pcfme_manage_extrafield_class {
 		   }
 	      	
 	      
-        }
+    }
 
 
 	public function pcfme_core_override_default_navigation_template($template,$template_name,$template_path) {

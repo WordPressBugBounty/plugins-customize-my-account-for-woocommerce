@@ -32,11 +32,11 @@ $core_fields       = 'dashboard,edit-address,edit-account,customer-logout,downlo
 
 
 	<tr>
-		<td><label><?php echo esc_html__('Disable Dashboard Links','customize-my-account-for-woocommerce-pro'); ?></label> <br />
+		<td><label><?php echo esc_html__('Disable Dashboard Links','customize-my-account-for-woocommerce'); ?></label> <br />
 		</td>
 		<td>
-			<input type="checkbox" data-toggle="toggle"  data-on="<?php echo esc_html__('Yes','customize-my-account-for-woocommerce-pro'); ?>" data-off="<?php echo esc_html__('No','customize-my-account-for-woocommerce-pro'); ?>" class="" name="<?php  echo esc_html__($this->wcmamtx_plugin_options_key); ?>[disable_dashboard_links]" value="yes" <?php if (isset($plugin_options['disable_dashboard_links']) && ($plugin_options['disable_dashboard_links'] == "yes")) { echo 'checked'; } ?>>
-			<p><?php echo esc_html__('Turn it on if your theme is already displaying dashboard links and you do not want plugin to duplicate it','customize-my-account-for-woocommerce-pro'); ?></p>
+			<input type="checkbox" data-toggle="toggle"  data-on="<?php echo esc_html__('Yes','customize-my-account-for-woocommerce'); ?>" data-off="<?php echo esc_html__('No','customize-my-account-for-woocommerce'); ?>" class="" name="<?php  echo esc_html__($this->wcmamtx_plugin_options_key); ?>[disable_dashboard_links]" value="yes" <?php if (isset($plugin_options['disable_dashboard_links']) && ($plugin_options['disable_dashboard_links'] == "yes")) { echo 'checked'; } ?>>
+			<p><?php echo esc_html__('Turn it on if your theme is already displaying dashboard links and you do not want plugin to duplicate it','customize-my-account-for-woocommerce'); ?></p>
 		</td>
 	</tr>
 

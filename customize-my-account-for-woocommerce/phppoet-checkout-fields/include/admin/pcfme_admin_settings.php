@@ -1411,6 +1411,16 @@ class pcfme_add_settings_page_class {
 			   	</td>
 			   </tr>
 
+			   <tr>
+			   	<td width="15%"><label for="<?php echo $key; ?>_required"><?php  echo esc_html__('Show in Registration Form','customize-my-account-for-woocommerce'); ?></label></td>
+			   	<td width="85%">
+			   		<input type="checkbox" data-toggle="toggle" class="" data-size="mini" data-on="<?php  echo esc_html__('Yes','customize-my-account-for-woocommerce'); ?>" data-off="<?php  echo esc_html__('No','customize-my-account-for-woocommerce'); ?>" name="<?php echo $slug; ?>[<?php echo $key; ?>][show_register]" <?php if (isset($field['show_register']) && ($field['show_register'] == 1)) { echo "checked";} ?> value="1">
+
+			   		
+
+			   	</td>
+			   </tr>
+
 			   
 			   
 			   <tr>
@@ -1663,24 +1673,22 @@ class pcfme_add_settings_page_class {
                         </label>
 	                </td>
 			        <td width="85%">
-                            <?php echo esc_html__('This feature is available in pro version only','customize-my-account-for-woocommerce'); ?></span>
+                           <?php echo esc_html__('This feature is available in pro version only','customize-my-account-for-woocommerce'); ?>
 			        </td>
 			    </tr>
 
 				<?php if (isset($field['conditional'])) $conditional_field = $field['conditional']; ?>
 
 				<tr class="checkout_field_conditional_tr_new" style="">
-					<td width="15%">
-						<label for="notice_category"><span class="pcfmeformfield">
-							<?php echo esc_html__('Field Conditional Rules','customize-my-account-for-woocommerce'); ?></span>
-						</label>
-					</td>
-					
-					<td width="85%">
-						<?php echo esc_html__('This feature is available in pro version only','customize-my-account-for-woocommerce'); ?></span>
-					</td>
-					
-				</tr>
+			        <td width="15%">
+                        <label for="notice_category"><span class="pcfmeformfield">
+                        	<?php echo esc_html__('Field Conditional Rules','customize-my-account-for-woocommerce'); ?></span>
+                        </label>
+	                </td>
+	                <td width="85%">
+	                	<?php echo esc_html__('This feature is available in pro version only','customize-my-account-for-woocommerce'); ?>
+	                </td>
+			    </tr>
 
 			 <?php if (($slug != 'pcfme_additional_settings') && ($key != 'order_comments')) { ?>
 			   <tr>

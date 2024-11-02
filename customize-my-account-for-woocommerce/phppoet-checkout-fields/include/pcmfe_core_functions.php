@@ -2371,7 +2371,7 @@ if ( ! function_exists( 'pcfme_get_woo_version_number' ) ) {
 		require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 	
         // Create the plugins folder and file variables
-	   $plugin_folder = get_plugins( '/' . 'woocommerce' );
+	   $plugin_folder = get_plugins( '/' . 'customize-my-account-for-woocommerce' );
 	   $plugin_file = 'woocommerce.php';
 	
 	   // If the plugin version number is set, return it 

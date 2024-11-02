@@ -118,7 +118,7 @@ if (!function_exists('wcmamtx_review_reminder_div')) {
 
 				<a type="button" target="_blank" href="https://wordpress.org/support/plugin/customize-my-account-for-woocommerce/reviews/#new-post"  class="" >
 						
-						<?php echo esc_html__( 'Rate now' ,'customize-my-account-for-woocommerce-pro'); ?>
+						<?php echo esc_html__( 'Rate now' ,'customize-my-account-for-woocommerce'); ?>
 					</a>
 
 				<div class="sysbasics_review_buttons">
@@ -126,7 +126,7 @@ if (!function_exists('wcmamtx_review_reminder_div')) {
 
 					<a type="button" target="_blank" href="#"  class="wcmamtx_dismiss_renew_notice wcmamtx_frontend_link" >
 						
-						<?php echo esc_html__( 'Dismiss notice' ,'customize-my-account-for-woocommerce-pro'); ?>
+						<?php echo esc_html__( 'Dismiss notice' ,'customize-my-account-for-woocommerce'); ?>
 					</a>
 				</div>
 			</div>
@@ -847,10 +847,10 @@ if (!function_exists('wcmamtx_get_account_order_items')) {
 	function wcmamtx_get_account_order_items() {
 
 		$columns = array(
-			'order-number'  => esc_html__( 'Order', 'woocommerce' ),
-			'order-date'    => esc_html__( 'Date', 'woocommerce' ),
-			'order-status'  => esc_html__( 'Status', 'woocommerce' ),
-			'order-total'   => esc_html__( 'Total', 'woocommerce' ),
+			'order-number'  => esc_html__( 'Order', 'customize-my-account-for-woocommerce' ),
+			'order-date'    => esc_html__( 'Date', 'customize-my-account-for-woocommerce' ),
+			'order-status'  => esc_html__( 'Status', 'customize-my-account-for-woocommerce' ),
+			'order-total'   => esc_html__( 'Total', 'customize-my-account-for-woocommerce' ),
 			'order-actions' => '&nbsp;',
 		);
 

@@ -4,10 +4,10 @@ $tabs              = wcmamtx_get_account_order_items();
 $core_fields       = 'order-number,order-date,order-status,order-total,order-actions';
 
 $core_fields_array =  array(
-                         'order-number'=> esc_html__( 'Order', 'woocommerce' ),
-                         'order-date'=> esc_html__( 'Date', 'woocommerce' ),
-                         'order-status'=> esc_html__( 'Status', 'woocommerce' ),
-                         'order-total'=>esc_html__( 'Total', 'woocommerce' ),
+                         'order-number'=> esc_html__( 'Order', 'customize-my-account-for-woocommerce' ),
+                         'order-date'=> esc_html__( 'Date', 'customize-my-account-for-woocommerce' ),
+                         'order-status'=> esc_html__( 'Status', 'customize-my-account-for-woocommerce' ),
+                         'order-total'=>esc_html__( 'Total', 'customize-my-account-for-woocommerce' ),
                          'order-actions'=>'&nbsp;',
                       );
 

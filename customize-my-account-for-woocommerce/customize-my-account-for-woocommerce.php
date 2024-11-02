@@ -3,7 +3,7 @@
     Plugin Name: SysBasics Customize My Account for WooCommerce
     Plugin URI: https://sysbasics.com
     Description: Customize My account page. Add/Edit/Remove Endpoints.
-    Version: 2.7.26
+    Version: 2.7.27
     Author: SysBasics
     Author URI: https://sysbasics.com
     Domain Path: /languages
@@ -118,7 +118,7 @@ load_plugin_textdomain( 'customize-my-account-for-woocommerce', false, basename(
      */
 
     function wcmamtx__installation_notice_woocommerce() {
-        echo '<div class="updated" style="padding:15px; position:relative;"><a href="http://wordpress.org/plugins/woocommerce/">'.esc_html__('WooCommerce','customize-my-account-for-woocommerce').'</a> '.esc_html__('must be activated before activating Customize My Account For WooCommerce ','customize-my-account-for-woocommerce').' </div>';
+        echo '<div class="updated" style="padding:15px; position:relative;"><a href="http://wordpress.org/plugins/woocommerce/">'.esc_html__('customize-my-account-for-woocommerce','customize-my-account-for-woocommerce').'</a> '.esc_html__('must be activated before activating Customize My Account For WooCommerce ','customize-my-account-for-woocommerce').' </div>';
     }
 
     add_action('admin_notices', 'wcmamtx__installation_notice_woocommerce');
@@ -221,7 +221,7 @@ if (!function_exists('wcmamtx_get_woo_version_number')) {
          require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
     
        
-       $plugin_folder = get_plugins( '/' . 'woocommerce' );
+       $plugin_folder = get_plugins( '/' . 'customize-my-account-for-woocommerce' );
        $plugin_file = 'woocommerce.php';
     
     
