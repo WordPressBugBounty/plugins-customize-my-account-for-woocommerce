@@ -23,9 +23,8 @@ class pcfme_manage_extrafield_class {
 		
 		add_filter( 'wp_enqueue_scripts', array( $this, 'add_checkout_frountend_scripts' ));
 
-		add_action( 'woocommerce_cart_calculate_fees', array( $this, 'add_cart_fees' ) );
-		add_action( 'wp_ajax_nopriv_pcfme_get_action_data', array( $this, 'pcfme_get_action_data_function' ) );
-        add_action( 'wp_ajax_pcfme_get_action_data', array( $this, 'pcfme_get_action_data_function' ) );
+		
+
         add_action( 'woocommerce_locate_template', array($this,'pcfme_core_override_default_navigation_template'), 100, 3 );
 
         add_action( 'woocommerce_save_account_details', array($this,'pcfme_save_profile_fields'), 12, 1 );
@@ -231,46 +230,7 @@ class pcfme_manage_extrafield_class {
     }
 
 
-	public function pcfme_get_action_data_function() {
 
-	    if ( ! $_POST || ( is_admin() && ! is_ajax() ) ) {
-            return;
-        }
-
-        $additional_fees    = get_option('pcfme_additional_fees');
-
-        $response  = array();
-        
-
-        if (is_array($additional_fees)) {
-        	$additional_fees    = array_filter($additional_fees);
-        }
-
-
-        if (isset($additional_fees) && is_array($additional_fees) && (sizeof($additional_fees) >= 1)) { 
-        	$additional_fees = $additional_fees;
-        } else {
-        	$additional_fees = array();
-        }
-
-
-        $field_key = isset($_POST['key']) ? $_POST['key'] : "";
-        $thisval   = isset($_POST['thisval']) ? $_POST['thisval'] : "";
-
-        foreach ($additional_fees as $akey=>$avalue) {
-
-        	if (isset($avalue['parentfield']) && ($avalue['parentfield'] != "") && ($avalue['parentfield'] == $field_key) && ($avalue['equalto'] == $thisval)) {
-        		$response[$akey] = array(
-        			'action'=> $avalue['action_type'],
-        	        'target'=> $avalue['actionfield']
-        	    );
-
-        	}
-        }
-
-
-        wp_send_json_success( $response );
-    }
 
 
 
@@ -771,16 +731,13 @@ class pcfme_manage_extrafield_class {
 	  
 	     if ( $args['required'] ) {
 			  $args['class'][] = 'validate-required';
-			  $required = ' <abbr class="required" title="' . esc_attr__( 'required', 'customize-my-account-for-woocommerce'  ) . '">*</abbr>';
+			  $required = ' <abbr class="required" title="' . esc_attr__( 'required', 'pcfme'  ) . '">*</abbr>';
 		  } else {
 			$required = '';
 		  }
 		     
 
 
-		$fees_class       = '';
-
-		$fees_class       = pcfme_get_fees_class($key);
 
 		
 		if ($value == "empty") {
@@ -792,7 +749,7 @@ class pcfme_manage_extrafield_class {
 
         $field = '<p class="form-row ' . implode( ' ', $args['class'] ) .' " id="' . $key . '_field">
             <label for="' . $key . '" class="' . implode( ' ', $args['label_class'] ) .'">' . $args['label']. $required . '</label>
-            <input type="' . esc_attr( $args['type'] ) . '" class="'.$fees_class.' input-text ' . esc_attr( implode( ' ', $args['input_class'] ) ) .'  '. pcfmeinput_conditional_class($key) .'" name="' . esc_attr( $key ) . '" id="' . esc_attr( $key ) . '" placeholder="' . esc_attr( $args['placeholder'] ) . '" ' . $args['maxlength'] . ' ' . $args['autocomplete'] . ' value="' . esc_attr( $value ) . '" />
+            <input type="' . esc_attr( $args['type'] ) . '" class=" input-text ' . esc_attr( implode( ' ', $args['input_class'] ) ) .'  '. pcfmeinput_conditional_class($key) .'" name="' . esc_attr( $key ) . '" id="' . esc_attr( $key ) . '" placeholder="' . esc_attr( $args['placeholder'] ) . '" ' . $args['maxlength'] . ' ' . $args['autocomplete'] . ' value="' . esc_attr( $value ) . '" />
         </p>' . $after;
          
 
@@ -885,9 +842,7 @@ class pcfme_manage_extrafield_class {
 			$value = "";
 		}
 
-    	$fees_class       = '';
-
-    	$fees_class       = pcfme_get_fees_class($key);
+    	
     	$charlimit        = isset($args['charlimit']) ? $args['charlimit'] : 200;
         
         $after ='';
@@ -896,7 +851,7 @@ class pcfme_manage_extrafield_class {
 
     	$field = '<p class="form-row ' . implode( ' ', $args['class'] ) .' " id="' . $key . '_field">
     	<label for="' . $key . '" class="' . implode( ' ', $args['label_class'] ) .'">' . $args['label']. $required . '</label>
-    	<textarea maxlength="'.$charlimit.'" name="' . esc_attr( $key ) . '" class="'.$fees_class.' input-text ' . esc_attr( implode( ' ', $args['input_class'] ) ) .'  '. pcfmeinput_conditional_class($key) .'" id="' . $key . '" placeholder="' . esc_attr( $args['placeholder'] ) . '" ' . $args['maxlength'] . ' ' . $args['autocomplete'] . ' ' . ( empty( $args['custom_attributes']['rows'] ) ? ' rows="2"' : '' ) . ( empty( $args['custom_attributes']['cols'] ) ? ' cols="5"' : '' ) . '>'. esc_textarea( $value  ) .'</textarea>
+    	<textarea maxlength="'.$charlimit.'" name="' . esc_attr( $key ) . '" class=" input-text ' . esc_attr( implode( ' ', $args['input_class'] ) ) .'  '. pcfmeinput_conditional_class($key) .'" id="' . $key . '" placeholder="' . esc_attr( $args['placeholder'] ) . '" ' . $args['maxlength'] . ' ' . $args['autocomplete'] . ' ' . ( empty( $args['custom_attributes']['rows'] ) ? ' rows="2"' : '' ) . ( empty( $args['custom_attributes']['cols'] ) ? ' cols="5"' : '' ) . '>'. esc_textarea( $value  ) .'</textarea>
     	</p>' . $after;
     	
 
@@ -924,9 +879,7 @@ class pcfme_manage_extrafield_class {
 		 
 
 
-		 $fees_class       = '';
-
-		 $fees_class       = pcfme_get_fees_class($key);
+		
 
          $after ='';
 
@@ -940,7 +893,7 @@ class pcfme_manage_extrafield_class {
 		 }
 	     
 
-         $field = '<p class="form-row ' . implode( ' ', $args['class'] ) .' " id="' . $key . '_field"><label class="checkbox ' . implode( ' ', $args['label_class'] ) .' ' . implode( ' ', $args['class'] ) .' ' . $pcfme_conditional_class .'" ><input type="' . esc_attr( $args['type'] ) . '" class="'.$fees_class.' input-checkbox ' . esc_attr( implode( ' ', $args['input_class'] ) ) .' ' . $pcfme_conditional_class .' '. pcfmeinput_conditional_class($key) .'" name="' . esc_attr( $key ) . '" id="' . $key . '" value="yes" '.$checked_text .' /> '
+         $field = '<p class="form-row ' . implode( ' ', $args['class'] ) .' " id="' . $key . '_field"><label class="checkbox ' . implode( ' ', $args['label_class'] ) .' ' . implode( ' ', $args['class'] ) .' ' . $pcfme_conditional_class .'" ><input type="' . esc_attr( $args['type'] ) . '" class=" input-checkbox ' . esc_attr( implode( ' ', $args['input_class'] ) ) .' ' . $pcfme_conditional_class .' '. pcfmeinput_conditional_class($key) .'" name="' . esc_attr( $key ) . '" id="' . $key . '" value="yes" '.$checked_text .' /> '
 						 . $args['label'] . $required . '</label></p>' . $after;
          
 
@@ -961,9 +914,7 @@ class pcfme_manage_extrafield_class {
 		}
 
 
-		$fees_class       = '';
-
-		$fees_class         = pcfme_get_fees_class($key);
+		
 
 
 		$action_class       = '';
@@ -1003,7 +954,7 @@ class pcfme_manage_extrafield_class {
 	       	  	  $checked_text = $default_val;
 	       	  }
 
-			  $options .= '<input type="radio" name="' . $key . '" id="' . $key . '" value="' . $option_key . '" ' . checked( $value, $option_key, false ) . 'class="'.$fees_class.' '.$action_class.' select  '. pcfmeinput_conditional_class($key) .'" '.$checked_text.' '.$checked_text.'>  ' . $option_text . '<br>';
+			  $options .= '<input type="radio" name="' . $key . '" id="' . $key . '" value="' . $option_key . '" ' . checked( $value, $option_key, false ) . 'class=" '.$action_class.' select  '. pcfmeinput_conditional_class($key) .'" '.$checked_text.' '.$checked_text.'>  ' . $option_text . '<br>';
 		    }
             
             
@@ -1113,9 +1064,7 @@ public function pcfmeselect_form_field( $field, $key, $args, $value) {
 		
 	    
 
-		$fees_class       = '';
-
-		$fees_class       = pcfme_get_fees_class($key);
+		
 		
 	    $options = '';
 
@@ -1184,9 +1133,7 @@ public function pcfmeselect_form_field( $field, $key, $args, $value) {
 
 
 
-		$fees_class       = '';
-
-		$fees_class       = pcfme_get_fees_class($key);
+		
 
 		$args['maxlength'] = ( $args['maxlength'] ) ? 'maxlength="' . absint( $args['maxlength'] ) . '"' : '';
 
@@ -1281,9 +1228,8 @@ public function pcfmeselect_form_field( $field, $key, $args, $value) {
 
 
 
-		$fees_class       = '';
+		
 
-		$fees_class       = pcfme_get_fees_class($key);
 
 		$args['maxlength'] = ( $args['maxlength'] ) ? 'maxlength="' . absint( $args['maxlength'] ) . '"' : '';
 
@@ -1296,7 +1242,7 @@ public function pcfmeselect_form_field( $field, $key, $args, $value) {
 		if ( $args['label'] )
 			$field .= '<label for="' . esc_attr( $key ) . '" class="' . implode( ' ', $args['label_class'] ) .'">' . $args['label'] . $required . '</label>';
 
-		$field .= '<input dates_to_disable="'.$disable_specific_dates.'" t_allowed="'.$allowed_times.'" type="text" class="'.$fees_class.' '. $datepicker_class .' input-text  '. pcfmeinput_conditional_class($key) .'" name="' . esc_attr( $key ) . '" id="' . esc_attr( $key ) . '" placeholder="' . $args['placeholder'] . '" '.$args['maxlength'].' value="'.$defalt_val.'" />
+		$field .= '<input dates_to_disable="'.$disable_specific_dates.'" t_allowed="'.$allowed_times.'" type="text" class=" '. $datepicker_class .' input-text  '. pcfmeinput_conditional_class($key) .'" name="' . esc_attr( $key ) . '" id="' . esc_attr( $key ) . '" placeholder="' . $args['placeholder'] . '" '.$args['maxlength'].' value="'.$defalt_val.'" />
 			</p>' . $after;
 
 		return $field;
@@ -1331,9 +1277,7 @@ public function pcfmeselect_form_field( $field, $key, $args, $value) {
 		}
 
 
-		$fees_class       = '';
 
-		$fees_class       = pcfme_get_fees_class($key);
 
 		$args['maxlength'] = ( $args['maxlength'] ) ? 'maxlength="' . absint( $args['maxlength'] ) . '"' : '';
 
@@ -1375,9 +1319,6 @@ public function pcfmeselect_form_field( $field, $key, $args, $value) {
 		
 		
 
-		$fees_class       = '';
-
-		$fees_class       = pcfme_get_fees_class($key);
 		
 		if (isset($args['disable_past'])) {
 			$datepicker_class='pcfme-datetimerangepicker-disable-past';
@@ -1396,7 +1337,7 @@ public function pcfmeselect_form_field( $field, $key, $args, $value) {
 		if ( $args['label'] )
 			$field .= '<label for="' . esc_attr( $key ) . '" class="' . implode( ' ', $args['label_class'] ) .'">' . $args['label'] . $required . '</label>';
 
-		$field .= '<input type="text" class="'.$fees_class.' '. $datepicker_class .' input-text  '. pcfmeinput_conditional_class($key) .'" name="' . esc_attr( $key ) . '" id="' . esc_attr( $key ) . '" placeholder="' . $args['placeholder'] . '" '.$args['maxlength'].' value="" />
+		$field .= '<input type="text" class=" '. $datepicker_class .' input-text  '. pcfmeinput_conditional_class($key) .'" name="' . esc_attr( $key ) . '" id="' . esc_attr( $key ) . '" placeholder="' . $args['placeholder'] . '" '.$args['maxlength'].' value="" />
 			</p>' . $after;
 
 		return $field;
@@ -1424,9 +1365,7 @@ public function pcfmeselect_form_field( $field, $key, $args, $value) {
 		$after ='';
 		 
 
-		$fees_class       = '';
 
-		$fees_class       = pcfme_get_fees_class($key);
 
 		$defalt_val = '';
 
@@ -1458,7 +1397,7 @@ public function pcfmeselect_form_field( $field, $key, $args, $value) {
 		if ( $args['label'] )
 			$field .= '<label for="' . esc_attr( $key ) . '" class="' . implode( ' ', $args['label_class'] ) .'">' . $args['label'] . $required . '</label>';
 
-		$field .= '<input type="text" t_allowed="'.$allowed_times.'" class="'. $fees_class.' '. $datepicker_class .' input-text  '. pcfmeinput_conditional_class($key) .'" name="' . esc_attr( $key ) . '" id="' . esc_attr( $key ) . '" placeholder="' . $args['placeholder'] . '" '.$args['maxlength'].' value="'.$defalt_val.'" />
+		$field .= '<input type="text" t_allowed="'.$allowed_times.'" class=" '. $datepicker_class .' input-text  '. pcfmeinput_conditional_class($key) .'" name="' . esc_attr( $key ) . '" id="' . esc_attr( $key ) . '" placeholder="' . $args['placeholder'] . '" '.$args['maxlength'].' value="'.$defalt_val.'" />
 			</p>' . $after;
 
 		return $field;

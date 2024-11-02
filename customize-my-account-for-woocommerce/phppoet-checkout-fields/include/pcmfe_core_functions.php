@@ -2999,23 +2999,7 @@ if ( ! function_exists( 'pcfme_update_fields_combined' ) ) {
 	}
 
 
-	if ( is_checkout() ) {
 
-		if (isset($plugin_fields) && (sizeof($plugin_fields) >1)) {
-
-
-
-			$order = get_order_array($plugin_fields);
-
-			foreach($order as $field) {
-				$ordered_fields[$field] = $fields[$slug][$field];
-			}
-
-			$fields[$slug] = $ordered_fields;
-
-		} 
-
-	}
 
 
 

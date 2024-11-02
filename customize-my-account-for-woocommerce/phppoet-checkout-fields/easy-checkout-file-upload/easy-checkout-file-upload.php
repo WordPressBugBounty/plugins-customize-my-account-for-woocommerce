@@ -85,7 +85,7 @@ function pcfme_file_upload(){
 add_filter( 'wp_enqueue_scripts', 'pcfme_add_checkout_frountend_scripts' );
 
 function pcfme_add_checkout_frountend_scripts() {
-	if ( is_checkout() || is_account_page() ) {
+	if ( is_account_page() ) {
        wp_enqueue_script( 'pcfme_file_upload', ''.pcfme_PLUGIN_URL_file_upload.'assets/js/frontend.js',array('jquery') );
         wp_enqueue_style( 'pcfme_file_upload', ''.pcfme_PLUGIN_URL_file_upload.'assets/css/frontend.css' );
 

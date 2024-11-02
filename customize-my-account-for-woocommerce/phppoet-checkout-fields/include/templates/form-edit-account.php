@@ -133,33 +133,36 @@ if ( current_user_can( 'administrator' ) ) {
 	<?php
 
 	$all_fields    = (array) get_option('pcfme_additional_settings');
+    
+    unset($all_fields[0]);
+
+	if (isset($all_fields) && (sizeof($all_fields) >= 1)) { 
 
 
-
-
-	foreach ( $all_fields as $key => $field ) {
+		foreach ( $all_fields as $key => $field ) {
 
 
 			$field_key = isset($field['field_key']) ? $field['field_key'] : $key;
 
 			$default_value = get_user_meta( get_current_user_id(), $field_key, true );
-            
 
-            if ($field['type'] == "pcfmeselect ") {
 
-            	$field_html = '';
+			if (isset($field['type']) &&  ($field['type'] == "pcpcfmeselect")) {
 
-            	woocommerce_form_field( $field_html, $key, $field, $default_value );
+				$field_html = '';
 
-            } else {
+				woocommerce_form_field( $field_html, $key, $field, $default_value );
 
-            	woocommerce_form_field( $key, $field, $default_value );
+			} else {
 
-            }
+				woocommerce_form_field( $key, $field, $default_value );
+
+			}
 
 			
-		
 
+
+		}
 	}
 	?>
 	<div class="clear"></div>
