@@ -732,11 +732,9 @@ class pcfme_manage_extrafield_class {
          wp_enqueue_script( 'moment', ''.pcfme_PLUGIN_URL.'assets/js/moment.js');
 		 wp_enqueue_script( 'daterangepicker', ''.pcfme_PLUGIN_URL.'assets/js/daterangepicker.js',array('moment'));
 		 
-		 if ($pcfme_woo_version < 2.3) {
-		 	wp_enqueue_script( 'pcfme-frontend1', ''.pcfme_PLUGIN_URL.'assets/js/frontend1.js' );
-		 } else {
+
             wp_enqueue_script( 'pcfme-frontend2', ''.pcfme_PLUGIN_URL.'assets/js/frontend2.js',array(),$pcfme_checkout_version );
-		 }
+		 
          
         $pcfmefrontend_array = array( 
 		    'datepicker_format'               => $datepicker_format,
@@ -1213,7 +1211,7 @@ public function pcfmeselect_form_field( $field, $key, $args, $value) {
 		if ( $args['label'] )
 			$field .= '<label for="' . esc_attr( $key ) . '" class="' . implode( ' ', $args['label_class'] ) .'">' . $args['label'] . $required . '</label>';
 
-		$field .= '<input dates_to_disable="'.$disable_specific_dates.'" type="text" class="'.$fees_class.' '. $datepicker_class .' input-text  '. pcfmeinput_conditional_class($key) .'" name="' . esc_attr( $key ) . '" id="' . esc_attr( $key ) . '" placeholder="' . $args['placeholder'] . '" '.$args['maxlength'].' value="' . esc_attr( $defalt_val ) . '" />
+		$field .= '<input dates_to_disable="'.$disable_specific_dates.'" type="text" class=" '. $datepicker_class .' input-text  '. pcfmeinput_conditional_class($key) .'" name="' . esc_attr( $key ) . '" id="' . esc_attr( $key ) . '" placeholder="' . $args['placeholder'] . '" '.$args['maxlength'].' value="' . esc_attr( $defalt_val ) . '" />
 			</p>' . $after;
 
 		return $field;

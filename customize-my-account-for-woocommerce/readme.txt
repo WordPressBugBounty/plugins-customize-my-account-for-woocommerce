@@ -6,17 +6,17 @@ Tested up to: 6.6.2
 WC Tested up to: 9.3.3
 WC Requires at least: 4.0
 Requires PHP: 5.2
-Stable tag: 2.7.27
+Stable tag: 2.7.28
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-SysBasics Customize My Account for WooCommerce Plugin add dashboard links , WooCommerce user avatar and lets you manage My Account endpoints.
+Manage/customize WooCommerce My Account Page along with endpoints, user avatar , account/registration fields and much more 
 
 == Description ==
 
 <h3>Customize My Account for WooCommerce</h3>
 
-Customize your default my account page. Reorder them , hide existing core endpoints. You will also be able to change the default endpoint. 
+SysBasics Customize My Account for WooCommerce Plugin add dashboard links , user avatar, manage My Account endpoints & account/registration fields
 
 <p><a href="https://sysbasics.com/go/customize/" title="Customize My Account for WooCommerce pro" rel="nofollow">Upgrade to pro</a></p>
 
@@ -145,8 +145,9 @@ Learn more about how [Appsero collects and uses this data](https://Appsero.com/p
 == Changelog ==
 
 
-Version 2.7.27 - 01 November 2024 
+Version 2.7.28 - 03 November 2024 
 
+- 2.7.28 - Fix - issues with datepicker field.
 - 2.7.27 - Fix - Translation issues.
 - 2.7.26 - Fix - Bugs that created issue with checkout fields.
 - 2.7.25 - Ehnahcement - Dashboard links feature.

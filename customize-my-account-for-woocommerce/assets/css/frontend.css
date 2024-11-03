@@ -587,3 +587,7 @@ ul.wcmamtx_vertical_menu li.is-active {
     color: white;
     background-color: #d8d8ed;
 }
+
+.theme-neve .wcmamtx_intro_text {
+    width: 30% !important;
+}
