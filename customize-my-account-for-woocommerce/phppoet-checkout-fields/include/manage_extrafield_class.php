@@ -733,7 +733,7 @@ class pcfme_manage_extrafield_class {
 		 wp_enqueue_script( 'daterangepicker', ''.pcfme_PLUGIN_URL.'assets/js/daterangepicker.js',array('moment'));
 		 
 
-            wp_enqueue_script( 'pcfme-frontend2', ''.pcfme_PLUGIN_URL.'assets/js/frontend2.js',array(),$pcfme_checkout_version );
+         wp_enqueue_script( 'pcfme-frontend2', ''.pcfme_PLUGIN_URL.'assets/js/frontend2.js',array(),$pcfme_checkout_version );
 		 
          
         $pcfmefrontend_array = array( 
@@ -770,9 +770,7 @@ class pcfme_manage_extrafield_class {
 
 
 
-	 	$fees_class       = '';
 
-	 	$fees_class       = pcfme_get_fees_class($key);
 
 
 	 	$value = isset($args['hidden_default']) ? $args['hidden_default'] : "Yes";
@@ -781,7 +779,7 @@ class pcfme_manage_extrafield_class {
 
 
 	 	$field = '
-	 	<p class="form-row ' . implode( ' ', $args['class'] ) .' " id="' . $key . '_field"><input type="hidden" class="'.$fees_class.' input-text ' . esc_attr( implode( ' ', $args['input_class'] ) ) .'  '. pcfmeinput_conditional_class($key) .'" name="' . esc_attr( $key ) . '" id="' . esc_attr( $key ) . '"   ' . $args['autocomplete'] . ' value="' . esc_attr( $value ) . '" />
+	 	<p class="form-row ' . implode( ' ', $args['class'] ) .' " id="' . $key . '_field"><input type="hidden" class=" input-text ' . esc_attr( implode( ' ', $args['input_class'] ) ) .'  '. pcfmeinput_conditional_class($key) .'" name="' . esc_attr( $key ) . '" id="' . esc_attr( $key ) . '"   ' . $args['autocomplete'] . ' value="' . esc_attr( $value ) . '" />
 	 	</p>' . $after;
 
 
@@ -1149,7 +1147,7 @@ public function pcfmeselect_form_field( $field, $key, $args, $value) {
 
         $field = '<p class="form-row ' . implode( ' ', $args['class'] ) .' " id="' . $key . '_field">
             <label for="' . $key . '" class="' . implode( ' ', $args['label_class'] ) .'">' . $args['label']. $required . '</label>
-            <select name="' . $key . '[]" id="' . $key . '" class="'.$fees_class.' select pcfme-multiselect  '. pcfmeinput_conditional_class($key) .'" multiple="multiple">
+            <select name="' . $key . '[]" id="' . $key . '" class=" select pcfme-multiselect  '. pcfmeinput_conditional_class($key) .'" multiple="multiple">
                 ' . $options . '
             </select>
         </p>' . $after;
@@ -1234,7 +1232,7 @@ public function pcfmeselect_form_field( $field, $key, $args, $value) {
 
 		$after ='';
 		
-		 
+		
 		
 		if (isset($args['disable_past'])) {
 			$datepicker_class='pcfme-datetimepicker-disable-past';
@@ -1248,6 +1246,8 @@ public function pcfmeselect_form_field( $field, $key, $args, $value) {
 
 
 		$defalt_val = '';
+
+        $defalt_val = isset($value) ? $value : $defalt_val;
 
 
 		if (isset($args['enable_default_date'])) {
@@ -1340,7 +1340,9 @@ public function pcfmeselect_form_field( $field, $key, $args, $value) {
 		} else {
 			$datepicker_class='pcfme-daterangepicker';
 		}
+        
 
+        $defalt_val = isset($value) ? $value : $defalt_val;
 
 
 
@@ -1355,7 +1357,7 @@ public function pcfmeselect_form_field( $field, $key, $args, $value) {
 		if ( $args['label'] )
 			$field .= '<label for="' . esc_attr( $key ) . '" class="' . implode( ' ', $args['label_class'] ) .'">' . $args['label'] . $required . '</label>';
 
-		$field .= '<input type="text" class="'.$fees_class.' '. $datepicker_class .' input-text  '. pcfmeinput_conditional_class($key) .'" name="' . esc_attr( $key ) . '" id="' . esc_attr( $key ) . '" placeholder="' . $args['placeholder'] . '" '.$args['maxlength'].' value="" />
+		$field .= '<input type="text" class=" '. $datepicker_class .' input-text  '. pcfmeinput_conditional_class($key) .'" name="' . esc_attr( $key ) . '" id="' . esc_attr( $key ) . '" placeholder="' . $args['placeholder'] . '" '.$args['maxlength'].' value="'.$defalt_val.'" />
 			</p>' . $after;
 
 		return $field;
@@ -1382,7 +1384,7 @@ public function pcfmeselect_form_field( $field, $key, $args, $value) {
 
 		$after ='';
 		
-		
+		$defalt_val = isset($value) ? $value : $defalt_val;
 
 		
 		if (isset($args['disable_past'])) {
@@ -1402,7 +1404,7 @@ public function pcfmeselect_form_field( $field, $key, $args, $value) {
 		if ( $args['label'] )
 			$field .= '<label for="' . esc_attr( $key ) . '" class="' . implode( ' ', $args['label_class'] ) .'">' . $args['label'] . $required . '</label>';
 
-		$field .= '<input type="text" class=" '. $datepicker_class .' input-text  '. pcfmeinput_conditional_class($key) .'" name="' . esc_attr( $key ) . '" id="' . esc_attr( $key ) . '" placeholder="' . $args['placeholder'] . '" '.$args['maxlength'].' value="" />
+		$field .= '<input type="text" class=" '. $datepicker_class .' input-text  '. pcfmeinput_conditional_class($key) .'" name="' . esc_attr( $key ) . '" id="' . esc_attr( $key ) . '" placeholder="' . $args['placeholder'] . '" '.$args['maxlength'].' value="'.$defalt_val.'" />
 			</p>' . $after;
 
 		return $field;
@@ -1433,6 +1435,8 @@ public function pcfmeselect_form_field( $field, $key, $args, $value) {
 
 
 		$defalt_val = '';
+
+		$defalt_val = isset($value) ? $value : $defalt_val;
 
 		if (isset($args['enable_default_time'])) {
 

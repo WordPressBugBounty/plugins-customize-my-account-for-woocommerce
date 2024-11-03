@@ -26,7 +26,7 @@ $extra_settings    = (array) get_option('pcfme_extra_settings');
 
 if ( current_user_can( 'administrator' ) ) {
 
-		echo '<div class="woocommerce-info">'.__( 'You can Manage these Fields, visit <a target="_blank" class"button" href="'.admin_url( '/admin.php?page=pcfme_plugin_options&tab=pcfme_additional_settings' ).'">My Account Fields</a> tab.This notice is visible to Administrator only.', 'customize-my-account-for-woocommerce' ).'</div>';
+		echo '<div class="woocommerce-info">'.__( 'You can Manage these Fields, visit <a target="_blank" class"button" href="'.admin_url( '/admin.php?page=pcfme_plugin_options&tab=pcfme_additional_settings' ).'">My Account Fields</a>. To view user information visit <a target="_blank" class"button" href="'.admin_url( '/users.php' ).'">Users Page</a>.This notice is visible to Administrator only.', 'customize-my-account-for-woocommerce' ).'</div>';
 
 
 
@@ -146,6 +146,8 @@ if ( current_user_can( 'administrator' ) ) {
 
 			$default_value = get_user_meta( get_current_user_id(), $field_key, true );
 
+			
+
 
 			if (isset($field['type']) &&  ($field['type'] == "pcpcfmeselect")) {
 
@@ -154,6 +156,8 @@ if ( current_user_can( 'administrator' ) ) {
 				woocommerce_form_field( $field_html, $key, $field, $default_value );
 
 			} else {
+
+
 
 				woocommerce_form_field( $key, $field, $default_value );
 

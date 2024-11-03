@@ -42,7 +42,7 @@ $noticerowno3 = 1;
 		?>	  
 		<button type="button" href="#" data-etype="additional" id="wcmamtx_add_field" class="btn btn-primary" >
 			<span class="dashicons dashicons-insert"></span>
-			<?php echo esc_html__('Add Account Field','customize-my-account-for-woocommerce-pro'); ?>
+			<?php echo esc_html__('Add Account Field','customize-my-account-for-woocommerce'); ?>
 		</button>
 
 		

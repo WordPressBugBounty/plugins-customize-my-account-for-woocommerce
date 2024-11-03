@@ -851,7 +851,23 @@ class pcfme_add_settings_page_class {
 				
 				<?php 
 
-				
+				$checkout_url = '#';
+				$checkout_url = wc_get_account_endpoint_url( 'edit-account' );;
+				?>
+				<div class="pcfme_additional_buttons">
+					<a type="button" target="_blank" href="<?php echo $checkout_url; ?>" id="pcfme_frontend_link" class="btn btn-primary pcfme_frontend_link">
+						<span class="dashicons dashicons-welcome-view-site"></span>
+						<?php echo esc_html__('Frontend','pcfme'); ?>
+					</a>
+
+					<?php 
+					if ($tab != $this->extra_settings_key) {
+						do_action( 'pcfme_add_author_links' ); 
+					}
+
+					?>
+				</div>
+				<?php
 
 
 
@@ -1673,22 +1689,22 @@ class pcfme_add_settings_page_class {
                         </label>
 	                </td>
 			        <td width="85%">
-                           <?php echo esc_html__('This feature is available in pro version only','customize-my-account-for-woocommerce'); ?>
+                          <?php echo esc_html__('This feature is available in pro version','customize-my-account-for-woocommerce'); ?>
 			        </td>
 			    </tr>
 
 				<?php if (isset($field['conditional'])) $conditional_field = $field['conditional']; ?>
 
 				<tr class="checkout_field_conditional_tr_new" style="">
-			        <td width="15%">
-                        <label for="notice_category"><span class="pcfmeformfield">
-                        	<?php echo esc_html__('Field Conditional Rules','customize-my-account-for-woocommerce'); ?></span>
-                        </label>
-	                </td>
-	                <td width="85%">
-	                	<?php echo esc_html__('This feature is available in pro version only','customize-my-account-for-woocommerce'); ?>
-	                </td>
-			    </tr>
+					<td width="15%">
+						<label for="notice_category"><span class="pcfmeformfield">
+							<?php echo esc_html__('Field Conditional Rules','customize-my-account-for-woocommerce'); ?></span>
+						</label>
+					</td>
+					<td width="85%">
+						<?php echo esc_html__('This feature is available in pro version','customize-my-account-for-woocommerce'); ?>
+					</td>
+				</tr>
 
 			 <?php if (($slug != 'pcfme_additional_settings') && ($key != 'order_comments')) { ?>
 			   <tr>
