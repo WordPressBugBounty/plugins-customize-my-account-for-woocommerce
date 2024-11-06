@@ -830,7 +830,7 @@ class pcfme_add_settings_page_class {
 
 
 
-		$tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'pcfme_additional_settings';
+		$tab = isset( $_GET['tab'] ) ? sanitize_text_field($_GET['tab']) : 'pcfme_additional_settings';
 		global $billing_fields;
 		$billing_fields = '';
 		?>
@@ -1735,7 +1735,7 @@ class pcfme_add_settings_page_class {
 	
 
 	public function plugin_options_tabs() {
-		$current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : $this->billing_settings_key;
+		$current_tab = isset( $_GET['tab'] ) ? sanitize_text_field($_GET['tab']) : $this->billing_settings_key;
 
 		do_action('sysbasics_extra_button_admin');
 
