@@ -6,7 +6,7 @@ Tested up to: 6.6.2
 WC Tested up to: 9.3.3
 WC Requires at least: 4.0
 Requires PHP: 5.2
-Stable tag: 2.7.30
+Stable tag: 2.8.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -145,6 +145,10 @@ Learn more about how [Appsero collects and uses this data](https://Appsero.com/p
 == Changelog ==
 
 
+Version 2.8.0 - 07 November 2024
+
+- Enhancement - Added Missing strings after plugin check(pcp) test.
+
 Version 2.7.30 - 06 November 2024 
 
 - 2.7.30 - Fix - Cross-Site Scripting Vulnerability discovered by vgo0 at WordFence Security.
@@ -208,7 +212,17 @@ Version 2.0.13 - 14 December 2023
 
 == Frequently Asked Questions ==
 
+= How to enable dashboard links ? =
 
+To enable dashboard links paste below given php code into your theme's functions.php or create php code snippet into code snippet plugin.
+
+<pre>
+add_filter('wcmamtx_show_dashboard_links','wcmamtx_show_dashboard_links_function');
+
+function wcmamtx_show_dashboard_links_function() {
+    return 'yes';
+}
+</pre>
 
 = Is plugin compatible with WPML ? =
 

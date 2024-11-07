@@ -1,6 +1,6 @@
 {
-  "name": "appsero/client",
-  "description": "Appsero Client",
+  "name": "wcmamtx_Appsero/client",
+  "description": "wcmamtx_Appsero Client",
   "keywords": [
     "analytics",
     "wordpress",
@@ -12,12 +12,12 @@
   "authors": [
     {
       "name": "Tareq Hasan",
-      "email": "tareq@appsero.com"
+      "email": "tareq@wcmamtx_Appsero.com"
     }
   ],
   "autoload": {
     "psr-4": {
-      "Appsero\\": "src/"
+      "wcmamtx_Appsero\\": "src/"
     }
   },
   "require": {

@@ -114,7 +114,7 @@ if (!function_exists('wcmamtx_review_reminder_div')) {
 		<div class="wcmamtx_notice_div review">
 
 			<div class="wcmamtx_notice_div_uppertext">
-				<?php echo esc_html__( 'If you like our plugin kindly rate it.'); ?>
+				<?php echo esc_html__( 'If you like our plugin kindly rate it.','customize-my-account-for-woocommerce'); ?>
 
 				<a type="button" target="_blank" href="https://wordpress.org/support/plugin/customize-my-account-for-woocommerce/reviews/#new-post"  class="" >
 						
@@ -727,7 +727,7 @@ if (!function_exists('wcmamtx_load_pro_reminder_div')) {
 		<div class="wcmamtx_notice_div">
 
 			<div class="wcmamtx_notice_div_uppertext">
-				<?php echo esc_html__( 'This feature is available in pro version only.'); ?>
+				<?php echo esc_html__( 'This feature is available in pro version only.','customize-my-account-for-woocommerce'); ?>
 
 			</div>
 

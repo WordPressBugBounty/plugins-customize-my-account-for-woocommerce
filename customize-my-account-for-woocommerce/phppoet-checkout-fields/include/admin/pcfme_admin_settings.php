@@ -113,7 +113,7 @@ class pcfme_add_settings_page_class {
 			wp_redirect($redirect_tab);
 			exit;
 		} else {
-			wp_die( __( 'Invalid nonce specified' ), __( 'Error' ), array(
+			wp_die( __( 'Invalid nonce specified','customize-my-account-for-woocommerce' ), __( 'Error','customize-my-account-for-woocommerce' ), array(
 				'response' 	=> 403,
 				'back_link' => 'admin.php?page=pcfme_plugin_options',
 
@@ -233,7 +233,7 @@ class pcfme_add_settings_page_class {
 			wp_redirect($redirect_tab);
 			exit;
 		} else {
-			wp_die( __( 'Invalid nonce specified' ), __( 'Error' ), array(
+			wp_die( __( 'Invalid nonce specified','customize-my-account-for-woocommerce' ), __( 'Error','customize-my-account-for-woocommerce' ), array(
 				'response' 	=> 403,
 				'back_link' => 'admin.php?page=pcfme_plugin_options',
 
@@ -809,7 +809,7 @@ class pcfme_add_settings_page_class {
 	   global $billing_pcfmesettings_page;
 
 	    add_menu_page(
-          esc_html__( 'sysbasics', 'plps' ),
+          esc_html__( 'sysbasics','customize-my-account-for-woocommerce' ),
          'SysBasics',
          'manage_woocommerce',
          'sysbasics',
@@ -852,12 +852,12 @@ class pcfme_add_settings_page_class {
 				<?php 
 
 				$checkout_url = '#';
-				$checkout_url = wc_get_account_endpoint_url( 'edit-account' );;
+				$checkout_url = wc_get_account_endpoint_url( 'edit-account' );
 				?>
 				<div class="pcfme_additional_buttons">
 					<a type="button" target="_blank" href="<?php echo $checkout_url; ?>" id="pcfme_frontend_link" class="btn btn-primary pcfme_frontend_link">
 						<span class="dashicons dashicons-welcome-view-site"></span>
-						<?php echo esc_html__('Frontend','pcfme'); ?>
+						<?php echo esc_html__('Frontend','customize-my-account-for-woocommerce'); ?>
 					</a>
 
 					<?php 
@@ -1399,7 +1399,7 @@ class pcfme_add_settings_page_class {
 			   <tr class="wcmamtx_dash_notice_tr" style="<?php if (isset($field['dashboard_notice']) && ($field['dashboard_notice'] == 1)) { echo "display:table-row;";} else { echo 'display:none;'; } ?>">
 			   	<?php 
 
-			   			$default_dash_notice = ''.__( 'Kindly Enter required details <a href="{edit_account_link}">'.$cpm_lable.'</a>', 'customize-my-account-for-woocommerce' ).'';
+			   			$default_dash_notice = ''.__( 'Kindly Enter required details','customize-my-account-for-woocommerce').'<a href="{edit_account_link}">'.$cpm_lable.'</a>';
 
 			   			if (isset($field['dash_notice_text']) && ($field['dash_notice_text'] != "")) { 
 			   				$ds_text_default = $field['dash_notice_text']; 

@@ -45,8 +45,10 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
         $plugin_options = (array) get_option( 'wcmamtx_plugin_options' );
 
         $plugin_options = (array) get_option( 'wcmamtx_plugin_options' );
+
+        $show_dash_links = apply_filters('wcmamtx_show_dashboard_links',"no");
          
-        if ( (isset($plugin_options['disable_dashboard_links'])) && ($plugin_options['disable_dashboard_links'] == "yes")) {
+        if ( $show_dash_links == "no") {
             return;
         }
 

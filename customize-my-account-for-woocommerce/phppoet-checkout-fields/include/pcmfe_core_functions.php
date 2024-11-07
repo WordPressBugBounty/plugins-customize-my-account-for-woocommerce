@@ -2299,7 +2299,7 @@ if (!function_exists('pcfme_load_license_reminder_div')) {
 		<div class="pcfme_notice_div">
 
 			<div class="pcfme_notice_div_uppertext">
-				<?php echo esc_html__( 'Its been more than a month since you activated plugin.Kindly activate your license to keep accessing this section.Your frontend functionality is unaffected.'); ?>
+				<?php echo esc_html__( 'Its been more than a month since you activated plugin.Kindly activate your license to keep accessing this section.Your frontend functionality is unaffected.','customize-my-account-for-woocommerce'); ?>
 
 			</div>
 

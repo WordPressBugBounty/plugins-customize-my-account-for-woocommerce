@@ -1,5 +1,5 @@
-# AppSero Client
-### Version 1.3.0
+# wcmamtx_Appsero Client
+### Version 2.0.2
 
 - [Installation](#installation)
 - [Insights](#insights)
@@ -8,14 +8,14 @@
 
 ## Installation
 
-You can install AppSero Client in two ways, via composer and manually.
+You can install wcmamtx_Appsero Client in two ways, via composer and manually.
 
 ### 1. Composer Installation
 
 Add dependency in your project (theme/plugin):
 
 ```
-composer require appsero/client
+composer require wcmamtx_Appsero/client
 ```
 
 Now add `autoload.php` in your file if you haven't done already.
@@ -30,25 +30,25 @@ Clone the repository in your project.
 
 ```bash
 cd /path/to/your/project/folder
-git clone https://github.com/AppSero/client.git appsero
+git clone https://github.com/wcmamtx_Appsero/client.git wcmamtx_Appsero
 ```
 
 Now include the dependencies in your plugin/theme.
 
 ```php
-if( !class_exists('Appsero\Client') ) {
-    require __DIR__ . '/appsero/src/Client.php';
+if( !class_exists('wcmamtx_Appsero\Client') ) {
+    require __DIR__ . '/wcmamtx_Appsero/src/Client.php';
 }
 ```
 
 ## Insights
 
-AppSero can be used in both themes and plugins.
+wcmamtx_Appsero can be used in both themes and plugins.
 
-The `Appsero\Client` class has *three* parameters:
+The `wcmamtx_Appsero\Client` class has *three* parameters:
 
 ```php
-$client = new Appsero\Client( $hash, $name, $file );
+$client = new wcmamtx_Appsero\Client( $hash, $name, $file );
 ```
 
 - **hash** (*string*, *required*) - The unique identifier for a plugin or theme.
@@ -59,7 +59,7 @@ $client = new Appsero\Client( $hash, $name, $file );
 
 Please refer to the **installation** step before start using the class.
 
-You can obtain the **hash** for your plugin for the [Appsero Dashboard](https://dashboard.appsero.com). The 3rd parameter **must** have to be the main file of the plugin.
+You can obtain the **hash** for your plugin for the [wcmamtx_Appsero Dashboard](https://dashboard.wcmamtx_Appsero.com). The 3rd parameter **must** have to be the main file of the plugin.
 
 ```php
 /**
@@ -67,13 +67,13 @@ You can obtain the **hash** for your plugin for the [Appsero Dashboard](https://
  *
  * @return void
  */
-function appsero_init_tracker_appsero_test() {
+function wcmamtx_Appsero_init_tracker_wcmamtx_Appsero_test() {
 
-    if ( ! class_exists( 'Appsero\Client' ) ) {
-        require_once __DIR__ . '/appsero/src/Client.php';
+    if ( ! class_exists( 'wcmamtx_Appsero\Client' ) ) {
+        require_once __DIR__ . '/wcmamtx_Appsero/src/Client.php';
     }
 
-    $client = new Appsero\Client( 'a4a8da5b-b419-4656-98e9-4a42e9044891', 'Akismet', __FILE__ );
+    $client = new wcmamtx_Appsero\Client( 'a4a8da5b-b419-4656-98e9-4a42e9044891', 'Akismet', __FILE__ );
 
     // Active insights
     $client->insights()->init();
@@ -88,7 +88,7 @@ function appsero_init_tracker_appsero_test() {
     $client->license()->add_settings_page( $args );
 }
 
-appsero_init_tracker_appsero_test();
+wcmamtx_Appsero_init_tracker_wcmamtx_Appsero_test();
 ```
 
 Make sure you call this function directly, never use any action hook to call this function.
@@ -97,13 +97,13 @@ Make sure you call this function directly, never use any action hook to call thi
 > For themes example code that needs to be used on your themes `functions.php` file.
 
 ## Using the Updater (to manage Pro plugin updates)
-> By default the Appsero client doesn't include Updater functionalities in this client. If you want to manage updates for your premium plugins, please include [the Updater](https://github.com/Appsero/updater) separately inside your product
+> By default the wcmamtx_Appsero client doesn't include Updater functionalities in this client. If you want to manage updates for your premium plugins, please include [the Updater](https://github.com/wcmamtx_Appsero/updater) separately inside your product
 
 
 ## More Usage
 
 ```php
-$client = new Appsero\Client( 'a4a8da5b-b419-4656-98e9-4a42e9044892', 'Twenty Twelve', __FILE__ );
+$client = new wcmamtx_Appsero\Client( 'a4a8da5b-b419-4656-98e9-4a42e9044892', 'Twenty Twelve', __FILE__ );
 ```
 
 #### 1. Hiding the notice
@@ -126,7 +126,7 @@ $client->insights()
 
 #### 3. Adding extra data
 
-You can add extra metadata from your theme or plugin. In that case, the **keys** has to be whitelisted from the Appsero dashboard.
+You can add extra metadata from your theme or plugin. In that case, the **keys** has to be whitelisted from the wcmamtx_Appsero dashboard.
 `add_extra` method also support callback as parameter, If you need database call then callback is best for you.
 
 ```php
@@ -167,7 +167,7 @@ $client->set_textdomain( 'your-project-textdomain' );
 
 
 #### 5. Get Plugin Data
-If you want to get the most used plugins with your plugin or theme, send the active plugins' data to Appsero.
+If you want to get the most used plugins with your plugin or theme, send the active plugins' data to wcmamtx_Appsero.
 ```php
 $client->insights()
        ->add_plugin_data()
@@ -190,7 +190,7 @@ Check your plugin/theme is using with valid license or not, First create a globa
 If you are using it outside of same function make sure you global the variable before using the condition.
 
 ```php
-$client = new Appsero\Client( 'a4a8da5b-b419-4656-98e9-4a42e9044892', 'Twenty Twelve', __FILE__ );
+$client = new wcmamtx_Appsero\Client( 'a4a8da5b-b419-4656-98e9-4a42e9044892', 'Twenty Twelve', __FILE__ );
 
 $args = array(
     'type'        => 'submenu',
@@ -239,7 +239,7 @@ if ( ! $twenty_twelve_license->error ) {
 
 ### Set Custom Deactivation Reasons
 
-First set your deactivation reasons in Appsero dashboard then map them in your plugin/theme using filter hook.
+First set your deactivation reasons in wcmamtx_Appsero dashboard then map them in your plugin/theme using filter hook.
 
 - **id** is the deactivation slug
 - **text** is the deactivation title
@@ -247,7 +247,7 @@ First set your deactivation reasons in Appsero dashboard then map them in your p
 - **icon** You can set SVG icon with 23x23 size
 
 ```php
-add_filter( 'appsero_custom_deactivation_reasons', function () {
+add_filter( 'wcmamtx_Appsero_custom_deactivation_reasons', function () {
     return [
         [
             'id'          => 'looks-buggy',
@@ -335,4 +335,4 @@ add_action('PLUGIN_OR_THEME_SLUG_uninstall_reason_submitted', 'sample_uninstall_
  
 ## Credits
 
-Created and maintained by [Appsero](https://appsero.com).
+Created and maintained by [wcmamtx_Appsero](https://wcmamtx_Appsero.com).

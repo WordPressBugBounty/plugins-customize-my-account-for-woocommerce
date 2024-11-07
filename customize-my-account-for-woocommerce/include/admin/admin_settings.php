@@ -213,7 +213,7 @@ class wcmamtx_add_settings_page_class {
             exit;
         }           
         else {
-            wp_die( __( 'Invalid nonce specified' ), __( 'Error' ), array(
+            wp_die( __( 'Invalid nonce specified','customize-my-account-for-woocommerce' ), __( 'Error','customize-my-account-for-woocommerce' ), array(
                 'response'  => 403,
                 'back_link' => 'admin.php?page=wcmamtx_advanced_settings&tab=wcmamtx_order_actions',
 
@@ -321,7 +321,7 @@ class wcmamtx_add_settings_page_class {
             exit;
         }           
         else {
-            wp_die( __( 'Invalid nonce specified' ), __( 'Error' ), array(
+            wp_die( __( 'Invalid nonce specified','customize-my-account-for-woocommerce' ), __( 'Error','customize-my-account-for-woocommerce' ), array(
                 'response'  => 403,
                 'back_link' => 'admin.php?page=wcmamtx_advanced_settings&tab=wcmamtx_order_settings',
 
@@ -512,7 +512,7 @@ class wcmamtx_add_settings_page_class {
 			exit;
 		}			
 		else {
-			wp_die( __( 'Invalid nonce specified' ), __( 'Error' ), array(
+			wp_die( __( 'Invalid nonce specified','customize-my-account-for-woocommerce' ), __( 'Error','customize-my-account-for-woocommerce' ), array(
 				'response' 	=> 403,
 				'back_link' => 'admin.php?page=wcmamtx_advanced_settings',
 
@@ -798,7 +798,7 @@ class wcmamtx_add_settings_page_class {
 
         $this->wcmamtx_plugin_settings_tab[$this->wcmamtx_avatar_settings_page] = esc_html__( 'User Avatar' ,'customize-my-account-for-woocommerce');
 
-        $this->wcmamtx_plugin_settings_tab[$this->wcmamtx_plugin_options_key] = esc_html__( 'Settings' ,'customize-my-account-for-woocommerce');
+
 
         $this->wcmamtx_plugin_settings_tab[$this->wcmamtx_wizard_page] = esc_html__( 'Setup Wizard' ,'customize-my-account-for-woocommerce');
        
@@ -827,12 +827,6 @@ class wcmamtx_add_settings_page_class {
         add_settings_field( 'avatar_option', '', array( $this, 'wcmamtx_avatar_page' ), $this->wcmamtx_avatar_settings_page, 'wcmamtx_avatar_section' );
 
 
-
-		register_setting( $this->wcmamtx_plugin_options_key, $this->wcmamtx_plugin_options_key );
-
-		add_settings_section( 'wcmamtx_general_section', '', '', $this->wcmamtx_plugin_options_key );
-
-		add_settings_field( 'general_option', '', array( $this, 'wcmamtx_options_page' ), $this->wcmamtx_plugin_options_key, 'wcmamtx_general_section' );
 
 
         
@@ -946,16 +940,6 @@ class wcmamtx_add_settings_page_class {
 
 
 
-	/*
-     * Plugin options page
-     * 
-     */
-	
-	public function wcmamtx_options_page() { 
-
-	   include ('forms/options_form.php');
-		   
-	}
 
 
 
@@ -980,7 +964,7 @@ class wcmamtx_add_settings_page_class {
         );
 	    
 
-        $general_wcmamtxsettings_page = add_submenu_page( 'sysbasics', wcmamtx_PLUGIN_name , wcmamtx_PLUGIN_name , 'manage_woocommerce', esc_html__($this->wcmamtx_notices_settings_page), array($this, 'plugin_options_page'));
+        $general_wcmamtxsettings_page = add_submenu_page( 'sysbasics', wcmamtx_PLUGIN_name , wcmamtx_PLUGIN_name , 'manage_woocommerce', $this->wcmamtx_notices_settings_page, array($this, 'plugin_options_page'));
 
 
 	         
@@ -1222,7 +1206,7 @@ $current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : sanitize_text_field($this-
             echo '<a target="_blank" class="btn wcmamtx_support_buton btn-warning" href="https://www.sysbasics.com/go/customize-free-help/"><span class="wcmamtx_docs_icon dashicons dashicons-admin-generic"></span>'.esc_html__( 'Support (Live Chat)' ,'customize-my-account-for-woocommerce').'</a>';
         } else {
 
-            echo '<a class="btn wcmamtx_exit_setup btn-danger" href="?page=' . esc_html__($this->wcmamtx_notices_settings_page) . '&wcmamtx_disable_wizard=yes"><span class="wcmamtx_docs_icon dashicons dashicons-controls-forward"></span>'.esc_html__( 'Skip Quick Setup Wizard' ,'customize-my-account-for-woocommerce').'</a>';
+            echo '<a class="btn wcmamtx_exit_setup btn-danger" href="?page=' .$this->wcmamtx_notices_settings_page. '&wcmamtx_disable_wizard=yes"><span class="wcmamtx_docs_icon dashicons dashicons-controls-forward"></span>'.esc_html__( 'Skip Quick Setup Wizard' ,'customize-my-account-for-woocommerce').'</a>';
 
         }
 
@@ -1287,7 +1271,7 @@ $current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : sanitize_text_field($this-
 
                $active = $current_tab == $tab_key ? 'nav-tab-active' : '';
 
-               echo '<a class="nav-tab ' . esc_html__($active) . ' '.$tab_key.' " href="?page=' . esc_html__($this->wcmamtx_notices_settings_page) . '&tab=' . esc_html__($tab_key) . '">' . esc_html__($tab_caption) . '</a>'; 
+               echo '<a class="nav-tab ' . $active . ' '.$tab_key.' " href="?page=' . $this->wcmamtx_notices_settings_page . '&tab=' . $tab_key . '">' . esc_html($tab_caption) . '</a>'; 
 
             }
 
@@ -1299,7 +1283,7 @@ $current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : sanitize_text_field($this-
 
             $active = $current_tab == 'wcmamtx_wizard_settings' ? 'nav-tab-active' : '';
 
-            echo '<a class="nav-tab ' . esc_html__($active) . '" href="?page=' . esc_html__($this->wcmamtx_notices_settings_page) . '&tab=wcmamtx_wizard_settings">' . esc_html__('Quick Setup Wizard','customize-my-account-for-woocommerce') . '</a>'; 
+            echo '<a class="nav-tab ' . esc_html($active) . '" href="?page=' . $this->wcmamtx_notices_settings_page. '&tab=wcmamtx_wizard_settings">' . esc_html__('Quick Setup Wizard','customize-my-account-for-woocommerce') . '</a>'; 
 
             echo '</h2>';
 
@@ -1530,7 +1514,7 @@ $current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : sanitize_text_field($this-
                         
                     </td>
                 	<td>
-                        <p><?php  echo esc_html__('Example :- '.site_url().'/?order_id={orderid}&trekking={your_custom_meta_key}','customize-my-account-for-woocommerce'); ?></p>
+                        <p><?php  echo ''.esc_html__('Example','customize-my-account-for-woocommerce').' : '.site_url().'/?order_id={orderid}&trekking={your_custom_meta_key}'; ?></p>
                         <p><?php  echo esc_html__('You can use following variables inside url','customize-my-account-for-woocommerce'); ?></p>
                         <ul>
                         	<li><?php  echo esc_html__('{orderid} = Order ID','customize-my-account-for-woocommerce'); ?></li>
@@ -2011,7 +1995,7 @@ $current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : sanitize_text_field($this-
     		<div class="wcmamtx_accordion_handler">
     			
     				<input type="checkbox" class="wcmamtx_accordion_onoff" parentkey="<?php echo $key; ?>"  <?php if (isset($value['show']) && ($value['show'] != "no"))  { echo "checked"; } elseif (!isset($value['show'])) { echo 'checked';} ?>>
-    				<input type="hidden" class="<?php echo $key; ?>_hidden_checkbox" value='<?php if (isset($value['show']) && ($value['show'] == "no")) { echo "no"; } else { echo 'yes';} ?>' name='<?php  echo esc_html__($this->wcmamtx_notices_settings_page); ?>[<?php echo $key; ?>][show]'>
+    				<input type="hidden" class="<?php echo $key; ?>_hidden_checkbox" value='<?php if (isset($value['show']) && ($value['show'] == "no")) { echo "no"; } else { echo 'yes';} ?>' name='<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][show]'>
                 
     		</div>
 
@@ -2046,8 +2030,8 @@ $current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : sanitize_text_field($this-
         				</td>
         				<td>
         					<p><?php  echo esc_html__('This is third party endpoint.Some features may not work.','customize-my-account-for-woocommerce'); ?></p>
-        					<input type="hidden" name="<?php  echo esc_html__($this->wcmamtx_notices_settings_page); ?>[<?php echo $key; ?>][third_party]" value="yes">
-        					<input type="hidden" name="<?php  echo esc_html__($this->wcmamtx_notices_settings_page); ?>[<?php echo $key; ?>][endpoint_name]" value="<?php if (isset($name)) { echo $name; } ?>">
+        					<input type="hidden" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][third_party]" value="yes">
+        					<input type="hidden" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][endpoint_name]" value="<?php if (isset($name)) { echo $name; } ?>">
         				</td>
 
         			</tr>
@@ -2061,21 +2045,21 @@ $current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : sanitize_text_field($this-
                     	<label class="wcmamtx_accordion_label"><?php  echo esc_html__('Key','customize-my-account-for-woocommerce'); ?></label>
                     </td>
                     <td>
-                        <input type="text" class="wcmamtx_accordion_input" name="<?php  echo esc_html__($this->wcmamtx_notices_settings_page); ?>[<?php echo $key; ?>][endpoint_key]" value="<?php if (isset($value['endpoint_key'])) { echo $value['endpoint_key']; } else { echo $key; } ?>">
+                        <input type="text" class="wcmamtx_accordion_input" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][endpoint_key]" value="<?php if (isset($value['endpoint_key'])) { echo $value['endpoint_key']; } else { echo $key; } ?>">
                     </td>
             
                 </tr>
                 <?php } else { ?>
 
-            	    <input type="hidden" class="wcmamtx_accordion_input" name="<?php  echo esc_html__($this->wcmamtx_notices_settings_page); ?>[<?php echo $key; ?>][endpoint_key]" value="<?php if (isset($value['endpoint_key'])) { echo $value['endpoint_key']; } else { echo $key; } ?>">
+            	    <input type="hidden" class="wcmamtx_accordion_input" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][endpoint_key]" value="<?php if (isset($value['endpoint_key'])) { echo $value['endpoint_key']; } else { echo $key; } ?>">
 
 
                 <?php  } ?>
 
         
-                <input type="hidden" name="<?php  echo esc_html__($this->wcmamtx_notices_settings_page); ?>[<?php echo $key; ?>][wcmamtx_type]" value="<?php echo $wcmamtx_type; ?>">
+                <input type="hidden" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][wcmamtx_type]" value="<?php echo $wcmamtx_type; ?>">
 
-                <input type="hidden" name="<?php  echo esc_html__($this->wcmamtx_notices_settings_page); ?>[<?php echo $key; ?>][parent]" class="wcmamtx_parent_field" value="<?php echo $wcmamtx_parent; ?>">
+                <input type="hidden" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][parent]" class="wcmamtx_parent_field" value="<?php echo $wcmamtx_parent; ?>">
 
                 <?php if (!isset($third_party)) { ?>
 
@@ -2085,7 +2069,7 @@ $current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : sanitize_text_field($this-
                     </td>
                     <td>
 
-                        <input type="text" class="wcmamtx_accordion_input" name="<?php  echo esc_html__($this->wcmamtx_notices_settings_page); ?>[<?php echo $key; ?>][endpoint_name]" value="<?php if (isset($value['endpoint_name'])) { echo $value['endpoint_name']; } else { if (preg_match('/\b'.$key.'\b/', $core_fields ) ) { echo $value; } } ?>">
+                        <input type="text" class="wcmamtx_accordion_input" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][endpoint_name]" value="<?php if (isset($value['endpoint_name'])) { echo $value['endpoint_name']; } else { if (preg_match('/\b'.$key.'\b/', $core_fields ) ) { echo $value; } } ?>">
                     </td>
             
                 </tr>
@@ -2108,33 +2092,33 @@ $current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : sanitize_text_field($this-
 
                     	<div class="wcmamtx_icon_settings_div">
                     		<div class="form-check wcmamtx_icon_checkbox">
-                    			<input class="form-check-input wcmamtx_icon_source_radio" type="radio" name="<?php  echo esc_html__($this->wcmamtx_notices_settings_page); ?>[<?php echo $key; ?>][icon_source]"  value="default" <?php if ($icon_source == "default") { echo 'checked'; } ?>>
+                    			<input class="form-check-input wcmamtx_icon_source_radio" type="radio" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][icon_source]"  value="default" <?php if ($icon_source == "default") { echo 'checked'; } ?>>
                     			<label class="form-check-label wcmamtx_icon_checkbox_label" >
                     				<?php  echo esc_html__('Default Icon','customize-my-account-for-woocommerce'); ?>
                     			</label>
                     		</div>
                     		<div class="form-check wcmamtx_icon_checkbox">
-                    			<input class="form-check-input wcmamtx_icon_source_radio" type="radio" name="<?php  echo esc_html__($this->wcmamtx_notices_settings_page); ?>[<?php echo $key; ?>][icon_source]"  value="noicon" <?php if ($icon_source == "noicon") { echo 'checked'; } ?>>
+                    			<input class="form-check-input wcmamtx_icon_source_radio" type="radio" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][icon_source]"  value="noicon" <?php if ($icon_source == "noicon") { echo 'checked'; } ?>>
                     			<label class="form-check-label wcmamtx_icon_checkbox_label">
                     				<?php  echo esc_html__('No Icon','customize-my-account-for-woocommerce'); ?>
                     			</label>
                     		</div>
                     		<div class="form-check wcmamtx_icon_checkbox">
-                    			<input class="form-check-input wcmamtx_icon_source_radio" type="radio" name="<?php  echo esc_html__($this->wcmamtx_notices_settings_page); ?>[<?php echo $key; ?>][icon_source]"  value="custom" <?php if ($icon_source == "custom") { echo 'checked'; } ?>>
+                    			<input class="form-check-input wcmamtx_icon_source_radio" type="radio" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][icon_source]"  value="custom" <?php if ($icon_source == "custom") { echo 'checked'; } ?>>
                     			<label class="form-check-label wcmamtx_icon_checkbox_label">
                     				<?php  echo esc_html__('Font Awesome Icon','customize-my-account-for-woocommerce'); ?>
                     			</label>
                     		</div>
 
                     		<div class="form-check wcmamtx_icon_checkbox">
-                    			<input class="form-check-input wcmamtx_icon_source_radio" type="radio" name="<?php  echo esc_html__($this->wcmamtx_notices_settings_page); ?>[<?php echo $key; ?>][icon_source]"  value="dashicon" <?php if ($icon_source == "dashicon") { echo 'checked'; } ?>>
+                    			<input class="form-check-input wcmamtx_icon_source_radio" type="radio" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][icon_source]"  value="dashicon" <?php if ($icon_source == "dashicon") { echo 'checked'; } ?>>
                     			<label class="form-check-label wcmamtx_icon_checkbox_label">
                     				<?php  echo esc_html__('Dashicon','customize-my-account-for-woocommerce'); ?>
                     			</label>
                     		</div>
 
                             <div class="form-check wcmamtx_icon_checkbox">
-                                <input class="form-check-input wcmamtx_icon_source_radio" type="radio" name="<?php  echo esc_html__($this->wcmamtx_notices_settings_page); ?>[<?php echo $key; ?>][icon_source]"  value="upload" <?php if ($icon_source == "upload") { echo 'checked'; } ?>>
+                                <input class="form-check-input wcmamtx_icon_source_radio" type="radio" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][icon_source]"  value="upload" <?php if ($icon_source == "upload") { echo 'checked'; } ?>>
                                 <label class="form-check-label wcmamtx_icon_checkbox_label">
                                     <?php  echo esc_html__('Upload Icon','customize-my-account-for-woocommerce'); ?>
                                 </label>
@@ -2150,7 +2134,7 @@ $current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : sanitize_text_field($this-
                     </td>
                     <td>
 
-                        <input type="text" class="wcmamtx_iconpicker icon-class-input" name="<?php  echo esc_html__($this->wcmamtx_notices_settings_page); ?>[<?php echo $key; ?>][icon]" value="<?php if (isset($value['icon'])) { echo $value['icon']; } ?>">
+                        <input type="text" class="wcmamtx_iconpicker icon-class-input" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][icon]" value="<?php if (isset($value['icon'])) { echo $value['icon']; } ?>">
                         <button type="button" class="btn btn-primary picker-button"><?php  echo esc_html__('Chose Font Awesome Icon','customize-my-account-for-woocommerce'); ?></button>
                     </td>
             
@@ -2162,7 +2146,7 @@ $current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : sanitize_text_field($this-
                     </td>
                     <td>
 
-                        <input class="regular-text " id="dashicons_picker_example_<?php echo $key; ?>" type="text" name="<?php  echo esc_html__($this->wcmamtx_notices_settings_page); ?>[<?php echo $key; ?>][dashicon]" value="<?php if (isset($value['dashicon'])) { echo $value['dashicon']; } ?>" />
+                        <input class="regular-text " id="dashicons_picker_example_<?php echo $key; ?>" type="text" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][dashicon]" value="<?php if (isset($value['dashicon'])) { echo $value['dashicon']; } ?>" />
                         <input class="button dashicons-picker" type="button" value="<?php  echo esc_html__('Chose Dashicon','customize-my-account-for-woocommerce'); ?>" data-target="#dashicons_picker_example_<?php echo $key; ?>" />
 
                     </td>
@@ -2185,9 +2169,9 @@ $current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : sanitize_text_field($this-
                         <div class="facility_thumbnail" id="facility_thumbnail_<?php echo $key; ?>" style="float:left;">
                             <img src="<?php if (isset($swatchurl) && ($swatchurl != '')) { echo $swatchurl; } else { echo wcmamtx_placeholder_img_src(); }  ?>" width="60px" height="60px" />
                             <div  class="image-upload-div" idval="<?php echo $key; ?>" >
-                                <input type="hidden" class="facility_thumbnail_id_<?php echo $key; ?>" name="<?php  echo esc_html__($this->wcmamtx_notices_settings_page); ?>[<?php echo $key; ?>][upload_icon]" value="<?php if (isset($swatchimage)) { echo $swatchimage; } ?>"/>
-                                <button type="submit" class="upload_image_button_<?php echo $key; ?> button"><?php echo esc_html__( 'Upload/Add image', 'wcva' ); ?></button>
-                                <button type="submit" class="remove_image_button_<?php echo $key; ?> button"><?php echo esc_html__( 'Remove image', 'wcva' ); ?></button>
+                                <input type="hidden" class="facility_thumbnail_id_<?php echo $key; ?>" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][upload_icon]" value="<?php if (isset($swatchimage)) { echo $swatchimage; } ?>"/>
+                                <button type="submit" class="upload_image_button_<?php echo $key; ?> button"><?php echo esc_html__( 'Upload/Add image', 'customize-my-account-for-woocommerce' ); ?></button>
+                                <button type="submit" class="remove_image_button_<?php echo $key; ?> button"><?php echo esc_html__( 'Remove image', 'customize-my-account-for-woocommerce' ); ?></button>
                             </div>
                         </div>
 
@@ -2293,7 +2277,7 @@ $current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : sanitize_text_field($this-
                             
 
                             $editor_id      = 'wcmamtx_content_'.$key.'';
-                            $editor_name    = ''.esc_html__($this->wcmamtx_notices_settings_page).'['.$key.'][content_dash]';
+                            $editor_name    = ''.$this->wcmamtx_notices_settings_page.'['.$key.'][content_dash]';
 
                             wp_editor( $editor_content, $editor_id, $settings = array(
                                 'textarea_name' => $editor_name,
@@ -2391,7 +2375,7 @@ $current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : sanitize_text_field($this-
                             
 
                             $editor_id      = 'wcmamtx_content_'.$key.'';
-                            $editor_name    = ''.esc_html__($this->wcmamtx_notices_settings_page).'['.$key.'][content]';
+                            $editor_name    = ''.$this->wcmamtx_notices_settings_page.'['.$key.'][content]';
 
                             wp_editor( $editor_content, $editor_id, $settings = array(
                             	'textarea_name' => $editor_name,
@@ -2422,13 +2406,13 @@ $current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : sanitize_text_field($this-
 
                 			<div class="wcmamtx_content_settings_div">
                 				<div class="form-check wcmamtx_content_checkbox">
-                					<input class="form-check-input wcmamtx_content_source_radio" type="radio" name="<?php  echo esc_html__($this->wcmamtx_notices_settings_page); ?>[<?php echo $key; ?>][content_settings]"  value="after" <?php if ($content_settings == "after") { echo 'checked'; } ?>>
+                					<input class="form-check-input wcmamtx_content_source_radio" type="radio" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][content_settings]"  value="after" <?php if ($content_settings == "after") { echo 'checked'; } ?>>
                 					<label class="form-check-label wcmamtx_icon_checkbox_label" >
                 						<?php  echo esc_html__('After Existing Content','customize-my-account-for-woocommerce'); ?>
                 					</label>
                 				</div>
                 				<div class="form-check wcmamtx_content_checkbox">
-                					<input class="form-check-input wcmamtx_content_source_radio" type="radio" name="<?php  echo esc_html__($this->wcmamtx_notices_settings_page); ?>[<?php echo $key; ?>][content_settings]"  value="before" <?php if ($content_settings == "before") { echo 'checked'; } ?>>
+                					<input class="form-check-input wcmamtx_content_source_radio" type="radio" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][content_settings]"  value="before" <?php if ($content_settings == "before") { echo 'checked'; } ?>>
                 					<label class="form-check-label wcmamtx_icon_checkbox_label">
                 						<?php  echo esc_html__('Before Existing Content','customize-my-account-for-woocommerce'); ?>
                 					</label>
@@ -2459,7 +2443,7 @@ $current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : sanitize_text_field($this-
                         <label class="wcmamtx_accordion_label"><?php  echo esc_html__('Classes','customize-my-account-for-woocommerce'); ?></label>
                     </td>
                     <td>    
-                        <input type="text" class="wcmamtx_accordion_input wcmamtx_class_input" name="<?php  echo esc_html__($this->wcmamtx_notices_settings_page); ?>[<?php echo $key; ?>][class]" value="<?php if (isset($value['class'])) { echo $value['class']; } ?>">
+                        <input type="text" class="wcmamtx_accordion_input wcmamtx_class_input" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][class]" value="<?php if (isset($value['class'])) { echo $value['class']; } ?>">
                     </td>
                 </tr>
 

@@ -93,13 +93,7 @@ if (isset($advanced_settings['dashboard'])) {
 
 } else {
 
-	if ( current_user_can( 'administrator' ) ) {
 
-		echo '<div class="woocommerce-info">'.__( 'You can modify all default text on this page, visit <a href="'.admin_url( '/admin.php?page=wcmamtx_advanced_settings' ).'">Endpoints tab</a>, open dashboard endpoint settings to configure.This text is visible to admins only, once you save your endpoints it will be gone.', 'customize-my-account-for-woocommerce' ).'</div>';
-
-
-
-	}
 
 }
 

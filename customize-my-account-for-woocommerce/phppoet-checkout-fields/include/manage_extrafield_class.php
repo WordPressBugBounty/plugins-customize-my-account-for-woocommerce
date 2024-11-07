@@ -177,7 +177,7 @@ class pcfme_manage_extrafield_class {
 
 				$edit_account_url = wc_customer_edit_account_url();
 
-				$default_dash_notice = ''.__( 'Kindly Enter required details <a href="'.$edit_account_url.'">'.$mvalue['label'].'</a>', 'customize-my-account-for-woocommerce' ).'';
+				$default_dash_notice = ''.__( 'Kindly Enter required details','customize-my-account-for-woocommerce').' <a href="'.$edit_account_url.'">'.$mvalue['label'].'</a>';
 
 				if (isset($mvalue['dash_notice_text']) && ($mvalue['dash_notice_text'] != "")) { 
 					$ds_text_default2 = $mvalue['dash_notice_text']; 
@@ -794,7 +794,7 @@ class pcfme_manage_extrafield_class {
 	  
 	     if ( $args['required'] ) {
 			  $args['class'][] = 'validate-required';
-			  $required = ' <abbr class="required" title="' . esc_attr__( 'required', 'pcfme'  ) . '">*</abbr>';
+			  $required = ' <abbr class="required" title="' . esc_attr__( 'required', 'customize-my-account-for-woocommerce'  ) . '">*</abbr>';
 		  } else {
 			$required = '';
 		  }
