@@ -886,28 +886,7 @@ class wcmamtx_add_settings_page_class {
 	
 	public function linked_product_swatches_settings() { 
 
-        $wcmamtx_act_date_free  = get_option('wcmamtx_act_date_free');
-
         
-
-        $wcmamtx_act_date_free  = date('Y-m-d',strtotime($wcmamtx_act_date_free));
-
-        $tld             = date('Y-m-d');
-
-        $wcmamtx_act_date_free = new DateTime($wcmamtx_act_date_free);
-        $tld = new DateTime($tld);
-        $wcmamtx_interval = $wcmamtx_act_date_free->diff($tld);
-
-        $days_used = $wcmamtx_interval->days;
-        
-        $wcmamtx_dismiss_renew_notice_permanately = get_option("wcmamtx_dismiss_renew_notice_permanately","no");
-
-
-        if (($days_used > 3 ) && ($wcmamtx_dismiss_renew_notice_permanately == "no")) {
-
-            wcmamtx_review_reminder_div();
-            
-        } 
 
 	    include ('forms/settings_form.php');
 		   

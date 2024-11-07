@@ -24,6 +24,11 @@ $noticerowno3 = 1;
 ?>
 
 <center>
+	
+	<div class="alert alert-primary" role="alert">
+		<?php echo esc_html__('Click on Add Account Field button to add new field.To manage existing fields visit settings tab.','customize-my-account-for-woocommerce'); ?>
+	</div>
+
 	<div class="panel-group pcfme-sortable-list" id="accordion" >
 		<?php if (isset($additional_settings) && (sizeof($additional_settings) >= 1)) { 
 			foreach ($additional_settings as $key =>$field) { 

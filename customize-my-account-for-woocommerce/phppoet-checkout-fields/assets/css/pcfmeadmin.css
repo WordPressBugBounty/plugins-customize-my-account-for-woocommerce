@@ -542,3 +542,11 @@ span.dashicons.dashicons-remove.pcfme-remove-condition {
 }
 
 .show_if_contains_rule select[style*="display:none;"] + .select2 { display:none; }
+
+.alert.alert-primary {
+    background-color: #dedefa;
+    color: #000000;
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+}
