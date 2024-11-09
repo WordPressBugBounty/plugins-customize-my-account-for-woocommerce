@@ -1,14 +1,14 @@
 <?php
 
 
-if( !defined( 'pcfme_PLUGIN_URL_file_upload' ) )
+if( !defined( 'syscmafwpl_PLUGIN_URL_file_upload' ) )
 
-define( 'pcfme_PLUGIN_URL_file_upload', plugin_dir_url( __FILE__ ) );
+define( 'syscmafwpl_PLUGIN_URL_file_upload', plugin_dir_url( __FILE__ ) );
 
 
-add_filter('pcfme_override_field_types','pcfme_add_file_type_function',10,1);
+add_filter('syscmafwpl_override_field_types','syscmafwpl_add_file_type_function',10,1);
 
-function pcfme_add_file_type_function($field_types) {
+function syscmafwpl_add_file_type_function($field_types) {
 	$field_types[] = array(
 	 		    'type'=>'file_upload',
 	 		    'text'=> __('File Upload','customize-my-account-for-woocommerce'),
@@ -18,9 +18,9 @@ function pcfme_add_file_type_function($field_types) {
 	return $field_types;
 }
 
-add_filter( 'woocommerce_form_field_file_upload', 'pcfmefile_upload_form_field', 10, 4 );
+add_filter( 'woocommerce_form_field_file_upload', 'syscmafwplfile_upload_form_field', 10, 4 );
 
-function pcfmefile_upload_form_field($field, $key, $args, $value) {
+function syscmafwplfile_upload_form_field($field, $key, $args, $value) {
 	$key = isset($args['field_key']) ? $args['field_key'] : $key;
 
          if ( ( ! empty( $args['clear'] ) ) ) $after = '<div class="clear"></div>'; else $after = '';
@@ -36,7 +36,7 @@ function pcfmefile_upload_form_field($field, $key, $args, $value) {
 
 		$fees_class       = '';
 
-		$fees_class       = pcfme_get_fees_class($key);
+		$fees_class       = syscmafwpl_get_fees_class($key);
 
 		
 		if ($value == "empty") {
@@ -46,7 +46,7 @@ function pcfmefile_upload_form_field($field, $key, $args, $value) {
 
     $allowed_file_types = isset($args['allowed_file_types']) ? $args['allowed_file_types'] : "png,jpeg,pdf";
 
-	$input_html =  '<input nkey="'.$key.'" type="file" class="pcfme_file" allowed_type="'.$allowed_file_types.'" max_allowed="'.$max_allowed.'" id="pcfme_file_'.$key.'" name="pcfme_file_'.$key.'" /><input class="pcfme_hidden_input_file pcme_hidden_file_'.$key.'" type="hidden" name="' . $key . '" /><div class="pcfme_filelist pcfme_filelist_' . $key . '"></div>';
+	$input_html =  '<input nkey="'.$key.'" type="file" class="syscmafwpl_file" allowed_type="'.$allowed_file_types.'" max_allowed="'.$max_allowed.'" id="syscmafwpl_file_'.$key.'" name="syscmafwpl_file_'.$key.'" /><input class="syscmafwpl_hidden_input_file pcme_hidden_file_'.$key.'" type="hidden" name="' . $key . '" /><div class="syscmafwpl_filelist syscmafwpl_filelist_' . $key . '"></div>';
 	
 
         $field = '<p class="form-row ' . implode( ' ', $args['class'] ) .' " id="' . $key . '_field">
@@ -58,10 +58,10 @@ function pcfmefile_upload_form_field($field, $key, $args, $value) {
     return $field;
 }
 
-add_action( 'wp_ajax_pcfme_checkout_file_upload', 'pcfme_file_upload' );
-add_action( 'wp_ajax_nopriv_pcfme_checkout_file_upload', 'pcfme_file_upload' );
+add_action( 'wp_ajax_syscmafwpl_checkout_file_upload', 'syscmafwpl_file_upload' );
+add_action( 'wp_ajax_nopriv_syscmafwpl_checkout_file_upload', 'syscmafwpl_file_upload' );
 
-function pcfme_file_upload(){
+function syscmafwpl_file_upload(){
 
 	
 	$image_url = '';
@@ -69,25 +69,25 @@ function pcfme_file_upload(){
 	require_once(ABSPATH.'wp-admin/includes/file.php');
 
 
-	if ( isset( $_FILES[ 'pcfme_file' ] ) ) {
+	if ( isset( $_FILES[ 'syscmafwpl_file' ] ) ) {
 
 
 		$upload_overrides = array( 'test_form' => false );
 
 		
 
-		$result = wp_handle_upload( $_FILES[ 'pcfme_file' ], $upload_overrides );
+		$result = wp_handle_upload( $_FILES[ 'syscmafwpl_file' ], $upload_overrides );
 	}
 
 	wp_send_json( array( 'type' => 'success', 'image_url' => $result ) );
 }
 
-add_filter( 'wp_enqueue_scripts', 'pcfme_add_checkout_frountend_scripts' );
+add_filter( 'wp_enqueue_scripts', 'syscmafwpl_add_checkout_frountend_scripts' );
 
-function pcfme_add_checkout_frountend_scripts() {
+function syscmafwpl_add_checkout_frountend_scripts() {
 	if ( is_account_page() ) {
-       wp_enqueue_script( 'pcfme_file_upload', ''.pcfme_PLUGIN_URL_file_upload.'assets/js/frontend.js',array('jquery') );
-        wp_enqueue_style( 'pcfme_file_upload', ''.pcfme_PLUGIN_URL_file_upload.'assets/css/frontend.css' );
+       wp_enqueue_script( 'syscmafwpl_file_upload', ''.syscmafwpl_PLUGIN_URL_file_upload.'assets/js/frontend.js',array('jquery') );
+        wp_enqueue_style( 'syscmafwpl_file_upload', ''.syscmafwpl_PLUGIN_URL_file_upload.'assets/css/frontend.css' );
 
         $translation_array = array( 
 		        'max_allowed_text'               => esc_html__( 'Maximum size allowed for this upload is ' ,'customize-my-account-for-woocommerce'),
@@ -96,47 +96,47 @@ function pcfme_add_checkout_frountend_scripts() {
 		        
 		);
          
-        wp_localize_script( 'pcfme_file_upload', 'pcfme_file_upload', $translation_array );
+        wp_localize_script( 'syscmafwpl_file_upload', 'syscmafwpl_file_upload', $translation_array );
 	}
 }
 
-add_action( 'woocommerce_checkout_update_order_meta', 'pcfme_file_field_save_added' );
-function pcfme_file_field_save_added( $order_id ){
+add_action( 'woocommerce_checkout_update_order_meta', 'syscmafwpl_file_field_save_added' );
+function syscmafwpl_file_field_save_added( $order_id ){
 
-	if( ! empty( $_POST[ 'pcfme_file_field' ] ) ) {
-		update_post_meta( $order_id, 'pcfme_file_field', sanitize_text_field( $_POST[ 'pcfme_file_field' ] ) );
+	if( ! empty( $_POST[ 'syscmafwpl_file_field' ] ) ) {
+		update_post_meta( $order_id, 'syscmafwpl_file_field', sanitize_text_field( $_POST[ 'syscmafwpl_file_field' ] ) );
 	}
 
 }
 
 
 
-add_action( 'woocommerce_admin_order_data_after_order_details', 'pcfme_order_meta_general' );
-function pcfme_order_meta_general( $order ){
+add_action( 'woocommerce_admin_order_data_after_order_details', 'syscmafwpl_order_meta_general' );
+function syscmafwpl_order_meta_general( $order ){
 
-	$file = get_post_meta( $order->get_id(), 'pcfme_file_field', true );
+	$file = get_post_meta( $order->get_id(), 'syscmafwpl_file_field', true );
 	if( $file ) {
 		echo '<img class="cxc-order-img" style="max-width: 400px;width: 100%;height: auto; margin-top: 10px;" src="'. esc_url( $file ) .'" />';
 	}
 
 }
 
-add_action('admin_enqueue_scripts','pcfme_register_admin_scripts_file_upload');
+add_action('admin_enqueue_scripts','syscmafwpl_register_admin_scripts_file_upload');
 
 /*
  * registers admin scripts via admin enqueue scripts
  */
-function pcfme_register_admin_scripts_file_upload($hook) {
-	    global $billing_pcfmesettings_page;
+function syscmafwpl_register_admin_scripts_file_upload($hook) {
+	    global $billing_syscmafwplsettings_page;
 			
-		if ( $hook == $billing_pcfmesettings_page ) {
+		if ( $hook == $billing_syscmafwplsettings_page ) {
 		     
  
 		 
 		 
 		 
 		    
-		    wp_enqueue_script( 'pcfmeadmin-file_upload', ''.pcfme_PLUGIN_URL_file_upload.'assets/js/admin.js' , array('jquery'));
+		    wp_enqueue_script( 'syscmafwpladmin-file_upload', ''.syscmafwpl_PLUGIN_URL_file_upload.'assets/js/admin.js' , array('jquery'));
 		 
 
      
@@ -145,10 +145,10 @@ function pcfme_register_admin_scripts_file_upload($hook) {
 
 }
 
-add_action('pcfme_after_visibility_content_tr','pcfme_after_visibility_content_tr_function',10,3);
+add_action('syscmafwpl_after_visibility_content_tr','syscmafwpl_after_visibility_content_tr_function',10,3);
 
 
-function pcfme_after_visibility_content_tr_function($slug,$key,$field) {
+function syscmafwpl_after_visibility_content_tr_function($slug,$key,$field) {
 	?>
 
 	<tr class="visible_only_if_field_type_file_upload" style="<?php if (isset($field['type']) && ($field['type'] == "file_upload")) { echo 'display:table-row;'; } else { echo 'display:none;'; } ?>">

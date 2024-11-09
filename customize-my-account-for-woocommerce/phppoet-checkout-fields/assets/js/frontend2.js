@@ -2,9 +2,9 @@ var $iaz = jQuery.noConflict();
 (function( $iaz ) {
     'use strict';
 
-    $iaz.datetimepicker.setLocale(pcfmefrontend.datetimepicker_lang);
+    $iaz.datetimepicker.setLocale(syscmafwplfrontend.datetimepicker_lang);
 
-    function pcfme_convert_datesdisable_to_format($disable_days) {
+    function syscmafwpl_convert_datesdisable_to_format($disable_days) {
 
     	
 
@@ -24,7 +24,7 @@ var $iaz = jQuery.noConflict();
     }
 
 
-	var datepicker_format = pcfmefrontend.datepicker_format;
+	var datepicker_format = syscmafwplfrontend.datepicker_format;
 
     switch(datepicker_format) {
           case "01":
@@ -54,9 +54,9 @@ var $iaz = jQuery.noConflict();
 
     var gdays ='';
     
-    if ((pcfmefrontend.days_to_exclude) && (pcfmefrontend.days_to_exclude != '')) {
+    if ((syscmafwplfrontend.days_to_exclude) && (syscmafwplfrontend.days_to_exclude != '')) {
 
-    	gdays = pcfmefrontend.days_to_exclude.split(',');
+    	gdays = syscmafwplfrontend.days_to_exclude.split(',');
     	
     }
 
@@ -66,19 +66,19 @@ var $iaz = jQuery.noConflict();
 	$iaz(function() {
 
 
-		if (jQuery('.pcfme-datepicker').length) {
+		if (jQuery('.syscmafwpl-datepicker').length) {
 
-			jQuery('.pcfme-datepicker').each(function(){
+			jQuery('.syscmafwpl-datepicker').each(function(){
 
 				var dates_to_disable = jQuery(this).attr("dates_to_disable");
 
-				dates_to_disable = pcfme_convert_datesdisable_to_format(dates_to_disable);
+				dates_to_disable = syscmafwpl_convert_datesdisable_to_format(dates_to_disable);
 
 				jQuery(this).datetimepicker({
 					format:dtformat,
 					timepicker:false,
 					disabledWeekDays: gdays,
-					dayOfWeekStart: pcfmefrontend.dt_week_starts_on,
+					dayOfWeekStart: syscmafwplfrontend.dt_week_starts_on,
 					disabledDates: dates_to_disable,
 					formatDate:'d.m.Y'
 				});
@@ -93,13 +93,13 @@ var $iaz = jQuery.noConflict();
 
 	    var dateToday = new Date(); 
 
-	    if (jQuery('.pcfme-datepicker-disable-past').length) {
+	    if (jQuery('.syscmafwpl-datepicker-disable-past').length) {
 
-	    	jQuery('.pcfme-datepicker-disable-past').each(function(){
+	    	jQuery('.syscmafwpl-datepicker-disable-past').each(function(){
 
 	    		var dates_to_disable = jQuery(this).attr("dates_to_disable");
 
-	    		dates_to_disable = pcfme_convert_datesdisable_to_format(dates_to_disable);
+	    		dates_to_disable = syscmafwpl_convert_datesdisable_to_format(dates_to_disable);
 
 
 	    		jQuery(this).datetimepicker({
@@ -107,7 +107,7 @@ var $iaz = jQuery.noConflict();
 	    			minDate: dateToday,
 	    			timepicker:false,
 	    			disabledWeekDays: gdays,
-	    			dayOfWeekStart: pcfmefrontend.dt_week_starts_on,
+	    			dayOfWeekStart: syscmafwplfrontend.dt_week_starts_on,
 	    			disabledDates: dates_to_disable,
 					  formatDate:'d.m.Y'
 	    		});
@@ -117,36 +117,36 @@ var $iaz = jQuery.noConflict();
 
 
 
-	   if (jQuery('.pcfme-daterangepicker').length) {
-		  jQuery('.pcfme-daterangepicker').dateRangePicker({
+	   if (jQuery('.syscmafwpl-daterangepicker').length) {
+		  jQuery('.syscmafwpl-daterangepicker').dateRangePicker({
             format: 'DD/MM/YYYY',
-            language: pcfmefrontend.datetimepicker_lang,
-            startOfWeek:pcfmefrontend.week_starts_on,
-            separator: ' '+pcfmefrontend.separater_text+' '
+            language: syscmafwplfrontend.datetimepicker_lang,
+            startOfWeek:syscmafwplfrontend.week_starts_on,
+            separator: ' '+syscmafwplfrontend.separater_text+' '
             
           });
 	   }
 
 	   var dateToday = new Date(); 
-	   if (jQuery('.pcfme-daterangepicker-disable-past').length) {
-		  jQuery('.pcfme-daterangepicker-disable-past').dateRangePicker({
+	   if (jQuery('.syscmafwpl-daterangepicker-disable-past').length) {
+		  jQuery('.syscmafwpl-daterangepicker-disable-past').dateRangePicker({
             format: 'DD/MM/YYYY',
 		    startDate: dateToday,
-		    language: pcfmefrontend.datetimepicker_lang,
-		    startOfWeek:pcfmefrontend.week_starts_on,
-		    separator: ' '+pcfmefrontend.separater_text+' '
+		    language: syscmafwplfrontend.datetimepicker_lang,
+		    startOfWeek:syscmafwplfrontend.week_starts_on,
+		    separator: ' '+syscmafwplfrontend.separater_text+' '
 		    
           });
 	   }
 
 
 
-	    if (jQuery('.pcfme-datetimerangepicker').length) {
-		  jQuery('.pcfme-datetimerangepicker').dateRangePicker({
-                separator: ' '+pcfmefrontend.separater_text+' ',
+	    if (jQuery('.syscmafwpl-datetimerangepicker').length) {
+		  jQuery('.syscmafwpl-datetimerangepicker').dateRangePicker({
+                separator: ' '+syscmafwplfrontend.separater_text+' ',
                 format: 'DD/MM/YYYY HH:mm',
-                language: pcfmefrontend.datetimepicker_lang,
-                startOfWeek:pcfmefrontend.week_starts_on,
+                language: syscmafwplfrontend.datetimepicker_lang,
+                startOfWeek:syscmafwplfrontend.week_starts_on,
                 time: {
 		          enabled: true
 	            }
@@ -155,14 +155,14 @@ var $iaz = jQuery.noConflict();
 	    }
 
 	    var dateToday = new Date(); 
-	    if (jQuery('.pcfme-datetimerangepicker-disable-past').length) {
+	    if (jQuery('.syscmafwpl-datetimerangepicker-disable-past').length) {
 
-		    jQuery('.pcfme-datetimerangepicker-disable-past').dateRangePicker({
-            separator: ' '+pcfmefrontend.separater_text+' ',
+		    jQuery('.syscmafwpl-datetimerangepicker-disable-past').dateRangePicker({
+            separator: ' '+syscmafwplfrontend.separater_text+' ',
             format: 'DD/MM/YYYY HH:mm',
 		        startDate: dateToday,
-		        language: pcfmefrontend.datetimepicker_lang,
-		        startOfWeek:pcfmefrontend.week_starts_on,
+		        language: syscmafwplfrontend.datetimepicker_lang,
+		        startOfWeek:syscmafwplfrontend.week_starts_on,
 		        time: {
 		         enabled: true
 	            }
@@ -176,16 +176,16 @@ var $iaz = jQuery.noConflict();
 
 	$iaz(function() {
 
-		if (jQuery('.pcfme-datetimepicker').length) {
+		if (jQuery('.syscmafwpl-datetimepicker').length) {
 
-			jQuery('.pcfme-datetimepicker').each(function() {
+			jQuery('.syscmafwpl-datetimepicker').each(function() {
 
 				var dates_to_disable = jQuery(this).attr("dates_to_disable");
 
-				dates_to_disable = pcfme_convert_datesdisable_to_format(dates_to_disable);
+				dates_to_disable = syscmafwpl_convert_datesdisable_to_format(dates_to_disable);
 
 
-				var allowed_times_global = pcfmefrontend.allowed_times;
+				var allowed_times_global = syscmafwplfrontend.allowed_times;
 
 				var allowed_times_field = jQuery(this).attr("t_allowed");
 
@@ -200,7 +200,7 @@ var $iaz = jQuery.noConflict();
 
 				jQuery(this).datetimepicker({
 					format:''+ dtformat + ' H:i',
-					dayOfWeekStart: pcfmefrontend.dt_week_starts_on,
+					dayOfWeekStart: syscmafwplfrontend.dt_week_starts_on,
 					disabledDates: dates_to_disable,
 					formatDate:'d.m.Y',
 					allowTimes: function getArr() {
@@ -225,16 +225,16 @@ var $iaz = jQuery.noConflict();
 
 		var dateToday = new Date(); 
 
-		if (jQuery('.pcfme-datetimepicker-disable-past').length) {
+		if (jQuery('.syscmafwpl-datetimepicker-disable-past').length) {
 
-			jQuery('.pcfme-datetimepicker-disable-past').each(function() {
+			jQuery('.syscmafwpl-datetimepicker-disable-past').each(function() {
 
 				var dates_to_disable = jQuery(this).attr("dates_to_disable");
 
-				dates_to_disable = pcfme_convert_datesdisable_to_format(dates_to_disable);
+				dates_to_disable = syscmafwpl_convert_datesdisable_to_format(dates_to_disable);
 
 
-				var allowed_times_global = pcfmefrontend.allowed_times;
+				var allowed_times_global = syscmafwplfrontend.allowed_times;
 
 				var allowed_times_field = jQuery(this).attr("t_allowed");
 
@@ -249,7 +249,7 @@ var $iaz = jQuery.noConflict();
 				jQuery(this).datetimepicker({
 					minDate: dateToday,
 					format:''+ dtformat + ' H:i',
-					dayOfWeekStart: pcfmefrontend.dt_week_starts_on,
+					dayOfWeekStart: syscmafwplfrontend.dt_week_starts_on,
 					disabledDates: dates_to_disable,
 					formatDate:'d.m.Y',
 					allowTimes: function getArr() {
@@ -276,11 +276,11 @@ var $iaz = jQuery.noConflict();
 
 	$iaz(function() {
 
-		if (jQuery('.pcfme-timepicker').length) {
+		if (jQuery('.syscmafwpl-timepicker').length) {
 
-			jQuery('.pcfme-timepicker').each(function() {
+			jQuery('.syscmafwpl-timepicker').each(function() {
 
-				var allowed_times_global = pcfmefrontend.allowed_times;
+				var allowed_times_global = syscmafwplfrontend.allowed_times;
 
 				var allowed_times_field = jQuery(this).attr("t_allowed");
 
@@ -299,8 +299,8 @@ var $iaz = jQuery.noConflict();
 
 					format:'H:i',
 					datepicker:false,
-					dayOfWeekStart: pcfmefrontend.dt_week_starts_on,
-					step:pcfmefrontend.timepicker_interval,
+					dayOfWeekStart: syscmafwplfrontend.dt_week_starts_on,
+					step:syscmafwplfrontend.timepicker_interval,
 					allowTimes: function getArr() {
 
 
@@ -327,8 +327,8 @@ var $iaz = jQuery.noConflict();
    	
 	$iaz(function() {
 
-		if ($iaz('.pcfme-multiselect').length) {
-			$iaz('.pcfme-multiselect').select2({});
+		if ($iaz('.syscmafwpl-multiselect').length) {
+			$iaz('.syscmafwpl-multiselect').select2({});
 		}
 
 
@@ -342,7 +342,7 @@ var $iaz = jQuery.noConflict();
 	
 	$iaz(function() {
 
-		$iaz('.pcfme-opener').on('change',function(){
+		$iaz('.syscmafwpl-opener').on('change',function(){
 			var this_obj=$iaz(this);
 			var id= this_obj.attr('id');
 			var name= this_obj.attr('name');
@@ -351,14 +351,14 @@ var $iaz = jQuery.noConflict();
 
 
 
-			if (this_obj.hasClass('pcfme-singleselect')){
+			if (this_obj.hasClass('syscmafwpl-singleselect')){
 
 
 				$iaz('.open_by_'+ id +'_'+ uval).each(function() {
 
 					var child_input = $iaz(this).find('input');
 					var child_input_number = $iaz(this).find('input[type="number"]');
-					var child_input_select = $iaz(this).find('.pcfme-singleselect');
+					var child_input_select = $iaz(this).find('.syscmafwpl-singleselect');
 
 					var entered_value = child_input.val();
 					var entered_value_number = child_input_number.val();
@@ -422,7 +422,7 @@ var $iaz = jQuery.noConflict();
 
 					var child_input = $iaz(this).find('input');
 					var child_input_number = $iaz(this).find('input[type="number"]');
-					var child_input_select = $iaz(this).find('.pcfme-singleselect');
+					var child_input_select = $iaz(this).find('.syscmafwpl-singleselect');
 
 
 					var previous_value = child_input.val();
@@ -456,14 +456,14 @@ var $iaz = jQuery.noConflict();
 
 					};
 
-					$iaz(this).find('.pcfme-singleselect').val('selectedIndex',0).trigger("change");
+					$iaz(this).find('.syscmafwpl-singleselect').val('selectedIndex',0).trigger("change");
 
 				});
 
 
 			
 
-			} else if (this_obj.hasClass('pcfme-multiselect')){
+			} else if (this_obj.hasClass('syscmafwpl-multiselect')){
 
 
 				$iaz('.open_by_'+ id +'_'+uval ).closest('.form-row').show();
@@ -494,8 +494,8 @@ var $iaz = jQuery.noConflict();
 						$iaz(this).closest('.form-row').show();
 						var child_input = $iaz(this).find('input');
 						var child_input_number = $iaz(this).find('input[type="number"]');
-						var child_input_select = $iaz(this).find('.pcfme-singleselect');
-            var child_input_hidden_file = $iaz(this).find('input.pcfme_hidden_input_file');
+						var child_input_select = $iaz(this).find('.syscmafwpl-singleselect');
+            var child_input_hidden_file = $iaz(this).find('input.syscmafwpl_hidden_input_file');
             child_input_hidden_file.val("");
 
 						child_input.val('');
@@ -543,7 +543,7 @@ var $iaz = jQuery.noConflict();
 						var child_input = $iaz(this).find('input');
             var child_input_number = $iaz(this).find('input[type="number"]');
             var child_input_select = $iaz(this).find('select');
-            var child_input_hidden_file = $iaz(this).find('input.pcfme_hidden_input_file');
+            var child_input_hidden_file = $iaz(this).find('input.syscmafwpl_hidden_input_file');
             child_input_hidden_file.val("empty");
             
             
@@ -598,7 +598,7 @@ var $iaz = jQuery.noConflict();
 
 					var child_input = $iaz(this).find('input');
 					var child_input_number = $iaz(this).find('input[type="number"]');
-					var child_input_select = $iaz(this).find('.pcfme-singleselect');
+					var child_input_select = $iaz(this).find('.syscmafwpl-singleselect');
 
 					var entered_value = child_input.val();
 					var entered_value_number = child_input_number.val();
@@ -662,7 +662,7 @@ var $iaz = jQuery.noConflict();
 
 					var child_input = $iaz(this).find('input');
 					var child_input_number = $iaz(this).find('input[type="number"]');
-					var child_input_select = $iaz(this).find('.pcfme-singleselect');
+					var child_input_select = $iaz(this).find('.syscmafwpl-singleselect');
 
 
 					var previous_value = child_input.val();
@@ -696,7 +696,7 @@ var $iaz = jQuery.noConflict();
 						
 					};
 
-					$iaz(this).find('.pcfme-singleselect').val('selectedIndex',0).trigger("change");
+					$iaz(this).find('.syscmafwpl-singleselect').val('selectedIndex',0).trigger("change");
 
 				});
 
@@ -765,11 +765,11 @@ var $iaz = jQuery.noConflict();
 
 		});
 	  
-	  $iaz('.pcfme-opener').trigger('change');
+	  $iaz('.syscmafwpl-opener').trigger('change');
 
-    $iaz('.pcfme-price-changer').trigger('change');
+    $iaz('.syscmafwpl-price-changer').trigger('change');
 
-    $iaz('.pcfme-price-changer').on('change',function(){
+    $iaz('.syscmafwpl-price-changer').on('change',function(){
 
             
       	jQuery('body').trigger('update_checkout');
@@ -778,9 +778,9 @@ var $iaz = jQuery.noConflict();
     });
 
 
-    $iaz('.pcfme-action-changer').trigger('change');
+    $iaz('.syscmafwpl-action-changer').trigger('change');
 
-    $iaz('.pcfme-action-changer').on('change',function(){
+    $iaz('.syscmafwpl-action-changer').on('change',function(){
 
     	  var thiskey = $iaz(this).attr('id');
 
@@ -798,7 +798,7 @@ var $iaz = jQuery.noConflict();
             type : "POST",
             dataType : "json",
             url : wc_checkout_params.ajax_url,
-            data : { action: "pcfme_get_action_data" ,
+            data : { action: "syscmafwpl_get_action_data" ,
                      key : thiskey,
                      thisval : thisval
                    },
@@ -1026,7 +1026,7 @@ var $iaz = jQuery.noConflict();
     $iaz('.show_on_load2').show();  
 	  
 	  
-    $iaz('.pcfme-hider').on('change',function(){
+    $iaz('.syscmafwpl-hider').on('change',function(){
 
 
     	var this_obj=$iaz(this);
@@ -1034,7 +1034,7 @@ var $iaz = jQuery.noConflict();
     	var name= this_obj.attr('name');
     	var hval = this_obj.val();
 
-    	if (this_obj.hasClass('pcfme-singleselect')){
+    	if (this_obj.hasClass('syscmafwpl-singleselect')){
 
     		$iaz('.hide_by_'+ id +'_'+hval ).closest('.form-row').hide();
     		var child_input = $iaz('.hide_by_'+ id +'_'+ hval +' input');
@@ -1048,7 +1048,7 @@ var $iaz = jQuery.noConflict();
         $iaz("[class^='hide_by_"+ id +"_'],[class*=' hide_by_"+ id+"_']").not('.hide_by_'+ id +'_'+hval).closest('.form-row').find('input[type="number"]').val("");
     	
 
-    	} else if (this_obj.hasClass('pcfme-multiselect')){
+    	} else if (this_obj.hasClass('syscmafwpl-multiselect')){
 
     		$iaz('.hide_by_'+ id +'_'+hval ).closest('.form-row').hide();
     		var child_input = $iaz('.hide_by_'+ id +'_'+ hval +' input');
@@ -1073,7 +1073,7 @@ var $iaz = jQuery.noConflict();
 						var child_input = $iaz(this).find('input');
             var child_input_number = $iaz(this).find('input[type="number"]');
             var child_input_select = $iaz(this).find('select');
-            var child_input_hidden_file = $iaz(this).find('input.pcfme_hidden_input_file');
+            var child_input_hidden_file = $iaz(this).find('input.syscmafwpl_hidden_input_file');
             child_input_hidden_file.val("empty");
             
             
@@ -1131,8 +1131,8 @@ var $iaz = jQuery.noConflict();
 						$iaz(this).closest('.form-row').show();
 						var child_input = $iaz(this).find('input');
 						var child_input_number = $iaz(this).find('input[type="number"]');
-						var child_input_select = $iaz(this).find('.pcfme-singleselect');
-						var child_input_hidden_file = $iaz(this).find('input.pcfme_hidden_input_file');
+						var child_input_select = $iaz(this).find('.syscmafwpl-singleselect');
+						var child_input_hidden_file = $iaz(this).find('input.syscmafwpl_hidden_input_file');
 						child_input_hidden_file.val("");
 
 						child_input.val('');
@@ -1231,6 +1231,6 @@ var $iaz = jQuery.noConflict();
     	} 
     });
 	  
-	   $iaz('.pcfme-hider').trigger('change');
+	   $iaz('.syscmafwpl-hider').trigger('change');
 	});
 })(jQuery);

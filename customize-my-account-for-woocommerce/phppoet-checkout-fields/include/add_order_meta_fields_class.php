@@ -1,10 +1,10 @@
 <?php
-class pcfme_add_order_meta_class {
+class syscmafwpl_add_order_meta_class {
      
 	 
-	 private $billing_settings_key = 'pcfme_billing_settings';
-	 private $shipping_settings_key = 'pcfme_shipping_settings';
-	 private $additional_settings_key = 'pcfme_additional_settings';
+	 private $billing_settings_key = 'syscmafwpl_billing_settings';
+	 private $shipping_settings_key = 'syscmafwpl_shipping_settings';
+	 private $additional_settings_key = 'syscmafwpl_additional_settings';
      
 	 public function __construct() {
 	      
@@ -17,7 +17,7 @@ class pcfme_add_order_meta_class {
           add_filter('woocommerce_view_order', array($this, 'data_after_order_details_page'), 195);
 
 
-        $extra_settings            = get_option('pcfme_extra_settings');
+        $extra_settings            = get_option('syscmafwpl_extra_settings');
 
         $thankyou_fields_location  = isset($extra_settings['thankyou_fields_location']) ? $extra_settings['thankyou_fields_location'] : "after"; 
 
@@ -487,5 +487,5 @@ class pcfme_add_order_meta_class {
 	 
 }
 
-new pcfme_add_order_meta_class();
+new syscmafwpl_add_order_meta_class();
 ?>

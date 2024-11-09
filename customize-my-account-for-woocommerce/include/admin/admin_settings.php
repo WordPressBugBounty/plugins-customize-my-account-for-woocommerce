@@ -1765,7 +1765,7 @@ $current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : sanitize_text_field($this-
                                 <optgroup label="<?php echo esc_html__( 'Billing Fields' ,'customize-my-account-for-woocommerce'); ?>">
                                     <?php
 
-                                    $billing_settings = (array) get_option('pcfme_billing_settings');
+                                    $billing_settings = (array) get_option('syscmafwpl_billing_settings');
                                     
 
                                     if (sysbasics_checkout_mode =="on") { 
@@ -1812,7 +1812,7 @@ $current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : sanitize_text_field($this-
 
                                 <optgroup label="<?php echo esc_html__( 'Shipping Fields' ,'customize-my-account-for-woocommerce'); ?>">
                                     <?php
-                                    $shipping_settings = (array) get_option('pcfme_shipping_settings');
+                                    $shipping_settings = (array) get_option('syscmafwpl_shipping_settings');
 
                                     if (sysbasics_checkout_mode == "on") { 
                                       
@@ -1855,7 +1855,7 @@ $current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : sanitize_text_field($this-
 
                                 <?php
 
-                                $additional_settings  = (array) get_option('pcfme_additional_settings');
+                                $additional_settings  = (array) get_option('syscmafwpl_additional_settings');
                                 $additional_settings  = array_filter($additional_settings);
 
                                 if (isset($additional_settings) && (sizeof($additional_settings) >= 1)) { 
@@ -2437,7 +2437,7 @@ $current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : sanitize_text_field($this-
                         </td>
                         <td>    
                             
-                            <a class="btn btn-success" style="color:white;" target="_blank" href="admin.php?page=pcfme_plugin_options&tab=pcfme_additional_settings">
+                            <a class="btn btn-success" style="color:white;" target="_blank" href="admin.php?page=syscmafwpl_plugin_options&tab=syscmafwpl_additional_settings">
                                 <?php  echo esc_html__('Manage Edit Account Fields','customize-my-account-for-woocommerce'); ?>
                             </a>
                         </td>

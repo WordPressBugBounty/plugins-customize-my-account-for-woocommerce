@@ -19,10 +19,18 @@ defined( 'ABSPATH' ) || exit;
 
 do_action( 'woocommerce_before_edit_account_form' ); 
 
-$extra_settings    = (array) get_option('pcfme_extra_settings');
+$extra_settings    = (array) get_option('syscmafwpl_extra_settings');
 
 
 
+
+if ( current_user_can( 'administrator' ) ) {
+
+		echo '<div class="woocommerce-info">'.__( 'You can Manage these Fields, visit <a target="_blank" class"button" href="'.admin_url( '/admin.php?page=syscmafwpl_plugin_options&tab=syscmafwpl_additional_settings' ).'">My Account Fields</a>. To view user information visit <a target="_blank" class"button" href="'.admin_url( '/users.php' ).'">Users Page</a>.This notice is visible to Administrator only.', 'customize-my-account-for-woocommerce' ).'</div>';
+
+
+
+	}
 
 
 
@@ -124,7 +132,7 @@ $extra_settings    = (array) get_option('pcfme_extra_settings');
 
 	<?php
 
-	$all_fields    = (array) get_option('pcfme_additional_settings');
+	$all_fields    = (array) get_option('syscmafwpl_additional_settings');
     
     unset($all_fields[0]);
 
@@ -139,24 +147,86 @@ $extra_settings    = (array) get_option('pcfme_extra_settings');
 			$default_value = get_user_meta( get_current_user_id(), $field_key, true );
 
 			
+			$hide_account_edit = isset($field['hide_account_edit']) && ($field['hide_account_edit'] == 1) ? "no" : "yes";
 
 
-			if (isset($field['type']) &&  ($field['type'] == "pcpcfmeselect")) {
-
-				$field_html = '';
-
-				woocommerce_form_field( $field_html, $key, $field, $default_value );
-
-			} else {
+			if ($hide_account_edit == "yes") {
 
 
+				$visibilityarray = $field['visibility'];
+				 
+				if (isset($field['products'])) { 
+				    $allowedproducts = $field['products'];
+				} else {
+					$allowedproducts = array(); 
+				}
+				 
+				if (isset($field['category'])) {
+					$allowedcats = $field['category'];
+				} else {
+					$allowedcats = array();
+				}
 
-				woocommerce_form_field( $key, $field, $default_value );
+				if (isset($field['role'])) {
+					$allowedroles = $field['role'];
+				} else {
+					$allowedroles = array();
+				}
+
+				if (isset($field['total-quantity'])) {
+					$total_quantity = $field['total-quantity'];
+				} else {
+					$total_quantity = 0;
+				}
+
+				if (isset($field['specific-product'])) {
+					$prd = $field['specific-product'];
+				} else {
+					$prd = 0;
+				}
+
+				if (isset($field['specific-quantity'])) {
+					$prd_qnty = $field['specific-quantity'];
+				} else {
+					$prd_qnty = 0;
+				}
+
+
+				if (isset($field['dynamic_rules'])) { 
+					$dynamic_rules = $field['dynamic_rules'];
+				} else {
+					$dynamic_rules = array(); 
+				}
+
+
+				if (isset($field['dynamic_visibility_criteria'])) { 
+					$dynamic_criteria = $field['dynamic_visibility_criteria'];
+				} else {
+					$dynamic_criteria = 'match_all'; 
+				}
+
+
+				 
+				$is_field_hidden = syscmafwpl_check_if_field_is_hidden2($visibilityarray,$allowedproducts,$allowedcats,$allowedroles,$total_quantity,$prd,$prd_qnty,$dynamic_rules,$dynamic_criteria);
+
+				if ((!isset($is_field_hidden)) || ($is_field_hidden != 0)) {
+
+					if (isset($field['type']) &&  ($field['type'] == "pcsyscmafwplselect")) {
+
+						$field_html = '';
+
+						woocommerce_form_field( $field_html, $key, $field, $default_value );
+
+					} else {
+
+
+
+						woocommerce_form_field( $key, $field, $default_value );
+
+					}
+				}
 
 			}
-
-			
-
 
 		}
 	}
