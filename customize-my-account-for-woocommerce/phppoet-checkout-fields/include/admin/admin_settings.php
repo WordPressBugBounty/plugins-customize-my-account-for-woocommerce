@@ -5,41 +5,25 @@ class syscmafwpl_add_settings_page_class {
 	
 	
 	
-	private $billing_settings_key       = 'syscmafwpl_billing_settings';
-	private $shipping_settings_key      = 'syscmafwpl_shipping_settings';
-	private $additional_settings_key    = 'syscmafwpl_additional_settings';
-	private $additional_fees_key        = 'syscmafwpl_additional_fees';
-	private $extra_settings_key         = 'syscmafwpl_extra_settings';
-	private $syscmafwpl_plugin_options       = 'syscmafwpl_plugin_options';
-	private $syscmafwpl_license_settings     = 'syscmafwpl_license_settings';
+
+	private $additional_settings_key         = 'syscmafwpl_additional_settings';
+	private $extra_settings_key              = 'syscmafwpl_extra_settings';
+	private $forms_settings_key              = 'syscmafwpl_forms_settings';
     private $syscmafwpl_plugin_settings_tabs = array();	
 	
 	
-	public function __construct() {
+	public function __construct() {		
 	    
-		
-		
-	    
-		add_action( 'admin_init', array( $this, 'register_billing_settings' ) );
-		
+		add_action( 'admin_init', array( $this, 'register_billing_settings' ) );		
 		add_action( 'admin_menu', array( $this, 'add_admin_menus' ) ,100);
 		add_action( 'admin_enqueue_scripts', array($this, 'syscmafwpl_register_admin_scripts'));
 		add_action( 'admin_enqueue_scripts', array($this, 'syscmafwpl_load_admin_default_css'));
-        add_action( 'wp_ajax_restore_billing_fields', array( $this, 'restore_billing_fields' ) );
-		add_action( 'wp_ajax_restore_shipping_fields', array( $this, 'restore_shipping_fields' ) );
-		add_action( 'wp_ajax_pdfmegetajaxproductslist', array( $this, 'syscmafwpl_get_posts_ajax_callback' ) );
-        
+		add_action( 'wp_ajax_pdfmegetajaxproductslist', array( $this, 'syscmafwpl_get_posts_ajax_callback' ) );        
         add_action( 'wp_ajax_syscmafwpl_get_child_field_options', array( $this, 'syscmafwpl_get_child_field_options_function' ) );
-
-        
-
         add_action( 'admin_post_add_field_form_response', array( $this, 'add_field_form_response' ));
-
-		add_action( 'admin_post_add_fees_form_response', array( $this, 'add_fees_form_response' ));
-
+        add_action( 'admin_post_add_field_form_response2', array( $this, 'add_field_form_response2' ));
 		add_shortcode( 'sysbasics_user_details',array( $this, 'sysbasics_user_details_shortcode' ));
-      
-
+   
 	}
 
 
@@ -80,83 +64,7 @@ class syscmafwpl_add_settings_page_class {
 
 	}
 
-	public function add_fees_form_response() {
 
-		if( isset( $_POST['syscmafwpl_add_fees_nonce'] ) && wp_verify_nonce( $_POST['syscmafwpl_add_fees_nonce'], 'syscmafwpl_nonce_hidden_fees') ) {
-
-		
-		$rule_type = "01";
-			
-
-		if (isset($_POST['nds2']['rule_type'])) {
-			$rule_type     = sanitize_text_field($_POST['nds2']['rule_type']);
-		}
-		
-
-
-        $random_number  = mt_rand(100000, 999999);
-
-       
-        
-        $existing_fields = (array) get_option('syscmafwpl_additional_fees');
-
-        $existing_fields    = array_filter($existing_fields);
-
-
-
-        $new_row_values = array();
-
-
-        $rownum = 02;
-        	
-
-        foreach ($existing_fields as $key2=>$value2) {
-
-        		
-             $new_row_values[$rownum] = $value2;
-
-             $rownum++;
-                
-        }
-
-        
-
-
-        if (isset($rule_type) && ($rule_type != "")) {
-            $new_row_values[$random_number]['rule_type']            = $rule_type;
-            $new_row_values[$random_number]['amount']               = '';
-            $new_row_values[$random_number]['type']                 = 'fixed';
-            $new_row_values[$random_number]['parentfield']          = '';
-            $new_row_values[$random_number]['custom_label']         = '';
-            $new_row_values[$random_number]['equalto']              = '';
-           
-        }
-
-
-        if (($new_row_values != $existing_fields) && !empty($new_row_values)) {
-
-
-        	update_option('syscmafwpl_additional_fees',$new_row_values);
-
-
-        }
-
-        $redirect_tab ='admin.php?page=syscmafwpl_plugin_options&tab=syscmafwpl_additional_fees';
- 
-		// add the admin notice
-			$admin_notice = "success";
-
-		// redirect the user to the appropriate page
-			wp_redirect($redirect_tab);
-			exit;
-		} else {
-			wp_die( __( 'Invalid nonce specified' ), __( 'Error' ), array(
-				'response' 	=> 403,
-				'back_link' => 'admin.php?page=syscmafwpl_plugin_options',
-
-			) );
-		}
-	}
 
 	public function add_field_form_response() {
 
@@ -174,38 +82,22 @@ class syscmafwpl_add_settings_page_class {
             $new_name      = sanitize_text_field($_POST['nds']['label']);
         }
 
-        if (isset($_POST['nds']['section'])) {
-            $section      = sanitize_text_field($_POST['nds']['section']);
-        }
+
 
         $random_number  = mt_rand(100000, 999999);
 
         $countries     = new WC_Countries();
 
 
-        switch($section) {
-        	case "billing":
-        	    $existing_fields = (array) get_option('syscmafwpl_billing_settings');
-        	    $redirect_tab    = 'admin.php?page=syscmafwpl_plugin_options&tab=syscmafwpl_billing_settings';
-        	    $new_key         = 'billing_field_'.$random_number.'';
-        	    $core_fields     = $countries->get_address_fields( $countries->get_base_country(),'billing_');
 
-        	break;
 
-        	case "shipping":
-        	    $existing_fields = (array) get_option('syscmafwpl_shipping_settings');
-        	    $redirect_tab    = 'admin.php?page=syscmafwpl_plugin_options&tab=syscmafwpl_shipping_settings';
-        	    $new_key         = 'shipping_field_'.$random_number.'';
-        	    $core_fields     = $countries->get_address_fields( $countries->get_base_country(),'shipping_');
-        	break;
 
-        	case "additional":
-        	    $existing_fields = (array) get_option('syscmafwpl_additional_settings');
-        	    $redirect_tab    = 'admin.php?page=syscmafwpl_plugin_options&tab=syscmafwpl_additional_settings';
-        	    $new_key         = 'additional_field_'.$random_number.'';
-        	    $core_fields     = array();
-        	break;
-        }
+        $existing_fields = (array) get_option('syscmafwpl_additional_settings');
+        $redirect_tab    = 'admin.php?page=syscmafwpl_plugin_options&tab=syscmafwpl_additional_settings';
+        $new_key         = 'additional_field_'.$random_number.'';
+        $core_fields     = array();
+
+      
 
         $new_row_values = array();
 
@@ -278,6 +170,96 @@ class syscmafwpl_add_settings_page_class {
 		}
 	}
 
+	public function add_field_form_response2() {
+
+		if( isset( $_POST['syscmafwpl_add_field_nonce2'] ) && wp_verify_nonce( $_POST['syscmafwpl_add_field_nonce2'], 'syscmafwpl_nonce_hidden2') ) {
+
+		
+		
+			
+
+		if (isset($_POST['nds']['field_type'])) {
+			$field_type     = sanitize_text_field($_POST['nds']['field_type']);
+		}
+		
+        if (isset($_POST['nds']['label'])) {
+            $new_name      = sanitize_text_field($_POST['nds']['label']);
+        }
+
+
+
+        $random_number  = mt_rand(100000, 999999);
+
+        $countries     = new WC_Countries();
+
+
+
+
+        $existing_fields = (array) get_option('syscmafwpl_forms_settings');
+        $redirect_tab    = 'admin.php?page=syscmafwpl_plugin_options&tab=syscmafwpl_forms_settings';
+        $new_key         = $random_number;
+        $core_fields     = array();
+
+
+        $new_row_values = array();
+
+
+        if ((!isset($existing_fields) || (sizeof($existing_fields) <= 0 )) ) {
+            $tabs  = $core_fields;
+
+            foreach ($tabs as $key=>$value) {
+            
+                $new_row_values[$key] = $value;
+
+
+            }
+
+        } else {
+        	
+
+        	foreach ($existing_fields as $key2=>$value2) {
+
+        		
+                $new_row_values[$key2] = $value2;
+                
+               
+
+            }
+
+        }
+
+
+        if (isset($new_name) && ($new_name != '')) {
+            $new_row_values[$new_key]['field_key']           = $new_key;
+            $new_row_values[$new_key]['type']                = $field_type;
+            $new_row_values[$new_key]['label']               = $new_name;
+
+        }
+
+        if (($new_row_values != $existing_fields) && !empty($new_row_values)) {
+
+
+        		update_option('syscmafwpl_forms_settings',$new_row_values);
+        
+        }
+
+
+ 
+		// add the admin notice
+			$admin_notice = "success";
+
+		// redirect the user to the appropriate page
+			wp_redirect($redirect_tab);
+			exit;
+		} else {
+			wp_die( __( 'Invalid nonce specified' ), __( 'Error' ), array(
+				'response' 	=> 403,
+				'back_link' => 'admin.php?page=syscmafwpl_plugin_options',
+
+			) );
+		}
+	}
+
 	public function syscmafwpl_get_child_field_options_function() {
 
 		global $woocommerce;
@@ -328,20 +310,7 @@ class syscmafwpl_add_settings_page_class {
     }
 	
 	
-	public function restore_billing_fields() {
-	    if( current_user_can('manage_woocommerce') ) {
-           delete_option( $this->billing_settings_key );
-	    }
-	   
-	   die();
-	}
-	
-	public function restore_shipping_fields() {
-	    if( current_user_can('manage_woocommerce') ) {
-	        delete_option( $this->shipping_settings_key );
-	    }
-	   die();
-	}
+
 
 	
 
@@ -761,7 +730,7 @@ class syscmafwpl_add_settings_page_class {
 			    'fixedtext'                 => esc_html__( 'Fixed Amount' ,'customize-my-account-for-woocommerce'),
 			    'percentagetext'            => esc_html__( 'Percentage' ,'customize-my-account-for-woocommerce'),
 			    'is_checked'                => esc_html__( 'Is Checked' ,'customize-my-account-for-woocommerce'),
-			    'copiedalert'               => esc_html__( 'Field key successfully copied to clipboard.' ,'customize-my-account-for-woocommerce'),
+			    'copiedalert'               => esc_html__( 'Shortcodecond successfully copied to clipboard.' ,'customize-my-account-for-woocommerce'),
 			    'input_label_text'          => esc_html__( 'Custom Label' ,'customize-my-account-for-woocommerce'),
 			    'copy_text'                 => esc_html__( 'Copy' ,'customize-my-account-for-woocommerce'),
 			    'rule_type_select1'         => $rule_type_select1,
@@ -785,7 +754,7 @@ class syscmafwpl_add_settings_page_class {
 
 		$this->syscmafwpl_plugin_settings_tabs['syscmafwpl_additional_settings'] = esc_html__( 'Edit Account Fields' ,'customize-my-account-for-woocommerce');
 
-		
+		$this->syscmafwpl_plugin_settings_tabs['syscmafwpl_forms_settings'] = esc_html__( 'Field Forms' ,'customize-my-account-for-woocommerce');
 
 		$this->syscmafwpl_plugin_settings_tabs['syscmafwpl_extra_settings'] = esc_html__( 'Settings' ,'customize-my-account-for-woocommerce');
 
@@ -800,6 +769,10 @@ class syscmafwpl_add_settings_page_class {
 		register_setting( $this->additional_settings_key, $this->additional_settings_key );
 		add_settings_section( 'syscmafwpl_section_additional', '', '', $this->additional_settings_key );
 		add_settings_field( 'syscmafwpl_additional_option', '', array( $this, 'syscmafwpl_field_additional_option' ), $this->additional_settings_key, 'syscmafwpl_section_additional' );
+
+		register_setting( $this->forms_settings_key, $this->forms_settings_key );
+		add_settings_section( 'syscmafwpl_section_forms', '', '', $this->forms_settings_key );
+		add_settings_field( 'syscmafwpl_forms_option', '', array( $this, 'syscmafwpl_field_forms_option' ), $this->forms_settings_key, 'syscmafwpl_section_forms' );
 
 		
 
@@ -821,6 +794,14 @@ class syscmafwpl_add_settings_page_class {
 
 	 	
 
+
+	 }
+
+
+	public function syscmafwpl_field_forms_option() { 
+
+
+	 		include ('forms/admin_forms_fields_form.php');
 
 	 }
 
@@ -850,7 +831,7 @@ class syscmafwpl_add_settings_page_class {
          'SysBasics',
          'manage_woocommerce',
          'sysbasics',
-         array($this,'plugin_options_page'),
+         array($this,'syscmafwpl_plugin_options'),
          ''.syscmafwpl_PLUGIN_URL.'assets/images/icon.png',
          70
         );
@@ -858,7 +839,7 @@ class syscmafwpl_add_settings_page_class {
 
         
 	   
-	    $billing_syscmafwplsettings_page = add_submenu_page( 'sysbasics', esc_html__('My Account Fields','customize-my-account-for-woocommerce'), esc_html__('My Account Fields','customize-my-account-for-woocommerce'), 'manage_woocommerce', $this->syscmafwpl_plugin_options, array($this, 'plugin_options_page'));
+	    $billing_syscmafwplsettings_page = add_submenu_page( 'sysbasics', esc_html__('My Account Fields','customize-my-account-for-woocommerce'), esc_html__('My Account Fields','customize-my-account-for-woocommerce'), 'manage_woocommerce', 'syscmafwpl_plugin_options', array($this, 'plugin_options_page'));
 	}
 	
 	
@@ -892,10 +873,12 @@ class syscmafwpl_add_settings_page_class {
 				$checkout_url = wc_get_account_endpoint_url( 'edit-account' );;
 				?>
 				<div class="syscmafwpl_additional_buttons">
-					<a type="button" target="_blank" href="<?php echo $checkout_url; ?>" id="syscmafwpl_frontend_link" class="btn btn-primary syscmafwpl_frontend_link">
-						<span class="dashicons dashicons-welcome-view-site"></span>
-						<?php echo esc_html__('Frontend','syscmafwpl'); ?>
-					</a>
+					<?php if ($tab != "syscmafwpl_forms_settings") { ?>
+						<a type="button" target="_blank" href="<?php echo $checkout_url; ?>" id="syscmafwpl_frontend_link" class="btn btn-primary syscmafwpl_frontend_link">
+							<span class="dashicons dashicons-welcome-view-site"></span>
+							<?php echo esc_html__('Frontend','syscmafwpl'); ?>
+						</a>
+					<?php } ?>
 
 					<?php 
 					if ($tab != $this->extra_settings_key) {
@@ -977,6 +960,48 @@ class syscmafwpl_add_settings_page_class {
 								<button type="submit" id="syscmafwpl_new_field_etype" etype="" name="submit"  class="btn btn-primary wcmamtx_new_end_point"><?php echo esc_html__( 'Add New Field' ,'customize-my-account-for-woocommerce'); ?>
 
                                 </button>
+                            </form>
+
+                        </div>
+                        <div class="modal-footer">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="syscmafwpl_example_modal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+
+						<div class="modal-body">
+
+							<form action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" method="post" id="add_field_form_response2" >			
+
+
+								<input type="hidden" name="action" value="add_field_form_response2">
+								<input type="hidden" name="syscmafwpl_add_field_nonce2" value="<?php echo wp_create_nonce( 'syscmafwpl_nonce_hidden2' ); ?>" />	
+
+
+
+								<input  required id="sdfsd-user_meta_key" type="text" name="<?php echo "nds"; ?>[label]" value="" placeholder="<?php echo esc_html__('Enter Label','customize-my-account-for-woocommerce'); ?>" />
+								<input type="hidden" nonce="<?php echo wp_create_nonce( 'syscmafwpl_nonce_hidden2' ); ?>" name="<?php echo "nds"; ?>[section]" id="syscmafwpl_hidden_field_section" value="">
+								<input type="hidden" id="syscmafwpl_hidden_field_type" nonce="<?php echo wp_create_nonce( 'syscmafwpl_nonce_hidden2' ); ?>" name="<?php echo "nds"; ?>[field_type]" id="syscmafwpl_hidden_field_type" value="text">
+								
+
+								
+
+
+								<div class="sdfsd_body_footer_div">
+
+									<button type="button" class="btn btn-secondary" data-dismiss="modal"><?php echo esc_html__( 'Close' ,'customize-my-account-for-woocommerce'); ?></button>
+
+
+
+									<button type="submit" id="syscmafwpl_new_field_etype" etype="" name="submit"  class="btn btn-primary wcmamtx_new_end_point"><?php echo esc_html__( 'Add New Field Form' ,'customize-my-account-for-woocommerce'); ?>
+
+								    </button>
+							    </div>
                             </form>
 
                         </div>
@@ -1115,6 +1140,265 @@ class syscmafwpl_add_settings_page_class {
 	<?php 
     
     }
+
+	public function display_visual_preview2($key,$field,$noticerowno) { 
+        global $woocommerce;
+     
+		?>
+	 
+		<td width="30%">
+			<a class="accordion-toggle syscmafwpl_edit_icon_a" data-toggle="collapse" data-parent="#accordion" href="#syscmafwpl<?php echo $noticerowno; ?>">
+				<label class="syscmafwpl_field_heading_lable syscmafwpl_field_heading_lable_<?php echo $key; ?>">
+					<?php echo $this->display_field_label($key,$field); ?>
+				</label>
+			</a>
+		</td>
+		<td width="30%">
+			<?php 
+			if (isset($field['field_key']) && ($field['field_key'] != "")) { 
+				$field_key = $field['field_key'];
+			} else { 
+				$field_key = $key;
+			}
+			?>
+
+
+			<span class="syscmafwpl_field_key syscmafwpl_field_key_<?php echo $key; ?>">
+				[sysbasics_field_form id='<?php echo $field_key; ?>']
+			</span>
+			<span onclick="syscmafwpl_copyToClipboard('.syscmafwpl_copy_key_icon_<?php echo $key; ?>')" cpkey="[sysbasics_field_form id='<?php echo $field_key; ?>']" title="<?php echo esc_html__('Copy to clipboard','customize-my-account-for-woocommerce'); ?>" class="glyphicon glyphicon-book syscmafwpl_copy_key_icon syscmafwpl_copy_key_icon_<?php echo $key; ?> "></span>
+		</td>
+	 
+	<?php 
+    
+    }
+
+
+    public function show_fields_form2($fields,$key,$field,$noticerowno,$slug,$required_slugs,$core_fields,$country_fields,$address2_field) { ?>
+	      <?php
+		    
+            if (isset($field['width'])) {
+                 
+                $fieldwidth= $field['width'];
+               	 
+            } elseif (isset($field['class'])) {
+                  
+                foreach($field['class'] as $class) {
+               	  	if (isset($class)) {
+                        switch($class) {
+                    	    case "form-row-first":
+                                $fieldwidth='form-row-first';
+						    break;
+
+                    	    case "form-row-last":
+                                $fieldwidth='form-row-last';
+						    break;
+
+                    	    default:
+                    	        $fieldwidth='form-row-wide';
+                    	}
+                    }
+               	} 
+            }
+	    
+	    global $wp_roles;
+
+        if ( ! isset( $wp_roles ) ) { 
+    	    $wp_roles = new WP_Roles();  
+        }
+	
+	    $roles = $wp_roles->roles;
+        $shipping_methods = WC()->shipping->get_shipping_methods();
+
+	    $payment_gateways = WC()->payment_gateways->get_available_payment_gateways();
+
+	
+		$catargs = array(
+	      'orderby'                  => 'name',
+	      'taxonomy'                 => 'product_cat',
+	      'hide_empty'               => 0
+	    );
+		 
+	  
+		$categories           = get_categories( $catargs );  
+
+      
+		if (!empty($field['category'])) {
+		       $chosencategories = implode(',', $field['category']); 
+		} else { 
+			   $chosencategories=''; 
+		}
+
+		if (!empty($field['role'])) {
+			$chosenroles = implode(',', $field['role']); 
+		} else { 
+			$chosenroles=''; 
+		}
+		
+		
+		?>   
+
+       
+	   <div class="panel-group panel panel-default syscmafwpl_list_item" id="syscmafwpl_list_items_<?php echo $noticerowno; ?>" style="display:block;">
+           <div class="panel-heading"> 
+		
+	     <table class="heading-table <?php echo $key; ?>_panel <?php if (isset($field['hide']) && ($field['hide'] == 1)) { echo "syscmafwpl_disabled";} ?>">
+	     	<tr>
+	     		<td>
+	     			<?php if (preg_match('/\b'.$key.'\b/', $core_fields )) { ?>
+	     				<input type="checkbox" class="syscmafwpl_accordion_onoff" parentkey="<?php echo $key; ?>" <?php if (!isset($field['hide']) || ($field['hide'] == 0)) { echo "checked";} ?>>
+	     				<input type="hidden" class="<?php echo $key; ?>_hidden_checkbox" name="<?php echo $slug; ?>[<?php echo $key; ?>][hide]" value="<?php if (isset($field['hide'])) { echo ($field['hide']); } else { echo 0; } ?>" checked>
+	     			<?php } else { ?>
+                        <span class="glyphicon glyphicon-trash syscmafwpl_trash_icon"></span>
+	     			<?php } ?>
+
+
+	     			<a class="accordion-toggle syscmafwpl_edit_icon_a" data-toggle="collapse" data-parent="#accordion" href="#syscmafwpl<?php echo $noticerowno; ?>">
+	     				<span class="glyphicon glyphicon-edit syscmafwpl_edit_icon"></span>
+	     			</a>
+
+	     			
+	     		</td>
+
+	     		<?php $this->display_visual_preview2($key,$field,$noticerowno); ?>
+
+	     		
+	     	</tr>
+
+
+
+		  </table>
+           </div>
+           <div id="syscmafwpl<?php echo $noticerowno; ?>" class="panel-collapse collapse">
+
+           	<table class="table"> 
+
+
+
+           		<tr class="syscmafwpl_field_key_tr">
+           			<td width="15%"><label for="<?php echo $key; ?>_type"><?php echo esc_html__('Shortcode','customize-my-account-for-woocommerce'); ?></label></td>
+           			<td width="85%" class="syscmafwpl_field_key_tr">
+           				<?php 
+           				if (isset($field['field_key']) && ($field['field_key'] != "")) { 
+           					$field_key = $field['field_key'];
+           				} else { 
+           					$field_key = $key;
+           				}
+           				?>
+
+
+           				<span class="syscmafwpl_field_key syscmafwpl_field_key_<?php echo $key; ?>">
+           					[sysbasics_field_form id='<?php echo $field_key; ?>']
+           				</span>
+           				<span onclick="syscmafwpl_copyToClipboard('.syscmafwpl_copy_key_icon_<?php echo $key; ?>')" cpkey="[<?php echo $field_key; ?>]" title="<?php echo esc_html__('Copy to clipboard','customize-my-account-for-woocommerce'); ?>" class="glyphicon glyphicon-book syscmafwpl_copy_key_icon syscmafwpl_copy_key_icon_<?php echo $key; ?> "></span>
+
+           			</td>
+           		</tr> 
+
+
+
+			   <tr>
+                <td width="15%"><label for="<?php echo $key; ?>_label"><?php  echo esc_html__('Label','customize-my-account-for-woocommerce'); ?></label></td>
+	            <td width="85%">
+	            	<input type="text" clkey="<?php echo $key; ?>" class="syscmafwpl_label_input" name="syscmafwpl_forms_settings[<?php echo $key; ?>][label]" value="<?php 
+	                if (isset($field['label']) && ($field['label'] != '')) { 
+	            	    echo $field['label']; 
+
+	            	    $cpm_lable = $field['label'];
+	            	} else { 
+	            		echo $headlingtext; 
+
+	            		 $cpm_lable = $headlingtext;
+
+	            	} ?>" size="100"></td>
+               </tr>
+	
+
+                
+                <tr class="" style="">
+			        <td width="15%">
+                        <label for="notice_category"><span class="syscmafwplformfield">
+                        	<?php echo esc_html__('Fields','customize-my-account-for-woocommerce'); ?></span>
+                        </label>
+	                </td>
+			        <td width="85%">
+			        	
+                        <div class="dynamic_fields_div_wrapper dynamic_fields_div_wrapper_<?php echo $key; ?>">
+			        		<?php 
+
+			        		$gtindex = 1;
+
+			        		$default_rules = array(
+			        			'first_name'   => array('label'=>esc_html__('First Name','customize-my-account-for-woocommerce')),
+			        			'last_name'    => array('label'=>esc_html__('Last Name','customize-my-account-for-woocommerce')),
+			        			'email'        => array('label'=>esc_html__('Email','customize-my-account-for-woocommerce')),
+			        			'display_name' => array('label'=>esc_html__('Display Name','customize-my-account-for-woocommerce')),
+			        			'password_change' => array('label'=>esc_html__('Password Change','customize-my-account-for-woocommerce'))
+			        		);
+                            
+                            $dynamice_rules = isset($field['dynamic_rules']) ? $field['dynamic_rules'] : $default_rules;
+
+                            
+
+			        		if (isset($dynamice_rules)) {
+                            
+                                $gtindex = max(array_keys($dynamice_rules));
+
+                                $gtindex++;
+
+                               
+                             
+			            	    foreach ($dynamice_rules as $dynamickey=>$dynamicvalue) {
+
+			            	    	
+
+			            	    	syscmafwpl_display_each_dynamic_row2($dynamickey,$dynamicvalue,$key,$slug);
+			            	    	
+
+			            	    } 
+			            	}
+
+			            	if (!isset($field['dynamic_rules'])) {
+
+			            		$all_fields    = (array) get_option('syscmafwpl_additional_settings');
+
+			            		unset($all_fields[0]);
+
+			            		if (isset($all_fields) && (sizeof($all_fields) >= 1)) { 
+
+
+			            			foreach ( $all_fields as $mnkey => $mnfield ) {
+
+
+			            				$field_key = isset($mnfield['field_key']) ? $mnfield['field_key'] : $mnkey;
+
+			            				syscmafwpl_display_each_dynamic_row2($mnkey,$mnfield,$key,$slug);
+
+			            			}
+
+			            		}
+
+			            	} 
+
+			            	
+
+			            	?>
+			        	</div>
+
+
+
+			           
+			        </td>
+			    </tr>
+
+
+           		<?php do_action('syscmafwpl_after_field_content_end',$key,$field); ?>
+           	</table>
+
+             </div>
+			
+          </div>
+	<?php }
 	
 	
 	public function show_fields_form($fields,$key,$field,$noticerowno,$slug,$required_slugs,$core_fields,$country_fields,$address2_field) { ?>
@@ -1746,7 +2030,7 @@ class syscmafwpl_add_settings_page_class {
                         </label>
 	                </td>
 			        <td width="85%">
-                        <?php echo esc_html__('This feature is available in pro version only','customize-my-account-for-woocommerce'); ?></span>
+			        	<?php echo esc_html__('This feature is available in pro version only','customize-my-account-for-woocommerce'); ?>
 			        </td>
 			    </tr>
 
@@ -1759,7 +2043,7 @@ class syscmafwpl_add_settings_page_class {
                         </label>
 	                </td>
 			        <td width="85%">
-                          <?php echo esc_html__('This feature is available in pro version only','customize-my-account-for-woocommerce'); ?></span>
+			            <?php echo esc_html__('This feature is available in pro version only','customize-my-account-for-woocommerce'); ?>
                     </td>
 			    </tr>
 
@@ -1804,7 +2088,7 @@ class syscmafwpl_add_settings_page_class {
         echo '<h2 class="nav-tab-wrapper">';
 		foreach ( $this->syscmafwpl_plugin_settings_tabs as $tab_key => $tab_caption ) {
 			$active = $current_tab == $tab_key ? 'nav-tab-active' : '';
-			echo '<a class="nav-tab ' . $active . '" href="?page=' . $this->syscmafwpl_plugin_options . '&tab=' . $tab_key . '">' . $tab_caption . '</a>';	
+			echo '<a class="nav-tab ' . $active . '" href="?page=syscmafwpl_plugin_options&tab=' . $tab_key . '">' . $tab_caption . '</a>';	
 		}
 		echo '</h2>';
 	}

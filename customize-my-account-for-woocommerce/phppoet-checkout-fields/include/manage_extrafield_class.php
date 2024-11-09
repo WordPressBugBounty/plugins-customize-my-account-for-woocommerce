@@ -41,7 +41,279 @@ class syscmafwpl_manage_extrafield_class {
 
         add_action( 'woocommerce_created_customer', array($this,'syscmafwpl_save_registration_fields') );
 
+        add_shortcode('sysbasics_field_form',array($this,'syscmafwpl_register_shortcode_front_Fields'));
+
     }
+
+
+    public function syscmafwpl_register_shortcode_front_Fields($atts) {
+    	 ob_start();
+
+    	 $form_id = $atts['id'];
+
+
+    	 $forms_settings              = (array) get_option('syscmafwpl_forms_settings');
+		   
+         unset($forms_settings[0]);
+
+         $forms_value = $forms_settings[$form_id];
+
+         $this->process_field_form($forms_value);
+
+    	 return ob_get_clean();
+    }
+
+
+    public function process_first_name($user) {
+
+    	?>
+
+    	<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+    		<label for="account_first_name"><?php esc_html_e( 'First name', 'customize-my-account-for-woocommerce' ); ?>&nbsp;<span class="required">*</span></label>
+    		<input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="account_first_name" id="account_first_name" autocomplete="given-name" value="<?php echo esc_attr( $user->first_name ); ?>" />
+    	</p>
+
+    	<?php
+
+    }
+
+
+    public function process_last_name($user) {
+
+    	?>
+
+    	<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+    		<label for="account_last_name"><?php esc_html_e( 'Last name', 'customize-my-account-for-woocommerce' ); ?>&nbsp;<span class="required">*</span></label>
+    		<input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="account_last_name" id="account_last_name" autocomplete="family-name" value="<?php echo esc_attr( $user->last_name ); ?>" />
+    	</p>
+    	<?php
+
+    }
+
+
+    public function process_display_name($user) {
+    	?>
+
+    	<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+    		<label for="account_display_name"><?php esc_html_e( 'Display name', 'customize-my-account-for-woocommerce' ); ?>&nbsp;<span class="required">*</span></label>
+    		<input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="account_display_name" id="account_display_name" value="<?php echo esc_attr( $user->display_name ); ?>" /> <span><em><?php esc_html_e( 'This will be how your name will be displayed in the account section and in reviews', 'customize-my-account-for-woocommerce' ); ?></em></span>
+    	</p>
+
+    	<?php
+    }
+
+
+    public function process_email($user) { ?>
+
+    	<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+    		<label for="account_email"><?php esc_html_e( 'Email address', 'customize-my-account-for-woocommerce' ); ?>&nbsp;<span class="required">*</span></label>
+    		<input type="email" class="woocommerce-Input woocommerce-Input--email input-text" name="account_email" id="account_email" autocomplete="email" value="<?php echo esc_attr( $user->user_email ); ?>" />
+    	</p>
+
+    	<?php
+    }
+
+
+    public function process_redirect() { 
+         
+        $actual_link = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+
+
+
+    	?>
+
+
+    		<input type="hidden" class="woocommerce-Input woocommerce-Input--email input-text" name="custom_redirect" id="custom_redirect" value="<?php echo $actual_link; ?>" />
+    	
+
+    	<?php
+    }
+
+
+    public function process_password_change($user) { ?>
+
+
+    	<fieldset>
+    		<legend><?php esc_html_e( 'Password change', 'customize-my-account-for-woocommerce' ); ?></legend>
+
+    		<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+    			<label for="password_current"><?php esc_html_e( 'Current password (leave blank to leave unchanged)', 'customize-my-account-for-woocommerce' ); ?></label>
+    			<input type="password" class="woocommerce-Input woocommerce-Input--password input-text" name="password_current" id="password_current" autocomplete="off" />
+    		</p>
+    		<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+    			<label for="password_1"><?php esc_html_e( 'New password (leave blank to leave unchanged)', 'customize-my-account-for-woocommerce' ); ?></label>
+    			<input type="password" class="woocommerce-Input woocommerce-Input--password input-text" name="password_1" id="password_1" autocomplete="off" />
+    		</p>
+    		<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+    			<label for="password_2"><?php esc_html_e( 'Confirm new password', 'customize-my-account-for-woocommerce' ); ?></label>
+    			<input type="password" class="woocommerce-Input woocommerce-Input--password input-text" name="password_2" id="password_2" autocomplete="off" />
+    		</p>
+    	</fieldset>
+
+    	<?php
+
+    }
+
+    public function process_custom_field($field) {
+    		$field_key = isset($field['field_key']) ? $field['field_key'] : '';
+
+			$default_value = get_user_meta( get_current_user_id(), $field_key, true );
+
+			
+			$hide_account_edit = isset($field['hide_account_edit']) && ($field['hide_account_edit'] == 1) ? "no" : "yes";
+
+
+			if ($hide_account_edit == "yes") {
+
+
+				$visibilityarray = $field['visibility'];
+				 
+				if (isset($field['products'])) { 
+				    $allowedproducts = $field['products'];
+				} else {
+					$allowedproducts = array(); 
+				}
+				 
+				if (isset($field['category'])) {
+					$allowedcats = $field['category'];
+				} else {
+					$allowedcats = array();
+				}
+
+				if (isset($field['role'])) {
+					$allowedroles = $field['role'];
+				} else {
+					$allowedroles = array();
+				}
+
+				if (isset($field['total-quantity'])) {
+					$total_quantity = $field['total-quantity'];
+				} else {
+					$total_quantity = 0;
+				}
+
+				if (isset($field['specific-product'])) {
+					$prd = $field['specific-product'];
+				} else {
+					$prd = 0;
+				}
+
+				if (isset($field['specific-quantity'])) {
+					$prd_qnty = $field['specific-quantity'];
+				} else {
+					$prd_qnty = 0;
+				}
+
+
+				if (isset($field['dynamic_rules'])) { 
+					$dynamic_rules = $field['dynamic_rules'];
+				} else {
+					$dynamic_rules = array(); 
+				}
+
+
+				if (isset($field['dynamic_visibility_criteria'])) { 
+					$dynamic_criteria = $field['dynamic_visibility_criteria'];
+				} else {
+					$dynamic_criteria = 'match_all'; 
+				}
+
+
+				 
+				$is_field_hidden = syscmafwpl_check_if_field_is_hidden2($visibilityarray,$allowedproducts,$allowedcats,$allowedroles,$total_quantity,$prd,$prd_qnty,$dynamic_rules,$dynamic_criteria);
+
+				if ((!isset($is_field_hidden)) || ($is_field_hidden != 0)) {
+
+					if (isset($field['type']) &&  ($field['type'] == "pcsyscmafwplselect")) {
+
+						$field_html = '';
+
+						woocommerce_form_field( $field_html, $key, $field, $default_value );
+
+					} else {
+
+
+
+						woocommerce_form_field( $key, $field, $default_value );
+
+					}
+				}
+
+			}
+    }
+
+
+
+
+    public function process_field_form($forms_value) {
+
+
+
+    	$dynamic_rules = $forms_value['dynamic_rules'];
+
+    	$user = wp_get_current_user();
+
+    	?>
+
+    	<form class="woocommerce-EditAccountForm edit-account" action="" method="post" <?php do_action( 'woocommerce_edit_account_form_tag' ); ?> >
+
+    		
+            <?php
+
+                foreach ($dynamic_rules as $dkey=>$dvalue) {
+
+                	switch($dkey) {
+                		case "first_name":
+                		$this->process_first_name($user);
+                		break;
+
+                		case "last_name":
+                		$this->process_last_name($user);
+                		break;
+
+                		case "display_name":
+                		$this->process_display_name($user);
+                		break;
+
+                		case "email":
+                		$this->process_email($user);
+                		break;
+
+                		case "password_change":
+                		$this->process_password_change($user);
+                		break;
+
+                		default:
+                		$all_fields    = (array) get_option('syscmafwpl_additional_settings');
+
+                		unset($all_fields[0]);
+                        
+                        $field_value   = $all_fields[$dkey];
+
+
+                      
+                        $this->process_custom_field($field_value);
+
+                		break;
+                	}
+
+                }
+
+                $this->process_redirect();
+    			
+            ?>
+
+		<p>
+			<?php wp_nonce_field( 'save_account_details', 'save-account-details-nonce' ); ?>
+			<button type="submit" class="woocommerce-Button button<?php echo esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '' ); ?>" name="save_account_details" value="<?php esc_attr_e( 'Save changes', 'customize-my-account-for-woocommerce' ); ?>"><?php esc_html_e( 'Save changes', 'customize-my-account-for-woocommerce' ); ?></button>
+			<input type="hidden" name="action" value="save_account_details" />
+		</p>
+
+		
+	</form>
+	<?php
+
+}
 
 
     public function syscmafwpl_save_registration_fields( $customer_id ) {
@@ -262,23 +534,32 @@ class syscmafwpl_manage_extrafield_class {
 	 }
 
 
-     public function syscmafwpl_save_profile_fields( $user_id ) {
-          
-	      if ( !current_user_can( 'edit_user', $user_id ) )
-		   return false;
-           
+	 public function syscmafwpl_save_profile_fields( $user_id ) {
 
-		   $additional_fields              = (array) get_option('syscmafwpl_additional_settings');
-		   
+	 	if ( !current_user_can( 'edit_user', $user_id ) )
+	 		return false;
 
-		   
-		   foreach ($additional_fields as $additionalkey=>$additional_field) {
-		   	    if ( isset( $_POST[$additionalkey] ) )
-		   		update_user_meta( $user_id, $additionalkey, sanitize_text_field( $_POST[$additionalkey] ) );
-		   }
-	      	
-	      
-    }
+
+	 	$additional_fields              = (array) get_option('syscmafwpl_additional_settings');
+
+
+
+	 	foreach ($additional_fields as $additionalkey=>$additional_field) {
+	 		if ( isset( $_POST[$additionalkey] ) )
+	 			update_user_meta( $user_id, $additionalkey, sanitize_text_field( $_POST[$additionalkey] ) );
+	 	}
+
+	 	if ( isset( $_POST['custom_redirect'] ) && ( $_POST['custom_redirect'] != "")) {
+	 		wp_safe_redirect($_POST['custom_redirect']); 
+	 	}
+
+	 	
+
+
+	 	exit;
+
+
+	 }
 
 
 	public function syscmafwpl_core_override_default_navigation_template($template,$template_name,$template_path) {

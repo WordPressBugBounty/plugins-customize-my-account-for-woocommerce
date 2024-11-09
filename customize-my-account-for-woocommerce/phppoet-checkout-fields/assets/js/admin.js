@@ -558,35 +558,7 @@ $('.checkout_field_quantity_specific_product_fees,.checkout_field_products,.chec
 	    width: "300px"// the minimum of symbols to input before perform a search
 });
 
-$("#restore-billing-fields").on('click',function() {
-	var result2 = confirm(syscmafwpladmin.restorealert);
-	if (result2 == true) {
-		
-		$.ajax({
-			data: {action: "restore_billing_fields" },
-			type: 'POST',
-			url: ajaxurl,
-			success: function( response ) { 
-				window.location.reload();
-			}
-		});
-	}
-});
 
-$("#restore-shipping-fields").on('click',function() {
-	var result3 = confirm(syscmafwpladmin.restorealert);
-	if (result3 == true) {
-		
-		$.ajax({
-			data: {action: "restore_shipping_fields" },
-			type: 'POST',
-			url: ajaxurl,
-			success: function( response ) { 
-				window.location.reload();
-			}
-		});
-	}
-});
 
 
 
@@ -614,6 +586,8 @@ $('span.syscmafwpl_remove_icon.dashicons.dashicons-remove').on('click',function(
 	$(this).parents('tr.syscmafwpl_sortable_tr').remove();
 });
 
+
+
 $('.syscmafwpl_change_key_input').keyup(function () {
 	var clkey      = $(this).attr("clkey");
 	var enteredval = $(this).val();
@@ -622,6 +596,8 @@ $('.syscmafwpl_change_key_input').keyup(function () {
 	$('.syscmafwpl_copy_key_icon_'+ clkey +'').attr("cpkey",enteredval);
 	
 });
+
+
 
 $('.syscmafwpl_value_input').keyup(function(event){
 
@@ -690,6 +666,25 @@ $('.add-option-button').on('click',function(event){
 });
 
 
+$('.add-field-button').on('click',function(event){
+
+	event.preventDefault();
+
+	alert("hello world");
+
+	return false;
+
+});
+
+$('.add-field-button-new').on('click',function(event){
+
+	event.preventDefault();
+
+	
+
+	return false;
+
+});
 
 
 
@@ -1215,7 +1210,19 @@ $("#wcmamtx_add_field").on("click",function (event) {
 });
 
 
+$("#wcmamtx_add_field2").on("click",function (event) {
+	event.preventDefault();
 
+	var mnkey = $(this).data('etype');
+
+	$("#syscmafwpl_hidden_field_section").val(mnkey);
+
+	$('#syscmafwpl_hidden_field_type').val("text");
+
+	$('#syscmafwpl_example_modal3').modal('show');
+
+	return false;
+});
 
 $("#syscmafwpl_modal_popup_select_button").on("click",function (event) {
 

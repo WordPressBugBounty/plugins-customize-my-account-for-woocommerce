@@ -95,6 +95,81 @@ if (! function_exists('syscmafwpl_easy_checkout_get_fees_type')) {
 
 }
 
+if (! function_exists('syscmafwpl_display_each_dynamic_row2')) {
+
+	 /**
+	 * Outputs a installed woocommerce version
+	 *
+	 * @access public
+	 * @subpackage	Forms
+	 */
+
+	 function syscmafwpl_display_each_dynamic_row2($dynamickey,$dynamicvalue,$key,$slug) {
+
+	 	
+
+	 	$selected = isset($dynamicvalue['rule_type']) ? $dynamicvalue['rule_type'] : "";
+
+	 	$selected_compare = isset($dynamicvalue['rule_type_compare']) ? $dynamicvalue['rule_type_compare'] : "";
+
+	 	$selected_contains = isset($dynamicvalue['rule_type_contains']) ? $dynamicvalue['rule_type_contains'] : "";
+        
+        $checked_text = isset($dynamicvalue['enabled']) && ($dynamicvalue['enabled'] == "yes") ? 'checked' : "";
+
+        $rule_type_number =  isset($dynamicvalue['rule_type_number']) ? $dynamicvalue['rule_type_number'] : "";
+
+        $rule_type_products = isset($dynamicvalue['rule_type_products']) ? $dynamicvalue['rule_type_products'] : array();
+        
+        $chosencategories   = isset($dynamicvalue['rule_type_categories']) ? $dynamicvalue['rule_type_categories'] : array();
+
+        $chosenroles        = isset($dynamicvalue['rule_type_roles']) ? $dynamicvalue['rule_type_roles'] : array();
+
+        $default_label      = isset($dynamicvalue['label']) ?  $dynamicvalue['label'] : '';
+
+        global $wp_roles;
+
+        if ( ! isset( $wp_roles ) ) { 
+    	    $wp_roles = new WP_Roles();  
+        }
+	
+	    $roles = $wp_roles->roles;
+        
+
+
+
+
+
+
+        $catargs = array(
+	      'orderby'                  => 'name',
+	      'taxonomy'                 => 'product_cat',
+	      'hide_empty'               => 0
+	    );
+		 
+	  
+		$categories           = get_categories( $catargs );  
+
+       
+
+	 	?>
+           
+        <div class="conditional-row conditional_row_<?php echo $dynamickey; ?>_<?php echo $key; ?>">
+        	<span class="syscmafwpl_sortable_tr_handle_dynamic dashicons dashicons-menu"></span>&nbsp;
+        	<input type="hidden" class="rule_enabled_checkbox" name="syscmafwpl_forms_settings[<?php echo $key; ?>][dynamic_rules][<?php echo $dynamickey; ?>][label]" value="<?php echo $default_label; ?>">
+            
+            <span class="syscmafwpl_field_label_fields">
+            	<?php echo esc_html($default_label); ?>
+            </span>         
+
+        	<span class="dashicons dashicons-remove syscmafwpl-remove-condition-dynamic"></span>
+        </div>
+
+        <?php
+
+	 }
+
+}
+
 
 if (! function_exists('syscmafwpl_display_each_dynamic_row')) {
 

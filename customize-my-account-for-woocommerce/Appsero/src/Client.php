@@ -14,7 +14,7 @@ class Client {
      *
      * @var string
      */
-    public $version = '2.0.3';
+    public $version = '1.3.0';
 
     /**
      * Hash identifier of the plugin
@@ -128,26 +128,6 @@ class Client {
     }
 
     /**
-     * Initialize plugin/theme updater
-     *
-     * @return void
-     */
-    public function updater() {
-        // do not show update notice on ajax request and rest api request
-        if ( wp_doing_ajax() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) ) {
-            return;
-        }
-
-        // show deprecated notice
-        _deprecated_function( __CLASS__ . '::updater', '2.0', '\wcmamtx_Appsero\Updater::init($client);, for more details please visit: https://wcmamtx_Appsero.com/docs/wcmamtx_Appsero-developers-guide/wcmamtx_Appsero-client/wcmamtx_Appsero-sdk-updater-changes/' );
-
-        // initialize the new updater
-        if ( method_exists( '\wcmamtx_Appsero\Updater', 'init' ) ) {
-            \wcmamtx_Appsero\Updater::init( $this );
-        }
-    }
-
-    /**
      * Initialize license checker
      *
      * @return wcmamtx_Appsero\License
@@ -173,7 +153,7 @@ class Client {
      * @return string
      */
     public function endpoint() {
-        $endpoint = apply_filters( 'wcmamtx_Appsero_endpoint', 'https://api.wcmamtx_Appsero.com' );
+        $endpoint = apply_filters( 'wcmamtx_Appsero_endpoint', 'https://api.Appsero.com' );
 
         return trailingslashit( $endpoint );
     }

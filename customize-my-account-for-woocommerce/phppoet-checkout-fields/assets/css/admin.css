@@ -439,7 +439,7 @@ input#sdfsd-user_meta_key {
     margin-left: 20px;
 }
 
-button#wcmamtx_add_field {
+button#wcmamtx_add_field,button#wcmamtx_add_field2 {
     float: left;
 }
 
@@ -549,4 +549,27 @@ span.dashicons.dashicons-remove.syscmafwpl-remove-condition {
     font-size: 14px;
     font-weight: bold;
     font-style: italic;
+}
+.sdfsd_body_footer_div {
+    margin-top: 20px;
+    padding: 17px;
+}
+
+span.dashicons.dashicons-remove.syscmafwpl-remove-condition-dynamic {
+    float: right;
+}
+input.rule_enabled_checkbox {
+    margin-top: 7px;
+    margin-left: 20px;
+}
+
+span.syscmafwpl_field_label_fields {
+    margin-bottom: -15px !important;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+}
+
+input.rule_enabled_checkbox {
+    display: none;
 }
