@@ -6,7 +6,7 @@ class Elementor_paymentmethods_widget extends \Elementor\Widget_Base {
 	}
 
 	public function get_title() {
-		return esc_html__( 'Payment Methods', 'customize-my-account-for-woocommerce' );
+		return esc_html__( 'Payment Methods', 'customize-my-account-for-woocommerce-pro' );
 	}
 
 	public function get_icon() {

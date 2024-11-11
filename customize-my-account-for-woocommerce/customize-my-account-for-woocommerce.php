@@ -3,7 +3,7 @@
     Plugin Name: SysBasics Customize My Account for WooCommerce
     Plugin URI: https://sysbasics.com
     Description: Customize My account page. Add/Edit/Remove Endpoints.
-    Version: 2.8.5
+    Version: 2.8.6
     Author: SysBasics
     Author URI: https://sysbasics.com
     Domain Path: /languages
@@ -57,27 +57,43 @@ add_action( 'before_woocommerce_init', function() {
 load_plugin_textdomain( 'customize-my-account-for-woocommerce', false, basename( dirname(__FILE__) ).'/languages' );
 
 
+
+
+
+
+
+
+
 /**
  * Check if elementor or elementor pro is active
  */
 
 
-    include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-    
+include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
 
-    if ( is_plugin_active( 'wpml-sticky-links/plugin.php' )) {
-        define( 'wcmamtx_wpmlsticky_mode', 'on' );
+if( !defined( 'wcmamtx_elementor_mode' ) ) {
+
+    if ( is_plugin_active( 'elementor/elementor.php' ) || is_plugin_active( 'elementor-pro/elementor-pro.php' )) {
+        define( 'wcmamtx_elementor_mode', 'on' );
     } else {
-        define( 'wcmamtx_wpmlsticky_mode', 'off' );
+        define( 'wcmamtx_elementor_mode', 'off' );
     }
 
-    
-    if ( is_plugin_active( 'phppoet-checkout-fields/phppoet-checkout-fields.php' ) ) {
-        define( 'sysbasics_checkout_mode', 'on' );
-    } else {
-        define( 'sysbasics_checkout_mode', 'off' );
-    }
+}
+
+if ( is_plugin_active( 'wpml-sticky-links/plugin.php' )) {
+    define( 'wcmamtx_wpmlsticky_mode', 'on' );
+} else {
+    define( 'wcmamtx_wpmlsticky_mode', 'off' );
+}
+
+
+if ( is_plugin_active( 'phppoet-checkout-fields/phppoet-checkout-fields.php' ) ) {
+    define( 'sysbasics_checkout_mode', 'on' );
+} else {
+    define( 'sysbasics_checkout_mode', 'off' );
+}
 
 
 
@@ -125,7 +141,11 @@ load_plugin_textdomain( 'customize-my-account-for-woocommerce', false, basename(
 
 
 
-
+if (wcmamtx_elementor_mode !== null) {
+    if  (wcmamtx_elementor_mode == "on") {
+     include dirname( __FILE__ ) . '/elementor-addon/elementor-addon.php';
+ }
+}
 
 
 register_activation_hook(__FILE__, 'wcmamtx_plugin_activation_hook');

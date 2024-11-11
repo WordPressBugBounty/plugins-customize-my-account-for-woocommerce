@@ -6,7 +6,7 @@ Tested up to: 6.6.2
 WC Tested up to: 9.3.3
 WC Requires at least: 4.0
 Requires PHP: 5.2
-Stable tag: 2.8.5
+Stable tag: 2.8.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -145,8 +145,9 @@ Learn more about how [Appsero collects and uses this data](https://Appsero.com/p
 == Changelog ==
 
 
-Version 2.8.5 - 11 November 2024
+Version 2.8.6 - 11 November 2024
 
+- Version 2.8.6 - Enhancement - Enhanced elementor template functionality.
 - version 2.8.5 - Fix - My account page goes black after saving.
 - version 2.8.3 - Fix - unique_syntax added to prevent conflict.
 - version 2.8.2 - Added notice on account fields tab.

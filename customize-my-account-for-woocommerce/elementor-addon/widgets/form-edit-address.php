@@ -6,7 +6,7 @@ class Elementor_formeditaddress_widget extends \Elementor\Widget_Base {
 	}
 
 	public function get_title() {
-		return esc_html__( 'Edit address Form', 'customize-my-account-for-woocommerce' );
+		return esc_html__( 'Edit address Form', 'customize-my-account-for-woocommerce-pro' );
 	}
 
 	public function get_icon() {

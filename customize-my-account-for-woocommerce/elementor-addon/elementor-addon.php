@@ -1,22 +1,36 @@
 <?php
+/**
+ * Plugin Name: Elementor Addon
+ * Description: Simple hello world widgets for Elementor.
+ * Version:     1.0.0
+ * Author:      Elementor Developer
+ * Author URI:  https://developers.elementor.com/
+ * Text Domain: elementor-addon
+ */
 
 include 'helper.php';
 
-function register_customize_widgets( $widgets_manager ) {
+
+if (!function_exists('register_customize_widgets_pro')) {
+
+function register_customize_widgets_pro( $widgets_manager ) {
 
     $plugin_options = (array) get_option("wcmamtx_plugin_options");
 
     $el_widgets = array('my-orders'=>'My Orders',
-        'dashboard'=>'Dashboard',
-        'form-add-payment-method'=>'Add Payment Method',
-        'form-edit-account'=>'Edit Account Form',
-        'form-edit-address'=>'Edit Address Form',
-        'form-login'=>'Login Form',
-        'my-address'=>'My Address',
-        'navigation'=>'Navigation',
-        'orders'=>'Orders',
-        'payment-methods'=>'Payment Methods'
+        'dashboard'=>esc_html__('Dashboard','customize-my-account-for-woocommerce-pro'),
+        'form-add-payment-method'=>esc_html__('Add Payment Method','customize-my-account-for-woocommerce-pro'),
+        'form-edit-account'=>esc_html__('Edit Account Form','customize-my-account-for-woocommerce-pro'),
+        'form-edit-address'=>esc_html__('Edit Address Form','customize-my-account-for-woocommerce-pro'),
+        'form-login'=>esc_html__('Login Form','customize-my-account-for-woocommerce-pro'),
+        'form-register'=>esc_html__('Register Form','customize-my-account-for-woocommerce-pro'),
+        'form-lost-password'=>esc_html__('Lost Password Form','customize-my-account-for-woocommerce-pro'),
+        'my-address'=>esc_html__('My Address','customize-my-account-for-woocommerce-pro'),   
+        'orders'=>esc_html__('Orders','customize-my-account-for-woocommerce-pro'),
+        'payment-methods'=>esc_html__('Payment Methods','customize-my-account-for-woocommerce-pro'),
+        
     );
+
 
 
     $el_widgets = isset($plugin_options['el_widgets']) && !empty($plugin_options['el_widgets']) ? $plugin_options['el_widgets'] : $el_widgets;
@@ -61,12 +75,28 @@ function register_customize_widgets( $widgets_manager ) {
 
 
 
-
     if (isset($el_widgets['form-login'])) {
 
 
         require_once( __DIR__ . '/widgets/form-login.php' );
         $widgets_manager->register( new \Elementor_formlogin_widget() );
+
+    }
+
+    if (isset($el_widgets['form-register'])) {
+
+
+        require_once( __DIR__ . '/widgets/form-register.php' );
+        $widgets_manager->register( new \Elementor_formregister_widget() );
+
+    }
+
+
+    if (isset($el_widgets['form-lost-password'])) {
+
+
+        require_once( __DIR__ . '/widgets/form-lost-password.php' );
+        $widgets_manager->register( new \Elementor_formlost_password_widget() );
 
     }
 
@@ -82,13 +112,7 @@ function register_customize_widgets( $widgets_manager ) {
 
 
 
-    if (isset($el_widgets['navigation'])) {
 
-
-        require_once( __DIR__ . '/widgets/navigation.php' );
-        $widgets_manager->register( new \Elementor_navigation_widget() );
-
-    }
 
     if (isset($el_widgets['orders'])) { 
 
@@ -109,4 +133,6 @@ function register_customize_widgets( $widgets_manager ) {
 
 
 }
-add_action( 'elementor/widgets/register', 'register_customize_widgets' );
+
+}
+add_action( 'elementor/widgets/register', 'register_customize_widgets_pro' );

@@ -798,7 +798,7 @@ class wcmamtx_add_settings_page_class {
 
         $this->wcmamtx_plugin_settings_tab[$this->wcmamtx_avatar_settings_page] = esc_html__( 'User Avatar' ,'customize-my-account-for-woocommerce');
 
-
+         $this->wcmamtx_plugin_settings_tab[$this->wcmamtx_plugin_options_key]    = esc_html__( 'Elementor Templates' ,'customize-my-account-for-woocommerce-pro');
 
         $this->wcmamtx_plugin_settings_tab[$this->wcmamtx_wizard_page] = esc_html__( 'Setup Wizard' ,'customize-my-account-for-woocommerce');
        
@@ -827,6 +827,12 @@ class wcmamtx_add_settings_page_class {
         add_settings_field( 'avatar_option', '', array( $this, 'wcmamtx_avatar_page' ), $this->wcmamtx_avatar_settings_page, 'wcmamtx_avatar_section' );
 
 
+
+        register_setting( $this->wcmamtx_plugin_options_key, $this->wcmamtx_plugin_options_key );
+
+        add_settings_section( 'wcmamtx_general_section', '', '', $this->wcmamtx_plugin_options_key );
+
+        add_settings_field( 'general_option', '', array( $this, 'wcmamtx_options_page' ), $this->wcmamtx_plugin_options_key, 'wcmamtx_general_section' );
 
 
         
@@ -920,7 +926,16 @@ class wcmamtx_add_settings_page_class {
 
 
 
+    /*
+     * Plugin options page
+     * 
+     */
+    
+    public function wcmamtx_options_page() { 
 
+       include ('forms/options_form.php');
+           
+    }
 
 	
 	

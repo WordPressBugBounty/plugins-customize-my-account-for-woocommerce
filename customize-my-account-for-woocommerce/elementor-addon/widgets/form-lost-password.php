@@ -1,12 +1,12 @@
 <?php
-class Elementor_formlogin_widget extends \Elementor\Widget_Base {
+class Elementor_formlost_password_widget extends \Elementor\Widget_Base {
 
 	public function get_name() {
-		return 'my_formloginwidget';
+		return 'my_formlost_passwordwidget';
 	}
 
 	public function get_title() {
-		return esc_html__( 'Login Form', 'customize-my-account-for-woocommerce-pro' );
+		return esc_html__( 'lost_password Form', 'customize-my-account-for-woocommerce-pro' );
 	}
 
 	public function get_icon() {
@@ -20,6 +20,6 @@ class Elementor_formlogin_widget extends \Elementor\Widget_Base {
 
 
 	protected function render() {
-		include 'templates/form-login.php';
+		include 'templates/form-lost_password.php';
 	}
 }
