@@ -551,14 +551,11 @@ class syscmafwpl_manage_extrafield_class {
 
 	 	if ( isset( $_POST['custom_redirect'] ) && ( $_POST['custom_redirect'] != "")) {
 	 		wp_safe_redirect($_POST['custom_redirect']); 
+
+	 		exit;
 	 	}
 
-	 	
-
-
-	 	exit;
-
-
+	 
 	 }
 
 
