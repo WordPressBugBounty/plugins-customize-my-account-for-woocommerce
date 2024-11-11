@@ -1,7 +1,6 @@
 <?php 
 $advancedsettings  = (array) get_option('wcmamtx_advanced_settings');  
 
-
 $tabs              = wc_get_account_menu_items();
 $core_fields       = 'dashboard,orders,downloads,edit-address,edit-account,customer-logout';
 

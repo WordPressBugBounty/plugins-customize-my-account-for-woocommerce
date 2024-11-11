@@ -6,7 +6,7 @@ Tested up to: 6.6.2
 WC Tested up to: 9.3.3
 WC Requires at least: 4.0
 Requires PHP: 5.2
-Stable tag: 2.8.8
+Stable tag: 2.8.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -145,8 +145,9 @@ Learn more about how [Appsero collects and uses this data](https://Appsero.com/p
 == Changelog ==
 
 
-Version 2.8.8 - 11 November 2024
+Version 2.8.9 - 11 November 2024
 
+- Version 2.8.9 - Fix - new fields not being added.
 - Version 2.8.8 - Fix - toggle not working in backend.
 - Version 2.8.7 - Fix - debug errors related to previous release.
 - Version 2.8.6 - Enhancement - Enhanced elementor template functionality.

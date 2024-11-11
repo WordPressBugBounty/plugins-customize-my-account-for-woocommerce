@@ -102,7 +102,7 @@ class syscmafwpl_add_settings_page_class {
         $new_row_values = array();
 
 
-        if ((!isset($existing_fields) || (sizeof($existing_fields) <= 1 )) && ($section != "additional")) {
+        if ((!isset($existing_fields) || (sizeof($existing_fields) <= 1 )) ) {
             $tabs  = $core_fields;
 
             foreach ($tabs as $key=>$value) {
@@ -136,20 +136,9 @@ class syscmafwpl_add_settings_page_class {
 
         if (($new_row_values != $existing_fields) && !empty($new_row_values)) {
 
-        	switch($section) {
-        		case "billing":
-        		update_option('syscmafwpl_billing_settings',$new_row_values);
 
-        		break;
-
-        		case "shipping":
-        		update_option('syscmafwpl_shipping_settings',$new_row_values);
-        		break;
-
-        		case "additional":
         		update_option('syscmafwpl_additional_settings',$new_row_values);
-        		break;
-        	}
+   
 
         }
 

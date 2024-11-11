@@ -12,6 +12,7 @@ $core_fields          = '';
 $country_fields       = '';
 $address2_field       = '';
 
+
 $requiredadditional_slugs = '';
 
 if (isset($additional_settings) && (sizeof($additional_settings) >= 1)) { 
