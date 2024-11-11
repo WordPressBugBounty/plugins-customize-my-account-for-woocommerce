@@ -182,7 +182,14 @@ $var( function() {
     });
 
 
-
+    $var('.override_login_checkbox').on("change",function() {
+     
+        if($var(this).prop("checked")) {
+            $var(".override_login_tr").show();
+        } else {
+            $var(".override_login_tr").hide();
+        }
+    });
 
     $var(".wcmamtx_load_elementor_template").select2({
            ajax: {
