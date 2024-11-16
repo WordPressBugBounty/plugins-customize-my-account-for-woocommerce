@@ -24,13 +24,7 @@ $extra_settings    = (array) get_option('syscmafwpl_extra_settings');
 
 
 
-if ( current_user_can( 'administrator' ) ) {
 
-		echo '<div class="woocommerce-info">'.__( 'You can Manage these Fields, visit <a target="_blank" class"button" href="'.admin_url( '/admin.php?page=syscmafwpl_plugin_options&tab=syscmafwpl_additional_settings' ).'">My Account Fields</a>. To view user information visit <a target="_blank" class"button" href="'.admin_url( '/users.php' ).'">Users Page</a>.This notice is visible to Administrator only.', 'customize-my-account-for-woocommerce' ).'</div>';
-
-
-
-	}
 
 
 

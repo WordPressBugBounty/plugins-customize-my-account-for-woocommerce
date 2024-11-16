@@ -102,7 +102,7 @@ class syscmafwpl_add_settings_page_class {
         $new_row_values = array();
 
 
-        if ((!isset($existing_fields) || (sizeof($existing_fields) <= 1 )) ) {
+        if ((!isset($existing_fields) || (sizeof($existing_fields) <= 0 )) ) {
             $tabs  = $core_fields;
 
             foreach ($tabs as $key=>$value) {
