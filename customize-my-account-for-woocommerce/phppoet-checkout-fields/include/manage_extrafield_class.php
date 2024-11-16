@@ -49,6 +49,11 @@ class syscmafwpl_manage_extrafield_class {
     public function syscmafwpl_register_shortcode_front_Fields($atts) {
     	 ob_start();
 
+    	 if (!is_user_logged_in()) {
+    	 	echo '<div class="woocommerce-info">'.__( 'You must be logged in to view this <a class"button" href="'.get_permalink( get_option('woocommerce_myaccount_page_id') ).'">Log in</a>', 'customize-my-account-for-woocommerce' ).'</div>';
+    	 	return;
+    	 }
+
     	 $form_id = $atts['id'];
 
 
@@ -999,7 +1004,7 @@ class syscmafwpl_manage_extrafield_class {
 	    $separater_text = isset($syscmafwpl_extra_settings['separater_text']) ? $syscmafwpl_extra_settings['separater_text'] : esc_html__('to','customize-my-account-for-woocommerce');;
 	    
 
-	    if ( is_account_page() ) {
+	    if ( is_account_page() || has_shortcode( $post->post_content, 'sysbasics_field_form')) {
 
 	     
 		 
