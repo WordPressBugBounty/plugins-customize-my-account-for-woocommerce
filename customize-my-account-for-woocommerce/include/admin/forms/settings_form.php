@@ -52,6 +52,8 @@ if ((sizeof($advancedsettings) != 1)) {
     }
   }
 
+  /*
+
   foreach ($frontend_menu_items_updated as $zkey=>$zvalue) {
 
     $match = wcmtxka_find_string_match_pro($zkey,$advancedsettings);
@@ -71,6 +73,9 @@ if ((sizeof($advancedsettings) != 1)) {
 
     }
   }
+
+  */
+
 
 }
       
