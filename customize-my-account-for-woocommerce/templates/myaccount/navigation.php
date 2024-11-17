@@ -31,7 +31,7 @@ if (!isset($frontend_menu_items) || ($frontend_menu_items == "")) {
     update_option('wcmamtx_frontend_items',$items);
 }
 
-
+update_option('frontend_menu_items_updated',$items);
 
 
 

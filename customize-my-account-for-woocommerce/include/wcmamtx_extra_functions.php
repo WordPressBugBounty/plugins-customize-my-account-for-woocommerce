@@ -1605,20 +1605,22 @@ if (!function_exists('wcmamtx_myaccount_customer_avatar')) {
 add_action( 'wcmamtx_before_account_navigation', 'wcmamtx_myaccount_customer_avatar', 5 );
 
 
-function wcmtxka_find_string_match($string,$array) {
+if (!function_exists('wcmtxka_find_string_match_pro')) {
 
-	foreach ($array as $key=>$value) {
+	function wcmtxka_find_string_match_pro($string,$array) {
 
-	$endpoint_key = $value['endpoint_key'];
-    
-    if ($endpoint_key == $string) { // Yoshi version
-    	
-    	return 'found';
+		foreach ($array as $key=>$value) {
+
+			$endpoint_key = $value['endpoint_key'];
+			
+            if ($endpoint_key == $string) { // Yoshi version
+
+        	    return 'found';
+            }
+        }
+
+        return 'notfound';
     }
-}
-
-return 'notfound';
-
 
 }
 

@@ -6,7 +6,7 @@ Tested up to: 6.7.0
 WC Tested up to: 9.4.1
 WC Requires at least: 4.0
 Requires PHP: 5.2
-Stable tag: 2.8.13
+Stable tag: 2.8.14
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -145,8 +145,9 @@ Learn more about how [Appsero collects and uses this data](https://Appsero.com/p
 == Changelog ==
 
 
-Version 2.8.13 - 17 November 2024
+Version 2.8.14 - 17 November 2024
 
+- Version 2.8.14 - Enhancement - Improved compatibility with third party endpoints. 
 - Version 2.8.13 - Enhancement - Improved compatibility with third party endpoints. 
 - Version 2.8.12 - Fix - File upload module disabled temporarily.
 - Version 2.8.11 - Fix - forms showing notice when not logged in.

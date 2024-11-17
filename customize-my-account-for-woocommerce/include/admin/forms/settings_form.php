@@ -24,11 +24,17 @@ if (isset($frontend_menu_items) && is_array($frontend_menu_items)) {
     $tabs = $frontend_menu_items;
 }
 
+$frontend_menu_items_updated = get_option('frontend_menu_items_updated');
+
+
+
+
+
 if ((sizeof($advancedsettings) != 1)) {
 
   foreach ($tabs as $ikey=>$ivalue) {
 
-    $match = wcmtxka_find_string_match($ikey,$advancedsettings);
+    $match = wcmtxka_find_string_match_pro($ikey,$advancedsettings);
 
     if (!array_key_exists($ikey, $advancedsettings) && !array_key_exists($ikey, $core_fields_array) && ($match == "notfound")) {
 
@@ -41,6 +47,26 @@ if ((sizeof($advancedsettings) != 1)) {
         'wcmamtx_type' => 'endpoint',
         'parent'       => 'none',
         'endpoint_name'=> $ivalue,
+      );           
+
+    }
+  }
+
+  foreach ($frontend_menu_items_updated as $zkey=>$zvalue) {
+
+    $match = wcmtxka_find_string_match_pro($zkey,$advancedsettings);
+
+    if (!array_key_exists($zkey, $advancedsettings) && !array_key_exists($zkey, $core_fields_array) && ($match == "notfound")) {
+
+      
+
+      $advancedsettings[$zkey] = array(
+        'show' => 'yes',
+        'third_party' => 'yes',
+        'endpoint_key' => $zkey,
+        'wcmamtx_type' => 'endpoint',
+        'parent'       => 'none',
+        'endpoint_name'=> $zvalue,
       );           
 
     }
