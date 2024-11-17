@@ -165,11 +165,7 @@ class syscmafwpl_manage_extrafield_class {
 			$default_value = get_user_meta( get_current_user_id(), $field_key, true );
 
 			
-			$hide_account_edit = isset($field['hide_account_edit']) && ($field['hide_account_edit'] == 1) ? "no" : "yes";
-
-
-			if ($hide_account_edit == "yes") {
-
+	
 
 				$visibilityarray = $field['visibility'];
 				 
@@ -244,7 +240,7 @@ class syscmafwpl_manage_extrafield_class {
 					}
 				}
 
-			}
+			
     }
 
 
@@ -530,6 +526,15 @@ class syscmafwpl_manage_extrafield_class {
 
 	    if ($allow_last_name == "no") {
 
+	    	unset( $required_fields['account_last_name'] ); 
+
+	    }
+
+	    if ( isset( $_POST['custom_redirect'] ) && ( $_POST['custom_redirect'] != "")) {
+
+	    	unset( $required_fields['account_display_name'] );
+	    	unset( $required_fields['account_email'] ); 
+	    	unset( $required_fields['account_first_name'] ); 
 	    	unset( $required_fields['account_last_name'] ); 
 
 	    }
