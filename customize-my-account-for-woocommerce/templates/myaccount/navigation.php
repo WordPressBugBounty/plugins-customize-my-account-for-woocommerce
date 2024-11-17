@@ -16,19 +16,27 @@ $items          =  wc_get_account_menu_items();
 $core_fields    = 'dashboard,orders,downloads,edit-address,edit-account,customer-logout';
 
 $core_fields_array =  array(
-                         'dashboard'=>'dashboard',
-                         'orders'=>'orders',
-                         'downloads'=>'downloads',
-                         'edit-address'=>'edit-address',
-                         'edit-account'=>'edit-account',
-                         'customer-logout'=>'customer-logout'
-                      );
+    'orders'          => get_option( 'woocommerce_myaccount_orders_endpoint', 'orders' ),
+    'downloads'       => get_option( 'woocommerce_myaccount_downloads_endpoint', 'downloads' ),
+    'edit-address'    => get_option( 'woocommerce_myaccount_edit_address_endpoint', 'edit-address' ),
+    'payment-methods' => get_option( 'woocommerce_myaccount_payment_methods_endpoint', 'payment-methods' ),
+    'edit-account'    => get_option( 'woocommerce_myaccount_edit_account_endpoint', 'edit-account' ),
+    'customer-logout' => get_option( 'woocommerce_logout_endpoint', 'customer-logout' ),
+  );
+
+
+$frontend_menu_items = get_option('wcmamtx_frontend_items');
+
+if (!isset($frontend_menu_items) || ($frontend_menu_items == "")) {
+    update_option('wcmamtx_frontend_items',$items);
+}
 
 
 
 
 
 foreach ($items as $ikey=>$ivalue) {
+
     if (!array_key_exists($ikey, $wcmamtx_tabs) && !array_key_exists($ikey, $core_fields_array) ) {
         
         $match_index = 0;
@@ -42,7 +50,7 @@ foreach ($items as $ikey=>$ivalue) {
         if ($match_index == 0) {
             $wcmamtx_tabs[$ikey] = array(
               'show' => 'yes',
-              'third_party' => 'yes',
+              'third_party'  => 'yes',
               'endpoint_key' => $ikey,
               'wcmamtx_type' => 'endpoint',
               'parent'       => 'none',
@@ -52,10 +60,6 @@ foreach ($items as $ikey=>$ivalue) {
 
     }
 }
-
-
-
-
 
 $plugin_options = get_option('wcmamtx_plugin_options');
 
@@ -78,10 +82,12 @@ $icon_extra_class = '';
 
 if (!is_array($wcmamtx_tabs)) { 
     $wcmamtx_tabs = $items;
+    
 }
 
-if (!isset($wcmamtx_tabs) || (sizeof($wcmamtx_tabs) == 1)) {
+if (!isset($wcmamtx_tabs) || (sizeof($wcmamtx_tabs) === 1) || isset($wcmamtx_tabs[0])) {
     $wcmamtx_tabs = $items;
+    
 }
 
 if (isset($plugin_options['icon_position']) && ($plugin_options['icon_position'] != '')) {

@@ -2,16 +2,27 @@
 $advancedsettings  = (array) get_option('wcmamtx_advanced_settings');  
 
 $tabs              = wc_get_account_menu_items();
+
 $core_fields       = 'dashboard,orders,downloads,edit-address,edit-account,customer-logout';
 
+
+
 $core_fields_array =  array(
-                         'dashboard'=>'dashboard',
-                         'orders'=>'orders',
-                         'downloads'=>'downloads',
-                         'edit-address'=>'edit-address',
-                         'edit-account'=>'edit-account',
-                         'customer-logout'=>'customer-logout'
-                      );
+    'orders'          => get_option( 'woocommerce_myaccount_orders_endpoint', 'orders' ),
+    'downloads'       => get_option( 'woocommerce_myaccount_downloads_endpoint', 'downloads' ),
+    'edit-address'    => get_option( 'woocommerce_myaccount_edit_address_endpoint', 'edit-address' ),
+    'payment-methods' => get_option( 'woocommerce_myaccount_payment_methods_endpoint', 'payment-methods' ),
+    'edit-account'    => get_option( 'woocommerce_myaccount_edit_account_endpoint', 'edit-account' ),
+    'customer-logout' => get_option( 'woocommerce_logout_endpoint', 'customer-logout' ),
+  );
+
+$tabs                = apply_filters( 'woocommerce_account_menu_items', $tabs, $core_fields_array );
+
+$frontend_menu_items = get_option('wcmamtx_frontend_items');
+
+if (isset($frontend_menu_items) && is_array($frontend_menu_items)) {
+    $tabs = $frontend_menu_items;
+}
 
 if ((sizeof($advancedsettings) != 1)) {
 
