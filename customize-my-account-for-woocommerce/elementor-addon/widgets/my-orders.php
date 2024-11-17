@@ -6,7 +6,7 @@ class Elementor_My_orders_widget extends \Elementor\Widget_Base {
 	}
 
 	public function get_title() {
-		return esc_html__( 'My Orders', 'customize-my-account-for-woocommerce-pro' );
+		return esc_html__( 'My Orders', 'customize-my-account-for-woocommerce' );
 	}
 
 	public function get_icon() {

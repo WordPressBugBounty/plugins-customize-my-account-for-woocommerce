@@ -40,22 +40,25 @@ $core_fields       = 'dashboard,edit-address,edit-account,customer-logout,downlo
 		</tr>
        
 		<tr width="100%">
-			<td width="30%"><label><?php echo esc_html__('Elementor Widgets','customize-my-account-for-woocommerce-pro'); ?></label> <br />
+			<td width="30%"><label><?php echo esc_html__('Elementor Widgets','customize-my-account-for-woocommerce'); ?></label> <br />
 			</td>
 			<td width="70%">
 				<?php 
 
-				$el_widgets1 = array('my-orders'=>'My Orders',
-					                'dashboard'=>esc_html__('Dashboard','customize-my-account-for-woocommerce-pro'),
-					                'form-add-payment-method'=>esc_html__('Add Payment Method','customize-my-account-for-woocommerce-pro'),
-					                'form-edit-account'=>esc_html__('Edit Account Form','customize-my-account-for-woocommerce-pro'),
-					                'form-edit-address'=>esc_html__('Edit Address Form','customize-my-account-for-woocommerce-pro'),
-					                'form-login'=>esc_html__('Login Form','customize-my-account-for-woocommerce-pro'),
-					                'form-register'=>esc_html__('Registration Form','customize-my-account-for-woocommerce-pro'),
-					                'form-lost-password'=>esc_html__('Lost Password Form','customize-my-account-for-woocommerce-pro'),
-					                'my-address'=>esc_html__('My Address Form','customize-my-account-for-woocommerce-pro'),
-					                'orders'=>esc_html__('Orders Form','customize-my-account-for-woocommerce-pro'),
-					                'payment-methods'=>esc_html__('Payment Methods','customize-my-account-for-woocommerce-pro')
+				$el_widgets1 = array(
+                                    'vertical-navigation'=>esc_html__('Vertical Menu','customize-my-account-for-woocommerce'),
+                                    'horizontal-navigation'=>esc_html__('Horizontal Menu','customize-my-account-for-woocommerce'),
+					                'my-orders'=>esc_html__('My Orders','customize-my-account-for-woocommerce'),
+					                'dashboard'=>esc_html__('Dashboard','customize-my-account-for-woocommerce'),
+					                'form-add-payment-method'=>esc_html__('Add Payment Method','customize-my-account-for-woocommerce'),
+					                'form-edit-account'=>esc_html__('Edit Account Form','customize-my-account-for-woocommerce'),
+					                'form-edit-address'=>esc_html__('Edit Address Form','customize-my-account-for-woocommerce'),
+					                'form-login'=>esc_html__('Login Form','customize-my-account-for-woocommerce'),
+					                'form-register'=>esc_html__('Registration Form','customize-my-account-for-woocommerce'),
+					                'form-lost-password'=>esc_html__('Lost Password Form','customize-my-account-for-woocommerce'),
+					                'my-address'=>esc_html__('My Address Form','customize-my-account-for-woocommerce'),
+					                'orders'=>esc_html__('Orders Form','customize-my-account-for-woocommerce'),
+					                'payment-methods'=>esc_html__('Payment Methods','customize-my-account-for-woocommerce')
 					            );
 
 
@@ -73,7 +76,7 @@ $core_fields       = 'dashboard,edit-address,edit-account,customer-logout,downlo
 
 					<li>
 						<label><?php echo esc_attr($value); ?></label>
-						<input type="checkbox" data-toggle="toggle" data-on="<?php echo esc_html__('Yes','customize-my-account-for-woocommerce-pro'); ?>" data-off="<?php echo esc_html__('No','customize-my-account-for-woocommerce-pro'); ?>" class="wcmamtx_widget_checkbox" name="<?php  echo esc_html__($this->wcmamtx_plugin_options_key); ?>[el_widgets][<?php echo $key; ?>]" value="yes" <?php if (isset($el_widgets[$key])) { echo 'checked';}?> >
+						<input type="checkbox" data-toggle="toggle" data-on="<?php echo esc_html__('Yes','customize-my-account-for-woocommerce'); ?>" data-off="<?php echo esc_html__('No','customize-my-account-for-woocommerce'); ?>" class="wcmamtx_widget_checkbox" name="<?php  echo esc_html__($this->wcmamtx_plugin_options_key); ?>[el_widgets][<?php echo $key; ?>]" value="yes" <?php if (isset($el_widgets[$key])) { echo 'checked';}?> >
 
 					</li>           
 
@@ -84,10 +87,10 @@ $core_fields       = 'dashboard,edit-address,edit-account,customer-logout,downlo
 			</td>
 		</tr>
 		<tr>
-			<td><label><?php echo esc_html__('Use Custom elementor template for My Account Page','customize-my-account-for-woocommerce-pro'); ?></label> <br />
+			<td><label><?php echo esc_html__('Use Custom elementor template for My Account Page','customize-my-account-for-woocommerce'); ?></label> <br />
 			</td>
 			<td>
-				<input type="checkbox" data-toggle="toggle"  data-on="<?php echo esc_html__('Yes','customize-my-account-for-woocommerce-pro'); ?>" data-off="<?php echo esc_html__('No','customize-my-account-for-woocommerce-pro'); ?>" class="override_myaccount_tr_checkbox" name="<?php  echo esc_html__($this->wcmamtx_plugin_options_key); ?>[custom_myaccount]" value="yes" <?php if (isset($plugin_options['custom_myaccount']) && ($plugin_options['custom_myaccount'] == "yes")) { echo 'checked'; } ?>>
+				<input type="checkbox" data-toggle="toggle"  data-on="<?php echo esc_html__('Yes','customize-my-account-for-woocommerce'); ?>" data-off="<?php echo esc_html__('No','customize-my-account-for-woocommerce'); ?>" class="override_myaccount_tr_checkbox" name="<?php  echo esc_html__($this->wcmamtx_plugin_options_key); ?>[custom_myaccount]" value="yes" <?php if (isset($plugin_options['custom_myaccount']) && ($plugin_options['custom_myaccount'] == "yes")) { echo 'checked'; } ?>>
 				            
 				
 			</td>
@@ -106,7 +109,7 @@ $core_fields       = 'dashboard,edit-address,edit-account,customer-logout,downlo
 
 						<select class="myaccount wcmamtx_load_elementor_template" name="<?php  echo esc_html__($this->wcmamtx_plugin_options_key); ?>[custom_my_account_template]">
 							<option value="default" <?php if ($default_value2 == "default") { echo 'selected'; } ?>>
-								<?php echo esc_html__( 'Default' ,'customize-my-account-for-woocommerce-pro'); ?>
+								<?php echo esc_html__( 'Default' ,'customize-my-account-for-woocommerce'); ?>
 									
 							</option>
 
@@ -117,7 +120,7 @@ $core_fields       = 'dashboard,edit-address,edit-account,customer-logout,downlo
 							<?php } ?>
 							
 						</select>
-						    <button title="<?php echo esc_html__('Create new template','customize-my-account-for-woocommerce-pro'); ?>" type="button" href="#" data-toggle="modal" data-target="#wcmamtx_example_modal" data-etype="myaccount" id="wcmamtx_add_link" class="btn btn-primary btn-sm wcmamtx_add_group">
+						    <button title="<?php echo esc_html__('Create new template','customize-my-account-for-woocommerce'); ?>" type="button" href="#" data-toggle="modal" data-target="#wcmamtx_example_modal" data-etype="myaccount" id="wcmamtx_add_link" class="btn btn-primary btn-sm wcmamtx_add_group">
 				           
 				            	<span class="dashicons dashicons-insert"></span>
 				            </button>
@@ -131,10 +134,10 @@ $core_fields       = 'dashboard,edit-address,edit-account,customer-logout,downlo
                             $elementor_edit_link = ''.admin_url().'post.php?post='.$default_value2.'&action=elementor';
 
 							?>
-							<a target="blank" title="<?php echo esc_html__('Edit this template','customize-my-account-for-woocommerce-pro'); ?>" class="btn btn-sm btn-primary" href="<?php echo $elementor_edit_link; ?>">
+							<a target="blank" title="<?php echo esc_html__('Edit this template','customize-my-account-for-woocommerce'); ?>" class="btn btn-sm btn-primary" href="<?php echo $elementor_edit_link; ?>">
 								<span class="dashicons dashicons-edit"></span>
 							</a>
-							<a target="blank" title="<?php echo esc_html__('View on frontend','customize-my-account-for-woocommerce-pro'); ?>" class="btn btn-sm btn-primary" href="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>">
+							<a target="blank" title="<?php echo esc_html__('View on frontend','customize-my-account-for-woocommerce'); ?>" class="btn btn-sm btn-primary" href="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>">
 								<span class="dashicons dashicons-welcome-view-site"></span>
 							</a>
 						<?php } ?>
@@ -145,10 +148,10 @@ $core_fields       = 'dashboard,edit-address,edit-account,customer-logout,downlo
 
 
 		<tr>
-			<td><label><?php echo esc_html__('Use Custom elementor template for Login/Register/Lost Password Page','customize-my-account-for-woocommerce-pro'); ?></label> <br />
+			<td><label><?php echo esc_html__('Use Custom elementor template for Login/Register/Lost Password Page','customize-my-account-for-woocommerce'); ?></label> <br />
 			</td>
 			<td>
-				<input type="checkbox" data-toggle="toggle"  data-on="<?php echo esc_html__('Yes','customize-my-account-for-woocommerce-pro'); ?>" data-off="<?php echo esc_html__('No','customize-my-account-for-woocommerce-pro'); ?>" class="override_login_checkbox" name="<?php  echo esc_html__($this->wcmamtx_plugin_options_key); ?>[custom_login]" value="yes" <?php if (isset($plugin_options['custom_login']) && ($plugin_options['custom_login'] == "yes")) { echo 'checked'; } ?>>
+				<input type="checkbox" data-toggle="toggle"  data-on="<?php echo esc_html__('Yes','customize-my-account-for-woocommerce'); ?>" data-off="<?php echo esc_html__('No','customize-my-account-for-woocommerce'); ?>" class="override_login_checkbox" name="<?php  echo esc_html__($this->wcmamtx_plugin_options_key); ?>[custom_login]" value="yes" <?php if (isset($plugin_options['custom_login']) && ($plugin_options['custom_login'] == "yes")) { echo 'checked'; } ?>>
 				            
 				
 			</td>
@@ -164,7 +167,7 @@ $core_fields       = 'dashboard,edit-address,edit-account,customer-logout,downlo
 
 					<li>
 
-						<label><?php echo esc_html__('Login/Register','customize-my-account-for-woocommerce-pro'); ?></label>
+						<label><?php echo esc_html__('Login/Register','customize-my-account-for-woocommerce'); ?></label>
 						<?php
 
 						$default_value5 = isset($plugin_options['custom_login_register_template']) ? $plugin_options['custom_login_register_template'] : "default";
@@ -174,7 +177,7 @@ $core_fields       = 'dashboard,edit-address,edit-account,customer-logout,downlo
 
 						<select class="login wcmamtx_load_elementor_template" name="<?php  echo esc_html__($this->wcmamtx_plugin_options_key); ?>[custom_login_register_template]">
 							<option value="default" <?php if ($default_value5 == "default") { echo 'selected'; } ?>>
-								<?php echo esc_html__( 'Default' ,'customize-my-account-for-woocommerce-pro'); ?>
+								<?php echo esc_html__( 'Default' ,'customize-my-account-for-woocommerce'); ?>
 
 							</option>
 
@@ -185,7 +188,7 @@ $core_fields       = 'dashboard,edit-address,edit-account,customer-logout,downlo
 							<?php } ?>
 							
 						</select>
-						<a type="button" title="<?php echo esc_html__('Create new template','customize-my-account-for-woocommerce-pro'); ?>" href="#" data-toggle="modal" data-target="#wcmamtx_example_modal" data-etype="login" id="wcmamtx_add_link" class="">
+						<a type="button" title="<?php echo esc_html__('Create new template','customize-my-account-for-woocommerce'); ?>" href="#" data-toggle="modal" data-target="#wcmamtx_example_modal" data-etype="login" id="wcmamtx_add_link" class="">
 			    				<span class="dashicons dashicons-insert"></span>
 			    			</a>
 
@@ -194,7 +197,7 @@ $core_fields       = 'dashboard,edit-address,edit-account,customer-logout,downlo
 			    				$elementor_edit_link = ''.admin_url().'post.php?post='.$default_value5.'&action=elementor';
 
 			    				?>
-			    				<a target="blank" title="<?php echo esc_html__('Edit this template','customize-my-account-for-woocommerce-pro'); ?>" href="<?php echo $elementor_edit_link; ?>">
+			    				<a target="blank" title="<?php echo esc_html__('Edit this template','customize-my-account-for-woocommerce'); ?>" href="<?php echo $elementor_edit_link; ?>">
 			    					<span class="dashicons dashicons-edit"></span>
 			    				</a>
 			    				
@@ -204,7 +207,7 @@ $core_fields       = 'dashboard,edit-address,edit-account,customer-logout,downlo
 
 					<li>
 
-						<label><?php echo esc_html__('Lost Password','customize-my-account-for-woocommerce-pro'); ?></label>
+						<label><?php echo esc_html__('Lost Password','customize-my-account-for-woocommerce'); ?></label>
 						<?php
 
 						$default_value6 = isset($plugin_options['custom_lost_password_template']) ? $plugin_options['custom_lost_password_template'] : "default";
@@ -214,7 +217,7 @@ $core_fields       = 'dashboard,edit-address,edit-account,customer-logout,downlo
 
 						<select class="lostpassword wcmamtx_load_elementor_template" name="<?php  echo esc_html__($this->wcmamtx_plugin_options_key); ?>[custom_lost_password_template]">
 							<option value="default" <?php if ($default_value6 == "default") { echo 'selected'; } ?>>
-								<?php echo esc_html__( 'Default' ,'customize-my-account-for-woocommerce-pro'); ?>
+								<?php echo esc_html__( 'Default' ,'customize-my-account-for-woocommerce'); ?>
 
 							</option>
 
@@ -225,7 +228,7 @@ $core_fields       = 'dashboard,edit-address,edit-account,customer-logout,downlo
 							<?php } ?>
 							
 						</select>
-						<a type="button" title="<?php echo esc_html__('Create new template','customize-my-account-for-woocommerce-pro'); ?>" href="#" data-toggle="modal" data-target="#wcmamtx_example_modal" data-etype="lostpassword" id="wcmamtx_add_link" class="">
+						<a type="button" title="<?php echo esc_html__('Create new template','customize-my-account-for-woocommerce'); ?>" href="#" data-toggle="modal" data-target="#wcmamtx_example_modal" data-etype="lostpassword" id="wcmamtx_add_link" class="">
 			    				<span class="dashicons dashicons-insert"></span>
 			    			</a>
 
@@ -234,7 +237,7 @@ $core_fields       = 'dashboard,edit-address,edit-account,customer-logout,downlo
 			    				$elementor_edit_link = ''.admin_url().'post.php?post='.$default_value6.'&action=elementor';
 
 			    				?>
-			    				<a target="blank" title="<?php echo esc_html__('Edit this template','customize-my-account-for-woocommerce-pro'); ?>" href="<?php echo $elementor_edit_link; ?>">
+			    				<a target="blank" title="<?php echo esc_html__('Edit this template','customize-my-account-for-woocommerce'); ?>" href="<?php echo $elementor_edit_link; ?>">
 			    					<span class="dashicons dashicons-edit"></span>
 			    				</a>
 			    				
@@ -246,35 +249,35 @@ $core_fields       = 'dashboard,edit-address,edit-account,customer-logout,downlo
                     <table>
                     	<tr>
                     		<td>
-                    			<?php echo esc_html__( 'Hide link to set new password text' ,'customize-my-account-for-woocommerce-pro'); ?>
+                    			<?php echo esc_html__( 'Hide link to set new password text' ,'customize-my-account-for-woocommerce'); ?>
                     				
                     		</td>
                     		<td>
 
-                    			<input type="checkbox" data-toggle="toggle"  data-on="<?php echo esc_html__('Yes','customize-my-account-for-woocommerce-pro'); ?>" data-off="<?php echo esc_html__('No','customize-my-account-for-woocommerce-pro'); ?>" class="" name="<?php  echo esc_html__($this->wcmamtx_plugin_options_key); ?>[hide_linkto_password]" value="yes" <?php if (isset($plugin_options['hide_linkto_password']) && ($plugin_options['hide_linkto_password'] == "yes")) { echo 'checked'; } ?>>
+                    			<input type="checkbox" data-toggle="toggle"  data-on="<?php echo esc_html__('Yes','customize-my-account-for-woocommerce'); ?>" data-off="<?php echo esc_html__('No','customize-my-account-for-woocommerce'); ?>" class="" name="<?php  echo esc_html__($this->wcmamtx_plugin_options_key); ?>[hide_linkto_password]" value="yes" <?php if (isset($plugin_options['hide_linkto_password']) && ($plugin_options['hide_linkto_password'] == "yes")) { echo 'checked'; } ?>>
                     			
                     		</td>
                     	</tr>
 
                     	<tr>
                     		<td>
-                    			<?php echo esc_html__( 'Hide your personal data text' ,'customize-my-account-for-woocommerce-pro'); ?>
+                    			<?php echo esc_html__( 'Hide your personal data text' ,'customize-my-account-for-woocommerce'); ?>
                     				
                     		</td>
                     		<td>
 
-                    			<input type="checkbox" data-toggle="toggle"  data-on="<?php echo esc_html__('Yes','customize-my-account-for-woocommerce-pro'); ?>" data-off="<?php echo esc_html__('No','customize-my-account-for-woocommerce-pro'); ?>" class="" name="<?php  echo esc_html__($this->wcmamtx_plugin_options_key); ?>[hide_presonal_data_text]" value="yes" <?php if (isset($plugin_options['hide_presonal_data_text']) && ($plugin_options['hide_presonal_data_text'] == "yes")) { echo 'checked'; } ?>>
+                    			<input type="checkbox" data-toggle="toggle"  data-on="<?php echo esc_html__('Yes','customize-my-account-for-woocommerce'); ?>" data-off="<?php echo esc_html__('No','customize-my-account-for-woocommerce'); ?>" class="" name="<?php  echo esc_html__($this->wcmamtx_plugin_options_key); ?>[hide_presonal_data_text]" value="yes" <?php if (isset($plugin_options['hide_presonal_data_text']) && ($plugin_options['hide_presonal_data_text'] == "yes")) { echo 'checked'; } ?>>
                     			
                     		</td>
                     	</tr>
                     	<tr>
                     		<td>
-                    			<?php echo esc_html__( 'Hide lost your password ? text' ,'customize-my-account-for-woocommerce-pro'); ?>
+                    			<?php echo esc_html__( 'Hide lost your password ? text' ,'customize-my-account-for-woocommerce'); ?>
                     				
                     		</td>
                     		<td>  
 
-                    			<input type="checkbox" data-toggle="toggle"  data-on="<?php echo esc_html__('Yes','customize-my-account-for-woocommerce-pro'); ?>" data-off="<?php echo esc_html__('No','customize-my-account-for-woocommerce-pro'); ?>" class="" name="<?php  echo esc_html__($this->wcmamtx_plugin_options_key); ?>[hide_lost_password_text]" value="yes" <?php if (isset($plugin_options['hide_lost_password_text']) && ($plugin_options['hide_lost_password_text'] == "yes")) { echo 'checked'; } ?>>
+                    			<input type="checkbox" data-toggle="toggle"  data-on="<?php echo esc_html__('Yes','customize-my-account-for-woocommerce'); ?>" data-off="<?php echo esc_html__('No','customize-my-account-for-woocommerce'); ?>" class="" name="<?php  echo esc_html__($this->wcmamtx_plugin_options_key); ?>[hide_lost_password_text]" value="yes" <?php if (isset($plugin_options['hide_lost_password_text']) && ($plugin_options['hide_lost_password_text'] == "yes")) { echo 'checked'; } ?>>
                     			
                     		</td>
                     	</tr>
@@ -284,10 +287,10 @@ $core_fields       = 'dashboard,edit-address,edit-account,customer-logout,downlo
 		</tr>
 
 		<tr>
-			<td><label><?php echo esc_html__('Replace endpoint content with Elementor Template','customize-my-account-for-woocommerce-pro'); ?></label> <br />
+			<td><label><?php echo esc_html__('Replace endpoint content with Elementor Template','customize-my-account-for-woocommerce'); ?></label> <br />
 			</td>
 			<td>
-				<input type="checkbox" data-toggle="toggle"  data-on="<?php echo esc_html__('Yes','customize-my-account-for-woocommerce-pro'); ?>" data-off="<?php echo esc_html__('No','customize-my-account-for-woocommerce-pro'); ?>" class="override_endpoint_tr_checkbox" name="<?php  echo esc_html__($this->wcmamtx_plugin_options_key); ?>[override_endpoints]" value="yes" <?php if (isset($plugin_options['override_endpoints']) && ($plugin_options['override_endpoints'] == "yes")) { echo 'checked'; } ?>>
+				<input type="checkbox" data-toggle="toggle"  data-on="<?php echo esc_html__('Yes','customize-my-account-for-woocommerce'); ?>" data-off="<?php echo esc_html__('No','customize-my-account-for-woocommerce'); ?>" class="override_endpoint_tr_checkbox" name="<?php  echo esc_html__($this->wcmamtx_plugin_options_key); ?>[override_endpoints]" value="yes" <?php if (isset($plugin_options['override_endpoints']) && ($plugin_options['override_endpoints'] == "yes")) { echo 'checked'; } ?>>
 				
 
 				          
@@ -299,12 +302,12 @@ $core_fields       = 'dashboard,edit-address,edit-account,customer-logout,downlo
 				        			<div class="modal-body">
 				        				
 				        				<div class="form-group">
-				        					<input type="text" class="form-control" id="wcmamtx_modal_label" placeholder="<?php echo esc_html__( 'Enter label' ,'customize-my-account-for-woocommerce-pro'); ?>" value="">
-				        					<input type="hidden" class="form-control" nonce="<?php echo wp_create_nonce( 'wcmamtx_nonce_hidden' ); ?>" id="wcmamtx_hidden_endpoint_type" placeholder="<?php echo esc_html__( 'Enter label' ,'customize-my-account-for-woocommerce-pro'); ?>" value="">
+				        					<input type="text" class="form-control" id="wcmamtx_modal_label" placeholder="<?php echo esc_html__( 'Enter label' ,'customize-my-account-for-woocommerce'); ?>" value="">
+				        					<input type="hidden" class="form-control" nonce="<?php echo wp_create_nonce( 'wcmamtx_nonce_hidden' ); ?>" id="wcmamtx_hidden_endpoint_type" placeholder="<?php echo esc_html__( 'Enter label' ,'customize-my-account-for-woocommerce'); ?>" value="">
 				        				</div>
 				        				<div class="alert alert-info wcmamtx_enter_label_alert" role="alert" style="display:none;"></div>
-				        				<button type="button" class="btn btn-secondary btn-close-modal-button" data-dismiss="modal"><?php echo esc_html__( 'Close' ,'customize-my-account-for-woocommerce-pro'); ?></button>
-				        				<button type="submit" class="btn btn-primary wcmamtx_new_template"><?php echo esc_html__( 'Add' ,'customize-my-account-for-woocommerce-pro'); ?>
+				        				<button type="button" class="btn btn-secondary btn-close-modal-button" data-dismiss="modal"><?php echo esc_html__( 'Close' ,'customize-my-account-for-woocommerce'); ?></button>
+				        				<button type="submit" class="btn btn-primary wcmamtx_new_template"><?php echo esc_html__( 'Add' ,'customize-my-account-for-woocommerce'); ?>
 				        				    	
 				        				</button>
 				        				
@@ -349,7 +352,7 @@ $core_fields       = 'dashboard,edit-address,edit-account,customer-logout,downlo
 			    			<label><?php echo esc_attr($value); ?></label>
 			    			<select class="<?php echo strtolower($etype_val); ?> wcmamtx_load_elementor_template" name="<?php  echo esc_html__($this->wcmamtx_plugin_options_key); ?>[custom_templates][<?php echo $key; ?>]">
 			    				<option value="default" <?php if ($default_value == "default") { echo 'selected'; } ?>>
-			    					<?php echo esc_html__( 'Default' ,'customize-my-account-for-woocommerce-pro'); ?>
+			    					<?php echo esc_html__( 'Default' ,'customize-my-account-for-woocommerce'); ?>
 
 			    				</option>
 
@@ -360,7 +363,7 @@ $core_fields       = 'dashboard,edit-address,edit-account,customer-logout,downlo
 			    				<?php } ?>
 
 			    			</select>
-			    			<a type="button" title="<?php echo esc_html__('Create new template','customize-my-account-for-woocommerce-pro'); ?>" href="#" data-toggle="modal" data-target="#wcmamtx_example_modal" data-etype="<?php echo strtolower($etype_val); ?>" id="wcmamtx_add_link" class="">
+			    			<a type="button" title="<?php echo esc_html__('Create new template','customize-my-account-for-woocommerce'); ?>" href="#" data-toggle="modal" data-target="#wcmamtx_example_modal" data-etype="<?php echo strtolower($etype_val); ?>" id="wcmamtx_add_link" class="">
 			    				<span class="dashicons dashicons-insert"></span>
 			    			</a>
 
@@ -369,10 +372,10 @@ $core_fields       = 'dashboard,edit-address,edit-account,customer-logout,downlo
 			    				$elementor_edit_link = ''.admin_url().'post.php?post='.$default_value.'&action=elementor';
 
 			    				?>
-			    				<a target="blank" title="<?php echo esc_html__('Edit this template','customize-my-account-for-woocommerce-pro'); ?>" href="<?php echo $elementor_edit_link; ?>">
+			    				<a target="blank" title="<?php echo esc_html__('Edit this template','customize-my-account-for-woocommerce'); ?>" href="<?php echo $elementor_edit_link; ?>">
 			    					<span class="dashicons dashicons-edit"></span>
 			    				</a>
-			    				<a target="blank" title="<?php echo esc_html__('View on frontend','customize-my-account-for-woocommerce-pro'); ?>" href="<?php echo wc_get_endpoint_url($key, '', get_permalink(get_option('woocommerce_myaccount_page_id'))); ?>">
+			    				<a target="blank" title="<?php echo esc_html__('View on frontend','customize-my-account-for-woocommerce'); ?>" href="<?php echo wc_get_endpoint_url($key, '', get_permalink(get_option('woocommerce_myaccount_page_id'))); ?>">
 			    					<span class="dashicons dashicons-welcome-view-site"></span>
 			    				</a>
 			    			<?php } ?>
@@ -392,9 +395,9 @@ $core_fields       = 'dashboard,edit-address,edit-account,customer-logout,downlo
 			<td>
 			</td>
 			<td>
-				<p><?php echo esc_html__( 'We highly recommend you to use elementor page builder along with our plugin' ,'customize-my-account-for-woocommerce-pro'); ?> &emsp;&emsp;<a target="_blank" type="button" href="https://wordpress.org/plugins/elementor/"  class="btn btn-success wcmamtx_pro_link" >
+				<p><?php echo esc_html__( 'We highly recommend you to use elementor page builder along with our plugin' ,'customize-my-account-for-woocommerce'); ?> &emsp;&emsp;<a target="_blank" type="button" href="https://wordpress.org/plugins/elementor/"  class="btn btn-success wcmamtx_pro_link" >
 					<span class="dashicons dashicons-admin-customizer"></span>
-					<?php echo esc_html__( 'Install Elementor Free Plugin' ,'customize-my-account-for-woocommerce-pro'); ?>
+					<?php echo esc_html__( 'Install Elementor Free Plugin' ,'customize-my-account-for-woocommerce'); ?>
 				</a> </p>
 			</td>
 		</tr>
@@ -408,12 +411,12 @@ $core_fields       = 'dashboard,edit-address,edit-account,customer-logout,downlo
 				            			<div class="modal-body">
 
 				            				<div class="form-group">
-				            					<input type="text" class="form-control" id="wcmamtx_modal_label" placeholder="<?php echo esc_html__( 'Enter label' ,'customize-my-account-for-woocommerce-pro'); ?>" value="">
-				            					<input type="hidden" class="form-control" nonce="<?php echo wp_create_nonce( 'wcmamtx_nonce_hidden' ); ?>" id="wcmamtx_hidden_endpoint_type" placeholder="<?php echo esc_html__( 'Enter label' ,'customize-my-account-for-woocommerce-pro'); ?>" value="">
+				            					<input type="text" class="form-control" id="wcmamtx_modal_label" placeholder="<?php echo esc_html__( 'Enter label' ,'customize-my-account-for-woocommerce'); ?>" value="">
+				            					<input type="hidden" class="form-control" nonce="<?php echo wp_create_nonce( 'wcmamtx_nonce_hidden' ); ?>" id="wcmamtx_hidden_endpoint_type" placeholder="<?php echo esc_html__( 'Enter label' ,'customize-my-account-for-woocommerce'); ?>" value="">
 				            				</div>
 				            				<div class="alert alert-info wcmamtx_enter_label_alert" role="alert" style="display:none;"></div>
-				            				<button type="button" class="btn btn-secondary btn-close-modal-button" data-dismiss="modal"><?php echo esc_html__( 'Close' ,'customize-my-account-for-woocommerce-pro'); ?></button>
-				            				<button type="submit" class="btn btn-primary wcmamtx_new_template"><?php echo esc_html__( 'Add new template' ,'customize-my-account-for-woocommerce-pro'); ?>
+				            				<button type="button" class="btn btn-secondary btn-close-modal-button" data-dismiss="modal"><?php echo esc_html__( 'Close' ,'customize-my-account-for-woocommerce'); ?></button>
+				            				<button type="submit" class="btn btn-primary wcmamtx_new_template"><?php echo esc_html__( 'Add new template' ,'customize-my-account-for-woocommerce'); ?>
 
 				            			</button>
 

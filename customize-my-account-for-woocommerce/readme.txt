@@ -6,7 +6,7 @@ Tested up to: 6.7.0
 WC Tested up to: 9.4.1
 WC Requires at least: 4.0
 Requires PHP: 5.2
-Stable tag: 2.8.16
+Stable tag: 2.8.17
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -145,8 +145,9 @@ Learn more about how [Appsero collects and uses this data](https://Appsero.com/p
 == Changelog ==
 
 
-Version 2.8.16 - 17 November 2024
+Version 2.8.17 - 17 November 2024
 
+- Version 2.8.17 - Enhancement - Elementor vertical and horizontal navigation widget.
 - Version 2.8.16 - Enhancement - Added notice  about elementor template location.
 - Version 2.8.15 - Enhancement - Changed tab text.
 - Version 2.8.14 - Enhancement - Improved compatibility with third party endpoints. 

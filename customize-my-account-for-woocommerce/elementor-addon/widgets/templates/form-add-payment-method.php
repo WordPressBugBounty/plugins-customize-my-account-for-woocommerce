@@ -51,11 +51,11 @@ if ( $available_gateways ) : ?>
 
 			<div class="form-row">
 				<?php wp_nonce_field( 'woocommerce-add-payment-method', 'woocommerce-add-payment-method-nonce' ); ?>
-				<button type="submit" class="woocommerce-Button woocommerce-Button--alt button alt<?php echo esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '' ); ?>" id="place_order" value="<?php esc_attr_e( 'Add payment method', 'customize-my-account-for-woocommerce-pro' ); ?>"><?php esc_html_e( 'Add payment method', 'customize-my-account-for-woocommerce-pro' ); ?></button>
+				<button type="submit" class="woocommerce-Button woocommerce-Button--alt button alt<?php echo esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '' ); ?>" id="place_order" value="<?php esc_attr_e( 'Add payment method', 'customize-my-account-for-woocommerce' ); ?>"><?php esc_html_e( 'Add payment method', 'customize-my-account-for-woocommerce' ); ?></button>
 				<input type="hidden" name="woocommerce_add_payment_method" id="woocommerce_add_payment_method" value="1" />
 			</div>
 		</div>
 	</form>
 <?php else : ?>
-	<p class="woocommerce-notice woocommerce-notice--info woocommerce-info"><?php esc_html_e( 'New payment methods can only be added during checkout. Please contact us if you require assistance.', 'customize-my-account-for-woocommerce-pro' ); ?></p>
+	<p class="woocommerce-notice woocommerce-notice--info woocommerce-info"><?php esc_html_e( 'New payment methods can only be added during checkout. Please contact us if you require assistance.', 'customize-my-account-for-woocommerce' ); ?></p>
 <?php endif; ?>

@@ -6,7 +6,7 @@ class Elementor_formregister_widget extends \Elementor\Widget_Base {
 	}
 
 	public function get_title() {
-		return esc_html__( 'register Form', 'customize-my-account-for-woocommerce-pro' );
+		return esc_html__( 'register Form', 'customize-my-account-for-woocommerce' );
 	}
 
 	public function get_icon() {

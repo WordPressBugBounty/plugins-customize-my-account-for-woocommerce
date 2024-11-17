@@ -7,7 +7,7 @@ function wxmtx_category_elementor_init(){
     Plugin::instance()->elements_manager->add_category(
         'customize-my-account',
         [
-            'title'  => 'Customize My Account Pro',
+            'title'  => 'SysBasics Customize My Account',
             'icon' => 'eicon-my-account'
         ],
         1

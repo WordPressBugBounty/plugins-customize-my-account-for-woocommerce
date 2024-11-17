@@ -17,23 +17,39 @@ function register_customize_widgets_pro( $widgets_manager ) {
 
     $plugin_options = (array) get_option("wcmamtx_plugin_options");
 
-    $el_widgets = array('my-orders'=>'My Orders',
-        'dashboard'=>esc_html__('Dashboard','customize-my-account-for-woocommerce-pro'),
-        'form-add-payment-method'=>esc_html__('Add Payment Method','customize-my-account-for-woocommerce-pro'),
-        'form-edit-account'=>esc_html__('Edit Account Form','customize-my-account-for-woocommerce-pro'),
-        'form-edit-address'=>esc_html__('Edit Address Form','customize-my-account-for-woocommerce-pro'),
-        'form-login'=>esc_html__('Login Form','customize-my-account-for-woocommerce-pro'),
-        'form-register'=>esc_html__('Register Form','customize-my-account-for-woocommerce-pro'),
-        'form-lost-password'=>esc_html__('Lost Password Form','customize-my-account-for-woocommerce-pro'),
-        'my-address'=>esc_html__('My Address','customize-my-account-for-woocommerce-pro'),   
-        'orders'=>esc_html__('Orders','customize-my-account-for-woocommerce-pro'),
-        'payment-methods'=>esc_html__('Payment Methods','customize-my-account-for-woocommerce-pro'),
-        
+    $el_widgets = array('vertical-navigation'=>esc_html__('Vertical Menu','customize-my-account-for-woocommerce'),
+                        'horizontal-navigation'=>esc_html__('Horizontal Menu','customize-my-account-for-woocommerce'),
+                        'my-orders'=>esc_html__('My Orders','customize-my-account-for-woocommerce'),
+                        'dashboard'=>esc_html__('Dashboard','customize-my-account-for-woocommerce'),
+                        'form-add-payment-method'=>esc_html__('Add Payment Method','customize-my-account-for-woocommerce'),
+                        'form-edit-account'=>esc_html__('Edit Account Form','customize-my-account-for-woocommerce'),
+                        'form-edit-address'=>esc_html__('Edit Address Form','customize-my-account-for-woocommerce'),
+                        'form-login'=>esc_html__('Login Form','customize-my-account-for-woocommerce'),
+                        'form-register'=>esc_html__('Registration Form','customize-my-account-for-woocommerce'),
+                        'form-lost-password'=>esc_html__('Lost Password Form','customize-my-account-for-woocommerce'),
+                        'my-address'=>esc_html__('My Address Form','customize-my-account-for-woocommerce'),
+                        'orders'=>esc_html__('Orders Form','customize-my-account-for-woocommerce'),
+                        'payment-methods'=>esc_html__('Payment Methods','customize-my-account-for-woocommerce')
     );
 
 
 
     $el_widgets = isset($plugin_options['el_widgets']) && !empty($plugin_options['el_widgets']) ? $plugin_options['el_widgets'] : $el_widgets;
+
+
+    if (isset($el_widgets['vertical-navigation'])) {
+
+        require_once( __DIR__ . '/widgets/vertical-navigation.php' );
+        $widgets_manager->register( new \Elementor_vertical_navigation_widget() );
+
+    }
+
+    if (isset($el_widgets['horizontal-navigation'])) {
+
+        require_once( __DIR__ . '/widgets/horizontal-navigation.php' );
+        $widgets_manager->register( new \Elementor_horizontal_navigation_widget() );
+
+    }
 
     if (isset($el_widgets['my-orders'])) {
 

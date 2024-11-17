@@ -6,7 +6,7 @@ class Elementor_dashboard_widget extends \Elementor\Widget_Base {
 	}
 
 	public function get_title() {
-		return esc_html__( 'Dashboard', 'customize-my-account-for-woocommerce-pro' );
+		return esc_html__( 'Dashboard', 'customize-my-account-for-woocommerce' );
 	}
 
 	public function get_icon() {

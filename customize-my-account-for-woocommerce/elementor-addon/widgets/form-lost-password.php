@@ -6,7 +6,7 @@ class Elementor_formlost_password_widget extends \Elementor\Widget_Base {
 	}
 
 	public function get_title() {
-		return esc_html__( 'lost_password Form', 'customize-my-account-for-woocommerce-pro' );
+		return esc_html__( 'lost_password Form', 'customize-my-account-for-woocommerce' );
 	}
 
 	public function get_icon() {
