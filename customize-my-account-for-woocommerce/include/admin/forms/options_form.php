@@ -29,8 +29,15 @@ $core_fields       = 'dashboard,edit-address,edit-account,customer-logout,downlo
 
 <table class="widefat wcmamtx_options_table">
 
-
+    
 	<?php if  (wcmamtx_elementor_mode == "on") { ?>
+
+		<tr>
+			<div class="alert alert-primary" role="alert">
+				<?php echo esc_html__('Existing templates can be found at','customize-my-account-for-woocommerce'); ?>
+				<a href="edit.php?post_type=elementor_library&tabs_group=library" target="_blank"><?php echo esc_html__('Saved Templates','customize-my-account-for-woocommerce'); ?></a>
+			</div>
+		</tr>
        
 		<tr width="100%">
 			<td width="30%"><label><?php echo esc_html__('Elementor Widgets','customize-my-account-for-woocommerce-pro'); ?></label> <br />

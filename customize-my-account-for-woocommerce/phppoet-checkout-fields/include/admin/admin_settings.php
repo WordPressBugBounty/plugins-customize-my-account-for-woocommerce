@@ -741,7 +741,7 @@ class syscmafwpl_add_settings_page_class {
 	public function register_billing_settings() {
 		
 
-		$this->syscmafwpl_plugin_settings_tabs['syscmafwpl_additional_settings'] = esc_html__( 'Edit Account Fields' ,'customize-my-account-for-woocommerce');
+		$this->syscmafwpl_plugin_settings_tabs['syscmafwpl_additional_settings'] = esc_html__( 'Edit Account/Registration Fields' ,'customize-my-account-for-woocommerce');
 
 		$this->syscmafwpl_plugin_settings_tabs['syscmafwpl_forms_settings'] = esc_html__( 'Field Forms' ,'customize-my-account-for-woocommerce');
 
