@@ -6,7 +6,7 @@ Tested up to: 6.7.0
 WC Tested up to: 9.4.1
 WC Requires at least: 4.0
 Requires PHP: 5.2
-Stable tag: 2.8.20
+Stable tag: 2.8.21
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -145,8 +145,9 @@ Learn more about how [Appsero collects and uses this data](https://Appsero.com/p
 == Changelog ==
 
 
-Version 2.8.20 - 19 November 2024
+Version 2.8.21 - 19 November 2024
 
+- Version 2.8.21 - Enhancement - Show notice about pro version. 
 - Version 2.8.20 - Fix - Recognition of third party addons.
 - Version 2.8.19 - Fix - Endpoints not getting removed.
 - Version 2.8.18 - Fix - issue with core required fields in field form.
