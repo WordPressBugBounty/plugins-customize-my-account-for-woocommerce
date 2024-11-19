@@ -31,21 +31,10 @@ class wcmamtx_add_settings_page_class {
 		add_action( 'admin_post_nds_form_response_action', array( $this, 'add_action_form_response' ));
         add_action( 'wp_ajax_wcmamtxadmin_get_users_ajax', array( $this, 'wcmamtxadmin_get_users_ajax_function' ) );
         add_action( 'wp_ajax_wcmamtx_dismiss_renew_notice', array( $this, 'wcmamtx_dismiss_renew_notice_function' ) );
-        add_action( 'admin_notices', array( $this, 'wcmamtx_add_admin_dash_notice' ) );
+        
 	}
 
-    public function wcmamtx_add_admin_dash_notice() {
-            ?>
-            <div class="notice notice-info">
-                <p>
-                    <?php
-                    /* translators: %s for a tag */
-                    echo sprintf( esc_html__( 'Want more advanced functionalities in your Customize My Account Plugin, upgrade it by purchasing the %s.', 'customize-my-account-for-woocommerce' ), '<a href="https://www.sysbasics.com/product/woocommerce-customize-my-account-pro/" target="_blank">' . esc_html__( 'pro version', 'customize-my-account-for-woocommerce' ) . '</a>' );
-                    ?>
-                </p>
-            </div>
-            <?php
-        }
+
 
     public function wcmamtx_dismiss_renew_notice_function() {
 
