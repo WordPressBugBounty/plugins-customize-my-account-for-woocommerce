@@ -31,7 +31,15 @@ if (!isset($frontend_menu_items) || ($frontend_menu_items == "")) {
     update_option('wcmamtx_frontend_items',$items);
 }
 
-update_option('frontend_menu_items_updated',$items);
+$date_today = date("Ymd");
+
+$frontend_menu_items_updated_time = get_option('frontend_menu_items_updated_time');
+
+if ($date_today > $frontend_menu_items_updated_time) {
+    update_option('frontend_menu_items_updated',$items);
+    update_option('frontend_menu_items_updated_time',$date_today);
+}
+
 
 
 

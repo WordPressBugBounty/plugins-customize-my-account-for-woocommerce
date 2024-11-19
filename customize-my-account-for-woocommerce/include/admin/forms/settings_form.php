@@ -20,11 +20,13 @@ $tabs                = apply_filters( 'woocommerce_account_menu_items', $tabs, $
 
 $frontend_menu_items = get_option('wcmamtx_frontend_items');
 
+
+
 if (isset($frontend_menu_items) && is_array($frontend_menu_items)) {
     $tabs = $frontend_menu_items;
 }
 
-$frontend_menu_items_updated = get_option('frontend_menu_items_updated');
+
 
 
 
@@ -52,7 +54,9 @@ if ((sizeof($advancedsettings) != 1)) {
     }
   }
 
-  /*
+  $frontend_menu_items_updated = get_option('frontend_menu_items_updated');
+
+
 
   foreach ($frontend_menu_items_updated as $zkey=>$zvalue) {
 
@@ -74,7 +78,7 @@ if ((sizeof($advancedsettings) != 1)) {
     }
   }
 
-  */
+  
 
 
 }

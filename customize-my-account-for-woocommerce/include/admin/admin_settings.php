@@ -1935,9 +1935,12 @@ $current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : sanitize_text_field($this-
                       }
 
                     ?>
-                    <span type="removeicon" parentkey="<?php echo $key; ?>" class="dashicons dashicons-trash wcmamtx_accordion_remove"></span>
+                    <?php if (!isset($third_party)) { ?>
+                        <span type="removeicon" parentkey="<?php echo $key; ?>" class="dashicons dashicons-trash wcmamtx_accordion_remove"></span>
+                    <?php } ?>
             <?php } ?>
             <?php if (isset($name)) { echo $name; } ?>
+           
             <span class="wcmamtx_type_label">
                 <?php echo ucfirst($wcmamtx_type); ?>
             </span>
