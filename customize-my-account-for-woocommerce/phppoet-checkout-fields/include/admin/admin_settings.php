@@ -837,7 +837,7 @@ class syscmafwpl_add_settings_page_class {
 
 
 
-		$tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'syscmafwpl_additional_settings';
+		$tab = isset( $_GET['tab'] ) ? sanitize_text_field($_GET['tab']) : 'syscmafwpl_additional_settings';
 		global $billing_fields;
 		$billing_fields = '';
 		?>

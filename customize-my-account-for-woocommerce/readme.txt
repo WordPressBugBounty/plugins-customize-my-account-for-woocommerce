@@ -6,7 +6,7 @@ Tested up to: 6.7.0
 WC Tested up to: 9.4.1
 WC Requires at least: 4.0
 Requires PHP: 5.2
-Stable tag: 2.8.22
+Stable tag: 2.9.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -144,6 +144,9 @@ Learn more about how [Appsero collects and uses this data](https://Appsero.com/p
 
 == Changelog ==
 
+Version 2.9.0 - 25 November 2024
+
+- Fix for XSS vulnarability issue discovered by Le Ngoc Anh at patchstack https://patchstack.com/database/report-preview/b1966a68-96be-4bee-8e1d-961488eeb039
 
 Version 2.8.22 - 19 November 2024
 
