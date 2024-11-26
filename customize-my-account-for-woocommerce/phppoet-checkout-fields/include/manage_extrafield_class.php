@@ -324,7 +324,7 @@ class syscmafwpl_manage_extrafield_class {
 
 		   $additional_fields              = (array) get_option('syscmafwpl_additional_settings');
 		   
-            unset($all_fields[0]);
+            unset($additional_fields[0]);
 		   
 		   foreach ($additional_fields as $additionalkey=>$additional_field) {
 		   	    if ( isset( $_POST[$additionalkey] ) )
