@@ -6,7 +6,7 @@ Tested up to: 6.7.0
 WC Tested up to: 9.4.1
 WC Requires at least: 4.0
 Requires PHP: 5.2
-Stable tag: 2.9.1
+Stable tag: 2.9.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -144,8 +144,10 @@ Learn more about how [Appsero collects and uses this data](https://Appsero.com/p
 
 == Changelog ==
 
-Version 2.9.1 - 26 November 2024
+Version 2.9.3 - 27 November 2024
 
+- Enhancement - Fixing missing two translation strings.
+- Enhancement - Implemented translation configurations as per latest wp 6.7.1 recommendation.
 - Fix - Bug with previous release.
 - Fix for XSS vulnarability issue discovered by Le Ngoc Anh at patchstack https://patchstack.com/database/report-preview/b1966a68-96be-4bee-8e1d-961488eeb039
 
