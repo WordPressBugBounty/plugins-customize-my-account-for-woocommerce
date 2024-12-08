@@ -1009,7 +1009,7 @@ class syscmafwpl_manage_extrafield_class {
 	    $separater_text = isset($syscmafwpl_extra_settings['separater_text']) ? $syscmafwpl_extra_settings['separater_text'] : esc_html__('to','customize-my-account-for-woocommerce');;
 	    
 
-	    if ( is_account_page() || has_shortcode( $post->post_content, 'sysbasics_field_form')) {
+	    if ( is_account_page() || ( ! empty( $post->post_content ) && strstr( $post->post_content, '[sysbasics_field_form' ) && (!is_shop() || !is_checkout() || (!is_cart())) )) {
 
 	     
 		 

@@ -6,7 +6,7 @@ Tested up to: 6.7.0
 WC Tested up to: 9.4.1
 WC Requires at least: 4.0
 Requires PHP: 5.2
-Stable tag: 2.9.3
+Stable tag: 2.10.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -143,6 +143,10 @@ Learn more about how [Appsero collects and uses this data](https://Appsero.com/p
 
 
 == Changelog ==
+
+Version 2.10.1 - 08 December 2024
+
+- Fix - Debug error appearing on WooCommcer Pages. 
 
 Version 2.9.3 - 27 November 2024
 
