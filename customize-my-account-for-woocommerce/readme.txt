@@ -2,11 +2,11 @@
 Contributors: phppoet
 Tags: woocommerce, my account, customize, endpoints, user avatar
 Requires at least: 4.0
-Tested up to: 6.7.0
-WC Tested up to: 9.4.1
+Tested up to: 6.7.1
+WC Tested up to: 9.4.3
 WC Requires at least: 4.0
 Requires PHP: 5.2
-Stable tag: 2.10.1
+Stable tag: 2.10.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 

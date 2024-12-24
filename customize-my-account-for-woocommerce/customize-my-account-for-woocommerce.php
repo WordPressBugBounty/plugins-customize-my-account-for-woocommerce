@@ -3,16 +3,16 @@
     Plugin Name: SysBasics Customize My Account for WooCommerce
     Plugin URI: https://sysbasics.com
     Description: Customize My account page. Add/Edit/Remove Endpoints.
-    Version: 2.10.1
+    Version: 2.10.2
     Author: SysBasics
     Author URI: https://sysbasics.com
     Domain Path: /languages
     License: GPL v2 or later
     License URI: https://www.gnu.org/licenses/gpl-2.0.html
     Requires at least: 3.3
-    Tested up to: 6.7.0
+    Tested up to: 6.7.1
     WC requires at least: 3.0.0
-    WC tested up to: 9.4.1
+    WC tested up to: 9.4.3
 */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -114,7 +114,7 @@ if ( is_plugin_active( 'phppoet-checkout-fields/phppoet-checkout-fields.php' ) )
     include dirname( __FILE__ ) . '/include/frontend/frontend_functions.php';
     include dirname( __FILE__ ) . '/include/wcmamtx_extra_functions.php';
     include dirname( __FILE__ ) . '/include/sysbasics-avatar-upload.php';
-    include dirname( __FILE__ ) . '/phppoet-checkout-fields/init.php';
+    
 
 
 
