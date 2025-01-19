@@ -6,7 +6,7 @@ Tested up to: 6.7.1
 WC Tested up to: 9.5.2
 WC Requires at least: 4.0
 Requires PHP: 5.2
-Stable tag: 2.11.0
+Stable tag: 2.11.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -143,6 +143,11 @@ Learn more about how [Appsero collects and uses this data](https://Appsero.com/p
 
 
 == Changelog ==
+
+Version 2.11.1 - 19 January 2025
+
+- Fix - Disable my account fields free features if pro version of sysbasics my account fields pro version is detected.
+- Fix - Class conflict with sysbasics my account fields pro plugin.
 
 Version 2.10.1 - 08 December 2024
 

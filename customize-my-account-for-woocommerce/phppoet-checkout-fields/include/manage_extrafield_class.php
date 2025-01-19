@@ -1,18 +1,18 @@
 <?php
 
-class syscmafwpl_manage_extrafield_class {
+class wcmamtx_manage_extrafield_class {
 
      public function __construct() {
-		add_filter( 'woocommerce_form_field_text', array( $this, 'syscmafwpltext_form_field' ), 10, 4 );
-		add_filter( 'woocommerce_form_field_hidden_field', array( $this, 'syscmafwplhidden_field_form_field' ), 10, 4 );
-		add_filter( 'woocommerce_form_field_heading', array( $this, 'syscmafwplheading_form_field' ), 10, 4 );
-		add_filter( 'woocommerce_form_field_password', array( $this, 'syscmafwpltext_form_field' ), 10, 4 );
-		add_filter( 'woocommerce_form_field_email', array( $this, 'syscmafwpltext_form_field' ), 10, 4 );
-		add_filter( 'woocommerce_form_field_number', array( $this, 'syscmafwpltext_form_field' ), 10, 4 );
-		add_filter( 'woocommerce_form_field_textarea', array( $this, 'syscmafwpltextarea_form_field' ), 10, 4 );
-		add_filter( 'woocommerce_form_field_checkbox', array( $this, 'syscmafwplcheckbox_form_field' ), 10, 4 );
+		add_filter( 'woocommerce_form_field_text', array( $this, 'wcmamtxtext_form_field' ), 10, 4 );
+		add_filter( 'woocommerce_form_field_hidden_field', array( $this, 'wcmamtxhidden_field_form_field' ), 10, 4 );
+		add_filter( 'woocommerce_form_field_heading', array( $this, 'wcmamtxheading_form_field' ), 10, 4 );
+		add_filter( 'woocommerce_form_field_password', array( $this, 'wcmamtxtext_form_field' ), 10, 4 );
+		add_filter( 'woocommerce_form_field_email', array( $this, 'wcmamtxtext_form_field' ), 10, 4 );
+		add_filter( 'woocommerce_form_field_number', array( $this, 'wcmamtxtext_form_field' ), 10, 4 );
+		add_filter( 'woocommerce_form_field_textarea', array( $this, 'wcmamtxtextarea_form_field' ), 10, 4 );
+		add_filter( 'woocommerce_form_field_checkbox', array( $this, 'wcmamtxcheckbox_form_field' ), 10, 4 );
 		add_filter( 'woocommerce_form_field_radio', array( $this, 'radio_form_field' ), 10, 4 );
-     	add_filter( 'woocommerce_form_field_syscmafwplselect', array( $this, 'syscmafwplselect_form_field' ), 10, 4 );
+     	add_filter( 'woocommerce_form_field_wcmamtxselect', array( $this, 'wcmamtxselect_form_field' ), 10, 4 );
 	    add_filter( 'woocommerce_form_field_datepicker', array( $this, 'datepicker_form_field' ), 10, 4 );
 	    add_filter( 'woocommerce_form_field_datetimepicker', array( $this, 'datetimepicker_form_field' ), 10, 4 );
 	    add_filter( 'woocommerce_form_field_timepicker', array( $this, 'timepicker_form_field' ), 10, 4 );
@@ -25,9 +25,9 @@ class syscmafwpl_manage_extrafield_class {
 
 		
 
-        add_action( 'woocommerce_locate_template', array($this,'syscmafwpl_core_override_default_navigation_template'), 100, 3 );
+        add_action( 'woocommerce_locate_template', array($this,'wcmamtx_core_override_default_navigation_template'), 100, 3 );
 
-        add_action( 'woocommerce_save_account_details', array($this,'syscmafwpl_save_profile_fields'), 12, 1 );
+        add_action( 'woocommerce_save_account_details', array($this,'wcmamtx_save_profile_fields'), 12, 1 );
 
         add_filter('woocommerce_save_account_details_required_fields', array($this,'wc_save_account_details_required_fields') );
 
@@ -39,14 +39,14 @@ class syscmafwpl_manage_extrafield_class {
 
         add_action('woocommerce_register_form',array($this,'wcmamtx_woocommerce_register_form_function'));
 
-        add_action( 'woocommerce_created_customer', array($this,'syscmafwpl_save_registration_fields') );
+        add_action( 'woocommerce_created_customer', array($this,'wcmamtx_save_registration_fields') );
 
-        add_shortcode('sysbasics_field_form',array($this,'syscmafwpl_register_shortcode_front_Fields'));
+        add_shortcode('sysbasics_field_form',array($this,'wcmamtx_register_shortcode_front_Fields'));
 
     }
 
 
-    public function syscmafwpl_register_shortcode_front_Fields($atts) {
+    public function wcmamtx_register_shortcode_front_Fields($atts) {
     	 ob_start();
 
     	 if (!is_user_logged_in()) {
@@ -57,7 +57,7 @@ class syscmafwpl_manage_extrafield_class {
     	 $form_id = $atts['id'];
 
 
-    	 $forms_settings              = (array) get_option('syscmafwpl_forms_settings');
+    	 $forms_settings              = (array) get_option('wcmamtx_forms_settings');
 		   
          unset($forms_settings[0]);
 
@@ -221,11 +221,11 @@ class syscmafwpl_manage_extrafield_class {
 
 
 				 
-				$is_field_hidden = syscmafwpl_check_if_field_is_hidden2($visibilityarray,$allowedproducts,$allowedcats,$allowedroles,$total_quantity,$prd,$prd_qnty,$dynamic_rules,$dynamic_criteria);
+				$is_field_hidden = wcmamtx_check_if_field_is_hidden2($visibilityarray,$allowedproducts,$allowedcats,$allowedroles,$total_quantity,$prd,$prd_qnty,$dynamic_rules,$dynamic_criteria);
 
 				if ((!isset($is_field_hidden)) || ($is_field_hidden != 0)) {
 
-					if (isset($field['type']) &&  ($field['type'] == "pcsyscmafwplselect")) {
+					if (isset($field['type']) &&  ($field['type'] == "pcwcmamtxselect")) {
 
 						$field_html = '';
 
@@ -285,7 +285,7 @@ class syscmafwpl_manage_extrafield_class {
                 		break;
 
                 		default:
-                		$all_fields    = (array) get_option('syscmafwpl_additional_settings');
+                		$all_fields    = (array) get_option('wcmamtx_additional_settings');
 
                 		unset($all_fields[0]);
                         
@@ -317,12 +317,12 @@ class syscmafwpl_manage_extrafield_class {
 }
 
 
-    public function syscmafwpl_save_registration_fields( $customer_id ) {
+    public function wcmamtx_save_registration_fields( $customer_id ) {
           
 	      
            
 
-		   $additional_fields              = (array) get_option('syscmafwpl_additional_settings');
+		   $additional_fields              = (array) get_option('wcmamtx_additional_settings');
 		   
             unset($additional_fields[0]);
 		   
@@ -340,7 +340,7 @@ class syscmafwpl_manage_extrafield_class {
 
     	
 
-    	$all_fields    = (array) get_option('syscmafwpl_additional_settings');
+    	$all_fields    = (array) get_option('wcmamtx_additional_settings');
 
     	unset($all_fields[0]);
 
@@ -359,7 +359,7 @@ class syscmafwpl_manage_extrafield_class {
     				$default_value = get_user_meta( get_current_user_id(), $field_key, true );
 
 
-    				if (isset($field['type']) &&  ($field['type'] == "pcsyscmafwplselect")) {
+    				if (isset($field['type']) &&  ($field['type'] == "pcwcmamtxselect")) {
 
     					$field_html = '';
 
@@ -381,7 +381,7 @@ class syscmafwpl_manage_extrafield_class {
 
 
     public function wcmamtx_new_user_ui_columns($column) {
-    	$all_fields        = (array) get_option('syscmafwpl_additional_settings');
+    	$all_fields        = (array) get_option('wcmamtx_additional_settings');
 
 	 	foreach ( $all_fields as $mkey => $mvalue ) {
 
@@ -400,7 +400,7 @@ class syscmafwpl_manage_extrafield_class {
 
     public function wcmamtx_new_user_ui_columns_process_data( $val, $column_name, $user_id ) {
 
-    	$all_fields        = (array) get_option('syscmafwpl_additional_settings');
+    	$all_fields        = (array) get_option('wcmamtx_additional_settings');
 
     	foreach ( $all_fields as $mkey => $mvalue ) {
 
@@ -432,7 +432,7 @@ class syscmafwpl_manage_extrafield_class {
       */
 	 public function wcmamtx_display_dash_notice() {
 
-	 	$all_fields        = (array) get_option('syscmafwpl_additional_settings');
+	 	$all_fields        = (array) get_option('wcmamtx_additional_settings');
 
 	 	foreach ( $all_fields as $mkey => $mvalue ) {
 
@@ -474,10 +474,10 @@ class syscmafwpl_manage_extrafield_class {
 
 	 public function wc_save_account_details_required_fields($required_fields) {
 
-	 	$extra_settings    = (array) get_option('syscmafwpl_extra_settings');
+	 	$extra_settings    = (array) get_option('wcmamtx_extra_settings');
 
 
-	 	$all_fields        = (array) get_option('syscmafwpl_additional_settings');
+	 	$all_fields        = (array) get_option('wcmamtx_additional_settings');
 
 
 
@@ -544,13 +544,13 @@ class syscmafwpl_manage_extrafield_class {
 	 }
 
 
-	 public function syscmafwpl_save_profile_fields( $user_id ) {
+	 public function wcmamtx_save_profile_fields( $user_id ) {
 
 	 	if ( !current_user_can( 'edit_user', $user_id ) )
 	 		return false;
 
 
-	 	$additional_fields              = (array) get_option('syscmafwpl_additional_settings');
+	 	$additional_fields              = (array) get_option('wcmamtx_additional_settings');
 
 
 
@@ -569,7 +569,7 @@ class syscmafwpl_manage_extrafield_class {
 	 }
 
 
-	public function syscmafwpl_core_override_default_navigation_template($template,$template_name,$template_path) {
+	public function wcmamtx_core_override_default_navigation_template($template,$template_name,$template_path) {
 
 
 
@@ -596,7 +596,7 @@ class syscmafwpl_manage_extrafield_class {
         }
 
 
-        $additional_fees    = get_option('syscmafwpl_additional_fees');
+        $additional_fees    = get_option('wcmamtx_additional_fees');
         
 
         if (is_array($additional_fees)) {
@@ -624,7 +624,7 @@ class syscmafwpl_manage_extrafield_class {
             
             $fees_field = $fvalue['parentfield'];
 
-            $field_data = syscmafwpl_get_field_data($fees_field);
+            $field_data = wcmamtx_get_field_data($fees_field);
             
             $field_type  = isset($field_data['type']) ? $field_data['type'] : "text";
             $field_label = isset($field_data['label']) ? $field_data['label'] : "";
@@ -684,7 +684,7 @@ class syscmafwpl_manage_extrafield_class {
 
 
 
-            $is_field_hidden=syscmafwpl_check_if_field_is_hidden($visibilityarray,$allowedproducts,$allowedcats,$allowedroles,$total_quantity,$prd,$prd_qnty,$dynamic_rules,$dynamic_criteria);
+            $is_field_hidden=wcmamtx_check_if_field_is_hidden($visibilityarray,$allowedproducts,$allowedcats,$allowedroles,$total_quantity,$prd,$prd_qnty,$dynamic_rules,$dynamic_criteria);
 
             if ((isset($is_field_hidden)) && ($is_field_hidden == 0)) {
 
@@ -938,9 +938,9 @@ class syscmafwpl_manage_extrafield_class {
      */
 	public function apply_cart_fees_final($field_label, $extracost) {
 
-		$syscmafwpl_extra_settings = get_option('syscmafwpl_extra_settings');
+		$wcmamtx_extra_settings = get_option('wcmamtx_extra_settings');
 
-		$fees_taxable = isset($syscmafwpl_extra_settings['fees_taxable']) ? $syscmafwpl_extra_settings['fees_taxable'] : "yes";
+		$fees_taxable = isset($wcmamtx_extra_settings['fees_taxable']) ? $wcmamtx_extra_settings['fees_taxable'] : "yes";
 
 
 		if (isset($fees_taxable) && ($fees_taxable == 'no')) {
@@ -962,30 +962,30 @@ class syscmafwpl_manage_extrafield_class {
 	 public function add_checkout_frountend_scripts() {
 	   global $post;
 
-	    $syscmafwpl_woo_version    = syscmafwpl_get_woo_version_number();
+	    $wcmamtx_woo_version    = wcmamtx_get_woo_version_number();
 
-	    $syscmafwpl_checkout_version    = syscmafwpl_get_checkout_field_varsion_number();
-	    $syscmafwpl_extra_settings = get_option('syscmafwpl_extra_settings');
+	    $wcmamtx_checkout_version    = wcmamtx_get_checkout_field_varsion_number();
+	    $wcmamtx_extra_settings = get_option('wcmamtx_extra_settings');
 
-	    if (isset($syscmafwpl_extra_settings['datepicker_format'])) {
-	    	$datepicker_format = $syscmafwpl_extra_settings['datepicker_format'];
+	    if (isset($wcmamtx_extra_settings['datepicker_format'])) {
+	    	$datepicker_format = $wcmamtx_extra_settings['datepicker_format'];
 	    } else {
 	    	$datepicker_format = 01;
 	    }
 
 
-	    if (isset($syscmafwpl_extra_settings['timepicker_interval']) && ($syscmafwpl_extra_settings['timepicker_interval'] == 02)) {
+	    if (isset($wcmamtx_extra_settings['timepicker_interval']) && ($wcmamtx_extra_settings['timepicker_interval'] == 02)) {
 	    	$timepicker_interval = 30;
 	    } else {
 	    	$timepicker_interval = 60;
 	    }
 
-	    if (isset($syscmafwpl_extra_settings['timepicker_format'])) {
-	    	$timepicker_format = $syscmafwpl_extra_settings['timepicker_format'];
+	    if (isset($wcmamtx_extra_settings['timepicker_format'])) {
+	    	$timepicker_format = $wcmamtx_extra_settings['timepicker_format'];
 	    }
 
-	    if (isset($syscmafwpl_extra_settings['allowed_times']) && ($syscmafwpl_extra_settings['allowed_times'] != '')) {
-	    	$allowed_times = $syscmafwpl_extra_settings['allowed_times'];
+	    if (isset($wcmamtx_extra_settings['allowed_times']) && ($wcmamtx_extra_settings['allowed_times'] != '')) {
+	    	$allowed_times = $wcmamtx_extra_settings['allowed_times'];
 	 
 	    } else {
 
@@ -993,38 +993,38 @@ class syscmafwpl_manage_extrafield_class {
 	    }
 
 
-	    if (!empty($syscmafwpl_extra_settings['datepicker_disable_days'])) {
-		    $days_to_exclude = implode(',', $syscmafwpl_extra_settings['datepicker_disable_days']); 
+	    if (!empty($wcmamtx_extra_settings['datepicker_disable_days'])) {
+		    $days_to_exclude = implode(',', $wcmamtx_extra_settings['datepicker_disable_days']); 
 	    } else { 
 	        $days_to_exclude=''; 
 	    }
 
 
-	    $datetimepicker_lang = isset($syscmafwpl_extra_settings['datetimepicker_lang']) ? $syscmafwpl_extra_settings['datetimepicker_lang'] : "en";
+	    $datetimepicker_lang = isset($wcmamtx_extra_settings['datetimepicker_lang']) ? $wcmamtx_extra_settings['datetimepicker_lang'] : "en";
 
-	    $week_starts_on = isset($syscmafwpl_extra_settings['week_starts_on']) ? $syscmafwpl_extra_settings['week_starts_on'] : "sunday";
+	    $week_starts_on = isset($wcmamtx_extra_settings['week_starts_on']) ? $wcmamtx_extra_settings['week_starts_on'] : "sunday";
 
-	    $dt_week_starts_on = isset($syscmafwpl_extra_settings['dt_week_starts_on']) ? $syscmafwpl_extra_settings['dt_week_starts_on'] : 0;
+	    $dt_week_starts_on = isset($wcmamtx_extra_settings['dt_week_starts_on']) ? $wcmamtx_extra_settings['dt_week_starts_on'] : 0;
 
-	    $separater_text = isset($syscmafwpl_extra_settings['separater_text']) ? $syscmafwpl_extra_settings['separater_text'] : esc_html__('to','customize-my-account-for-woocommerce');;
+	    $separater_text = isset($wcmamtx_extra_settings['separater_text']) ? $wcmamtx_extra_settings['separater_text'] : esc_html__('to','customize-my-account-for-woocommerce');;
 	    
 
 	    if ( is_account_page() || ( ! empty( $post->post_content ) && strstr( $post->post_content, '[sysbasics_field_form' ) && (!is_shop() || !is_checkout() || (!is_cart())) )) {
 
 	     
 		 
-		 wp_enqueue_style( 'jquery-ui', ''.syscmafwpl_PLUGIN_URL.'assets/css/jquery-ui.css' );
+		 wp_enqueue_style( 'jquery-ui', ''.wcmamtx_PLUGIN_URL.'assets/css/jquery-ui.css' );
 
-		 wp_enqueue_script( 'jquery.datetimepicker', ''.syscmafwpl_PLUGIN_URL.'assets/js/jquery.datetimepicker.js',array('jquery') );
+		 wp_enqueue_script( 'jquery.datetimepicker', ''.wcmamtx_PLUGIN_URL.'assets/js/jquery.datetimepicker.js',array('jquery') );
          
-         wp_enqueue_script( 'moment', ''.syscmafwpl_PLUGIN_URL.'assets/js/moment.js');
-		 wp_enqueue_script( 'daterangepicker', ''.syscmafwpl_PLUGIN_URL.'assets/js/daterangepicker.js',array('moment'));
+         wp_enqueue_script( 'moment', ''.wcmamtx_PLUGIN_URL.'assets/js/moment.js');
+		 wp_enqueue_script( 'daterangepicker', ''.wcmamtx_PLUGIN_URL.'assets/js/daterangepicker.js',array('moment'));
 		 
 
-         wp_enqueue_script( 'syscmafwpl-frontend2', ''.syscmafwpl_PLUGIN_URL.'assets/js/frontend2.js',array(),$syscmafwpl_checkout_version );
+         wp_enqueue_script( 'wcmamtx-frontend2', ''.wcmamtx_PLUGIN_URL.'assets/js/frontend2.js',array(),$wcmamtx_checkout_version );
 		 
          
-        $syscmafwplfrontend_array = array( 
+        $wcmamtxfrontend_array = array( 
 		    'datepicker_format'               => $datepicker_format,
 		    'timepicker_interval'             => $timepicker_interval,
 		    'allowed_times'                   => $allowed_times,
@@ -1036,22 +1036,22 @@ class syscmafwpl_manage_extrafield_class {
 		    'separater_text'                  => $separater_text
 		);
          
-         wp_localize_script( 'syscmafwpl-frontend2', 'syscmafwplfrontend', $syscmafwplfrontend_array );
+         wp_localize_script( 'wcmamtx-frontend2', 'wcmamtxfrontend', $wcmamtxfrontend_array );
 
 
 
 
-		 wp_enqueue_style( 'syscmafwpl-frontend', ''.syscmafwpl_PLUGIN_URL.'assets/css/frontend.css' );
+		 wp_enqueue_style( 'wcmamtx-frontend', ''.wcmamtx_PLUGIN_URL.'assets/css/frontend.css' );
 
-		 wp_enqueue_style( 'jquery.datetimepicker', ''.syscmafwpl_PLUGIN_URL.'assets/css/jquery.datetimepicker.css' );
+		 wp_enqueue_style( 'jquery.datetimepicker', ''.wcmamtx_PLUGIN_URL.'assets/css/jquery.datetimepicker.css' );
 
-		 wp_enqueue_style( 'daterangepicker', ''.syscmafwpl_PLUGIN_URL.'assets/css/daterangepicker.css' );
+		 wp_enqueue_style( 'daterangepicker', ''.wcmamtx_PLUGIN_URL.'assets/css/daterangepicker.css' );
 		}
 	 }
 	 
 	 
       
-	 public function syscmafwplhidden_field_form_field( $field, $key, $args, $value ) {
+	 public function wcmamtxhidden_field_form_field( $field, $key, $args, $value ) {
 
 	 	$key = isset($args['field_key']) ? $args['field_key'] : $key;
 
@@ -1067,14 +1067,14 @@ class syscmafwpl_manage_extrafield_class {
 
 
 	 	$field = '
-	 	<p class="form-row ' . implode( ' ', $args['class'] ) .' " id="' . $key . '_field"><input type="hidden" class=" input-text ' . esc_attr( implode( ' ', $args['input_class'] ) ) .'  '. syscmafwplinput_conditional_class($key) .'" name="' . esc_attr( $key ) . '" id="' . esc_attr( $key ) . '"   ' . $args['autocomplete'] . ' value="' . esc_attr( $value ) . '" />
+	 	<p class="form-row ' . implode( ' ', $args['class'] ) .' " id="' . $key . '_field"><input type="hidden" class=" input-text ' . esc_attr( implode( ' ', $args['input_class'] ) ) .'  '. wcmamtxinput_conditional_class($key) .'" name="' . esc_attr( $key ) . '" id="' . esc_attr( $key ) . '"   ' . $args['autocomplete'] . ' value="' . esc_attr( $value ) . '" />
 	 	</p>' . $after;
 
 
 	 	return $field;
 	 }
       
-	  public function syscmafwpltext_form_field( $field, $key, $args, $value ) {
+	  public function wcmamtxtext_form_field( $field, $key, $args, $value ) {
 
 	  	 $key = isset($args['field_key']) ? $args['field_key'] : $key;
 
@@ -1082,7 +1082,7 @@ class syscmafwpl_manage_extrafield_class {
 	  
 	     if ( $args['required'] ) {
 			  $args['class'][] = 'validate-required';
-			  $required = ' <abbr class="required" title="' . esc_attr__( 'required', 'syscmafwpl'  ) . '">*</abbr>';
+			  $required = ' <abbr class="required" title="' . esc_attr__( 'required', 'wcmamtx'  ) . '">*</abbr>';
 		  } else {
 			$required = '';
 		  }
@@ -1100,7 +1100,7 @@ class syscmafwpl_manage_extrafield_class {
 
         $field = '<p class="form-row ' . implode( ' ', $args['class'] ) .' " id="' . $key . '_field">
             <label for="' . $key . '" class="' . implode( ' ', $args['label_class'] ) .'">' . $args['label']. $required . '</label>
-            <input type="' . esc_attr( $args['type'] ) . '" class=" input-text ' . esc_attr( implode( ' ', $args['input_class'] ) ) .'  '. syscmafwplinput_conditional_class($key) .'" name="' . esc_attr( $key ) . '" id="' . esc_attr( $key ) . '" placeholder="' . esc_attr( $args['placeholder'] ) . '" ' . $args['maxlength'] . ' ' . $args['autocomplete'] . ' value="' . esc_attr( $value ) . '" />
+            <input type="' . esc_attr( $args['type'] ) . '" class=" input-text ' . esc_attr( implode( ' ', $args['input_class'] ) ) .'  '. wcmamtxinput_conditional_class($key) .'" name="' . esc_attr( $key ) . '" id="' . esc_attr( $key ) . '" placeholder="' . esc_attr( $args['placeholder'] ) . '" ' . $args['maxlength'] . ' ' . $args['autocomplete'] . ' value="' . esc_attr( $value ) . '" />
         </p>' . $after;
          
 
@@ -1108,7 +1108,7 @@ class syscmafwpl_manage_extrafield_class {
       }
 	  
 	  
-	  public function syscmafwplheading_form_field($field, $key, $args, $value) {
+	  public function wcmamtxheading_form_field($field, $key, $args, $value) {
 
          if ( ( ! empty( $args['clear'] ) ) ) $after = '<div class="clear"></div>'; else $after = '';
 	  
@@ -1126,7 +1126,7 @@ class syscmafwpl_manage_extrafield_class {
 
         $field = '<h3 class="form-row ' . implode( ' ', $args['class'] ) .' " id="' . $key . '_field">
 		
-            <span for="' . $key . '" class="syscmafwpl_heading ' . implode( ' ', $args['label_class'] ) .'">' . $args['label']. $required . '</span>
+            <span for="' . $key . '" class="wcmamtx_heading ' . implode( ' ', $args['label_class'] ) .'">' . $args['label']. $required . '</span>
 			
         </h3>' . $after;
          
@@ -1165,7 +1165,7 @@ class syscmafwpl_manage_extrafield_class {
 
         $field = '<p class="form-row ' . implode( ' ', $args['class'] ) .' " id="' . $key . '_field">
 		
-            <span for="' . $key . '" class="syscmafwpl_heading ' . implode( ' ', $args['label_class'] ) .'">' . $args['label']. $required . '</span>
+            <span for="' . $key . '" class="wcmamtx_heading ' . implode( ' ', $args['label_class'] ) .'">' . $args['label']. $required . '</span>
 			
         </p>' . $after;
          
@@ -1175,7 +1175,7 @@ class syscmafwpl_manage_extrafield_class {
 	  
 
 	  
-    public function syscmafwpltextarea_form_field($field,$key, $args, $value ) {
+    public function wcmamtxtextarea_form_field($field,$key, $args, $value ) {
 
     	$key = isset($args['field_key']) ? $args['field_key'] : $key;
 
@@ -1202,14 +1202,14 @@ class syscmafwpl_manage_extrafield_class {
 
     	$field = '<p class="form-row ' . implode( ' ', $args['class'] ) .' " id="' . $key . '_field">
     	<label for="' . $key . '" class="' . implode( ' ', $args['label_class'] ) .'">' . $args['label']. $required . '</label>
-    	<textarea maxlength="'.$charlimit.'" name="' . esc_attr( $key ) . '" class=" input-text ' . esc_attr( implode( ' ', $args['input_class'] ) ) .'  '. syscmafwplinput_conditional_class($key) .'" id="' . $key . '" placeholder="' . esc_attr( $args['placeholder'] ) . '" ' . $args['maxlength'] . ' ' . $args['autocomplete'] . ' ' . ( empty( $args['custom_attributes']['rows'] ) ? ' rows="2"' : '' ) . ( empty( $args['custom_attributes']['cols'] ) ? ' cols="5"' : '' ) . '>'. esc_textarea( $value  ) .'</textarea>
+    	<textarea maxlength="'.$charlimit.'" name="' . esc_attr( $key ) . '" class=" input-text ' . esc_attr( implode( ' ', $args['input_class'] ) ) .'  '. wcmamtxinput_conditional_class($key) .'" id="' . $key . '" placeholder="' . esc_attr( $args['placeholder'] ) . '" ' . $args['maxlength'] . ' ' . $args['autocomplete'] . ' ' . ( empty( $args['custom_attributes']['rows'] ) ? ' rows="2"' : '' ) . ( empty( $args['custom_attributes']['cols'] ) ? ' cols="5"' : '' ) . '>'. esc_textarea( $value  ) .'</textarea>
     	</p>' . $after;
     	
 
     	return $field;
     }
 	  
-	 public function syscmafwplcheckbox_form_field($field,$key, $args, $value) {
+	 public function wcmamtxcheckbox_form_field($field,$key, $args, $value) {
 
 
 
@@ -1225,7 +1225,7 @@ class syscmafwpl_manage_extrafield_class {
 			$required = '';
 		  }
 
-		 $syscmafwpl_conditional_class = '';
+		 $wcmamtx_conditional_class = '';
 		
 		 
 
@@ -1244,7 +1244,7 @@ class syscmafwpl_manage_extrafield_class {
 		 }
 	     
 
-         $field = '<p class="form-row ' . implode( ' ', $args['class'] ) .' " id="' . $key . '_field"><label class="checkbox ' . implode( ' ', $args['label_class'] ) .' ' . implode( ' ', $args['class'] ) .' ' . $syscmafwpl_conditional_class .'" ><input type="' . esc_attr( $args['type'] ) . '" class=" input-checkbox ' . esc_attr( implode( ' ', $args['input_class'] ) ) .' ' . $syscmafwpl_conditional_class .' '. syscmafwplinput_conditional_class($key) .'" name="' . esc_attr( $key ) . '" id="' . $key . '" value="yes" '.$checked_text .' /> '
+         $field = '<p class="form-row ' . implode( ' ', $args['class'] ) .' " id="' . $key . '_field"><label class="checkbox ' . implode( ' ', $args['label_class'] ) .' ' . implode( ' ', $args['class'] ) .' ' . $wcmamtx_conditional_class .'" ><input type="' . esc_attr( $args['type'] ) . '" class=" input-checkbox ' . esc_attr( implode( ' ', $args['input_class'] ) ) .' ' . $wcmamtx_conditional_class .' '. wcmamtxinput_conditional_class($key) .'" name="' . esc_attr( $key ) . '" id="' . $key . '" value="yes" '.$checked_text .' /> '
 						 . $args['label'] . $required . '</label></p>' . $after;
          
 
@@ -1270,7 +1270,7 @@ class syscmafwpl_manage_extrafield_class {
 
 		$action_class       = '';
 
-		$action_class       = syscmafwpl_get_action_class($key);
+		$action_class       = wcmamtx_get_action_class($key);
 		
         
 		if ($value == "empty") {
@@ -1305,11 +1305,11 @@ class syscmafwpl_manage_extrafield_class {
 	       	  	  $checked_text = $default_val;
 	       	  }
 
-			  $options .= '<input type="radio" name="' . $key . '" id="' . $key . '" value="' . $option_key . '" ' . checked( $value, $option_key, false ) . 'class=" '.$action_class.' select  '. syscmafwplinput_conditional_class($key) .'" '.$checked_text.' '.$checked_text.'>  ' . $option_text . '<br>';
+			  $options .= '<input type="radio" name="' . $key . '" id="' . $key . '" value="' . $option_key . '" ' . checked( $value, $option_key, false ) . 'class=" '.$action_class.' select  '. wcmamtxinput_conditional_class($key) .'" '.$checked_text.' '.$checked_text.'>  ' . $option_text . '<br>';
 		    }
             
             
-			$field = '<p class="syscmafwpl-radio-select form-row ' . implode( ' ', $args[ 'class' ] ) . ' " id="' . $key . '_field">
+			$field = '<p class="wcmamtx-radio-select form-row ' . implode( ' ', $args[ 'class' ] ) . ' " id="' . $key . '_field">
 			          <label for="' . $key . '" class="' . implode( ' ', $args[ 'label_class' ] ) . '">' . $args[ 'label' ] . $required . '</label>' . $options . '</p>' . $after;
         }
 
@@ -1320,7 +1320,7 @@ class syscmafwpl_manage_extrafield_class {
      }
       
 
-public function syscmafwplselect_form_field( $field, $key, $args, $value) {
+public function wcmamtxselect_form_field( $field, $key, $args, $value) {
         
 
   
@@ -1368,7 +1368,7 @@ public function syscmafwplselect_form_field( $field, $key, $args, $value) {
 
      		$field = '<p class="form-row ' . implode( ' ', $args['class'] ) .' " id="' . $key . '_field">
      		<label for="' . $key . '" class="' . implode( ' ', $args['label_class'] ) .'">' . $args['label']. $required . '</label>
-     		<select data-placeholder="'.$args['placeholder'].'" name="' . $key . '" id="' . $key . '" class="select syscmafwpl-singleselect  '. syscmafwplinput_conditional_class($key) .'" '.$requiredtext.'>
+     		<select data-placeholder="'.$args['placeholder'].'" name="' . $key . '" id="' . $key . '" class="select wcmamtx-singleselect  '. wcmamtxinput_conditional_class($key) .'" '.$requiredtext.'>
      		' . $options . '
      		</select>
      		</p>' . $after;
@@ -1435,7 +1435,7 @@ public function syscmafwplselect_form_field( $field, $key, $args, $value) {
 
         $field = '<p class="form-row ' . implode( ' ', $args['class'] ) .' " id="' . $key . '_field">
             <label for="' . $key . '" class="' . implode( ' ', $args['label_class'] ) .'">' . $args['label']. $required . '</label>
-            <select name="' . $key . '[]" id="' . $key . '" class=" select syscmafwpl-multiselect  '. syscmafwplinput_conditional_class($key) .'" multiple="multiple">
+            <select name="' . $key . '[]" id="' . $key . '" class=" select wcmamtx-multiselect  '. wcmamtxinput_conditional_class($key) .'" multiple="multiple">
                 ' . $options . '
             </select>
         </p>' . $after;
@@ -1462,9 +1462,9 @@ public function syscmafwplselect_form_field( $field, $key, $args, $value) {
 		 
 		
 		if (isset($args['disable_past'])) {
-			$datepicker_class='syscmafwpl-datepicker-disable-past';
+			$datepicker_class='wcmamtx-datepicker-disable-past';
 		} else {
-			$datepicker_class='syscmafwpl-datepicker';
+			$datepicker_class='wcmamtx-datepicker';
 		}
 
 
@@ -1497,7 +1497,7 @@ public function syscmafwplselect_form_field( $field, $key, $args, $value) {
 		if ( $args['label'] )
 			$field .= '<label for="' . esc_attr( $key ) . '" class="' . implode( ' ', $args['label_class'] ) .'">' . $args['label'] . $required . '</label>';
 
-		$field .= '<input dates_to_disable="'.$disable_specific_dates.'" type="text" class=" '. $datepicker_class .' input-text  '. syscmafwplinput_conditional_class($key) .'" name="' . esc_attr( $key ) . '" id="' . esc_attr( $key ) . '" placeholder="' . $args['placeholder'] . '" '.$args['maxlength'].' value="' . esc_attr( $defalt_val ) . '" />
+		$field .= '<input dates_to_disable="'.$disable_specific_dates.'" type="text" class=" '. $datepicker_class .' input-text  '. wcmamtxinput_conditional_class($key) .'" name="' . esc_attr( $key ) . '" id="' . esc_attr( $key ) . '" placeholder="' . $args['placeholder'] . '" '.$args['maxlength'].' value="' . esc_attr( $defalt_val ) . '" />
 			</p>' . $after;
 
 		return $field;
@@ -1523,9 +1523,9 @@ public function syscmafwplselect_form_field( $field, $key, $args, $value) {
 		
 		
 		if (isset($args['disable_past'])) {
-			$datepicker_class='syscmafwpl-datetimepicker-disable-past';
+			$datepicker_class='wcmamtx-datetimepicker-disable-past';
 		} else {
-			$datepicker_class='syscmafwpl-datetimepicker';
+			$datepicker_class='wcmamtx-datetimepicker';
 		}
 
 		if ($value == "empty") {
@@ -1542,11 +1542,11 @@ public function syscmafwplselect_form_field( $field, $key, $args, $value) {
 
 			$default_date         = isset($args['default_date_add']) ? $args['default_date_add'] : 0;
 
-			$syscmafwpl_extra_settings = (array) get_option('syscmafwpl_extra_settings');
+			$wcmamtx_extra_settings = (array) get_option('wcmamtx_extra_settings');
 
-			$date_format          = isset($syscmafwpl_extra_settings['datepicker_format']) ? $syscmafwpl_extra_settings['datepicker_format'] : 01;
+			$date_format          = isset($wcmamtx_extra_settings['datepicker_format']) ? $wcmamtx_extra_settings['datepicker_format'] : 01;
 
-			$date_format          = syscmafwpl_get_datepicker_format_from_option($date_format);
+			$date_format          = wcmamtx_get_datepicker_format_from_option($date_format);
 
 			$date = date("Y-m-d");
 
@@ -1595,7 +1595,7 @@ public function syscmafwplselect_form_field( $field, $key, $args, $value) {
 		if ( $args['label'] )
 			$field .= '<label for="' . esc_attr( $key ) . '" class="' . implode( ' ', $args['label_class'] ) .'">' . $args['label'] . $required . '</label>';
 
-		$field .= '<input dates_to_disable="'.$disable_specific_dates.'" t_allowed="'.$allowed_times.'" type="text" class=" '. $datepicker_class .' input-text  '. syscmafwplinput_conditional_class($key) .'" name="' . esc_attr( $key ) . '" id="' . esc_attr( $key ) . '" placeholder="' . $args['placeholder'] . '" '.$args['maxlength'].' value="'.$defalt_val.'" />
+		$field .= '<input dates_to_disable="'.$disable_specific_dates.'" t_allowed="'.$allowed_times.'" type="text" class=" '. $datepicker_class .' input-text  '. wcmamtxinput_conditional_class($key) .'" name="' . esc_attr( $key ) . '" id="' . esc_attr( $key ) . '" placeholder="' . $args['placeholder'] . '" '.$args['maxlength'].' value="'.$defalt_val.'" />
 			</p>' . $after;
 
 		return $field;
@@ -1624,9 +1624,9 @@ public function syscmafwplselect_form_field( $field, $key, $args, $value) {
 		 
 		
 		if (isset($args['disable_past'])) {
-			$datepicker_class='syscmafwpl-daterangepicker-disable-past';
+			$datepicker_class='wcmamtx-daterangepicker-disable-past';
 		} else {
-			$datepicker_class='syscmafwpl-daterangepicker';
+			$datepicker_class='wcmamtx-daterangepicker';
 		}
         
 
@@ -1645,7 +1645,7 @@ public function syscmafwplselect_form_field( $field, $key, $args, $value) {
 		if ( $args['label'] )
 			$field .= '<label for="' . esc_attr( $key ) . '" class="' . implode( ' ', $args['label_class'] ) .'">' . $args['label'] . $required . '</label>';
 
-		$field .= '<input type="text" class=" '. $datepicker_class .' input-text  '. syscmafwplinput_conditional_class($key) .'" name="' . esc_attr( $key ) . '" id="' . esc_attr( $key ) . '" placeholder="' . $args['placeholder'] . '" '.$args['maxlength'].' value="'.$defalt_val.'" />
+		$field .= '<input type="text" class=" '. $datepicker_class .' input-text  '. wcmamtxinput_conditional_class($key) .'" name="' . esc_attr( $key ) . '" id="' . esc_attr( $key ) . '" placeholder="' . $args['placeholder'] . '" '.$args['maxlength'].' value="'.$defalt_val.'" />
 			</p>' . $after;
 
 		return $field;
@@ -1676,9 +1676,9 @@ public function syscmafwplselect_form_field( $field, $key, $args, $value) {
 
 		
 		if (isset($args['disable_past'])) {
-			$datepicker_class='syscmafwpl-datetimerangepicker-disable-past';
+			$datepicker_class='wcmamtx-datetimerangepicker-disable-past';
 		} else {
-			$datepicker_class='syscmafwpl-datetimerangepicker';
+			$datepicker_class='wcmamtx-datetimerangepicker';
 		}
 
 		$args['maxlength'] = ( $args['maxlength'] ) ? 'maxlength="' . absint( $args['maxlength'] ) . '"' : '';
@@ -1692,7 +1692,7 @@ public function syscmafwplselect_form_field( $field, $key, $args, $value) {
 		if ( $args['label'] )
 			$field .= '<label for="' . esc_attr( $key ) . '" class="' . implode( ' ', $args['label_class'] ) .'">' . $args['label'] . $required . '</label>';
 
-		$field .= '<input type="text" class=" '. $datepicker_class .' input-text  '. syscmafwplinput_conditional_class($key) .'" name="' . esc_attr( $key ) . '" id="' . esc_attr( $key ) . '" placeholder="' . $args['placeholder'] . '" '.$args['maxlength'].' value="'.$defalt_val.'" />
+		$field .= '<input type="text" class=" '. $datepicker_class .' input-text  '. wcmamtxinput_conditional_class($key) .'" name="' . esc_attr( $key ) . '" id="' . esc_attr( $key ) . '" placeholder="' . $args['placeholder'] . '" '.$args['maxlength'].' value="'.$defalt_val.'" />
 			</p>' . $after;
 
 		return $field;
@@ -1740,7 +1740,7 @@ public function syscmafwplselect_form_field( $field, $key, $args, $value) {
 		}
 		
 		
-		$datepicker_class='syscmafwpl-timepicker';
+		$datepicker_class='wcmamtx-timepicker';
 		
 
 		$args['maxlength'] = ( $args['maxlength'] ) ? 'maxlength="' . absint( $args['maxlength'] ) . '"' : '';
@@ -1754,12 +1754,12 @@ public function syscmafwplselect_form_field( $field, $key, $args, $value) {
 		if ( $args['label'] )
 			$field .= '<label for="' . esc_attr( $key ) . '" class="' . implode( ' ', $args['label_class'] ) .'">' . $args['label'] . $required . '</label>';
 
-		$field .= '<input type="text" t_allowed="'.$allowed_times.'" class=" '. $datepicker_class .' input-text  '. syscmafwplinput_conditional_class($key) .'" name="' . esc_attr( $key ) . '" id="' . esc_attr( $key ) . '" placeholder="' . $args['placeholder'] . '" '.$args['maxlength'].' value="'.$defalt_val.'" />
+		$field .= '<input type="text" t_allowed="'.$allowed_times.'" class=" '. $datepicker_class .' input-text  '. wcmamtxinput_conditional_class($key) .'" name="' . esc_attr( $key ) . '" id="' . esc_attr( $key ) . '" placeholder="' . $args['placeholder'] . '" '.$args['maxlength'].' value="'.$defalt_val.'" />
 			</p>' . $after;
 
 		return $field;
 	}
 }
 
-new syscmafwpl_manage_extrafield_class();
+new wcmamtx_manage_extrafield_class();
 ?>

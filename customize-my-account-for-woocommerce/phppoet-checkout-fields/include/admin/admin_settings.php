@@ -1,7 +1,7 @@
 <?php
 
 	
-class syscmafwpl_add_settings_page_class {
+class syscmafwpl2_add_settings_page_class {
 	
 	
 	
@@ -2106,6 +2106,6 @@ class syscmafwpl_add_settings_page_class {
 
 
 
-new syscmafwpl_add_settings_page_class();
+new syscmafwpl2_add_settings_page_class();
 
 ?>
