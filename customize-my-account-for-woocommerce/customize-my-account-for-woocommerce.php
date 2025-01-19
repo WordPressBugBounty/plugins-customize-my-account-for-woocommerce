@@ -3,7 +3,7 @@
     Plugin Name: SysBasics Customize My Account for WooCommerce
     Plugin URI: https://sysbasics.com
     Description: Customize My account page. Add/Edit/Remove Endpoints.
-    Version: 2.11.1
+    Version: 2.11.3
     Author: SysBasics
     Author URI: https://sysbasics.com
     Domain Path: /languages
@@ -87,16 +87,6 @@ if( !defined( 'wcmamtx_elementor_mode' ) ) {
 
 }
 
-if( !defined( 'wcmamtx_sysbasics_my_account_fields_pro' ) ) {
-
-    if ( is_plugin_active( 'sysbasics-my-account-fields-pro/sysbasics-my-account-fields-pro.php' )) {
-        define( 'wcmamtx_sysbasics_my_account_fields_pro', 'on' );
-    } else {
-        define( 'wcmamtx_sysbasics_my_account_fields_pro', 'off' );
-    }
-
-}
-
 if ( is_plugin_active( 'wpml-sticky-links/plugin.php' )) {
     define( 'wcmamtx_wpmlsticky_mode', 'on' );
 } else {
@@ -112,6 +102,9 @@ if ( is_plugin_active( 'phppoet-checkout-fields/phppoet-checkout-fields.php' ) )
 
 
 
+
+
+
    /**
     * check weather woocommerce is active or not
     */
@@ -124,10 +117,11 @@ if ( is_plugin_active( 'phppoet-checkout-fields/phppoet-checkout-fields.php' ) )
     include dirname( __FILE__ ) . '/include/frontend/frontend_functions.php';
     include dirname( __FILE__ ) . '/include/wcmamtx_extra_functions.php';
     include dirname( __FILE__ ) . '/include/sysbasics-avatar-upload.php';
-
-    if (wcmamtx_sysbasics_my_account_fields_pro == "off") {
+    
+     if (!is_plugin_active( 'sysbasics-my-account-fields-pro/sysbasics-my-account-fields-pro.php' ) ) {
         include dirname( __FILE__ ) . '/phppoet-checkout-fields/init.php';
     }
+
     
 
 

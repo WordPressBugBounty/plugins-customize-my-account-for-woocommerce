@@ -1,7 +1,7 @@
 <?php
 
 	
-class syscmafwpl2_add_settings_page_class {
+class syscmafwpl_add_settings_page_class_free {
 	
 	
 	
@@ -2065,7 +2065,7 @@ class syscmafwpl2_add_settings_page_class {
 	
 
 	public function plugin_options_tabs() {
-		$current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : $this->billing_settings_key;
+		$current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : "syscmafwpl_additional_settings";
 
 		do_action('sysbasics_extra_button_admin');
 
@@ -2106,6 +2106,6 @@ class syscmafwpl2_add_settings_page_class {
 
 
 
-new syscmafwpl2_add_settings_page_class();
+new syscmafwpl_add_settings_page_class_free();
 
 ?>
