@@ -89,7 +89,7 @@ if (isset($advanced_settings['dashboard'])) {
 
 	$content_dash = isset($advanced_settings['dashboard']['content_dash']) ? $advanced_settings['dashboard']['content_dash'] : "";
 
-	echo $content_dash;
+	echo apply_filters('the_content',$content_dash);
 
 } else {
 

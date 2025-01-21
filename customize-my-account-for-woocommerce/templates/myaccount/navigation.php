@@ -289,7 +289,11 @@ if ($menu_shape == 'vertical') {
             
                 } else {
 
-                    if ($parent == "none") {
+                    $pro_added = wcmamtx_pro_added_endpoint($value);
+
+                    if (($parent == "none") && ($pro_added == "no")) {
+
+
                         wcmamtx_get_account_menu_li_html( $name,$key ,$value ,$icon_extra_class,$extraclass,$icon_source );
                     }
 

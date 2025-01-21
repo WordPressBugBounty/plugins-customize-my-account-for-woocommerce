@@ -99,6 +99,29 @@ if (!function_exists('wcmamtx_placeholder_img_src')) {
 
 
 /**
+ * Get account menu item classes.
+ *
+ * @since 1.0.0
+ * @param string $endpoint Endpoint.
+ * @return string
+ */
+
+if (!function_exists('wcmamtx_pro_added_endpoint')) {
+
+	function wcmamtx_pro_added_endpoint($value) {
+		if (($value["content"] != "") && ($value["third_party"] != "yes")) {
+			$pro_added = "yes";
+		} else {
+			$pro_added = "no";
+		}
+
+		return $pro_added;
+	}
+
+}
+
+
+/**
  * License activation reminder.
  *
  * @since 1.0.0

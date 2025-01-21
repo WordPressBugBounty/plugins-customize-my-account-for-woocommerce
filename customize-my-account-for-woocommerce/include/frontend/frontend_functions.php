@@ -967,41 +967,7 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
                     break;
                 }
 
-            } elseif ((!preg_match('/\b'.$key.'\b/', $core_fields )) && (isset($value['wcmamtx_type']) && ($value['wcmamtx_type'] == "endpoint") )) {
-
-                $content            = isset($value['content']) ? $value['content'] : "";
-                
-
-                $plugin_options = (array) get_option( 'wcmamtx_plugin_options' );
-
-                if (isset($plugin_options['override_endpoints']) && ($plugin_options['override_endpoints'] == "yes") && isset($plugin_options['custom_templates'][$key]) && ($plugin_options['custom_templates'][$key] != "default") && ($plugin_options['custom_templates'][$key] != "") ) {
-                     $contentElementor = "";
-
-                     if (class_exists("\\Elementor\\Plugin")) {
-                        $post_ID = $plugin_options['custom_templates'][$key];
-                        $pluginElementor = \Elementor\Plugin::instance();
-                        $contentElementor = $pluginElementor->frontend->get_builder_content($post_ID);
-                    }
-
-                    $content = $contentElementor;
-                }
-
-
-                global $end_key;
-                $end_key = $key;
-
-                add_filter( 'query_vars', array( $this, 'wcmamtx_do_query_vars' ), 0 );
-
-                $endkey             = isset($value['endpoint_key']) ? $value['endpoint_key'] : $key;
-
-                if ($content != '') {
-                    add_action( 'woocommerce_account_'.$endkey.'_endpoint', function() use ( $content ) {
-
-                       echo apply_filters('the_content',$content);
-                   });
-                }
-
-            }
+            } 
         }
     }
 
