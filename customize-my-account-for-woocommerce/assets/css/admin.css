@@ -554,3 +554,18 @@ p.wcmamtx_module_info {
 ul.wcmamtx_elwidget_ul2 li {
     min-height: 150px;
 }
+
+.pro_preview_table i.fa-check {
+    margin-right: 10px;
+    color: white;
+    background-color: #43b15b;
+    padding: 4px;
+    border-radius: 10px;
+    font-size: 10px;
+}
+
+table.pro_preview_table {
+    margin-top: 10px;
+    margin-bottom: 20px;
+
+}

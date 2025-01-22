@@ -933,6 +933,8 @@ class Insights
 
                 <div class="wd-dr-modal-footer">
                     <a href="#" class="dont-bother-me wd-dr-button-secondary"><?php $this->client->_etrans('Skip & Deactivate'); ?></a>
+
+                    <a target="_blank" style="background-color:green;color:white;float:left;" href="https://www.sysbasics.com/customize-my-account-free-plugin-support/" class="wd-dr-button-secondary"><?php $this->client->_etrans('Contact Support (Live Chat)'); ?></a>
                     <button class="wd-dr-button-secondary wd-dr-cancel-modal"><?php $this->client->_etrans('Cancel'); ?></button>
                     <button class="wd-dr-submit-modal"><?php $this->client->_etrans('Submit & Deactivate'); ?></button>
                 </div>

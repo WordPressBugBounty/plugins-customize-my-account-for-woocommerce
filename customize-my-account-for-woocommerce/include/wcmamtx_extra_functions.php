@@ -109,6 +109,51 @@ if (!function_exists('wcmamtx_placeholder_img_src')) {
  * @return string
  */
 
+if (!function_exists('wcmamtx_load_pro_feature_preview')) {
+
+	function wcmamtx_load_pro_feature_preview() { ?>
+        <br/>
+		<strong><?php echo esc_html__( 'Pro Version Features' ,'customize-my-account-for-woocommerce'); ?></strong>
+      
+      	<table class="pro_preview_table">
+
+      		<tr><td><i class="fa fa-check"></i></td><td><?php echo esc_html__( 'Unlimited Endpoints' ,'customize-my-account-for-woocommerce'); ?></td></tr>
+
+      		<tr><td><i class="fa fa-check"></i></td><td><?php echo esc_html__( 'Unlimited Groups' ,'customize-my-account-for-woocommerce'); ?></td></tr>
+
+      		<tr><td><i class="fa fa-check"></i></td><td><?php echo esc_html__( 'Dashboard Links' ,'customize-my-account-for-woocommerce'); ?>&emsp;<a target="_blank" href="https://i0.wp.com/www.sysbasics.com/wp-content/uploads/2023/11/1-2.png?w=1233&ssl=1"><?php echo esc_html__( 'Preview' ,'customize-my-account-for-woocommerce'); ?></a></td></tr>
+
+      		<tr><td><i class="fa fa-check"></i></td><td><?php echo esc_html__( 'Change Default Dashboard Page' ,'customize-my-account-for-woocommerce'); ?></td></tr>
+
+      		<tr><td><i class="fa fa-check"></i></td><td><?php echo esc_html__( 'Order Columns and Actions' ,'customize-my-account-for-woocommerce'); ?></td></tr>
+
+      		<tr><td><i class="fa fa-check"></i></td><td><?php echo esc_html__( 'Download Columns' ,'customize-my-account-for-woocommerce'); ?></td></tr>
+            
+            <tr><td><i class="fa fa-check"></i></td><td><?php echo esc_html__( 'Horizontal Navigation Menu' ,'customize-my-account-for-woocommerce'); ?></td></tr>
+
+            <tr><td><i class="fa fa-check"></i></td><td><?php echo esc_html__( 'Ajax Navigation between Endpoints' ,'customize-my-account-for-woocommerce'); ?></td></tr>
+
+            <tr><td><i class="fa fa-check"></i></td><td><?php echo esc_html__( 'My Account Menu Navigation Widget' ,'customize-my-account-for-woocommerce'); ?></td></tr>
+
+      	</table>
+      
+		
+	<?php 
+    }
+
+}
+
+
+
+
+/**
+ * Get account menu item classes.
+ *
+ * @since 1.0.0
+ * @param string $endpoint Endpoint.
+ * @return string
+ */
+
 if (!function_exists('wcmamtx_pro_added_endpoint')) {
 
 	function wcmamtx_pro_added_endpoint($value) {
@@ -756,6 +801,8 @@ if (!function_exists('wcmamtx_load_pro_reminder_div')) {
 				<?php echo esc_html__( 'This feature is available in pro version only.','customize-my-account-for-woocommerce'); ?>
 
 			</div>
+
+			<?php wcmamtx_load_pro_feature_preview(); ?>
 
 			<div class="wcmamtx_notice_div_lowerbutton">
 				<a type="button" href="https://sysbasics.com/go/customize-demo/"  class="btn btn-primary " >

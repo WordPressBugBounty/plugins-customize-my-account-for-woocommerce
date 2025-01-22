@@ -3,10 +3,10 @@ Contributors: phppoet
 Tags: woocommerce, my account, customize, endpoints, user avatar
 Requires at least: 4.0
 Tested up to: 6.7.1
-WC Tested up to: 9.5.2
+WC Tested up to: 9.6.0
 WC Requires at least: 4.0
 Requires PHP: 5.2
-Stable tag: 2.13.0
+Stable tag: 2.13.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -144,9 +144,13 @@ Learn more about how [Appsero collects and uses this data](https://Appsero.com/p
 
 == Changelog ==
 
-Version 2.13.0 - 23 January 2025
+Version 2.13.2 - 23 January 2025
 
-- Enhancement - Provided module enable/disable page.
+Version 2.13.2 - 23 January 2025   - Enhancement - Added Contact Support button to deactivation popup.
+
+- Version 2.13.1 (23 January 2025) - Enhancement - Added list of features to pro popup.
+
+- Version 2.13.0 Enhancement (23 January 2025)  - Provided module enable/disable page.
 
 Version 2.12.0 - 21 January 2025
 
