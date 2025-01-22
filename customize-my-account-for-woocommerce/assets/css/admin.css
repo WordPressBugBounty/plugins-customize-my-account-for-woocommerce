@@ -524,3 +524,33 @@ span.wcmamtx_pro_version_text {
     margin-left: 90px;
     /* padding-top: 40px !important; */
 }
+
+ul.wcmamtx_elwidget_ul2 li {
+    width: 650px;
+    max-width: 45%;
+    float: left;
+    border: 1px dotted grey;
+   
+    padding: 20px;
+    margin-right: 10px;
+}
+
+ul.wcmamtx_elwidget_ul2 li label {
+    width: 50%;
+    font-size: 12px;
+    font-style: italic;
+    font-weight: bold;
+}
+
+li.wcmamtx_module_sample {
+    display: none;
+}
+
+p.wcmamtx_module_info {
+    font-size: 11px !important;!i;!;
+    width: 50%;
+}
+
+ul.wcmamtx_elwidget_ul2 li {
+    min-height: 150px;
+}

@@ -1,10 +1,10 @@
 <?php
-class syscmafwpl_add_order_meta_class {
+class pcfme_add_order_meta_class {
      
 	 
-	 private $billing_settings_key = 'syscmafwpl_billing_settings';
-	 private $shipping_settings_key = 'syscmafwpl_shipping_settings';
-	 private $additional_settings_key = 'syscmafwpl_additional_settings';
+	 private $billing_settings_key    = 'pcfme_billing_settings';
+	 private $shipping_settings_key   = 'pcfme_shipping_settings';
+	 private $additional_settings_key = 'pcfme_additional_settings';
      
 	 public function __construct() {
 	      
@@ -17,7 +17,7 @@ class syscmafwpl_add_order_meta_class {
           add_filter('woocommerce_view_order', array($this, 'data_after_order_details_page'), 195);
 
 
-        $extra_settings            = get_option('syscmafwpl_extra_settings');
+        $extra_settings            = get_option('pcfme_extra_settings');
 
         $thankyou_fields_location  = isset($extra_settings['thankyou_fields_location']) ? $extra_settings['thankyou_fields_location'] : "after"; 
 
@@ -50,7 +50,7 @@ class syscmafwpl_add_order_meta_class {
 			switch ($key) {
                 case "billing_address_1":
 				case "shipping_address_1":
-                    $label = esc_html__('Address','customize-my-account-for-woocommerce');
+                    $label = esc_html__('Address','customize-my-account-pro');
                 break;
                 
 				case "billing_address_2":
@@ -60,17 +60,17 @@ class syscmafwpl_add_order_meta_class {
                         
 				case "billing_city":
 				case "shipping_city":
-                    $label = esc_html__('Town / City','customize-my-account-for-woocommerce');
+                    $label = esc_html__('Town / City','customize-my-account-pro');
                 break;
 						
 				case "billing_state":
 			    case "shipping_state":
-                    $label = esc_html__('State / County','customize-my-account-for-woocommerce');
+                    $label = esc_html__('State / County','customize-my-account-pro');
                 break;
 						
 				case "billing_postcode":
 				case "shipping_postcode":
-                    $label = esc_html__('Postcode / Zip','customize-my-account-for-woocommerce');
+                    $label = esc_html__('Postcode / Zip','customize-my-account-pro');
                 break;
 						
 						
@@ -84,7 +84,7 @@ class syscmafwpl_add_order_meta_class {
 	
 	}
 	 
-	 public function woocommerce_custom_new_pdfinvoice_template ($template,$order) {
+	 public function woocommerce_custom_new_pdfinvoice_template($template,$order) {
            
 		   
 		    $billing_fields                = (array) get_option( $this->billing_settings_key );
@@ -161,6 +161,26 @@ class syscmafwpl_add_order_meta_class {
 		   			delete_post_meta( $order_id, $additionalkey);
 		   		}
 
+
+		   		if (isset($additional_field['multiple_clone']) && ($additional_field['multiple_clone'])) { 
+		   			$multiple_clone = "yes";
+		   		} else {
+		   			$multiple_clone = "no"; 
+		   		}
+
+
+
+		   		if ($multiple_clone == "yes") {
+
+		   			$multiclone_condition = isset($additional_field['multiclone_condition']) ? $additional_field['multiclone_condition'] : "each_quantity";
+
+		   			$multiclone_product   = isset($additional_field['multiclone_product']) ? $additional_field['multiclone_product'] : "";
+
+
+
+		   			pcfmne_process_multiple_clone_pdfdetails($multiclone_condition,$multiclone_product,$additional_field,$orderid);
+		   		}
+
 		   	}
 
 		   }
@@ -213,20 +233,38 @@ class syscmafwpl_add_order_meta_class {
 			 }
 		   
 
-		   foreach ($additional_fields as $additionalkey=>$additional_field) {
-		   	    if ((isset($additional_field['orderedition'])) || (isset($additional_field['emailfields'])) || (isset($additional_field['pdfinvoice']))) {
-				     if ( ! empty( $_POST[$additionalkey] ) ) {
-						 
-						if (is_array($_POST[$additionalkey]))  {
-							$additionalkeyvalue = implode(',', $_POST[$additionalkey]);
-						} else {
-							$additionalkeyvalue = $_POST[$additionalkey];
-						}
-						
-                        update_post_meta( $order_id, $additionalkey, sanitize_text_field( $additionalkeyvalue ) );
-                       } 
-				   }
-		   }
+			 foreach ($additional_fields as $additionalkey=>$additional_field) {
+			 	if ((isset($additional_field['orderedition'])) || (isset($additional_field['emailfields'])) || (isset($additional_field['pdfinvoice']))) {
+			 		if ( ! empty( $_POST[$additionalkey] ) ) {
+
+			 			if (is_array($_POST[$additionalkey]))  {
+			 				$additionalkeyvalue = implode(',', $_POST[$additionalkey]);
+			 			} else {
+			 				$additionalkeyvalue = $_POST[$additionalkey];
+			 			}
+
+			 			update_post_meta( $order_id, $additionalkey, sanitize_text_field( $additionalkeyvalue ) );
+			 		} 
+
+
+			 		if (isset($additional_field['multiple_clone']) && ($additional_field['multiple_clone'])) { 
+			 			$multiple_clone = "yes";
+			 		} else {
+			 			$multiple_clone = "no"; 
+			 		}
+
+			 		if ($multiple_clone == "yes") {
+
+			 			$multiclone_condition = isset($additional_field['multiclone_condition']) ? $additional_field['multiclone_condition'] : "each_quantity";
+
+			 			$multiclone_product   = isset($additional_field['multiclone_product']) ? $additional_field['multiclone_product'] : "";
+
+			 			pcfmne_process_multiple_clone_order_save($multiclone_condition,$multiclone_product,$additional_field,$order_id);
+			 		}
+			 	}
+
+
+			 }
 		   
 		   
 	       
@@ -310,9 +348,28 @@ class syscmafwpl_add_order_meta_class {
 					   <?php 
 					    } else if (($additionalkeyvalue == 'empty') || ($additionalkeyvalue == 845675668)) {
 		     			    delete_post_meta( $orderid, $additionalkey);
-		     		    }		
+		     		    }
+
+		     		if (isset($additional_field['multiple_clone']) && ($additional_field['multiple_clone'])) { 
+			 			$multiple_clone = "yes";
+			 		} else {
+			 			$multiple_clone = "no"; 
+			 		}
+
+
+
+			 		if ($multiple_clone == "yes") {
+
+			 			$multiclone_condition = isset($additional_field['multiclone_condition']) ? $additional_field['multiclone_condition'] : "each_quantity";
+
+			 			$multiclone_product   = isset($additional_field['multiclone_product']) ? $additional_field['multiclone_product'] : "";
+
+			 			
+
+			 			pcfmne_process_multiple_clone_details($multiclone_condition,$multiclone_product,$additional_field,$orderid);
+			 		}	
 				      
-                     }
+                }
 
 		   }
 		   ?>
@@ -381,7 +438,23 @@ class syscmafwpl_add_order_meta_class {
 					   echo '<p><strong>'.__(''.$additional_field['label'].'').':</strong> ' . $additionalkeyvalue . '</p>';
 					} else if (($additionalkeyvalue == 'empty') && ($additionalkeyvalue == 845675668)) {
 		     			delete_post_meta( $order_id, $additionalkey);
-		     		}		
+		     		}
+
+
+		     		if (isset($additional_field['multiple_clone']) && ($additional_field['multiple_clone'])) { 
+			 			$multiple_clone = "yes";
+			 		} else {
+			 			$multiple_clone = "no"; 
+			 		}
+
+			 		if ($multiple_clone == "yes") {
+
+			 			$multiclone_condition = isset($additional_field['multiclone_condition']) ? $additional_field['multiclone_condition'] : "each_quantity";
+
+			 			$multiclone_product   = isset($additional_field['multiclone_product']) ? $additional_field['multiclone_product'] : "";
+
+			 			pcfmne_process_multiple_clone_details_edition($multiclone_condition,$multiclone_product,$additional_field,$order_id);
+			 		}		
 					
 					
                  }
@@ -465,19 +538,38 @@ class syscmafwpl_add_order_meta_class {
 		     					$additionalkeyvalue = get_post_meta( $order_id, $additionalkey, true );
 		     					$additionalkeyvalue = str_replace("_"," ",$additionalkeyvalue);
 		     					
-		     					if ( ! empty( $additionalkeyvalue ) && ($additionalkeyvalue != 'empty') && ($shippingkeyvalue != 845675668)) { ?>
+		     					if ( ! empty( $additionalkeyvalue ) && ($additionalkeyvalue != 'empty') && ($additionalkeyvalue != 845675668)) { ?>
 		     						
 		     						<tr>
 		     							<th scope="row" colspan="2" style="color:#636363;border:1px solid #e5e5e5;vertical-align:middle;padding:12px;text-align:left;border-top-width:4px" align="left"><?php echo ucfirst($additional_field['label']); ?></th>
 		     							<td style="color:#636363;border:1px solid #e5e5e5;vertical-align:middle;padding:12px;text-align:left;border-top-width:4px" align="left"><?php echo $additionalkeyvalue; ?></td>
 		     						</tr>
 		     					<?php	}	else if ( ($additionalkeyvalue == 'empty') || ($additionalkeyvalue == 845675668) ) {
-		     			              delete_post_meta( $order_id, $additionalkey);
-		     		                }		
+		     						delete_post_meta( $order_id, $additionalkey);
+		     					}	
+
+
+		     					if (isset($additional_field['multiple_clone']) && ($additional_field['multiple_clone'])) { 
+		     						$multiple_clone = "yes";
+		     					} else {
+		     						$multiple_clone = "no"; 
+		     					}
+
+		     					if ($multiple_clone == "yes") {
+
+		     						$multiclone_condition = isset($additional_field['multiclone_condition']) ? $additional_field['multiclone_condition'] : "each_quantity";
+
+		     						$multiclone_product   = isset($additional_field['multiclone_product']) ? $additional_field['multiclone_product'] : "";
+
+		     						pcfmne_process_multiple_clone_details_email($multiclone_condition,$multiclone_product,$additional_field,$order_id);
+		     					}	
 		     					
 		     				}
 
 		     			}
+
+
+
 		     			?>
 		     		</tfoot>
 		     	</table>
@@ -487,5 +579,5 @@ class syscmafwpl_add_order_meta_class {
 	 
 }
 
-new syscmafwpl_add_order_meta_class();
+new pcfme_add_order_meta_class();
 ?>

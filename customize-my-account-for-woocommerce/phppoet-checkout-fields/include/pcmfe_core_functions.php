@@ -53,7 +53,48 @@ if (! function_exists('pcfme_get_datepicker_format_from_option')) {
 }
 
 
+/**
+ * Get account menu item classes.
+ *
+ * @since 1.0.0
+ */
 
+if (!function_exists('pcfme_check_for_checkout_pages')) {
+
+    function pcfme_check_for_checkout_pages() {
+
+        $new_checkout_detected = 'no';
+
+        $checkout_page_id   = get_option( 'woocommerce_checkout_page_id' );
+
+        $checkout_content_post = get_post($checkout_page_id);
+        $checkout_content = $checkout_content_post->post_content;
+
+        
+
+        if (!has_shortcode( $checkout_content, 'woocommerce_checkout')) {
+
+            $new_checkout_detected = 'yes';
+
+        }
+
+    
+
+        
+
+        if ($new_checkout_detected == 'yes') {
+
+
+           
+            echo '<div class="updated" style="padding:15px; position:relative;"> ' . __( 'It looks like your site is using WooCommerce Block Checkout as Default checkout page.In order to make field modification Work create new page with [woocommerce_checkout] shortcode and asign it as default checkout page under <a href="admin.php?page=wc-settings&tab=advanced" target="_blank">woocommerce/setttings/advanced_settings tab</a>', 'customize-my-account-pro' ) . '</div>';
+           
+
+           
+
+           
+       }
+    }
+}
 
 
 if (! function_exists('pcfme_easy_checkout_get_fees_type')) {
@@ -70,19 +111,19 @@ if (! function_exists('pcfme_easy_checkout_get_fees_type')) {
          $fees_types = array(
 	 		"0"=>array(
 	 		    'value'=>01,
-	 		    'text'=> __('Add or Deduct Fixed Amount or Fixed Percentage','customize-my-account-for-woocommerce')
+	 		    'text'=> __('Add or Deduct Fixed Amount or Fixed Percentage','customize-my-account-pro')
 	 		   
 
 	 	    ),
 	 	    "1"=>array(
 	 		    'value'=>02,
-	 		    'text'=> __('Give Discount equal to price of product','customize-my-account-for-woocommerce')
+	 		    'text'=> __('Give Discount equal to price of product','customize-my-account-pro')
 	 		   
 
 	 	    ),
 	 	    "2"=>array(
 	 		    'value'=>03,
-	 		    'text'=> __('Add certain fee for each product','customize-my-account-for-woocommerce')
+	 		    'text'=> __('Add certain fee for each product','customize-my-account-pro')
 	 		   
 
 	 	    )
@@ -111,17 +152,37 @@ if (! function_exists('pcfme_display_each_dynamic_row')) {
 
 	 	$selected_compare = isset($dynamicvalue['rule_type_compare']) ? $dynamicvalue['rule_type_compare'] : "";
 
+	 	$from_to_specific = isset($dynamicvalue['from_to_specific']) ? $dynamicvalue['from_to_specific'] : "";
+
+	 	$from_to = isset($dynamicvalue['from_to']) ? $dynamicvalue['from_to'] : "";
+
+	 	$selected_compare = isset($dynamicvalue['rule_type_compare']) ? $dynamicvalue['rule_type_compare'] : "";
+
 	 	$selected_contains = isset($dynamicvalue['rule_type_contains']) ? $dynamicvalue['rule_type_contains'] : "";
         
         $checked_text = isset($dynamicvalue['enabled']) && ($dynamicvalue['enabled'] == "yes") ? 'checked' : "";
 
         $rule_type_number =  isset($dynamicvalue['rule_type_number']) ? $dynamicvalue['rule_type_number'] : "";
 
+        $rule_type_date =  isset($dynamicvalue['rule_type_date']) ? $dynamicvalue['rule_type_date'] : "";
+
+        $rule_type_time =  isset($dynamicvalue['rule_type_time']) ? $dynamicvalue['rule_type_time'] : "";
+
+        $rule_type_date_time =  isset($dynamicvalue['rule_type_date_time']) ? $dynamicvalue['rule_type_date_time'] : "";
+
         $rule_type_products = isset($dynamicvalue['rule_type_products']) ? $dynamicvalue['rule_type_products'] : array();
+
+        $rule_type_coupons = isset($dynamicvalue['rule_type_coupons']) ? $dynamicvalue['rule_type_coupons'] : array();
         
         $chosencategories   = isset($dynamicvalue['rule_type_categories']) ? $dynamicvalue['rule_type_categories'] : array();
 
         $chosenroles        = isset($dynamicvalue['rule_type_roles']) ? $dynamicvalue['rule_type_roles'] : array();
+
+        $chosendays         = isset($dynamicvalue['rule_type_days']) ? $dynamicvalue['rule_type_days'] : array();
+
+        $chosenmonthdays    = isset($dynamicvalue['rule_type_monthdays']) ? $dynamicvalue['rule_type_monthdays'] : array();
+
+        $chosenmonths       = isset($dynamicvalue['rule_type_months']) ? $dynamicvalue['rule_type_months'] : array();
 
         global $wp_roles;
 
@@ -130,6 +191,69 @@ if (! function_exists('pcfme_display_each_dynamic_row')) {
         }
 	
 	    $roles = $wp_roles->roles;
+
+	    $days  = array(
+	    	'mon' => __('Monday','customize-my-account-pro'),
+	    	'tue' => __('Tuesday','customize-my-account-pro'),
+	    	'wed' => __('Wednesday','customize-my-account-pro'),
+	    	'thu' => __('Thursday','customize-my-account-pro'),
+	    	'fri' => __('Friday','customize-my-account-pro'),
+	    	'sat' => __('Saturday','customize-my-account-pro'),
+	    	'sun' => __('Sunday','customize-my-account-pro')
+	    	
+	    );
+
+	    $months  = array(
+	    	'jan' => __('January','customize-my-account-pro'),
+	    	'feb' => __('Tuesday','customize-my-account-pro'),
+	    	'mar' => __('Wednesday','customize-my-account-pro'),
+	    	'apr' => __('Thursday','customize-my-account-pro'),
+	    	'may' => __('Friday','customize-my-account-pro'),
+	    	'jun' => __('Saturday','customize-my-account-pro'),
+	    	'jul' => __('Sunday','customize-my-account-pro'),
+	    	'aug' => __('January','customize-my-account-pro'),
+	    	'sep' => __('Tuesday','customize-my-account-pro'),
+	    	'oct' => __('Wednesday','customize-my-account-pro'),
+	    	'nov' => __('Thursday','customize-my-account-pro'),
+	    	'dec' => __('Friday','customize-my-account-pro') 	
+	    );
+
+	    $monthdays  = array(
+	    	'01' => '01',
+	    	'02' => '02',
+	    	'03' => '03',
+	    	'04' => '04',
+	    	'05' => '05',
+	    	'06' => '06',
+	    	'07' => '07',
+	    	'08' => '08',
+	    	'09' => '09',
+	    	'10' => '10',
+	    	'11' => '11',
+	    	'12' => '12',
+	    	'13' => '13',
+	    	'14' => '14',
+	    	'15' => '15',
+	    	'16' => '16',
+	    	'17' => '17',
+	    	'18' => '18',
+	    	'19' => '19',
+	    	'20' => '20',
+	    	'21' => '21',
+	    	'22' => '22',
+	    	'23' => '23',
+	    	'24' => '24',
+	    	'25' => '25',
+	    	'26' => '26',
+	    	'27' => '27',
+	    	'28' => '28',
+	    	'29' => '29',
+	    	'30' => '30',
+	    	'31' => '31',
+	    	'last_day' => __('Last day of month','customize-my-account-pro')
+	    );
+
+
         
 
         switch($selected) {
@@ -164,6 +288,16 @@ if (! function_exists('pcfme_display_each_dynamic_row')) {
         	    $filter_mode  = 'roles';
         	break;
 
+        	case "user_is_logged_in":
+        	    $row_mode = 'none';
+        	    $filter_mode  = 'none';
+        	break;
+
+        	case "user_is_logged_out":
+        	    $row_mode = 'none';
+        	    $filter_mode  = 'none';
+        	break;
+
         	case "customer_total_spent":
         	    $row_mode = 'quantity';
         	    $filter_mode  = 'none';
@@ -172,6 +306,42 @@ if (! function_exists('pcfme_display_each_dynamic_row')) {
         	case "customer_order_count":
         	    $row_mode = 'quantity';
         	    $filter_mode  = 'none';
+        	break;
+
+        	case "date_date":
+        	    $row_mode = 'from_to_specific';
+        	    $filter_mode  = 'date';
+        	break;
+
+        	case "date_time":
+        	    $row_mode = 'from_to';
+        	    $filter_mode  = 'time';
+        	break;
+
+
+        	case "date_date_time":
+        	    $row_mode = 'from_to';
+        	    $filter_mode  = 'date_time';
+        	break;
+
+        	case "date_week_day":
+        	    $row_mode = 'contains';
+        	    $filter_mode  = 'weekday';
+        	break;
+
+        	case "date_month_days":
+        	    $row_mode = 'contains';
+        	    $filter_mode  = 'monthdays';
+        	break;
+
+        	case "date_months":
+        	    $row_mode = 'contains';
+        	    $filter_mode  = 'months';
+        	break;
+
+        	case "coupon_applied":
+        	    $row_mode = 'contains';
+        	    $filter_mode  = 'coupons';
         	break;
 
         	default:
@@ -211,6 +381,22 @@ if (! function_exists('pcfme_display_each_dynamic_row')) {
 
         		<?php echo pcfme_get_dynamic_rule_types_compare_optionhtml($selected_compare); ?>
         	</select>
+
+
+        	<select style="<?php if ($row_mode == "from_to_specific") { echo 'display: inline-grid;'; } else { echo 'display:none;'; } ?>" mtype="<?php echo $slug; ?>" mntext="<?php echo $dynamickey; ?>" mnkey="<?php echo $key; ?>" class="show_if_from_to_specific_rule checkout_field_dynamic_rule_type_from_to_specific checkout_field_dynamic_rule_type_from_to_specific_<?php echo $dynamickey; ?>_<?php echo $key; ?>" name="<?php echo $slug; ?>[<?php echo $key; ?>][dynamic_rules][<?php echo $dynamickey; ?>][from_to_specific]">
+        		
+
+        		<?php echo pcfme_get_dynamic_rule_types_fromtospecific_optionhtml($from_to_specific); ?>
+        	</select>
+
+
+        	<select style="<?php if ($row_mode == "from_to") { echo 'display: inline-grid;'; } else { echo 'display:none;'; } ?>" mtype="<?php echo $slug; ?>" mntext="<?php echo $dynamickey; ?>" mnkey="<?php echo $key; ?>" class="show_if_from_to_rule checkout_field_dynamic_rule_type_from_to checkout_field_dynamic_rule_type_from_to_<?php echo $dynamickey; ?>_<?php echo $key; ?>" name="<?php echo $slug; ?>[<?php echo $key; ?>][dynamic_rules][<?php echo $dynamickey; ?>][from_to]">
+        		
+
+        		<?php echo pcfme_get_dynamic_rule_types_fromto_optionhtml($from_to); ?>
+        	</select>
+
+
             
 			
 
@@ -231,12 +417,12 @@ if (! function_exists('pcfme_display_each_dynamic_row')) {
         	</span>
 
 
-        	<span style="<?php if ($row_mode == "contains") { echo 'display:inline-grid;'; } else { echo 'display:none;'; } ?>" class="show_if_contains_rule">
+        	<span style="<?php if (($row_mode == "contains") || ($row_mode == "from_to") || ($row_mode == "from_to_specific")) { echo 'display:inline-grid;'; } else { echo 'display:none;'; } ?>" class="show_if_contains_rule_div">
                    
 
 			    <span  class="checkout_field_products_span" style="<?php if ($filter_mode == "products") { echo 'display:inline-grid;'; } else { echo 'display:none;'; } ?>">
         		
-			        <select  mtype="<?php echo $slug; ?>" mntext="<?php echo $dynamickey; ?>" mnkey="<?php echo $key; ?>" class="checkout_field_products" data-placeholder="<?php echo esc_html__('Choose Products','customize-my-account-for-woocommerce'); ?>" name="<?php echo $slug; ?>[<?php echo $key; ?>][dynamic_rules][<?php echo $dynamickey; ?>][rule_type_products][]" multiple>
+			        <select  mtype="<?php echo $slug; ?>" mntext="<?php echo $dynamickey; ?>" mnkey="<?php echo $key; ?>" class="checkout_field_products" data-placeholder="<?php echo esc_html__('Choose Products','customize-my-account-pro'); ?>" name="<?php echo $slug; ?>[<?php echo $key; ?>][dynamic_rules][<?php echo $dynamickey; ?>][rule_type_products][]" multiple>
 			   		<?php if (isset($rule_type_products) && (!empty($rule_type_products))) { ?>
 			   			<?php foreach ($rule_type_products as $uniquekey => $unique_id) { ?>
 			   				<option value="<?php echo $unique_id; ?>" selected>#<?php echo $unique_id; ?>- <?php echo get_the_title($unique_id); ?></option>
@@ -249,7 +435,7 @@ if (! function_exists('pcfme_display_each_dynamic_row')) {
 				<span  class="checkout_field_category_span" style="<?php if ($filter_mode == "categories") { echo 'display:inline-grid;'; } else { echo 'display:none;'; } ?>">
         		
 
-			   	    <select  mtype="<?php echo $slug; ?>" mntext="<?php echo $dynamickey; ?>" mnkey="<?php echo $key; ?>"  class="checkout_field_category" data-placeholder="<?php echo esc_html__('Choose Categories','customize-my-account-for-woocommerce'); ?>" name="<?php echo $slug; ?>[<?php echo $key; ?>][dynamic_rules][<?php echo $dynamickey; ?>][rule_type_categories][]"  multiple>
+			   	    <select  mtype="<?php echo $slug; ?>" mntext="<?php echo $dynamickey; ?>" mnkey="<?php echo $key; ?>"  class="checkout_field_category" data-placeholder="<?php echo esc_html__('Choose Categories','customize-my-account-pro'); ?>" name="<?php echo $slug; ?>[<?php echo $key; ?>][dynamic_rules][<?php echo $dynamickey; ?>][rule_type_categories][]"  multiple>
                             <?php foreach ($categories as $category) { ?>
 				                <option value="<?php echo $category->term_id; ?>" <?php if (in_array($category->term_id, $chosencategories)) { echo "selected"; } ?>>#<?php echo $category->term_id; ?>- <?php echo $category->name; ?></option>
 				            <?php } ?>
@@ -261,13 +447,84 @@ if (! function_exists('pcfme_display_each_dynamic_row')) {
 				<span  class="checkout_field_roles_span" style="<?php if ($filter_mode == "roles") { echo 'display:inline-grid;'; } else { echo 'display:none;'; } ?>">
 
 
-			        <select mtype="<?php echo $slug; ?>" mntext="<?php echo $dynamickey; ?>" mnkey="<?php echo $key; ?>" class="checkout_field_role" data-placeholder="<?php echo esc_html__('Choose Roles','customize-my-account-for-woocommerce'); ?>" name="<?php echo $slug; ?>[<?php echo $key; ?>][dynamic_rules][<?php echo $dynamickey; ?>][rule_type_roles][]"  multiple>
+			        <select mtype="<?php echo $slug; ?>" mntext="<?php echo $dynamickey; ?>" mnkey="<?php echo $key; ?>" class="checkout_field_role" data-placeholder="<?php echo esc_html__('Choose Roles','customize-my-account-pro'); ?>" name="<?php echo $slug; ?>[<?php echo $key; ?>][dynamic_rules][<?php echo $dynamickey; ?>][rule_type_roles][]"  multiple>
                             <?php foreach ($roles as $rkey=>$rvalue) { ?>
 				                 <option value="<?php echo $rkey; ?>" <?php if (in_array($rkey, $chosenroles)) { echo "selected"; } ?>><?php echo $rvalue['name']; ?></option>
 				            <?php } ?>
                     </select>
                 
 				</span>
+
+
+				<span  class="checkout_field_coupons_span" style="<?php if ($filter_mode == "coupons") { echo 'display:inline-grid;'; } else { echo 'display:none;'; } ?>">
+        		
+			        <select  mtype="<?php echo $slug; ?>" mntext="<?php echo $dynamickey; ?>" mnkey="<?php echo $key; ?>" class="checkout_field_coupons" data-placeholder="<?php echo esc_html__('Choose Coupons','customize-my-account-pro'); ?>" name="<?php echo $slug; ?>[<?php echo $key; ?>][dynamic_rules][<?php echo $dynamickey; ?>][rule_type_coupons][]" multiple>
+			   		<?php if (isset($rule_type_coupons) && (!empty($rule_type_coupons))) { ?>
+			   			<?php foreach ($rule_type_coupons as $uniquekey => $unique_id) { ?>
+			   				<option value="<?php echo $unique_id; ?>" selected>#<?php echo $unique_id; ?>- <?php echo get_the_title($unique_id); ?></option>
+			   			<?php } ?>
+			   		<?php  } ?>
+			   	    </select>
+
+				</span>
+
+
+				<span  class="checkout_field_date_span" style="<?php if ($filter_mode == "date") { echo 'display:inline-grid;'; } else { echo 'display:none;'; } ?>">
+
+                      <input   mtype="<?php echo $slug; ?>" mntext="<?php echo $dynamickey; ?>" mnkey="<?php echo $key; ?>" type="text" class=" checkout_field_dynamic_rule_date checkout_field_dynamic_rule_date_<?php echo $dynamickey; ?>_<?php echo $key; ?>" name="<?php echo $slug; ?>[<?php echo $key; ?>][dynamic_rules][<?php echo $dynamickey; ?>][rule_type_date]" value="<?php echo $rule_type_date; ?>">
+			        
+                
+				</span>
+
+				<span  class="checkout_field_time_span" style="<?php if ($filter_mode == "time") { echo 'display:inline-grid;'; } else { echo 'display:none;'; } ?>">
+
+                      <input   mtype="<?php echo $slug; ?>" mntext="<?php echo $dynamickey; ?>" mnkey="<?php echo $key; ?>" type="text" class=" checkout_field_dynamic_rule_time checkout_field_dynamic_rule_time_<?php echo $dynamickey; ?>_<?php echo $key; ?>" name="<?php echo $slug; ?>[<?php echo $key; ?>][dynamic_rules][<?php echo $dynamickey; ?>][rule_type_time]" value="<?php echo $rule_type_time; ?>">
+			        
+                
+				</span>
+
+				<span  class="checkout_field_date_time_span" style="<?php if ($filter_mode == "date_time") { echo 'display:inline-grid;'; } else { echo 'display:none;'; } ?>">
+
+                      <input   mtype="<?php echo $slug; ?>" mntext="<?php echo $dynamickey; ?>" mnkey="<?php echo $key; ?>" type="text" class=" checkout_field_dynamic_rule_date_time checkout_field_dynamic_rule_date_time_<?php echo $dynamickey; ?>_<?php echo $key; ?>" name="<?php echo $slug; ?>[<?php echo $key; ?>][dynamic_rules][<?php echo $dynamickey; ?>][rule_type_date_time]" value="<?php echo $rule_type_date_time; ?>">
+			        
+                
+				</span>
+
+				<span  class="checkout_field_weekday_span" style="<?php if ($filter_mode == "weekday") { echo 'display:inline-grid;'; } else { echo 'display:none;'; } ?>">
+
+
+			        <select mtype="<?php echo $slug; ?>" mntext="<?php echo $dynamickey; ?>" mnkey="<?php echo $key; ?>" class="checkout_field_weekday" data-placeholder="<?php echo esc_html__('Choose Days','customize-my-account-pro'); ?>" name="<?php echo $slug; ?>[<?php echo $key; ?>][dynamic_rules][<?php echo $dynamickey; ?>][rule_type_days][]"  multiple>
+                            <?php foreach ($days as $dkey=>$dvalue) { ?>
+				                 <option value="<?php echo $dkey; ?>" <?php if (in_array($dkey, $chosendays)) { echo "selected"; } ?>><?php echo $dvalue; ?></option>
+				            <?php } ?>
+                    </select>
+                
+				</span>
+
+				<span  class="checkout_field_monthdays_span" style="<?php if ($filter_mode == "monthdays") { echo 'display:inline-grid;'; } else { echo 'display:none;'; } ?>">
+
+
+			        <select mtype="<?php echo $slug; ?>" mntext="<?php echo $dynamickey; ?>" mnkey="<?php echo $key; ?>" class="checkout_field_monthdays" data-placeholder="<?php echo esc_html__('Choose Month Days','customize-my-account-pro'); ?>" name="<?php echo $slug; ?>[<?php echo $key; ?>][dynamic_rules][<?php echo $dynamickey; ?>][rule_type_monthdays][]"  multiple>
+                            <?php foreach ($monthdays as $mdkey=>$mdvalue) { ?>
+				                 <option value="<?php echo $mdkey; ?>" <?php if (in_array($mdkey, $chosenmonthdays)) { echo "selected"; } ?>><?php echo $mdvalue; ?></option>
+				            <?php } ?>
+                    </select>
+                
+				</span>
+
+
+				<span  class="checkout_field_months_span" style="<?php if ($filter_mode == "months") { echo 'display:inline-grid;'; } else { echo 'display:none;'; } ?>">
+
+
+			        <select mtype="<?php echo $slug; ?>" mntext="<?php echo $dynamickey; ?>" mnkey="<?php echo $key; ?>" class="checkout_field_months" data-placeholder="<?php echo esc_html__('Choose Months','customize-my-account-pro'); ?>" name="<?php echo $slug; ?>[<?php echo $key; ?>][dynamic_rules][<?php echo $dynamickey; ?>][rule_type_months][]"  multiple>
+                            <?php foreach ($months as $mkey=>$mvalue) { ?>
+				                 <option value="<?php echo $mkey; ?>" <?php if (in_array($mkey, $chosenmonths)) { echo "selected"; } ?>><?php echo $mvalue; ?></option>
+				            <?php } ?>
+                    </select>
+                
+				</span>
+
+				
 
 
         	</span>
@@ -284,6 +541,9 @@ if (! function_exists('pcfme_display_each_dynamic_row')) {
 }
 
 
+
+
+
 if (! function_exists('pcfme_get_dynamic_rule_types_contains_optionhtml')) {
 
 	 /**
@@ -298,28 +558,28 @@ if (! function_exists('pcfme_get_dynamic_rule_types_contains_optionhtml')) {
 	 	 $equality_types = array(
 	 		array(
 	 		    'value'=>'contains_any',
-	 		    'text'=> __('Contains Any','customize-my-account-for-woocommerce')
+	 		    'text'=> __('Contains Any','customize-my-account-pro')
 	 		   
 
 	 	    ),
 
 	 	    array(
 	 		    'value'=>'contains_all',
-	 		    'text'=> __('Contains All','customize-my-account-for-woocommerce')
+	 		    'text'=> __('Contains All','customize-my-account-pro')
 	 		   
 
 	 	    ),
 
 	 	    array(
 	 		    'value'=>'does_not_contain_any',
-	 		    'text'=> __('Does not Contains Any','customize-my-account-for-woocommerce')
+	 		    'text'=> __('Does not Contains Any','customize-my-account-pro')
 	 		   
 
 	 	    ),
 
 	 	    array(
 	 		    'value'=>'does_not_contain_all',
-	 		    'text'=> __('Does not contains all','customize-my-account-for-woocommerce')
+	 		    'text'=> __('Does not contains all','customize-my-account-pro')
 	 		   
 
 	 	    ),
@@ -363,21 +623,21 @@ if (! function_exists('pcfme_get_dynamic_rule_types_compare_optionhtml')) {
 	 	 $equality_types = array(
 	 		array(
 	 		    'value'=>'less_than',
-	 		    'text'=> __('Less than','customize-my-account-for-woocommerce')
+	 		    'text'=> __('Less than','customize-my-account-pro')
 	 		   
 
 	 	    ),
 
 	 	    array(
 	 		    'value'=>'greater_than',
-	 		    'text'=> __('Greater Than','customize-my-account-for-woocommerce')
+	 		    'text'=> __('Greater Than','customize-my-account-pro')
 	 		   
 
 	 	    ),
 
 	 	    array(
 	 		    'value'=>'greater_than_equal_to',
-	 		    'text'=> __('Greater than or equalto','customize-my-account-for-woocommerce')
+	 		    'text'=> __('Greater than or equalto','customize-my-account-pro')
 	 		   
 
 	 	    ),
@@ -395,11 +655,106 @@ if (! function_exists('pcfme_get_dynamic_rule_types_compare_optionhtml')) {
 
 	 	}
 
+	 	return $options_html;
+
+	 }
+
+}
 
 
-	 	
+if (! function_exists('pcfme_get_dynamic_rule_types_fromtospecific_optionhtml')) {
 
-	 	 return $options_html;
+	 /**
+	 * Outputs a installed woocommerce version
+	 *
+	 * @access public
+	 * @subpackage	Forms
+	 */
+
+	 function pcfme_get_dynamic_rule_types_fromtospecific_optionhtml($selected_compare = NULL) {
+
+	 	 $equality_types = array(
+	 		array(
+	 		    'value'=>'from',
+	 		    'text'=> __('From','customize-my-account-pro')
+	 		   
+
+	 	    ),
+
+	 	    array(
+	 		    'value'=>'to',
+	 		    'text'=> __('Till','customize-my-account-pro')
+	 		   
+
+	 	    ),
+
+	 	    array(
+	 		    'value'=>'specific',
+	 		    'text'=> __('Specific','customize-my-account-pro')
+	 		   
+
+	 	    ),
+
+	 	   
+	 	);
+
+	 	$options_html ='';
+
+	 	foreach ($equality_types as $okey=>$ovalue) {
+
+	 		$selected_text = isset($selected_compare) && ($selected_compare == $ovalue['value']) ? "selected" : "";
+
+	 		$options_html .='<option value="'.$ovalue['value'].'" '.$selected_text.'>'.$ovalue['text'].'</option>';
+
+	 	}
+
+	 	return $options_html;
+
+	 }
+
+}
+
+
+if (! function_exists('pcfme_get_dynamic_rule_types_fromto_optionhtml')) {
+
+	 /**
+	 * Outputs a installed woocommerce version
+	 *
+	 * @access public
+	 * @subpackage	Forms
+	 */
+
+	 function pcfme_get_dynamic_rule_types_fromto_optionhtml($selected_compare = NULL) {
+
+	 	 $equality_types = array(
+	 		array(
+	 		    'value'=>'from',
+	 		    'text'=> __('From','customize-my-account-pro')
+	 		   
+
+	 	    ),
+
+	 	    array(
+	 		    'value'=>'to',
+	 		    'text'=> __('Till','customize-my-account-pro')
+	 		   
+
+	 	    )
+
+	 	   
+	 	);
+
+	 	$options_html ='';
+
+	 	foreach ($equality_types as $okey=>$ovalue) {
+
+	 		$selected_text = isset($selected_compare) && ($selected_compare == $ovalue['value']) ? "selected" : "";
+
+	 		$options_html .='<option value="'.$ovalue['value'].'" '.$selected_text.'>'.$ovalue['text'].'</option>';
+
+	 	}
+
+	 	return $options_html;
 
 	 }
 
@@ -416,14 +771,15 @@ if (! function_exists('pcfme_get_dynamic_rule_types_select_optionhtml')) {
 
 	 function pcfme_get_dynamic_rule_types_select_optionhtml($selected = NULL) {
 
-	 	 $cart_options = pcfme_get_dynamic_rule_types_cart();
-	 	 $cart_options_items = pcfme_get_dynamic_rule_types_cart_items();
-	 	 $cart_options_user = pcfme_get_dynamic_rule_types_user();
+	 	 $cart_options          = pcfme_get_dynamic_rule_types_cart();
+	 	 $cart_options_items    = pcfme_get_dynamic_rule_types_cart_items();
+	 	 $cart_options_user     = pcfme_get_dynamic_rule_types_user();
 	 	 $cart_options_customer = pcfme_get_dynamic_rule_types_customer();
+	 	 
 
 	 	 $options_html ='';
 
-	 	 $options_html .='<optgroup label="'.__('Cart','customize-my-account-for-woocommerce').'">';
+	 	 $options_html .='<optgroup label="'.__('Cart','customize-my-account-pro').'">';
 
 	 	 foreach ($cart_options as $cvalue) {
 
@@ -435,7 +791,7 @@ if (! function_exists('pcfme_get_dynamic_rule_types_select_optionhtml')) {
 
 	 	 $options_html .='</optgroup>';
 
-	 	 $options_html .='<optgroup label="'.__('Cart Items','customize-my-account-for-woocommerce').'">';
+	 	 $options_html .='<optgroup label="'.__('Cart Items','customize-my-account-pro').'">';
 
 	 	 foreach ($cart_options_items as $cvalue2) {
 
@@ -447,7 +803,7 @@ if (! function_exists('pcfme_get_dynamic_rule_types_select_optionhtml')) {
 
 	 	 $options_html .='</optgroup>';
 
-	 	 $options_html .='<optgroup label="'.__('User','customize-my-account-for-woocommerce').'">';
+	 	 $options_html .='<optgroup label="'.__('User','customize-my-account-pro').'">';
 
 	 	 
 
@@ -462,7 +818,7 @@ if (! function_exists('pcfme_get_dynamic_rule_types_select_optionhtml')) {
 	 	 $options_html .='</optgroup>';
 
 
-	 	 $options_html .='<optgroup label="'.__('Customer','customize-my-account-for-woocommerce').'">';
+	 	 $options_html .='<optgroup label="'.__('Customer','customize-my-account-pro').'">';
 
 	 	 
 
@@ -475,9 +831,44 @@ if (! function_exists('pcfme_get_dynamic_rule_types_select_optionhtml')) {
 	 	 }
 
 	 	 $options_html .='</optgroup>';
-	 	 
 
-	 	 return $options_html;
+
+	 	 $options_html .='<optgroup label="'.__('Date & Time','customize-my-account-pro').'">';
+
+
+
+	 	 $cart_options_date     = pcfme_get_dynamic_rule_types_date();
+
+
+	 	 foreach ($cart_options_date as $cvalue5) {
+
+	 	 	$selected_text = isset($selected) && ($selected == $cvalue5['value']) ? "selected" : "";
+
+	 	 	$options_html .='<option value="'.$cvalue5['value'].'" '.$selected_text.'>'.$cvalue5['text'].'</option>';
+	 	 	
+	 	 }
+
+	 	 $options_html .='</optgroup>';
+
+
+	 	 $options_html .='<optgroup label="'.__('Coupons','customize-my-account-pro').'">';
+
+
+	 	 $cart_options_coupon     = pcfme_get_dynamic_rule_types_coupon();
+
+
+	 	 foreach ($cart_options_coupon as $cvalue6) {
+
+	 	 	$selected_text = isset($selected) && ($selected == $cvalue6['value']) ? "selected" : "";
+
+	 	 	$options_html .='<option value="'.$cvalue6['value'].'" '.$selected_text.'>'.$cvalue6['text'].'</option>';
+	 	 	
+	 	 }
+
+	 	 $options_html .='</optgroup>';
+	 	 
+         
+	 	 return apply_filters('pcfme_override_dynamic_visibility_types',$options_html);;
 
 	 }
 
@@ -498,21 +889,21 @@ if (! function_exists('pcfme_get_dynamic_rule_types_cart')) {
 	 	$visibility_types = array(
 	 		array(
 	 		    'value'=>'cart__quantity',
-	 		    'text'=> __('Cart total quantity','customize-my-account-for-woocommerce')
+	 		    'text'=> __('Cart total quantity','customize-my-account-pro')
 	 		   
 
 	 	    ),
 
 	 	    array(
 	 		    'value'=>'cart__count',
-	 		    'text'=> __('Cart item count','customize-my-account-for-woocommerce')
+	 		    'text'=> __('Cart item count','customize-my-account-pro')
 	 		   
 
 	 	    ),
 
 	 	    array(
 	 		    'value'=>'cart__weight',
-	 		    'text'=> __('Cart total weight','customize-my-account-for-woocommerce')
+	 		    'text'=> __('Cart total weight','customize-my-account-pro')
 	 		   
 
 	 	    ),
@@ -537,7 +928,7 @@ if (! function_exists('pcfme_get_dynamic_rule_types_cart_items')) {
 	 	$visibility_types = array(
 	 		array(
 	 		    'value'=>'cart_items__products',
-	 		    'text'=> __('Cart items - Products','customize-my-account-for-woocommerce')
+	 		    'text'=> __('Cart items - Products','customize-my-account-pro')
 	 		   
 
 	 	    ),
@@ -545,7 +936,7 @@ if (! function_exists('pcfme_get_dynamic_rule_types_cart_items')) {
 
 	 	    array(
 	 		    'value'=>'cart_items__product_categories',
-	 		    'text'=> __('Cart items - Categories','customize-my-account-for-woocommerce')
+	 		    'text'=> __('Cart items - Categories','customize-my-account-pro')
 	 		   
 
 	 	    ),
@@ -571,7 +962,19 @@ if (! function_exists('pcfme_get_dynamic_rule_types_user')) {
 	 	$visibility_types = array(
 	 		array(
 	 		    'value'=>'user_role',
-	 		    'text'=> __('User Role','customize-my-account-for-woocommerce')
+	 		    'text'=> __('User Role','customize-my-account-pro')
+	 		   
+
+	 	    ),
+	 	    array(
+	 		    'value'=>'user_is_logged_in',
+	 		    'text'=> __('Is Logged In','customize-my-account-pro')
+	 		   
+
+	 	    ),
+	 	    array(
+	 		    'value'=>'user_is_logged_out',
+	 		    'text'=> __('Is Logged out','customize-my-account-pro')
 	 		   
 
 	 	    )
@@ -597,17 +1000,98 @@ if (! function_exists('pcfme_get_dynamic_rule_types_customer')) {
 	 	$visibility_types = array(
 	 		array(
 	 		    'value'=>'customer_total_spent',
-	 		    'text'=> __('Total Spent','customize-my-account-for-woocommerce')
+	 		    'text'=> __('Total Spent','customize-my-account-pro')
 	 		   
 
 	 	    ),
 
             array(
 	 		    'value'=>'customer_order_count',
-	 		    'text'=> __('Order Count','customize-my-account-for-woocommerce')
+	 		    'text'=> __('Order Count','customize-my-account-pro')
 	 		   
 
 	 	    )
+	 	   
+	 	);
+	 	return apply_filters('pcfme_override_rule_types_cart_items',$visibility_types);
+	 }
+}
+
+if (! function_exists('pcfme_get_dynamic_rule_types_coupon')) {
+
+	 /**
+	 * Outputs a installed woocommerce version
+	 *
+	 * @access public
+	 * @subpackage	Forms
+	 */
+
+	 function pcfme_get_dynamic_rule_types_coupon() {
+
+	 	$visibility_types = array(
+	 		array(
+	 		    'value'=>'coupon_applied',
+	 		    'text'=> __('Coupons Applied','customize-my-account-pro')
+	 		   
+
+	 	    )
+	 	   
+	 	);
+	 	return apply_filters('pcfme_override_rule_types_coupon_items',$visibility_types);
+	 }
+}
+
+if (! function_exists('pcfme_get_dynamic_rule_types_date')) {
+
+	 /**
+	 * Outputs a installed woocommerce version
+	 *
+	 * @access public
+	 * @subpackage	Forms
+	 */
+
+	 function pcfme_get_dynamic_rule_types_date() {
+
+	 	$visibility_types = array(
+	 		array(
+	 		    'value'=>'date_date',
+	 		    'text'=> __('Date','customize-my-account-pro')
+	 		   
+
+	 	    ),
+
+            array(
+	 		    'value'=>'date_time',
+	 		    'text'=> __('Time','customize-my-account-pro')
+	 		   
+
+	 	    ),
+	 	    array(
+	 		    'value'=>'date_date_time',
+	 		    'text'=> __('Date & time','customize-my-account-pro')
+	 		   
+
+	 	    ),
+
+            array(
+	 		    'value'=>'date_week_day',
+	 		    'text'=> __('Days of week','customize-my-account-pro')
+	 		   
+
+	 	    ),
+	 	    array(
+	 		    'value'=>'date_month_days',
+	 		    'text'=> __('Days of Month','customize-my-account-pro')
+	 		   
+
+	 	    ),
+
+            array(
+	 		    'value'=>'date_months',
+	 		    'text'=> __('Months','customize-my-account-pro')
+	 		   
+
+	 	    ),
 	 	   
 	 	);
 	 	return apply_filters('pcfme_override_rule_types_cart_items',$visibility_types);
@@ -628,14 +1112,14 @@ if (! function_exists('pcfme_get_dynamic_rule_types_cart_items_quantity')) {
 	 	$visibility_types = array(
 	 		array(
 	 		    'value'=>'cart_items__products',
-	 		    'text'=> __('Cart item quantity - Products','customize-my-account-for-woocommerce')
+	 		    'text'=> __('Cart item quantity - Products','customize-my-account-pro')
 	 		   
 
 	 	    ),
 
 	 	    array(
 	 		    'value'=>'cart_items__product_categories',
-	 		    'text'=> __('Cart item quantity - Categories','customize-my-account-for-woocommerce')
+	 		    'text'=> __('Cart item quantity - Categories','customize-my-account-pro')
 	 		   
 
 	 	    ),
@@ -663,17 +1147,40 @@ if (! function_exists('pcfme_easy_checkout_get_visibility_types')) {
 	 	$visibility_types = array(
 	 		array(
 	 		    'value'=>'always-visible',
-	 		    'text'=> __('Always Visibile','customize-my-account-for-woocommerce')
+	 		    'text'=> __('Always Visibile','customize-my-account-pro')
 	 		   
 
 	 	    ),
 	 	    array(
 	 		    'value'=>'dynamically-visible',
-	 		    'text'=> __('Dynamically Visibile','customize-my-account-for-woocommerce')
+	 		    'text'=> __('Dynamically Visibile','customize-my-account-pro')
 	 		   
 
 	 	    ),
-	 	    
+	 	    array(
+	 		    'value'=>'shipping-specific',
+	 		    'text'=> __('Specific Shipping Method','customize-my-account-pro')
+	 		    
+
+	 	    ),
+	 	    array(
+	 		    'value'=>'payment-specific',
+	 		    'text'=> __('Specific Payment Gateway','customize-my-account-pro')
+	 		    
+
+	 	    ),
+	 	    array(
+	 		    'value'=>'hide-downloadable',
+	 		    'text'=> __('Hide If cart contains downloadable Products','customize-my-account-pro')
+	 		    
+
+	 	    ),
+	 	    array(
+	 		    'value'=>'hide-virtual',
+	 		    'text'=> __('Hide If cart contains virtual Products','customize-my-account-pro')
+	 		    
+
+	 	    ),
 
 	 	   
 	 	);
@@ -695,104 +1202,110 @@ if (! function_exists('pcfme_easy_checkout_get_field_types')) {
 	 	$field_types = array(
 	 		"0"=>array(
 	 		    'type'=>'text',
-	 		    'text'=> __('Text','customize-my-account-for-woocommerce'),
+	 		    'text'=> __('Text','customize-my-account-pro'),
 	 		    'icon'=> 'fa fa-user'
 
 	 	    ),
 	 	    "1"=>array(
 	 		    'type'=>'pcfmeselect',
-	 		    'text'=> __('Select','customize-my-account-for-woocommerce'),
+	 		    'text'=> __('Select','customize-my-account-pro'),
 	 		    'icon'=> 'fa fa-list'
 
 	 	    ),
 	 	    "2"=>array(
 	 		    'type'=>'checkbox',
-	 		    'text'=> __('Checkbox','customize-my-account-for-woocommerce'),
+	 		    'text'=> __('Checkbox','customize-my-account-pro'),
 	 		    'icon'=> 'fa fa-check'
 
 	 	    ),
 	 	    "3"=>array(
 	 		    'type'=>'textarea',
-	 		    'text'=> __('Textarea','customize-my-account-for-woocommerce'),
+	 		    'text'=> __('Textarea','customize-my-account-pro'),
 	 		    'icon'=> 'fa fa-file'
 
 	 	    ),
 	 	    "4"=>array(
+	 		    'type'=>'multiselect',
+	 		    'text'=> __('MultiSelect','customize-my-account-pro'),
+	 		    'icon'=> 'fa fa-list'
+
+	 	    ),
+	 	    "5"=>array(
 	 		    'type'=>'radio',
-	 		    'text'=> __('Radio','customize-my-account-for-woocommerce'),
+	 		    'text'=> __('Radio','customize-my-account-pro'),
 	 		    'icon'=> 'fa fa-bomb'
 
 	 	    ),
-	 	     "5"=>array(
+	 	     "6"=>array(
 	 		    'type'=>'heading',
-	 		    'text'=> __('Heading','customize-my-account-for-woocommerce'),
+	 		    'text'=> __('Heading','customize-my-account-pro'),
 	 		    'icon'=> 'fa fa-minus'
 
 	 	    ),
-	 	     "6"=>array(
+	 	     "7"=>array(
 	 		    'type'=>'email',
-	 		    'text'=> __('Email','customize-my-account-for-woocommerce'),
+	 		    'text'=> __('Email','customize-my-account-pro'),
 	 		    'icon'=> 'fa fa-envelope'
 
 	 	    ),
-	 	     "7"=>array(
-	 		    'type'=>'number',
-	 		    'text'=> __('Number','customize-my-account-for-woocommerce'),
-	 		    'icon'=> 'fa fa-file'
-
-	 	    ),
 	 	     "8"=>array(
+	 		    'type'=>'number',
+	 		    'text'=> __('Number','customize-my-account-pro'),
+	 		    'icon'=> 'fa fa-file'
+
+	 	    ),
+	 	     "9"=>array(
 	 		    'type'=>'paragraph',
-	 		    'text'=> __('Paragraph','customize-my-account-for-woocommerce'),
+	 		    'text'=> __('Paragraph','customize-my-account-pro'),
 	 		    'icon'=> 'fa fa-file'
 
 	 	    ),
 
-	 	     "9"=>array(
+	 	     "10"=>array(
 	 		    'type'=>'password',
-	 		    'text'=> __('Password','customize-my-account-for-woocommerce'),
+	 		    'text'=> __('Password','customize-my-account-pro'),
 	 		    'icon'=> 'fa fa-clipboard'
 
 	 	    ),
 
-	 	      "10"=>array(
+	 	      "11"=>array(
 	 		    'type'=>'datepicker',
-	 		    'text'=> __('DatePicker','customize-my-account-for-woocommerce'),
+	 		    'text'=> __('DatePicker','customize-my-account-pro'),
 	 		    'icon'=> 'fa fa-calendar'
 
 	 	    ),
 
-	 	      "11"=>array(
+	 	      "12"=>array(
 	 		    'type'=>'timepicker',
-	 		    'text'=> __('TimePicker','customize-my-account-for-woocommerce'),
+	 		    'text'=> __('TimePicker','customize-my-account-pro'),
 	 		    'icon'=> 'fa fa-list'
 
 	 	    ),
 
-	 	     "12"=>array(
-	 		    'type'=>'datetimepicker',
-	 		    'text'=> __('DateTime','customize-my-account-for-woocommerce'),
-	 		    'icon'=> 'fa fa-calendar'
-
-	 	    ),
-
 	 	     "13"=>array(
-	 		    'type'=>'daterangepicker',
-	 		    'text'=> __('DateRange','customize-my-account-for-woocommerce'),
+	 		    'type'=>'datetimepicker',
+	 		    'text'=> __('DateTime','customize-my-account-pro'),
 	 		    'icon'=> 'fa fa-calendar'
 
 	 	    ),
 
-	 	      "14"=>array(
-	 		    'type'=>'datetimerangepicker',
-	 		    'text'=> __('DateTimeRange','customize-my-account-for-woocommerce'),
-	 		    'icon'=> 'fa fa-file'
+	 	     "14"=>array(
+	 		    'type'=>'daterangepicker',
+	 		    'text'=> __('DateRange','customize-my-account-pro'),
+	 		    'icon'=> 'fa fa-calendar'
 
 	 	    ),
 
 	 	      "15"=>array(
+	 		    'type'=>'datetimerangepicker',
+	 		    'text'=> __('DateTimeRange','customize-my-account-pro'),
+	 		    'icon'=> 'fa fa-file'
+
+	 	    ),
+
+	 	      "16"=>array(
 	 		    'type'=>'hidden_field',
-	 		    'text'=> __('Hidden','customize-my-account-for-woocommerce'),
+	 		    'text'=> __('Hidden','customize-my-account-pro'),
 	 		    'icon'=> 'fa fa-file'
 
 	 	    ),
@@ -818,14 +1331,14 @@ if (! function_exists('pcfme_show_rule_type_01_td_values')) {
 	 		<?php if (isset($value['action_type']) ) {  ?>
 	 			<select class="checkout_field_rule_type" name="pcfme_additional_fees[<?php echo $mnindex; ?>][action_type]">
 	 				<option value="show" <?php if (isset($value['action_type']) && ($value['action_type'] == "show")) { echo 'selected';} ?>>
-	 					<?php echo esc_html__( 'Show' ,'customize-my-account-for-woocommerce'); ?>        
+	 					<?php echo esc_html__( 'Show' ,'customize-my-account-pro'); ?>        
 	 				</option>
 	 				<option value="hide" <?php if (isset($value['action_type']) && ($value['action_type'] == "hide")) { echo 'selected';} ?>>
-	 					<?php echo esc_html__( 'Hide' ,'customize-my-account-for-woocommerce'); ?>        
+	 					<?php echo esc_html__( 'Hide' ,'customize-my-account-pro'); ?>        
 	 				</option>
 	 			</select>
 	 		<?php } else { ?>
-	 			<strong><?php echo esc_html__( 'Add' ,'customize-my-account-for-woocommerce'); ?></strong>
+	 			<strong><?php echo esc_html__( 'Add' ,'customize-my-account-pro'); ?></strong>
 	 		<?php  } ?>
 	 	</td>
 	 	<td><?php if (isset($value['action_type']) ) {  
@@ -837,7 +1350,7 @@ if (! function_exists('pcfme_show_rule_type_01_td_values')) {
 
 	 		?>
 	 		<select class="checkout_field_rule_actionfield" name="pcfme_additional_fees[<?php echo $mnindex; ?>][actionfield]">
-	 			<optgroup label="<?php echo esc_html__( 'Payment Gateway' ,'customize-my-account-for-woocommerce'); ?>">
+	 			<optgroup label="<?php echo esc_html__( 'Payment Gateway' ,'customize-my-account-pro'); ?>">
 	 				<?php foreach ($payment_gateways as $pkey=>$pvalue) { ?>
 
 	 					<option value="payment_method_<?php echo $pkey; ?>"  <?php if (isset($value['actionfield']) && ($value['actionfield'] == 'payment_method_'.$pkey.'')) { echo 'selected';} ?>><?php echo $pkey; ?></option>
@@ -846,7 +1359,7 @@ if (! function_exists('pcfme_show_rule_type_01_td_values')) {
 
 	 			</optgroup>
 
-	 			<optgroup label="<?php echo esc_html__( 'Shipping Method' ,'customize-my-account-for-woocommerce'); ?>">
+	 			<optgroup label="<?php echo esc_html__( 'Shipping Method' ,'customize-my-account-pro'); ?>">
 	 				<?php foreach ($shipping_methods as $skey=>$pvalue) { ?>
 
 	 					<option value="shipping_method_<?php echo $skey; ?>"  <?php if (isset($value['actionfield']) && ($value['actionfield'] == 'shipping_method_'.$skey.'')) { echo 'selected';} ?>><?php echo $skey; ?></option>
@@ -858,18 +1371,18 @@ if (! function_exists('pcfme_show_rule_type_01_td_values')) {
 	 		</select>
 	 	<?php } else { ?>
 
-	 		<input type="number" step="0.01" name="pcfme_additional_fees[<?php echo $mnindex; ?>][amount]" value="<?php if (isset($value['amount']) ) { echo $value['amount']; } ?>" placeholder="<?php echo esc_html__( 'Amount' ,'customize-my-account-for-woocommerce'); ?>">
+	 		<input type="number" step="0.01" name="pcfme_additional_fees[<?php echo $mnindex; ?>][amount]" value="<?php if (isset($value['amount']) ) { echo $value['amount']; } ?>" placeholder="<?php echo esc_html__( 'Amount' ,'customize-my-account-pro'); ?>">
 	 	<?php  } ?>
 	 </td>
 	 <td>
 	 	<?php if (!isset($value['action_type']) ) {  ?>
 	 		<select class="checkout_field_rule_type" name="pcfme_additional_fees[<?php echo $mnindex; ?>][type]">
 	 			<option value="fixed" <?php if (isset($value['type']) && ($value['type'] != "percentage")) { echo 'selected';} ?>>
-	 				<?php echo esc_html__( 'Fixed Amount' ,'customize-my-account-for-woocommerce'); ?>
+	 				<?php echo esc_html__( 'Fixed Amount' ,'customize-my-account-pro'); ?>
 
 	 			</option>
 	 			<option value="percentage" <?php if (isset($value['type']) && ($value['type'] == "percentage")) { echo 'selected';} ?>>
-	 				<?php echo esc_html__( 'Percentage' ,'customize-my-account-for-woocommerce'); ?>
+	 				<?php echo esc_html__( 'Percentage' ,'customize-my-account-pro'); ?>
 
 	 			</option>
 	 		</select>
@@ -903,19 +1416,19 @@ if (! function_exists('pcfme_show_rule_type_02_td_values')) {
 	 		
 	 		<select class="checkout_field_rule_type" name="pcfme_additional_fees[<?php echo $mnindex; ?>][add_deduct_type]">
 	 			<option value="add" <?php if (isset($value['add_deduct_type']) && ($value['add_deduct_type'] == "add")) { echo 'selected';} ?>>
-	 				<?php echo esc_html__( 'Add' ,'customize-my-account-for-woocommerce'); ?>        
+	 				<?php echo esc_html__( 'Add' ,'customize-my-account-pro'); ?>        
 	 			</option>
 	 			<option value="deduct" <?php if (isset($value['add_deduct_type']) && ($value['add_deduct_type'] == "deduct")) { echo 'selected';} ?>>
-	 				<?php echo esc_html__( 'Deduct' ,'customize-my-account-for-woocommerce'); ?>        
+	 				<?php echo esc_html__( 'Deduct' ,'customize-my-account-pro'); ?>        
 	 			</option>
 	 		</select>
 	 		
 	 	</td>
 	 	<td>
-	 		<?php echo esc_html__( 'Amount equal to price of ' ,'customize-my-account-for-woocommerce'); ?>
+	 		<?php echo esc_html__( 'Amount equal to price of ' ,'customize-my-account-pro'); ?>
 	 	</td>
 	 	<td>
-	 		<select class="checkout_field_quantity_specific_product_fees" data-placeholder="<?php echo esc_html__('Choose Product','customize-my-account-for-woocommerce'); ?>" name="pcfme_additional_fees[<?php echo $mnindex; ?>][specific-product]" style="width:600px">
+	 		<select class="checkout_field_quantity_specific_product_fees" data-placeholder="<?php echo esc_html__('Choose Product','customize-my-account-pro'); ?>" name="pcfme_additional_fees[<?php echo $mnindex; ?>][specific-product]" style="width:600px">
 	 			<?php if (isset($value['specific-product'])) { ?>
 	 				<option value="<?php echo $value['specific-product']; ?>" selected>#<?php echo $value['specific-product'] ?>-<?php echo get_the_title($value['specific-product']); ?></option>
 	 			<?php } ?>
@@ -944,16 +1457,16 @@ if (! function_exists('pcfme_show_rule_type_03_td_values')) {
 
 	 	<td>
 
-	 		<strong><?php echo esc_html__( 'Add' ,'customize-my-account-for-woocommerce'); ?></strong>
+	 		<strong><?php echo esc_html__( 'Add' ,'customize-my-account-pro'); ?></strong>
 	 		
 	 	</td>
 	 	<td>
 
-	 		<input type="number" step="0.01" name="pcfme_additional_fees[<?php echo $mnindex; ?>][amount]" value="<?php if (isset($value['amount']) ) { echo $value['amount']; } ?>" placeholder="<?php echo esc_html__( 'Amount' ,'customize-my-account-for-woocommerce'); ?>">
+	 		<input type="number" step="0.01" name="pcfme_additional_fees[<?php echo $mnindex; ?>][amount]" value="<?php if (isset($value['amount']) ) { echo $value['amount']; } ?>" placeholder="<?php echo esc_html__( 'Amount' ,'customize-my-account-pro'); ?>">
 
 	 	</td>
 	 	<td>
-	 		<?php echo esc_html__( 'For each product in cart' ,'customize-my-account-for-woocommerce'); ?>
+	 		<?php echo esc_html__( 'For each product in cart' ,'customize-my-account-pro'); ?>
 	 	</td>
 	 	<?php
 
@@ -1324,6 +1837,325 @@ if (!function_exists('pcfme_does_rule_match_found')) {
 
         switch($rule_type) {
 
+        	case "date_date":
+
+        	    $from_to_specific = isset($rulevalue['from_to_specific']) ? $rulevalue['from_to_specific'] : "from";
+        	    $rule_type_date   = isset($rulevalue['rule_type_date']) ? $rulevalue['rule_type_date'] : "";
+
+        	    $rule_type_date   = date("Ymd",strtotime($rule_type_date));
+
+        	    $date_today      = date("Ymd");
+                
+              
+
+        	    if (!isset($rule_type_date) || ($rule_type_date == "")) {
+        	    	$rule_matched = 'no';
+
+        	        return $rule_matched;
+        	    }
+
+        	    if (isset($from_to_specific) && isset($from_to_specific)) {
+
+        	    	switch($from_to_specific) {
+
+        	    		case "from":
+
+        	    		   
+
+        	    		    if ($date_today > $rule_type_date) {
+        	    		    	$rule_matched = 'yes';
+
+        	    		    	return $rule_matched;
+        	    		    }
+
+        	    		break;
+
+        	    		case "to":
+
+        	    		  
+        	    		    if ($date_today < $rule_type_date) {
+        	    		    	$rule_matched = 'yes';
+
+        	    		    	return $rule_matched;
+        	    		    }
+
+        	    		break;
+
+        	    		case "specific":
+
+        	    		  
+
+        	    		    if ($date_today == $rule_type_date) {
+        	    		    	$rule_matched = 'yes';
+
+        	    		    	return $rule_matched;
+        	    		    }
+
+        	    		break;
+
+        	    	}
+
+        	    }
+
+        	break;
+
+        	case "date_time":
+
+        	    $from_to = isset($rulevalue['from_to']) ? $rulevalue['from_to'] : "from";
+        	    $rule_type_time   = isset($rulevalue['rule_type_time']) ? $rulevalue['rule_type_time'] : "";
+
+        	    $rule_type_time   = date("Hi",strtotime($rule_type_time));
+
+        	    $time_now      = date("Hi");
+                
+                
+
+        	    if (!isset($rule_type_time) || ($rule_type_time == "")) {
+        	    	$rule_matched = 'no';
+
+        	        return $rule_matched;
+        	    }
+
+        	    if (isset($from_to) && isset($from_to)) {
+
+        	    	switch($from_to) {
+
+        	    		case "from":
+
+        	    		   
+
+        	    		    if ($time_now > $rule_type_time) {
+        	    		    	$rule_matched = 'yes';
+
+        	    		    	return $rule_matched;
+        	    		    }
+
+        	    		break;
+
+        	    		case "to":
+
+        	    		  
+        	    		    if ($time_now < $rule_type_time) {
+        	    		    	$rule_matched = 'yes';
+
+        	    		    	return $rule_matched;
+        	    		    }
+
+        	    		break;
+
+        	    		
+
+        	    	}
+
+        	    }
+        	break;
+
+        	case "date_date_time":
+
+        	 $from_to = isset($rulevalue['from_to']) ? $rulevalue['from_to'] : "from";
+        	 $rule_type_date_time   = isset($rulevalue['rule_type_date_time']) ? $rulevalue['rule_type_date_time'] : "";
+
+        	 $rule_type_date_time   = date("YmdHis",strtotime($rule_type_date_time));
+        	 $current_date_time = current_datetime()->format('YmdHis');
+
+        	 if (!isset($rule_type_date_time) || ($rule_type_date_time == "")) {
+        	    	$rule_matched = 'no';
+
+        	        return $rule_matched;
+        	 }
+
+        	    if (isset($from_to) && isset($from_to)) {
+
+        	    	switch($from_to) {
+
+        	    		case "from":
+
+        	    		   
+
+        	    		    if ($current_date_time > $rule_type_date_time) {
+        	    		    	$rule_matched = 'yes';
+
+        	    		    	return $rule_matched;
+        	    		    }
+
+        	    		break;
+
+        	    		case "to":
+
+        	    		  
+        	    		    if ($current_date_time < $rule_type_date_time) {
+        	    		    	$rule_matched = 'yes';
+
+        	    		    	return $rule_matched;
+        	    		    }
+
+        	    		break;
+
+        	    		
+
+        	    	}
+
+        	    }
+
+        	break;
+
+        	case "date_week_day":
+
+        	   $contains_rule = isset($rulevalue['rule_type_contains']) ? $rulevalue['rule_type_contains'] : "contains_any";
+
+        	   $weekdays      = isset($rulevalue['rule_type_days']) ? $rulevalue['rule_type_days'] : array();
+
+        	   $currentday    = date("D");
+
+        	   $currentday    = strtolower($currentday);
+
+
+        	   switch($contains_rule) {
+
+        	   	case "contains_any":
+
+
+
+        	   	$allowedproductindex =0;
+
+
+        	   	foreach ($weekdays as $rkey=>$rvalue) {
+        	   		
+
+        	   		if ($rvalue == $currentday) {
+        	   			$allowedproductindex++;
+        	   		}
+        	   	}
+
+
+
+        	   	if ($allowedproductindex > 0)  {
+
+        	   		$rule_matched = 'yes';
+
+        	   		return $rule_matched;
+        	   	} else {
+
+        	   		$rule_matched = 'no';
+
+        	   		return $rule_matched;
+        	   	}
+
+        	   	break;
+
+        	   	case "contains_all":
+
+        	   	$allowedproductindex =0;
+
+        	   	$allowed_match_found_index = 0;
+
+
+
+
+
+
+        	   	foreach ($weekdays as $rkey=>$rvalue) {
+        	   		
+
+        	   		if ($rvalue == $currentday) {
+        	   			$allowedproductindex++;
+        	   		}
+
+        	   		$allowed_match_found_index++;
+        	   	}
+
+
+
+
+
+
+        	   	if ($allowedproductindex == $allowed_match_found_index)  {
+
+        	   		$rule_matched = 'yes';
+
+        	   		return $rule_matched;
+        	   	} else {
+
+        	   		$rule_matched = 'no';
+
+        	   		return $rule_matched;
+        	   	}
+
+        	   	break;
+
+        	   	case "does_not_contain_any":
+
+        	   	$allowedproductindex =0;
+
+
+
+        	   	foreach ($weekdays as $rkey=>$rvalue) {
+        	   		
+
+        	   		if ($rvalue == $currentday) {
+        	   			$allowedproductindex++;
+        	   		}
+        	   	}
+
+
+
+
+        	   	if ($allowedproductindex > 0)  {
+
+        	   		$rule_matched = 'no';
+
+        	   		return $rule_matched;
+        	   	} else {
+
+        	   		$rule_matched = 'yes';
+
+        	   		return $rule_matched;
+        	   	}
+
+        	   	break;
+
+        	   	case "does_not_contain_all":
+
+        	   	$allowedproductindex =0;
+
+        	   	$allowed_match_found_index = 0;
+
+
+
+        	   	foreach ($weekdays as $rkey=>$rvalue) {
+        	   		
+
+        	   		if ($rvalue == $currentday) {
+        	   			$allowedproductindex++;
+        	   		}
+
+        	   		$allowed_match_found_index++;
+        	   	}
+
+
+
+
+
+
+        	   	if ($allowedproductindex == $allowed_match_found_index)  {
+
+        	   		$rule_matched = 'no';
+
+        	   		return $rule_matched;
+        	   	} else {
+
+        	   		$rule_matched = 'yes';
+
+        	   		return $rule_matched;
+        	   	}
+
+        	   	break;
+
+
+        	   }
+
+        	break;
+
         	case "cart__quantity":
 
         	    $compare = isset($rulevalue['rule_type_compare']) ? $rulevalue['rule_type_compare'] : "less_than";
@@ -1490,6 +2322,528 @@ if (!function_exists('pcfme_does_rule_match_found')) {
 
         	    
         	   
+        	break;
+
+        	case "user_is_logged_in":
+        	$rule_matched = 'no';
+
+        	if ( is_user_logged_in() ) {
+        		$rule_matched = 'yes';
+        		return $rule_matched;
+        	} else {
+        		$rule_matched = 'no';
+        		return $rule_matched;
+        	}
+        	break;
+
+        	case "user_is_logged_out":
+        	   $rule_matched = 'no';
+
+        	   if ( is_user_logged_in() ) {
+        		$rule_matched = 'no';
+        		return $rule_matched;
+        	   } else {
+        		$rule_matched = 'yes';
+        		return $rule_matched;
+        	   }
+        	break;
+
+        	case "coupon_applied":
+
+        	$contains_rule = isset($rulevalue['rule_type_contains']) ? $rulevalue['rule_type_contains'] : "contains_any";
+
+        	$rule_coupons =  isset($rulevalue['rule_type_coupons']) ? $rulevalue['rule_type_coupons'] : array();
+
+
+        	global $woocommerce;
+    	        
+    	    if( ! $woocommerce->cart ) { return $rule_matched; }
+    	        
+    	    $cart_items = $woocommerce->cart->get_cart();
+
+    	    $applied_coupons = $woocommerce->cart->get_applied_coupons();
+
+    	    
+
+
+    	    switch($contains_rule) {
+
+        		case "contains_any":
+
+        		
+
+    	        $allowedproductindex =0;
+
+
+
+    	        
+
+                    
+    	        foreach ($rule_coupons as $rkey=>$rvalue) {
+    	        	$coupon_title = get_the_title($rvalue);
+
+    	        	if (in_array($coupon_title, $applied_coupons)) {
+    	        		$allowedproductindex++;
+    	        	}
+    	        }
+
+                   
+    	        
+
+    	        
+
+    	       
+
+
+    	        if ($allowedproductindex > 0)  {
+
+    	        	$rule_matched = 'yes';
+
+    	        	return $rule_matched;
+    	        } else {
+
+    	        	$rule_matched = 'no';
+
+    	        	return $rule_matched;
+    	        }
+
+                 break;
+
+                 case "contains_all":
+
+                 $allowedproductindex =0;
+
+                 $allowed_match_found_index = 0;
+
+
+
+
+                 
+
+                 foreach ($rule_coupons as $rkey=>$rvalue) {
+    	        	$coupon_title = get_the_title($rvalue);
+
+    	        	if (in_array($coupon_title, $applied_coupons)) {
+    	        		$allowedproductindex++;
+    	        	}
+
+    	        	$allowed_match_found_index++;
+    	        }
+
+    	        
+
+    	       
+
+
+        		if ($allowedproductindex == $allowed_match_found_index)  {
+
+        			$rule_matched = 'yes';
+
+        	        return $rule_matched;
+        		} else {
+
+        			$rule_matched = 'no';
+
+        	        return $rule_matched;
+        		}
+
+                 break;
+
+                 case "does_not_contain_any":
+
+                 $allowedproductindex =0;
+
+
+
+    	        foreach ($rule_coupons as $rkey=>$rvalue) {
+    	        	$coupon_title = get_the_title($rvalue);
+
+    	        	if (in_array($coupon_title, $applied_coupons)) {
+    	        		$allowedproductindex++;
+    	        	}
+    	        }
+
+    	       
+
+
+    	        if ($allowedproductindex > 0)  {
+
+    	        	$rule_matched = 'no';
+
+    	        	return $rule_matched;
+    	        } else {
+
+    	        	$rule_matched = 'yes';
+
+    	        	return $rule_matched;
+    	        }
+
+                 break;
+
+                 case "does_not_contain_all":
+
+                 $allowedproductindex =0;
+
+                 $allowed_match_found_index = 0;
+
+                 
+
+                 foreach ($rule_coupons as $rkey=>$rvalue) {
+    	        	$coupon_title = get_the_title($rvalue);
+
+    	        	if (in_array($coupon_title, $applied_coupons)) {
+    	        		$allowedproductindex++;
+    	        	}
+
+    	        	$allowed_match_found_index++;
+    	        }
+
+    	        
+
+    	       
+
+
+        		if ($allowedproductindex == $allowed_match_found_index)  {
+
+        			$rule_matched = 'no';
+
+        	        return $rule_matched;
+        		} else {
+
+        			$rule_matched = 'yes';
+
+        	        return $rule_matched;
+        		}
+
+                 break;
+
+        		
+        	}
+
+        	case "date_months":
+
+        	    $contains_rule = isset($rulevalue['rule_type_contains']) ? $rulevalue['rule_type_contains'] : "contains_any";
+
+        	    $months      = isset($rulevalue['rule_type_months']) ? $rulevalue['rule_type_months'] : array();
+
+        	    $currentmonth    = date("M");
+
+        	    $currentmonth    = strtolower($currentmonth);
+
+        	    //echo $currentmonth;
+
+        	    //print_r($months);
+
+        	    switch($contains_rule) {
+
+        	   	case "contains_any":
+
+
+
+        	   	$allowedproductindex = 0;
+
+
+        	   	foreach ($months as $rkey=>$rvalue) {
+        	   		
+        	   		
+
+        	   		if ($rvalue == $currentmonth) {
+        	   			$allowedproductindex++;
+        	   		}
+        	   	}
+                
+
+
+
+        	   	if ($allowedproductindex > 0)  {
+
+        	   		$rule_matched = 'yes';
+
+        	   		return $rule_matched;
+        	   	} else {
+
+        	   		$rule_matched = 'no';
+
+        	   		return $rule_matched;
+        	   	}
+
+        	   	break;
+
+        	   	case "contains_all":
+
+        	   	$allowedproductindex =0;
+
+        	   	$allowed_match_found_index = 0;
+
+
+
+
+
+
+        	   	foreach ($months as $rkey=>$rvalue) {
+        	   		
+
+        	   		if ($rvalue == $currentmonth) {
+        	   			$allowedproductindex++;
+        	   		}
+
+        	   		$allowed_match_found_index++;
+        	   	}
+
+
+
+
+
+
+        	   	if ($allowedproductindex == $allowed_match_found_index)  {
+
+        	   		$rule_matched = 'yes';
+
+        	   		return $rule_matched;
+        	   	} else {
+
+        	   		$rule_matched = 'no';
+
+        	   		return $rule_matched;
+        	   	}
+
+        	   	break;
+
+        	   	case "does_not_contain_any":
+
+        	   	$allowedproductindex =0;
+
+
+
+        	   	foreach ($months as $rkey=>$rvalue) {
+        	   		
+
+        	   		if ($rvalue == $currentmonth) {
+        	   			$allowedproductindex++;
+        	   		}
+        	   	}
+
+
+
+
+        	   	if ($allowedproductindex > 0)  {
+
+        	   		$rule_matched = 'no';
+
+        	   		return $rule_matched;
+        	   	} else {
+
+        	   		$rule_matched = 'yes';
+
+        	   		return $rule_matched;
+        	   	}
+
+        	   	break;
+
+        	   	case "does_not_contain_all":
+
+        	   	$allowedproductindex =0;
+
+        	   	$allowed_match_found_index = 0;
+
+
+
+        	   	foreach ($months as $rkey=>$rvalue) {
+        	   		
+
+        	   		if ($rvalue == $currentmonth) {
+        	   			$allowedproductindex++;
+        	   		}
+
+        	   		$allowed_match_found_index++;
+        	   	}
+
+
+
+
+
+
+        	   	if ($allowedproductindex == $allowed_match_found_index)  {
+
+        	   		$rule_matched = 'no';
+
+        	   		return $rule_matched;
+        	   	} else {
+
+        	   		$rule_matched = 'yes';
+
+        	   		return $rule_matched;
+        	   	}
+
+        	   	break;
+
+
+        	   }
+
+        	break;
+
+        	case "date_month_days":
+
+        	   $contains_rule = isset($rulevalue['rule_type_contains']) ? $rulevalue['rule_type_contains'] : "contains_any";
+
+        	   $monthdays      = isset($rulevalue['rule_type_monthdays']) ? $rulevalue['rule_type_monthdays'] : array();
+
+        	   $currentdate    = date("d");
+
+        	  
+               $currentdate    = (int) $currentdate;
+
+               
+
+        	   switch($contains_rule) {
+
+        	   	case "contains_any":
+
+
+
+        	   	$allowedproductindex = 0;
+
+
+        	   	foreach ($monthdays as $rkey=>$rvalue) {
+        	   		
+        	   		$rvalue = (int) $rvalue;
+
+        	   		if ($rvalue == $currentdate) {
+        	   			$allowedproductindex++;
+        	   		}
+        	   	}
+                
+
+
+
+        	   	if ($allowedproductindex > 0)  {
+
+        	   		$rule_matched = 'yes';
+
+        	   		return $rule_matched;
+        	   	} else {
+
+        	   		$rule_matched = 'no';
+
+        	   		return $rule_matched;
+        	   	}
+
+        	   	break;
+
+        	   	case "contains_all":
+
+        	   	$allowedproductindex =0;
+
+        	   	$allowed_match_found_index = 0;
+
+
+
+
+
+
+        	   	foreach ($monthdays as $rkey=>$rvalue) {
+        	   		
+
+        	   		if ($rvalue == $currentdate) {
+        	   			$allowedproductindex++;
+        	   		}
+
+        	   		$allowed_match_found_index++;
+        	   	}
+
+
+
+
+
+
+        	   	if ($allowedproductindex == $allowed_match_found_index)  {
+
+        	   		$rule_matched = 'yes';
+
+        	   		return $rule_matched;
+        	   	} else {
+
+        	   		$rule_matched = 'no';
+
+        	   		return $rule_matched;
+        	   	}
+
+        	   	break;
+
+        	   	case "does_not_contain_any":
+
+        	   	$allowedproductindex =0;
+
+
+
+        	   	foreach ($monthdays as $rkey=>$rvalue) {
+        	   		
+
+        	   		if ($rvalue == $currentdate) {
+        	   			$allowedproductindex++;
+        	   		}
+        	   	}
+
+
+
+
+        	   	if ($allowedproductindex > 0)  {
+
+        	   		$rule_matched = 'no';
+
+        	   		return $rule_matched;
+        	   	} else {
+
+        	   		$rule_matched = 'yes';
+
+        	   		return $rule_matched;
+        	   	}
+
+        	   	break;
+
+        	   	case "does_not_contain_all":
+
+        	   	$allowedproductindex =0;
+
+        	   	$allowed_match_found_index = 0;
+
+
+
+        	   	foreach ($monthdays as $rkey=>$rvalue) {
+        	   		
+
+        	   		if ($rvalue == $currentdate) {
+        	   			$allowedproductindex++;
+        	   		}
+
+        	   		$allowed_match_found_index++;
+        	   	}
+
+
+
+
+
+
+        	   	if ($allowedproductindex == $allowed_match_found_index)  {
+
+        	   		$rule_matched = 'no';
+
+        	   		return $rule_matched;
+        	   	} else {
+
+        	   		$rule_matched = 'yes';
+
+        	   		return $rule_matched;
+        	   	}
+
+        	   	break;
+
+
+        	   }
+        	break;
+
+
+
         	break;
 
         	case "cart_items__products":
@@ -2299,14 +3653,14 @@ if (!function_exists('pcfme_load_license_reminder_div')) {
 		<div class="pcfme_notice_div">
 
 			<div class="pcfme_notice_div_uppertext">
-				<?php echo esc_html__( 'Its been more than a month since you activated plugin.Kindly activate your license to keep accessing this section.Your frontend functionality is unaffected.','customize-my-account-for-woocommerce'); ?>
+				<?php echo esc_html__( 'Its time to activate license to access backend.This does not affect frontend functionality.'); ?>
 
 			</div>
 
 			<div class="pcfme_notice_div_lowerbutton">
 				<a type="button" href="admin.php?page=pcfme_plugin_options&tab=pcfme_license_settings"  class="btn btn-primary " >
 					<span class="dashicons dashicons-lock"></span>
-					<?php echo esc_html__( 'Activate License' ,'customize-my-account-for-woocommerce'); ?>
+					<?php echo esc_html__( 'Activate License' ,'customize-my-account-pro'); ?>
 				</a>
 
 				
@@ -2371,7 +3725,7 @@ if ( ! function_exists( 'pcfme_get_woo_version_number' ) ) {
 		require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 	
         // Create the plugins folder and file variables
-	   $plugin_folder = get_plugins( '/' . 'customize-my-account-for-woocommerce' );
+	   $plugin_folder = get_plugins( '/' . 'woocommerce' );
 	   $plugin_file = 'woocommerce.php';
 	
 	   // If the plugin version number is set, return it 
@@ -2999,7 +4353,23 @@ if ( ! function_exists( 'pcfme_update_fields_combined' ) ) {
 	}
 
 
+	if ( is_checkout() ) {
 
+		if (isset($plugin_fields) && (sizeof($plugin_fields) >1)) {
+
+
+
+			$order = get_order_array($plugin_fields);
+
+			foreach($order as $field) {
+				$ordered_fields[$field] = $fields[$slug][$field];
+			}
+
+			$fields[$slug] = $ordered_fields;
+
+		} 
+
+	}
 
 
 
@@ -3073,6 +4443,11 @@ if ( ! function_exists( 'pcfme_update_fields_combined' ) ) {
 				unset($fields[$slug][$hidekey]);
 
 			}
+
+
+
+
+
 
 			if (isset($hidevalue['visibility'])) {
 
@@ -3153,6 +4528,1540 @@ if ( ! function_exists( 'pcfme_update_fields_combined' ) ) {
 
 
 
+if ( ! function_exists( 'pcfmne_process_multiple_clone' ) ) {
+
+    /**
+	 * returns conditional classes
+	 *
+	 * @access public
+	 * @subpackage	Forms
+	 */
+
+
+
+    function pcfmne_process_multiple_clone($multiclone_condition,$multiclone_product,$additionalvalue) {
+
+    	global $woocommerce;
+    	if( ! $woocommerce->cart ) { return; }
+    	$cart_items = $woocommerce->cart->get_cart();
+
+        
+    	    $extrafield= array();
+
+
+
+            if (isset($additionalvalue['label'])) {
+                
+                $extrafield['label'] = $additionalvalue['label'];
+
+            }
+
+            if (isset($additionalvalue['type'])) {
+                
+                $extrafield['type'] = $additionalvalue['type'];
+
+            }
+          
+            if (isset($additionalvalue['width'])) {
+		        
+		        $extrafield['class'][] =$additionalvalue['width'];
+
+		    }
+            
+			//hider/opener class
+            if (isset($additionalvalue['visibility']) && ($additionalvalue['visibility'] == 'field-specific')) {
+			    
+			    if (isset($additionalvalue['conditional'])) {
+
+			    	$pcfme_conditional_class  = pcfme_get_conditional_class($additionalvalue['conditional']);
+
+			    }
+			    
+			 
+		    } else {
+
+			    $pcfme_conditional_class  = '';
+            
+            }	
+
+
+            //hider/opener class
+            if (isset($additionalvalue['visibility']) && ($additionalvalue['visibility'] == 'shipping-specific')) {
+			    
+			    if (isset($additionalvalue['shipping'])) {
+
+			    	$pcfme_shipping_class  = pcfme_get_conditional_shipping_class($additionalvalue['shipping']);
+
+			    }
+			    
+			 
+		    } else {
+
+			    $pcfme_shipping_class  = '';
+            
+            }
+
+
+            //hider/opener class
+            if (isset($additionalvalue['visibility']) && ($additionalvalue['visibility'] == 'payment-specific')) {
+			    
+			    if (isset($additionalvalue['payment'])) {
+
+			    	$pcfme_payment_class  = pcfme_get_conditional_payment_class($additionalvalue['payment']);
+
+			    }
+			    
+			 
+		    } else {
+
+			    $pcfme_payment_class  = '';
+            
+            }
+               
+			
+			$extrafield['class'][] = $pcfme_conditional_class;	
+			$extrafield['class'][] = $pcfme_shipping_class;	
+			$extrafield['class'][] = $pcfme_payment_class;	
+
+
+            if (isset($additionalvalue['required'])) {
+
+                $extrafield['required'] = $additionalvalue['required'];
+
+            }
+
+            if (isset($additionalvalue['placeholder'])) {
+                
+                $extrafield['placeholder'] = $additionalvalue['placeholder'];
+
+            }
+			
+			if (isset($keyorder)) {
+                
+                $extrafield['priority'] = $keyorder;
+
+            }
+
+            if (isset($additionalvalue['validate'])) {
+                
+                $extrafield['validate'] = $additionalvalue['validate'];
+
+            }
+
+
+            if (isset($additionalvalue['enable_default_date'])) {
+                
+                $extrafield['enable_default_date'] = $additionalvalue['enable_default_date'];
+
+            }
+
+            if (isset($additionalvalue['default_date_add'])) {
+                
+                $extrafield['default_date_add'] = $additionalvalue['default_date_add'];
+
+            }
+
+
+            if (isset($additionalvalue['disable_specific_dates'])) {
+                
+                $extrafield['disable_specific_dates'] = $additionalvalue['disable_specific_dates'];
+
+            }
+
+
+
+            if (isset($additionalvalue['allowed_times'])) {
+                
+                $extrafield['allowed_times'] = $additionalvalue['allowed_times'];
+
+            }
+
+            if (isset($additionalvalue['enable_default_time'])) {
+                
+                $extrafield['enable_default_time'] = $additionalvalue['enable_default_time'];
+
+            }
+
+            if (isset($additionalvalue['default_time'])) {
+                
+                $extrafield['default_time'] = $additionalvalue['default_time'];
+
+            }
+
+
+           
+            if (isset($additionalvalue['new_options']) || isset($additionalvalue['options'])) {
+
+            	$old_options = isset($additionalvalue['options']) ? $additionalvalue['options'] : '';
+
+            	$old_options = explode(',', $old_options);
+
+            	$old_options_array = array();
+
+
+
+            	if (isset($old_options) && !empty($old_options) && (sizeof($old_options) > 0)) {
+            		$old_options_array_index = 1;
+            		foreach($old_options as $ovalue) {
+            			$old_options_array[''.$old_options_array_index.''] = array('value'=>$ovalue,'text'=>$ovalue);
+            			$old_options_array_index++;
+            		}
+            	}
+
+            	$new_options_array = isset($additionalvalue['new_options']) ? $additionalvalue['new_options'] : $old_options_array;
+
+
+
+		        $options = array();
+                      
+                    foreach($new_options_array as $nkey=>$val){
+    
+                        $o_value = $val['value'];
+    					$o_text = $val['text'];
+
+    					$options[$o_value]  = $o_text;
+      
+                    }
+             
+                $extrafield['options'] = $options;
+
+            }
+			
+			
+		    //builds extraclass array
+		    if (isset($additionalvalue['extraclass']) && ($additionalvalue['extraclass'] != '')) {
+		      
+		        $tempclasses = explode(',',$additionalvalue['extraclass']);
+		      
+		      
+		        $extraclass = array();
+                      
+                foreach($tempclasses as $classval3){
+    
+                    $extraclass[$classval3]  = $classval3;
+      
+                }
+			 
+		    }
+			
+			
+			//adds extra classes to billing fields
+			if (isset($extraclass) && ($extraclass != '')) {
+                     
+			    foreach ($extraclass as $additionalclassval) {
+				    $extrafield['class'][] = $additionalclassval;
+			    }
+				
+			}
+
+
+			$pcfme_conditional_class = pcfme_get_visibility_class_combined($additionalvalue);
+
+
+            
+			if (isset($pcfme_conditional_class) && ($pcfme_conditional_class != '')) {
+				$extrafield['class'][] = $pcfme_conditional_class;
+			}
+
+			
+		   
+		    
+		    if (isset($additionalvalue['disable_past'])) {
+             
+			    $extrafield['disable_past'] = $additionalvalue['disable_past'];
+            }
+
+            if (isset($additionalvalue['hidden_default'])) {
+             
+			    $extrafield['hidden_default'] = $additionalvalue['hidden_default'];
+            }
+
+            if (isset($additionalvalue['charlimit'])) {
+             
+			    $extrafield['charlimit'] = $additionalvalue['charlimit'];
+            }
+
+
+            if (isset($additionalvalue['checked_by_default'])) {
+             
+			    $extrafield['checked_by_default'] = $additionalvalue['checked_by_default'];
+            }
+
+
+            if (isset($additionalvalue['dynamic_rules'])) { 
+		        $extrafield['dynamic_rules']  = $additionalvalue['dynamic_rules'];
+		    } else {
+		        $extrafield['dynamic_rules'] = array(); 
+		    }
+
+
+		    if (isset($additionalvalue['dynamic_visibility_criteria'])) { 
+		        $extrafield['dynamic_visibility_criteria']  = $additionalvalue['dynamic_visibility_criteria'];
+		    } else {
+		        $extrafield['dynamic_visibility_criteria'] = 'match_all'; 
+		    }
+
+
+
+
+    	
+
+    	foreach ($cart_items as $cartitem_key=>$cartitemvalue) {
+
+    		
+
+
+    		if (isset($cartitemvalue['variation_id']) &&  ($cartitemvalue['variation_id'] != 0)) {
+    			$product_id=$cartitemvalue['variation_id'];
+    		} else {
+    			$product_id=$cartitemvalue['product_id'];
+    		}
+
+
+    		
+
+
+
+    		if ($product_id == $multiclone_product) {
+
+    			$quantity=$cartitemvalue['quantity'];
+
+    			$quantity= $quantity+ 1;
+
+    			$match_index = 1;
+
+    			for ($i = 1; $i < $quantity; $i++) {
+
+    				$product_title  = get_the_title($product_id);
+
+    				
+
+    				$extrafield['label'] = str_replace("{product_title}",$product_title,$extrafield['label']);
+
+    				$extrafield['label'] = str_replace("{quantity_index}",$match_index,$extrafield['label']);
+
+
+
+
+    				$additionalkey = ''.$additionalvalue['field_key'].'_'.$match_index.'';
+
+
+    				$field_post_meta = get_user_meta( get_current_user_id(), $additionalkey , true ); 
+
+    				if (isset($field_post_meta) && ($field_post_meta != '')) {
+
+    					$additional_field_value = $field_post_meta;
+
+    				} elseif (isset($additionalvalue['value'])) {
+
+    					$additional_field_value = $additionalvalue['value'];
+
+    				} else {
+
+    					$additional_field_value = '';
+    				}
+
+    				
+
+    				woocommerce_form_field( $additionalkey,  $extrafield ,! empty( $_POST[ $additionalkey ] ) ? wc_clean( $_POST[ $additionalkey ] ) : $additional_field_value);
+
+    				$extrafield['label'] = str_replace($product_title,"{product_title}",$extrafield['label']);
+
+    				$extrafield['label'] = str_replace($match_index,"{quantity_index}",$extrafield['label']);
+
+
+
+
+    				$match_index++;
+
+    			}
+    		}
+    	}
+    }
+
+}
+
+
+
+
+if ( ! function_exists( 'pcfmne_process_multiple_clone_order_thanks' ) ) {
+
+    /**
+	 * returns conditional classes
+	 *
+	 * @access public
+	 * @subpackage	Forms
+	 */
+
+
+
+    function pcfmne_process_multiple_clone_order_thanks($multiclone_condition,$multiclone_product,$additionalvalue,$order_id) {
+
+    	global $woocommerce;
+    	if( ! $woocommerce->cart ) { return; }
+    	$cart_items = $woocommerce->cart->get_cart();
+
+    	 $requiredtext      =  __('is a required field','customize-my-account-pro');
+
+        
+    	    $extrafield= array();
+
+
+
+            if (isset($additionalvalue['label'])) {
+                
+                $extrafield['label'] = $additionalvalue['label'];
+
+            }
+
+            if (isset($additionalvalue['type'])) {
+                
+                $extrafield['type'] = $additionalvalue['type'];
+
+            }
+          
+            if (isset($additionalvalue['width'])) {
+		        
+		        $extrafield['class'][] =$additionalvalue['width'];
+
+		    }
+            
+			//hider/opener class
+            if (isset($additionalvalue['visibility']) && ($additionalvalue['visibility'] == 'field-specific')) {
+			    
+			    if (isset($additionalvalue['conditional'])) {
+
+			    	$pcfme_conditional_class  = pcfme_get_conditional_class($additionalvalue['conditional']);
+
+			    }
+			    
+			 
+		    } else {
+
+			    $pcfme_conditional_class  = '';
+            
+            }	
+
+
+            //hider/opener class
+            if (isset($additionalvalue['visibility']) && ($additionalvalue['visibility'] == 'shipping-specific')) {
+			    
+			    if (isset($additionalvalue['shipping'])) {
+
+			    	$pcfme_shipping_class  = pcfme_get_conditional_shipping_class($additionalvalue['shipping']);
+
+			    }
+			    
+			 
+		    } else {
+
+			    $pcfme_shipping_class  = '';
+            
+            }
+
+
+            //hider/opener class
+            if (isset($additionalvalue['visibility']) && ($additionalvalue['visibility'] == 'payment-specific')) {
+			    
+			    if (isset($additionalvalue['payment'])) {
+
+			    	$pcfme_payment_class  = pcfme_get_conditional_payment_class($additionalvalue['payment']);
+
+			    }
+			    
+			 
+		    } else {
+
+			    $pcfme_payment_class  = '';
+            
+            }
+               
+			
+			$extrafield['class'][] = $pcfme_conditional_class;	
+			$extrafield['class'][] = $pcfme_shipping_class;	
+			$extrafield['class'][] = $pcfme_payment_class;	
+
+
+            if (isset($additionalvalue['required'])) {
+
+                $extrafield['required'] = $additionalvalue['required'];
+
+            }
+
+            if (isset($additionalvalue['placeholder'])) {
+                
+                $extrafield['placeholder'] = $additionalvalue['placeholder'];
+
+            }
+			
+			if (isset($keyorder)) {
+                
+                $extrafield['priority'] = $keyorder;
+
+            }
+
+            if (isset($additionalvalue['validate'])) {
+                
+                $extrafield['validate'] = $additionalvalue['validate'];
+
+            }
+
+
+            if (isset($additionalvalue['enable_default_date'])) {
+                
+                $extrafield['enable_default_date'] = $additionalvalue['enable_default_date'];
+
+            }
+
+            if (isset($additionalvalue['default_date_add'])) {
+                
+                $extrafield['default_date_add'] = $additionalvalue['default_date_add'];
+
+            }
+
+
+            if (isset($additionalvalue['disable_specific_dates'])) {
+                
+                $extrafield['disable_specific_dates'] = $additionalvalue['disable_specific_dates'];
+
+            }
+
+
+
+            if (isset($additionalvalue['allowed_times'])) {
+                
+                $extrafield['allowed_times'] = $additionalvalue['allowed_times'];
+
+            }
+
+            if (isset($additionalvalue['enable_default_time'])) {
+                
+                $extrafield['enable_default_time'] = $additionalvalue['enable_default_time'];
+
+            }
+
+            if (isset($additionalvalue['default_time'])) {
+                
+                $extrafield['default_time'] = $additionalvalue['default_time'];
+
+            }
+
+
+           
+            if (isset($additionalvalue['new_options']) || isset($additionalvalue['options'])) {
+
+            	$old_options = isset($additionalvalue['options']) ? $additionalvalue['options'] : '';
+
+            	$old_options = explode(',', $old_options);
+
+            	$old_options_array = array();
+
+
+
+            	if (isset($old_options) && !empty($old_options) && (sizeof($old_options) > 0)) {
+            		$old_options_array_index = 1;
+            		foreach($old_options as $ovalue) {
+            			$old_options_array[''.$old_options_array_index.''] = array('value'=>$ovalue,'text'=>$ovalue);
+            			$old_options_array_index++;
+            		}
+            	}
+
+            	$new_options_array = isset($additionalvalue['new_options']) ? $additionalvalue['new_options'] : $old_options_array;
+
+
+
+		        $options = array();
+                      
+                    foreach($new_options_array as $nkey=>$val){
+    
+                        $o_value = $val['value'];
+    					$o_text = $val['text'];
+
+    					$options[$o_value]  = $o_text;
+      
+                    }
+             
+                $extrafield['options'] = $options;
+
+            }
+			
+			
+		    //builds extraclass array
+		    if (isset($additionalvalue['extraclass']) && ($additionalvalue['extraclass'] != '')) {
+		      
+		        $tempclasses = explode(',',$additionalvalue['extraclass']);
+		      
+		      
+		        $extraclass = array();
+                      
+                foreach($tempclasses as $classval3){
+    
+                    $extraclass[$classval3]  = $classval3;
+      
+                }
+			 
+		    }
+			
+			
+			//adds extra classes to billing fields
+			if (isset($extraclass) && ($extraclass != '')) {
+                     
+			    foreach ($extraclass as $additionalclassval) {
+				    $extrafield['class'][] = $additionalclassval;
+			    }
+				
+			}
+
+
+			$pcfme_conditional_class = pcfme_get_visibility_class_combined($additionalvalue);
+
+
+            
+			if (isset($pcfme_conditional_class) && ($pcfme_conditional_class != '')) {
+				$extrafield['class'][] = $pcfme_conditional_class;
+			}
+
+			
+		   
+		    
+		    if (isset($additionalvalue['disable_past'])) {
+             
+			    $extrafield['disable_past'] = $additionalvalue['disable_past'];
+            }
+
+            if (isset($additionalvalue['hidden_default'])) {
+             
+			    $extrafield['hidden_default'] = $additionalvalue['hidden_default'];
+            }
+
+            if (isset($additionalvalue['charlimit'])) {
+             
+			    $extrafield['charlimit'] = $additionalvalue['charlimit'];
+            }
+
+
+            if (isset($additionalvalue['checked_by_default'])) {
+             
+			    $extrafield['checked_by_default'] = $additionalvalue['checked_by_default'];
+            }
+
+
+            if (isset($additionalvalue['dynamic_rules'])) { 
+		        $extrafield['dynamic_rules']  = $additionalvalue['dynamic_rules'];
+		    } else {
+		        $extrafield['dynamic_rules'] = array(); 
+		    }
+
+
+		    if (isset($additionalvalue['dynamic_visibility_criteria'])) { 
+		        $extrafield['dynamic_visibility_criteria']  = $additionalvalue['dynamic_visibility_criteria'];
+		    } else {
+		        $extrafield['dynamic_visibility_criteria'] = 'match_all'; 
+		    }
+
+
+		    $field_post_meta = get_user_meta( get_current_user_id(), $additionalvalue['field_key'] , true ); 
+						  
+		    if (isset($field_post_meta) && ($field_post_meta != '')) {
+
+					$additional_field_value = $field_post_meta;
+
+			} elseif (isset($additionalvalue['value'])) {
+
+				    $additional_field_value = $additionalvalue['value'];
+
+			} else {
+
+				    $additional_field_value = '';
+			}
+
+    	
+
+    	foreach ($cart_items as $cartitem_key=>$cartitemvalue) {
+
+    		
+
+
+    		if (isset($cartitemvalue['variation_id']) &&  ($cartitemvalue['variation_id'] != 0)) {
+    			$product_id=$cartitemvalue['variation_id'];
+    		} else {
+    			$product_id=$cartitemvalue['product_id'];
+    		}
+
+
+    		
+
+
+
+    		if ($product_id == $multiclone_product) {
+
+    			$quantity=$cartitemvalue['quantity'];
+
+    			$quantity= $quantity+ 1;
+
+    			$match_index = 1;
+
+    			for ($i = 1; $i < $quantity; $i++) {
+
+    				$product_title  = get_the_title($product_id);
+
+    				
+
+    				$extrafield['label'] = str_replace("{product_title}",$product_title,$extrafield['label']);
+                    
+                    $extrafield['label'] = str_replace("{quantity_index}",$match_index,$extrafield['label']);
+
+
+
+
+    				$additionalkey = ''.$additionalvalue['field_key'].'_'.$match_index.'';
+               
+    				
+                    $additionalkeyvalue = get_post_meta( $order_id, $additionalkey, true );
+					$additionalkeyvalue = str_replace("_"," ",$additionalkeyvalue);
+				    
+					if ( ! empty( $additionalkeyvalue ) && ($additionalkeyvalue != 'empty') && ($additionalkeyvalue != 845675668) ) {
+					   echo '<p><strong>'.__(''.$extrafield['label'].'').':</strong> ' . $additionalkeyvalue . '</p>';
+					} else if (($additionalkeyvalue == 'empty') && ($additionalkeyvalue == 845675668)) {
+		     			delete_post_meta( $order_id, $additionalkey);
+		     		}
+    				
+
+    				$extrafield['label'] = str_replace($product_title,"{product_title}",$extrafield['label']);
+                    
+                    $extrafield['label'] = str_replace($match_index,"{quantity_index}",$extrafield['label']);
+
+
+                    
+
+    				$match_index++;
+
+    			}
+    		}
+    	}
+    }
+
+}
+
+
+if ( ! function_exists( 'pcfmne_process_multiple_clone_details_email' ) ) {
+
+    /**
+	 * returns conditional classes
+	 *
+	 * @access public
+	 * @subpackage	Forms
+	 */
+
+
+
+    function pcfmne_process_multiple_clone_details_email($multiclone_condition,$multiclone_product,$additionalvalue,$order_id) {
+
+
+       
+
+    	$order = wc_get_order( $order_id );
+
+    	$items = $order->get_items();
+
+    	//print_r($items);
+
+    	// Get and Loop Over Order Items
+        foreach ( $items as $item_id => $item ) {
+           $product_id = $item->get_product_id();
+           $variation_id = $item->get_variation_id();
+
+
+           $product_id = isset($variation_id) && ($variation_id != 0) ? $variation_id : $product_id;
+
+    		
+          
+
+
+    		if (($product_id == $multiclone_product))  {
+
+    			$quantity = $item->get_quantity();
+
+    			
+                $quantity = $quantity + 1;
+
+
+    			$match_index = 1;
+
+    			for ($i = 1; $i < $quantity; $i++) {
+
+    				$product_title  = get_the_title($product_id);
+
+
+
+
+    				$additionalkey = ''.$additionalvalue['field_key'].'_'.$match_index.'';
+
+    				
+
+    				
+    				$additionalvalue['label'] = str_replace("{product_title}",$product_title,$additionalvalue['label']);
+
+    				$additionalvalue['label'] = str_replace("{quantity_index}",$match_index,$additionalvalue['label']);
+
+
+
+
+    				$additionalkey = ''.$additionalvalue['field_key'].'_'.$match_index.'';
+
+    				
+    				$additionalkeyvalue = get_post_meta( $order_id, $additionalkey, true );
+    				$additionalkeyvalue = str_replace("_"," ",$additionalkeyvalue);
+
+
+
+    				if ( ! empty( $additionalkeyvalue ) && ($additionalkeyvalue != 'empty') && ($additionalkeyvalue != 845675668)) { ?>
+
+    					<tr>
+    						<th scope="row" colspan="2" style="color:#636363;border:1px solid #e5e5e5;vertical-align:middle;padding:12px;text-align:left;border-top-width:4px" align="left"><?php echo ucfirst($additionalvalue['label']); ?></th>
+    						<td style="color:#636363;border:1px solid #e5e5e5;vertical-align:middle;padding:12px;text-align:left;border-top-width:4px" align="left"><?php echo $additionalkeyvalue; ?></td>
+    					</tr>
+    				<?php	}	else if ( ($additionalkeyvalue == 'empty') || ($additionalkeyvalue == 845675668) ) {
+    					delete_post_meta( $order_id, $additionalkey);
+    				}
+    				
+
+    				$additionalvalue['label'] = str_replace($product_title,"{product_title}",$additionalvalue['label']);
+
+    				$additionalvalue['label'] = str_replace($match_index,"{quantity_index}",$additionalvalue['label']); 
+    				
+
+
+    				$match_index++;
+
+    			}
+    		}
+    	}
+    }
+
+}
+
+
+if ( ! function_exists( 'pcfmne_process_multiple_clone_details_edition' ) ) {
+
+    /**
+	 * returns conditional classes
+	 *
+	 * @access public
+	 * @subpackage	Forms
+	 */
+
+
+
+    function pcfmne_process_multiple_clone_details_edition($multiclone_condition,$multiclone_product,$additionalvalue,$order_id) {
+
+
+       
+
+    	$order = wc_get_order( $order_id );
+
+    	$items = $order->get_items();
+
+    	//print_r($items);
+
+    	// Get and Loop Over Order Items
+        foreach ( $items as $item_id => $item ) {
+           $product_id = $item->get_product_id();
+           $variation_id = $item->get_variation_id();
+
+
+           $product_id = isset($variation_id) && ($variation_id != 0) ? $variation_id : $product_id;
+
+    		
+          
+
+
+    		if (($product_id == $multiclone_product))  {
+
+    			$quantity = $item->get_quantity();
+
+    			
+                $quantity = $quantity + 1;
+
+
+    			$match_index = 1;
+
+    			for ($i = 1; $i < $quantity; $i++) {
+
+    				$product_title  = get_the_title($product_id);
+
+
+
+
+    				$additionalkey = ''.$additionalvalue['field_key'].'_'.$match_index.'';
+
+    				
+               
+    				
+                    $additionalvalue['label'] = str_replace("{product_title}",$product_title,$additionalvalue['label']);
+                    
+                    $additionalvalue['label'] = str_replace("{quantity_index}",$match_index,$additionalvalue['label']);
+
+
+
+
+    				$additionalkey = ''.$additionalvalue['field_key'].'_'.$match_index.'';
+               
+    				
+                    $additionalkeyvalue = get_post_meta( $order_id, $additionalkey, true );
+			        $additionalkeyvalue = str_replace("_"," ",$additionalkeyvalue);
+					
+				    
+				    
+					if ( ! empty( $additionalkeyvalue ) && ($additionalkeyvalue != 'empty') && ($additionalkeyvalue != 845675668) ) {
+					   echo '<p><strong>'.__(''.$additionalvalue['label'].'').':</strong> ' . $additionalkeyvalue . '</p>';
+					} else if (($additionalkeyvalue == 'empty') && ($additionalkeyvalue == 845675668)) {
+		     			delete_post_meta( $order_id, $additionalkey);
+		     		}
+    				
+
+    				$additionalvalue['label'] = str_replace($product_title,"{product_title}",$additionalvalue['label']);
+                    
+                    $additionalvalue['label'] = str_replace($match_index,"{quantity_index}",$additionalvalue['label']); 
+    				
+
+    			
+    				$match_index++;
+
+    			}
+    		}
+    	}
+    }
+
+}
+
+
+if ( ! function_exists( 'pcfmne_process_multiple_clone_pdfdetails' ) ) {
+
+    /**
+	 * returns conditional classes
+	 *
+	 * @access public
+	 * @subpackage	Forms
+	 */
+
+
+
+    function pcfmne_process_multiple_clone_pdfdetails($multiclone_condition,$multiclone_product,$additionalvalue,$order_id) {
+
+
+       
+
+    	$order = wc_get_order( $order_id );
+
+    	$items = $order->get_items();
+
+    	//print_r($items);
+
+    	// Get and Loop Over Order Items
+        foreach ( $items as $item_id => $item ) {
+           $product_id = $item->get_product_id();
+           $variation_id = $item->get_variation_id();
+
+
+           $product_id = isset($variation_id) && ($variation_id != 0) ? $variation_id : $product_id;
+
+    		
+          
+
+
+    		if (($product_id == $multiclone_product))  {
+
+    			$quantity = $item->get_quantity();
+
+    			
+                $quantity = $quantity + 1;
+
+
+    			$match_index = 1;
+
+    			for ($i = 1; $i < $quantity; $i++) {
+
+    				$product_title  = get_the_title($product_id);
+
+
+
+
+    				$additionalkey = ''.$additionalvalue['field_key'].'_'.$match_index.'';
+
+    				
+    				
+    				
+    				$additionalvalue['label'] = str_replace("{product_title}",$product_title,$additionalvalue['label']);
+    				
+    				$additionalvalue['label'] = str_replace("{quantity_index}",$match_index,$additionalvalue['label']);
+
+
+
+
+    				$additionalkey = ''.$additionalvalue['field_key'].'_'.$match_index.'';
+    				
+    				
+    				$additionalkeyvalue = get_post_meta( $order_id, $additionalkey, true );
+    				$additionalkeyvalue = str_replace("_"," ",$additionalkeyvalue);
+    				
+    				if ( ! empty( $additionalkeyvalue ) && ($additionalkeyvalue != 'empty') && ($additionalkeyvalue != 845675668)) { ?>
+
+    					<tr class="billing-nif">
+    						<th><?php echo $additionalvalue['label']; ?></th>
+    						<td><?php echo $additionalkeyvalue; ?></td>
+    					</tr>
+    					<?php	
+    				} else if (($additionalkeyvalue == 'empty') || ($additionalkeyvalue == 845675668)) {
+    					delete_post_meta( $order_id, $additionalkey);
+    				}
+    				
+
+    				$additionalvalue['label'] = str_replace($product_title,"{product_title}",$additionalvalue['label']);
+    				
+    				$additionalvalue['label'] = str_replace($match_index,"{quantity_index}",$additionalvalue['label']); 
+    				
+
+    				
+    				$match_index++;
+
+    			}
+    		}
+    	}
+    }
+
+}
+
+
+
+if ( ! function_exists( 'pcfmne_process_multiple_clone_details' ) ) {
+
+    /**
+	 * returns conditional classes
+	 *
+	 * @access public
+	 * @subpackage	Forms
+	 */
+
+
+
+    function pcfmne_process_multiple_clone_details($multiclone_condition,$multiclone_product,$additionalvalue,$order_id) {
+
+
+       
+
+    	$order = wc_get_order( $order_id );
+
+    	$items = $order->get_items();
+
+    	//print_r($items);
+
+    	// Get and Loop Over Order Items
+        foreach ( $items as $item_id => $item ) {
+           $product_id = $item->get_product_id();
+           $variation_id = $item->get_variation_id();
+
+
+           $product_id = isset($variation_id) && ($variation_id != 0) ? $variation_id : $product_id;
+
+    		
+          
+
+
+    		if (($product_id == $multiclone_product))  {
+
+    			$quantity = $item->get_quantity();
+
+    			
+                $quantity = $quantity + 1;
+
+
+    			$match_index = 1;
+
+    			for ($i = 1; $i < $quantity; $i++) {
+
+    				$product_title  = get_the_title($product_id);
+
+
+
+
+    				$additionalkey = ''.$additionalvalue['field_key'].'_'.$match_index.'';
+
+    				
+               
+    				
+                    $additionalvalue['label'] = str_replace("{product_title}",$product_title,$additionalvalue['label']);
+                    
+                    $additionalvalue['label'] = str_replace("{quantity_index}",$match_index,$additionalvalue['label']);
+
+
+
+
+    				$additionalkey = ''.$additionalvalue['field_key'].'_'.$match_index.'';
+               
+    				
+                    $additionalkeyvalue = get_post_meta( $order_id, $additionalkey, true );
+			        $additionalkeyvalue = str_replace("_"," ",$additionalkeyvalue);
+					
+				    if ( ! empty( $additionalkeyvalue ) && ($additionalkeyvalue != 'empty') && ($additionalkeyvalue != 845675668)) { ?>
+				          
+						   <tr>
+                             <th><?php echo $additionalvalue['label']; ?>:</th>
+                             <td><?php echo $additionalkeyvalue; ?></td>
+                           </tr>
+					<?php 
+					} else if (($additionalkeyvalue == 'empty') || ($additionalkeyvalue == 845675668)) {
+		     			    delete_post_meta( $order_id, $additionalkey);
+		     		}
+    				
+
+    				$additionalvalue['label'] = str_replace($product_title,"{product_title}",$additionalvalue['label']);
+                    
+                    $additionalvalue['label'] = str_replace($match_index,"{quantity_index}",$additionalvalue['label']); 
+    				
+
+    			
+    				$match_index++;
+
+    			}
+    		}
+    	}
+    }
+
+}
+
+if ( ! function_exists( 'pcfmne_process_multiple_clone_order_save' ) ) {
+
+    /**
+	 * returns conditional classes
+	 *
+	 * @access public
+	 * @subpackage	Forms
+	 */
+
+
+
+    function pcfmne_process_multiple_clone_order_save($multiclone_condition,$multiclone_product,$additionalvalue,$order_id) {
+
+    	
+    	
+
+        $order = wc_get_order( $order_id );
+
+    	
+
+    	// Get and Loop Over Order Items
+        foreach ( $order->get_items() as $item_id => $item ) {
+           $product_id = $item->get_product_id();
+           $variation_id = $item->get_variation_id();
+
+
+           $product_id = isset($variation_id) && ($variation_id != 0) ? $variation_id : $product_id;
+
+    		
+
+
+
+    		if (($product_id == $multiclone_product))  {
+
+    			$quantity = $item->get_quantity();
+
+    			$quantity= $quantity+ 1;
+
+    			$match_index = 1;
+
+    			for ($i = 1; $i < $quantity; $i++) {
+
+    				$product_title  = get_the_title($product_id);
+
+
+    				$additionalkey = ''.$additionalvalue['field_key'].'_'.$match_index.'';
+               
+    				
+                    if ( ! empty( $_POST[$additionalkey] ) ) {
+
+			 			if (is_array($_POST[$additionalkey]))  {
+			 				$additionalkeyvalue = implode(',', $_POST[$additionalkey]);
+			 			} else {
+			 				$additionalkeyvalue = $_POST[$additionalkey];
+			 			}
+
+			 			update_post_meta( $order_id, $additionalkey, sanitize_text_field( $additionalkeyvalue ) );
+			 		} 
+    				
+
+    			
+    				$match_index++;
+
+    			}
+    		}
+    	}
+    }
+
+}
+
+
+
+if ( ! function_exists( 'pcfmne_process_multiple_clone_notice' ) ) {
+
+    /**
+	 * returns conditional classes
+	 *
+	 * @access public
+	 * @subpackage	Forms
+	 */
+
+
+
+    function pcfmne_process_multiple_clone_notice($multiclone_condition,$multiclone_product,$additionalvalue) {
+
+    	global $woocommerce;
+    	if( ! $woocommerce->cart ) { return; }
+    	$cart_items = $woocommerce->cart->get_cart();
+
+    	 $requiredtext      =  __('is a required field','customize-my-account-pro');
+
+        
+    	    $extrafield= array();
+
+
+
+            if (isset($additionalvalue['label'])) {
+                
+                $extrafield['label'] = $additionalvalue['label'];
+
+            }
+
+            if (isset($additionalvalue['type'])) {
+                
+                $extrafield['type'] = $additionalvalue['type'];
+
+            }
+          
+            if (isset($additionalvalue['width'])) {
+		        
+		        $extrafield['class'][] =$additionalvalue['width'];
+
+		    }
+            
+			//hider/opener class
+            if (isset($additionalvalue['visibility']) && ($additionalvalue['visibility'] == 'field-specific')) {
+			    
+			    if (isset($additionalvalue['conditional'])) {
+
+			    	$pcfme_conditional_class  = pcfme_get_conditional_class($additionalvalue['conditional']);
+
+			    }
+			    
+			 
+		    } else {
+
+			    $pcfme_conditional_class  = '';
+            
+            }	
+
+
+            //hider/opener class
+            if (isset($additionalvalue['visibility']) && ($additionalvalue['visibility'] == 'shipping-specific')) {
+			    
+			    if (isset($additionalvalue['shipping'])) {
+
+			    	$pcfme_shipping_class  = pcfme_get_conditional_shipping_class($additionalvalue['shipping']);
+
+			    }
+			    
+			 
+		    } else {
+
+			    $pcfme_shipping_class  = '';
+            
+            }
+
+
+            //hider/opener class
+            if (isset($additionalvalue['visibility']) && ($additionalvalue['visibility'] == 'payment-specific')) {
+			    
+			    if (isset($additionalvalue['payment'])) {
+
+			    	$pcfme_payment_class  = pcfme_get_conditional_payment_class($additionalvalue['payment']);
+
+			    }
+			    
+			 
+		    } else {
+
+			    $pcfme_payment_class  = '';
+            
+            }
+               
+			
+			$extrafield['class'][] = $pcfme_conditional_class;	
+			$extrafield['class'][] = $pcfme_shipping_class;	
+			$extrafield['class'][] = $pcfme_payment_class;	
+
+
+            if (isset($additionalvalue['required'])) {
+
+                $extrafield['required'] = $additionalvalue['required'];
+
+            }
+
+            if (isset($additionalvalue['placeholder'])) {
+                
+                $extrafield['placeholder'] = $additionalvalue['placeholder'];
+
+            }
+			
+			if (isset($keyorder)) {
+                
+                $extrafield['priority'] = $keyorder;
+
+            }
+
+            if (isset($additionalvalue['validate'])) {
+                
+                $extrafield['validate'] = $additionalvalue['validate'];
+
+            }
+
+
+            if (isset($additionalvalue['enable_default_date'])) {
+                
+                $extrafield['enable_default_date'] = $additionalvalue['enable_default_date'];
+
+            }
+
+            if (isset($additionalvalue['default_date_add'])) {
+                
+                $extrafield['default_date_add'] = $additionalvalue['default_date_add'];
+
+            }
+
+
+            if (isset($additionalvalue['disable_specific_dates'])) {
+                
+                $extrafield['disable_specific_dates'] = $additionalvalue['disable_specific_dates'];
+
+            }
+
+
+
+            if (isset($additionalvalue['allowed_times'])) {
+                
+                $extrafield['allowed_times'] = $additionalvalue['allowed_times'];
+
+            }
+
+            if (isset($additionalvalue['enable_default_time'])) {
+                
+                $extrafield['enable_default_time'] = $additionalvalue['enable_default_time'];
+
+            }
+
+            if (isset($additionalvalue['default_time'])) {
+                
+                $extrafield['default_time'] = $additionalvalue['default_time'];
+
+            }
+
+
+           
+            if (isset($additionalvalue['new_options']) || isset($additionalvalue['options'])) {
+
+            	$old_options = isset($additionalvalue['options']) ? $additionalvalue['options'] : '';
+
+            	$old_options = explode(',', $old_options);
+
+            	$old_options_array = array();
+
+
+
+            	if (isset($old_options) && !empty($old_options) && (sizeof($old_options) > 0)) {
+            		$old_options_array_index = 1;
+            		foreach($old_options as $ovalue) {
+            			$old_options_array[''.$old_options_array_index.''] = array('value'=>$ovalue,'text'=>$ovalue);
+            			$old_options_array_index++;
+            		}
+            	}
+
+            	$new_options_array = isset($additionalvalue['new_options']) ? $additionalvalue['new_options'] : $old_options_array;
+
+
+
+		        $options = array();
+                      
+                    foreach($new_options_array as $nkey=>$val){
+    
+                        $o_value = $val['value'];
+    					$o_text = $val['text'];
+
+    					$options[$o_value]  = $o_text;
+      
+                    }
+             
+                $extrafield['options'] = $options;
+
+            }
+			
+			
+		    //builds extraclass array
+		    if (isset($additionalvalue['extraclass']) && ($additionalvalue['extraclass'] != '')) {
+		      
+		        $tempclasses = explode(',',$additionalvalue['extraclass']);
+		      
+		      
+		        $extraclass = array();
+                      
+                foreach($tempclasses as $classval3){
+    
+                    $extraclass[$classval3]  = $classval3;
+      
+                }
+			 
+		    }
+			
+			
+			//adds extra classes to billing fields
+			if (isset($extraclass) && ($extraclass != '')) {
+                     
+			    foreach ($extraclass as $additionalclassval) {
+				    $extrafield['class'][] = $additionalclassval;
+			    }
+				
+			}
+
+
+			$pcfme_conditional_class = pcfme_get_visibility_class_combined($additionalvalue);
+
+
+            
+			if (isset($pcfme_conditional_class) && ($pcfme_conditional_class != '')) {
+				$extrafield['class'][] = $pcfme_conditional_class;
+			}
+
+			
+		   
+		    
+		    if (isset($additionalvalue['disable_past'])) {
+             
+			    $extrafield['disable_past'] = $additionalvalue['disable_past'];
+            }
+
+            if (isset($additionalvalue['hidden_default'])) {
+             
+			    $extrafield['hidden_default'] = $additionalvalue['hidden_default'];
+            }
+
+            if (isset($additionalvalue['charlimit'])) {
+             
+			    $extrafield['charlimit'] = $additionalvalue['charlimit'];
+            }
+
+
+            if (isset($additionalvalue['checked_by_default'])) {
+             
+			    $extrafield['checked_by_default'] = $additionalvalue['checked_by_default'];
+            }
+
+
+            if (isset($additionalvalue['dynamic_rules'])) { 
+		        $extrafield['dynamic_rules']  = $additionalvalue['dynamic_rules'];
+		    } else {
+		        $extrafield['dynamic_rules'] = array(); 
+		    }
+
+
+		    if (isset($additionalvalue['dynamic_visibility_criteria'])) { 
+		        $extrafield['dynamic_visibility_criteria']  = $additionalvalue['dynamic_visibility_criteria'];
+		    } else {
+		        $extrafield['dynamic_visibility_criteria'] = 'match_all'; 
+		    }
+
+
+		    $field_post_meta = get_user_meta( get_current_user_id(), $additionalvalue['field_key'] , true ); 
+						  
+		    if (isset($field_post_meta) && ($field_post_meta != '')) {
+
+					$additional_field_value = $field_post_meta;
+
+			} elseif (isset($additionalvalue['value'])) {
+
+				    $additional_field_value = $additionalvalue['value'];
+
+			} else {
+
+				    $additional_field_value = '';
+			}
+
+    	
+
+    	foreach ($cart_items as $cartitem_key=>$cartitemvalue) {
+
+    		
+
+
+    		if (isset($cartitemvalue['variation_id']) &&  ($cartitemvalue['variation_id'] != 0)) {
+    			$product_id=$cartitemvalue['variation_id'];
+    		} else {
+    			$product_id=$cartitemvalue['product_id'];
+    		}
+
+
+    		
+
+
+
+    		if ($product_id == $multiclone_product) {
+
+    			$quantity=$cartitemvalue['quantity'];
+
+    			$quantity= $quantity+ 1;
+
+    			$match_index = 1;
+
+    			for ($i = 1; $i < $quantity; $i++) {
+
+    				$product_title  = get_the_title($product_id);
+
+    				
+
+    				$extrafield['label'] = str_replace("{product_title}",$product_title,$extrafield['label']);
+                    
+                    $extrafield['label'] = str_replace("{quantity_index}",$match_index,$extrafield['label']);
+
+
+
+
+    				$additionalkey = ''.$additionalvalue['field_key'].'_'.$match_index.'';
+               
+    				
+                    if (isset($additionalvalue['required']) && ( ! $_POST[$additionalkey] )) {
+				        $noticetext='<strong>'.$extrafield['label'].'</strong> '.$requiredtext.' '.$_POST[$additionalkey].' ';
+                        wc_add_notice( __( $noticetext ), 'error' );
+                    }
+    				
+
+    				$extrafield['label'] = str_replace($product_title,"{product_title}",$extrafield['label']);
+                    
+                    $extrafield['label'] = str_replace($match_index,"{quantity_index}",$extrafield['label']);
+
+
+                    
+
+    				$match_index++;
+
+    			}
+    		}
+    	}
+    }
+
+}
+
+
+
+
+
+
 if ( ! function_exists( 'pcfme_get_conditional_class' ) ) {
 
     /**
@@ -3196,11 +6105,25 @@ if ( ! function_exists( 'pcfme_get_conditional_class' ) ) {
             }
 
 
+            if (isset($value['equalto2']) && ($value['hidden_type'] == "select")) {
 
-            if (isset($value['equalto'])) {
-            	$equalto               = $value['equalto'];
-            	$equalto = str_replace(' ', '_', $equalto);
+            	if (isset($value['equalto2'])) {
+            		$equalto               = $value['equalto2'];
+            		$equalto = str_replace(' ', '_', $equalto);
+            	}
+
+            } else {
+
+            	if (isset($value['equalto'])) {
+            		$equalto               = $value['equalto'];
+            		$equalto = str_replace(' ', '_', $equalto);
+            	}
+
             }
+
+
+
+
     		
 	        
 	        if ((isset($showhide)) && (isset($parentfield))) {

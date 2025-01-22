@@ -3,7 +3,7 @@
     Plugin Name: SysBasics Customize My Account for WooCommerce
     Plugin URI: https://sysbasics.com
     Description: Customize My account page. Add/Edit/Remove Endpoints.
-    Version: 2.12.0
+    Version: 2.13.0
     Author: SysBasics
     Author URI: https://sysbasics.com
     Domain Path: /languages
@@ -94,17 +94,69 @@ if ( is_plugin_active( 'wpml-sticky-links/plugin.php' )) {
 }
 
 
-if ( is_plugin_active( 'phppoet-checkout-fields/phppoet-checkout-fields.php' ) ) {
+if ( is_plugin_active( 'sysbasics-account-fields/sysbasics-account-fields.php' ) ) {
     define( 'sysbasics_checkout_mode', 'on' );
 } else {
     define( 'sysbasics_checkout_mode', 'off' );
 }
 
+/**
+ * Check weather module is enabled or not.
+ *
+ * @since 2.12.0
+ * @param string $key equals to module slug.
+ * @return string
+ */
+
+if (!function_exists('wcmamtx_is_module_enabled')) {
+
+    function wcmamtx_is_module_enabled($key) {
+
+        $matchstick =  "yes";
 
 
+        $module_settings = (array) get_option( 'wcmamtx_module_settings' );
+
+        $el_widgets1 = array(
+          'user-avatar'=>esc_html__('User Avatar (Included)','customize-my-account-for-woocommerce'),
+          'elementor-templates'=>esc_html__('User Avatar (Included)','customize-my-account-for-woocommerce'),
+          'my-account-fields'=>esc_html__('My Account Fields','customize-my-account-for-woocommerce'),
+          'easy-checkout-fields'=>esc_html__('Easy Checkout Fields','customize-my-account-for-woocommerce'),
+          'sample'=>esc_html__('sample','customize-my-account-for-woocommerce')
+        );
 
 
+        $el_widgets2 = array(
+          'user-avatar'=>esc_html__('User Avatar (Included)','customize-my-account-for-woocommerce'),
+          'elementor-templates'=>esc_html__('Elementor Templates (Included)','customize-my-account-for-woocommerce'),
+          'my-account-fields'=>esc_html__('My Account Fields (Included)','customize-my-account-for-woocommerce'),
+          'easy-checkout-fields'=>esc_html__('Easy Checkout Fields','customize-my-account-for-woocommerce'),
+          'my-account-fields-pro'=>esc_html__('My Account Fields Pro (Pro Module)','customize-my-account-for-woocommerce'),
+          'Order-actions'=>esc_html__('Order Actions (Pro Module)','customize-my-account-for-woocommerce'),
+          'Order-columns'=>esc_html__('Order Columns (Pro Module)','customize-my-account-for-woocommerce'),
+          'Download-columns'=>esc_html__('Download Columns (Pro Module)','customize-my-account-for-woocommerce'),
+          'easy-checkout-fields-pro'=>esc_html__('Easy Checkout Fields Editor Pro (Pro Module)','customize-my-account-for-woocommerce'),
+          'sample'=>esc_html__('sample','customize-my-account-for-woocommerce')
+        );
 
+        $el_widgets = isset($module_settings['el_widgets']) && !empty($module_settings['el_widgets']) ? $module_settings['el_widgets'] : $el_widgets1;
+
+        if (isset($el_widgets[$key])) {
+            $matchstick =  "yes";
+        } else {
+            $matchstick =  "no";
+        }
+
+        return $matchstick;
+    }
+
+}
+
+
+$user_avatar_enable = wcmamtx_is_module_enabled("user-avatar");
+$elementor_module_enable = wcmamtx_is_module_enabled("elementor-templates");
+$my_account_fields_enable = wcmamtx_is_module_enabled('my-account-fields');
+$easy_checkout_fields_enable = wcmamtx_is_module_enabled('easy-checkout-fields');
    /**
     * check weather woocommerce is active or not
     */
@@ -116,17 +168,21 @@ if ( is_plugin_active( 'phppoet-checkout-fields/phppoet-checkout-fields.php' ) )
     include dirname( __FILE__ ) . '/include/admin/admin_settings.php';
     include dirname( __FILE__ ) . '/include/frontend/frontend_functions.php';
     include dirname( __FILE__ ) . '/include/wcmamtx_extra_functions.php';
-    include dirname( __FILE__ ) . '/include/sysbasics-avatar-upload.php';
+
+    if (isset($user_avatar_enable) && ($user_avatar_enable == "yes")) { 
+        include dirname( __FILE__ ) . '/include/sysbasics-avatar-upload.php';
+
+    }
     
-     if (!is_plugin_active( 'sysbasics-my-account-fields-pro/sysbasics-my-account-fields-pro.php' ) ) {
+     if ((!is_plugin_active( 'sysbasics-my-account-fields-pro/sysbasics-my-account-fields-pro.php' ) ) && ($my_account_fields_enable == "yes")) {
+        include dirname( __FILE__ ) . '/sysbasics-account-fields/init.php';
+    }
+
+    if ((!is_plugin_active( 'phppoet-checkout-fields/phppoet-checkout-fields.php' ) ) && ($easy_checkout_fields_enable == "yes")) {
         include dirname( __FILE__ ) . '/phppoet-checkout-fields/init.php';
     }
 
     
-
-
-
-
 
    if (!function_exists('wcmamtx_placeholder_img_src')) {
      function wcmamtx_placeholder_img_src() {
@@ -155,7 +211,7 @@ if ( is_plugin_active( 'phppoet-checkout-fields/phppoet-checkout-fields.php' ) )
 
 
 if (wcmamtx_elementor_mode !== null) {
-    if  (wcmamtx_elementor_mode == "on") {
+    if  ((wcmamtx_elementor_mode == "on") && ($elementor_module_enable == "yes")) {
      include dirname( __FILE__ ) . '/elementor-addon/elementor-addon.php';
  }
 }

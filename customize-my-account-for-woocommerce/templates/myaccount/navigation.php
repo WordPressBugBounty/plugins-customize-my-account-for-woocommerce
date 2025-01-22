@@ -164,8 +164,10 @@ if ($menu_shape == 'vertical') {
         $show_avatar = 'yes';
     }
 
+    $user_avatar_enable = wcmamtx_is_module_enabled("user-avatar");
 
-    if ($show_avatar == 'yes') {
+
+    if (($show_avatar == 'yes') && ($user_avatar_enable == "yes") ) {
         echo do_shortcode('[sysBasics-user-avatar]');
     }
 
@@ -181,7 +183,7 @@ if ($menu_shape == 'vertical') {
     }
     
 
-    if ($intro_text_hello == "yes") { 
+    if (($intro_text_hello == "yes") && ($user_avatar_enable == "yes")) { 
 
         global $current_user;
         wp_get_current_user();

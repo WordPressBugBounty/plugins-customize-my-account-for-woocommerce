@@ -59,15 +59,27 @@ jQuery(document).ready(function($) {
     });
 
 
-    $('.wcmamtx_dash_notice_toggle').on("change",function() {
-               
-        if($(this).prop("checked")) {
-            $(this).closest('tr').next('tr').show();
+
+
+    $('.pcfme_show_if_multiple_clone_on').on("change",function() {
+
+        var parentkey = $(this).attr("trkey");
+
+        
+        
+        if ($(this).is(":checked")) {
+            $("span.pcfme_show_if_multiple_clone_on_div."+ parentkey +"").show();
+            $("span.pcfme_show_if_multiple_clone_on_prducts_span."+ parentkey +"").show();
+           
+ 
         } else {
-            $(this).closest('tr').next('tr').hide();
+            
+            $("span.pcfme_show_if_multiple_clone_on_div."+ parentkey +"").hide();
+            $("span.pcfme_show_if_multiple_clone_on_prducts_span."+ parentkey +"").hide();
+            
         }
     });
-
+ 
 
 
 	$(function() {
@@ -84,7 +96,10 @@ jQuery(document).ready(function($) {
 				$(this).parents('table:eq(0)').find('.pcfme_field_options_tr').hide();
 			}
 		});
-
+        
+        $('.checkout_field_products_variations_conditions').select2({
+        	 minimumResultsForSearch: -1
+        });
 
 
 		$('.checkout_field_conditional_parentfield').on('change',function(xevent){
@@ -402,10 +417,25 @@ $('.pcfme_checkout_field_extraclass').tagEditor({
 
 });
 
+$( ".conditional-row" ).each(function() {
+	$(this).find('.checkout_field_dynamic_rule_date').datetimepicker({		
+		timepicker:false,
+		format:'Y-m-d',
+		defaultDate: new Date()
+	}); 
+});
 
 
+	 
 
+$('.checkout_field_dynamic_rule_time').datetimepicker({		
+	datepicker:false,
+	format:'H:i',	
+});
 
+$('.checkout_field_dynamic_rule_date_time').datetimepicker({		
+		
+});
 
 
 $(document).on('click', '.pcfme_trash_icon', function () {
@@ -417,11 +447,9 @@ $(document).on('click', '.pcfme_trash_icon', function () {
 });
 
 
-$('.checkout_field_dynamic_rule_type').on("change",function(event){
+function pcfme_change_type_val_toggle(type_val,element) {
 
-	event.preventDefault();
 
-	var type_val = $(this).val();
 
 	switch(type_val) {
 
@@ -438,22 +466,32 @@ $('.checkout_field_dynamic_rule_type').on("change",function(event){
 	case "cart__weight":
 		$row_mode = 'quantity';
 		$filter_mode = 'none';
-		break;
+	break;
 
 	case "cart_items__products":
 		$row_mode = 'contains';
 		$filter_mode  = 'products';
-		break;
+	break;
 
 
 	case "cart_items__product_categories":
 		$row_mode = 'contains';
 		$filter_mode  = 'categories';
-		break;
+	break;
 
 	case "user_role":
 		$row_mode = 'contains';
 		$filter_mode  = 'roles';
+	break;
+
+	case "user_is_logged_in":
+		$row_mode = 'none';
+		$filter_mode  = 'none';
+	break;
+
+    case "user_is_logged_out":
+		$row_mode = 'none';
+		$filter_mode  = 'none';
 	break;
 
 	case "customer_total_spent":
@@ -466,6 +504,42 @@ $('.checkout_field_dynamic_rule_type').on("change",function(event){
 		$filter_mode  = 'none';
 	break;
 
+	case "date_date":
+		$row_mode = 'from_to_specific';
+		$filter_mode  = 'date';
+	break;
+
+	case "date_time":
+		$row_mode = 'from_to';
+		$filter_mode  = 'time';
+	break;
+
+
+	case "date_date_time":
+		$row_mode = 'from_to';
+		$filter_mode  = 'date_time';
+	break;
+
+	case "date_week_day":
+		$row_mode = 'contains';
+		$filter_mode  = 'weekday';
+		break;
+
+	case "date_month_days":
+		$row_mode = 'contains';
+		$filter_mode  = 'monthdays';
+		break;
+
+	case "date_months":
+		$row_mode = 'contains';
+		$filter_mode  = 'months';
+		break;
+
+	case "coupon_applied":
+		$row_mode = 'contains';
+		$filter_mode  = 'coupons';
+	break;
+
 	default:
 		$row_mode = 'quantity';
 		$filter_mode  = 'products';
@@ -473,59 +547,276 @@ $('.checkout_field_dynamic_rule_type').on("change",function(event){
 	}
 
 	if ($row_mode == "quantity") {
-		$(this).parents('.conditional-row').find('.show_if_quantity_rule').show();
-		$(this).parents('.conditional-row').find('.show_if_contains_rule').hide();
+		element.parents('.conditional-row').find('.show_if_quantity_rule').show();
+		element.parents('.conditional-row').find('.show_if_contains_rule').hide();
+		element.parents('.conditional-row').find('.show_if_from_to_specific_rule').hide();
+		element.parents('.conditional-row').find('.show_if_from_to_rule').hide();
+	} else if ($row_mode == "contains")  {
+		
+		element.parents('.conditional-row').find('.show_if_quantity_rule').hide();
+		element.parents('.conditional-row').find('.show_if_contains_rule').show();
+		element.parents('.conditional-row').find('.show_if_from_to_specific_rule').hide();
+		element.parents('.conditional-row').find('.show_if_from_to_rule').hide();
+	} else if ($row_mode == "from_to_specific")  {
+		element.parents('.conditional-row').find('.show_if_quantity_rule').hide();
+		element.parents('.conditional-row').find('.show_if_contains_rule').hide();
+		element.parents('.conditional-row').find('.show_if_from_to_rule').hide();
+		element.parents('.conditional-row').find('.show_if_from_to_specific_rule').show();
+	} else if ($row_mode == "from_to")  {
+		element.parents('.conditional-row').find('.show_if_quantity_rule').hide();
+		element.parents('.conditional-row').find('.show_if_contains_rule').hide();
+		element.parents('.conditional-row').find('.show_if_from_to_specific_rule').hide();
+		element.parents('.conditional-row').find('.show_if_from_to_rule').show();
 	} else {
-        $(this).parents('.conditional-row').find('.show_if_quantity_rule').hide();
-		$(this).parents('.conditional-row').find('.show_if_contains_rule').show();
+		element.parents('.conditional-row').find('.show_if_quantity_rule').hide();
+		element.parents('.conditional-row').find('.show_if_contains_rule').hide();
+		element.parents('.conditional-row').find('.show_if_from_to_specific_rule').hide();
+		element.parents('.conditional-row').find('.show_if_from_to_rule').hide();
 	}
 
-	  	switch($filter_mode) {
+	switch($filter_mode) {
 
-    	case "products":
-    		
-    		$(this).parents('.conditional-row').find('.checkout_field_category_span').hide();
-    		$(this).parents('.conditional-row').find('.checkout_field_products_span').show();
-    		$(this).parents('.conditional-row').find('.checkout_field_roles_span').hide();
-    		$(this).parents('.conditional-row').find('.show_if_contains_rule').show(); 
+	case "products":
+		element.parents('.conditional-row').find('.checkout_field_coupons_span').hide();
+		element.parents('.conditional-row').find('.checkout_field_months_span').hide();
+		element.parents('.conditional-row').find('.checkout_field_monthdays_span').hide();
+		element.parents('.conditional-row').find('.checkout_field_weekday_span').hide();
+		element.parents('.conditional-row').find('.checkout_field_date_time_span').hide();
+        element.parents('.conditional-row').find('.checkout_field_time_span').hide();
+		element.parents('.conditional-row').find('.checkout_field_category_span').hide();
+		element.parents('.conditional-row').find('.checkout_field_products_span').show();
+		element.parents('.conditional-row').find('.checkout_field_roles_span').hide();
+		element.parents('.conditional-row').find('.checkout_field_date_span').hide();
+		element.parents('.conditional-row').find('.show_if_contains_rule_div').show(); 
 
-    		break;
+		break;
 
-    	case "roles":
-    		
-    		$(this).parents('.conditional-row').find('.checkout_field_roles_span').show();
-			
-    		$(this).parents('.conditional-row').find('.checkout_field_category_span').hide();
-    		$(this).parents('.conditional-row').find('.checkout_field_products_span').hide();
-    		$(this).parents('.conditional-row').find('.show_if_contains_rule').show(); 
-    		break;
+	case "roles":
+		element.parents('.conditional-row').find('.checkout_field_coupons_span').hide();
+		element.parents('.conditional-row').find('.checkout_field_months_span').hide();
+		element.parents('.conditional-row').find('.checkout_field_monthdays_span').hide();
+		element.parents('.conditional-row').find('.checkout_field_weekday_span').hide();
+		element.parents('.conditional-row').find('.checkout_field_date_time_span').hide();
+        element.parents('.conditional-row').find('.checkout_field_time_span').hide();
+		element.parents('.conditional-row').find('.checkout_field_roles_span').show();
+		element.parents('.conditional-row').find('.checkout_field_category_span').hide();
+		element.parents('.conditional-row').find('.checkout_field_products_span').hide();
+		element.parents('.conditional-row').find('.checkout_field_date_span').hide();
+		element.parents('.conditional-row').find('.show_if_contains_rule_div').show(); 
+		break;
 
-    	case "categories":
-    		
-    		$(this).parents('.conditional-row').find('.checkout_field_category_span').show();
-    		$(this).parents('.conditional-row').find('.checkout_field_roles_span').hide();
-
-    		$(this).parents('.conditional-row').find('.checkout_field_products_span').hide();  
-    		$(this).parents('.conditional-row').find('.show_if_contains_rule').show();   	 
-    		break;
-
-    	case "none":
-    		$(this).parents('.conditional-row').find('.checkout_field_category_span').hide();
-    		$(this).parents('.conditional-row').find('.checkout_field_roles_span').hide();
-
-    		$(this).parents('.conditional-row').find('.checkout_field_products_span').hide();   
-    		$(this).parents('.conditional-row').find('.show_if_contains_rule').hide(); 	 
-    		break;
+	case "categories":
+		element.parents('.conditional-row').find('.checkout_field_coupons_span').hide();
+		element.parents('.conditional-row').find('.checkout_field_months_span').hide();
+		element.parents('.conditional-row').find('.checkout_field_monthdays_span').hide();
+		element.parents('.conditional-row').find('.checkout_field_weekday_span').hide();
+		element.parents('.conditional-row').find('.checkout_field_date_time_span').hide();
+        element.parents('.conditional-row').find('.checkout_field_time_span').hide();
+		element.parents('.conditional-row').find('.checkout_field_category_span').show();
+		element.parents('.conditional-row').find('.checkout_field_roles_span').hide();
+		element.parents('.conditional-row').find('.checkout_field_products_span').hide();  
+		element.parents('.conditional-row').find('.checkout_field_date_span').hide();
+		element.parents('.conditional-row').find('.show_if_contains_rule_div').show();   	 
+	break;
 
 
-    	}
+     case "date":
+     	element.parents('.conditional-row').find('.checkout_field_coupons_span').hide();
+     	element.parents('.conditional-row').find('.checkout_field_months_span').hide();
+     	element.parents('.conditional-row').find('.checkout_field_monthdays_span').hide();
+     	element.parents('.conditional-row').find('.checkout_field_weekday_span').hide();
+     	element.parents('.conditional-row').find('.checkout_field_date_time_span').hide();
+     	element.parents('.conditional-row').find('.checkout_field_time_span').hide();
+        element.parents('.conditional-row').find('.checkout_field_date_span').show();
+		element.parents('.conditional-row').find('.checkout_field_category_span').hide();
+		element.parents('.conditional-row').find('.checkout_field_roles_span').hide();
+		element.parents('.conditional-row').find('.checkout_field_products_span').hide();  
+		element.parents('.conditional-row').find('.show_if_contains_rule_div').show(); 
+		element.parents('.conditional-row').find('.checkout_field_dynamic_rule_date').datetimepicker({		
+	    			timepicker:false,
+	    			format:'Y-m-d',
+	    			defaultDate: new Date()		
+	    }); 	 
+	break;
+
+    case "time":
+    	element.parents('.conditional-row').find('.checkout_field_coupons_span').hide();
+    	element.parents('.conditional-row').find('.checkout_field_months_span').hide();
+    	element.parents('.conditional-row').find('.checkout_field_monthdays_span').hide();
+    	element.parents('.conditional-row').find('.checkout_field_weekday_span').hide();
+    	element.parents('.conditional-row').find('.checkout_field_date_time_span').hide();
+    	element.parents('.conditional-row').find('.checkout_field_time_span').show();
+        element.parents('.conditional-row').find('.checkout_field_date_span').hide();
+		element.parents('.conditional-row').find('.checkout_field_category_span').hide();
+		element.parents('.conditional-row').find('.checkout_field_roles_span').hide();
+		element.parents('.conditional-row').find('.checkout_field_products_span').hide();  
+		element.parents('.conditional-row').find('.show_if_contains_rule_div').show(); 
+		element.parents('.conditional-row').find('.checkout_field_dynamic_rule_time').datetimepicker({		
+	    			datepicker:false,
+	    			format:'H:i',
+	    				
+	    }); 	 
+	break;
+
+
+    case "date_time":
+    	element.parents('.conditional-row').find('.checkout_field_coupons_span').hide();
+    	element.parents('.conditional-row').find('.checkout_field_months_span').hide();
+    	element.parents('.conditional-row').find('.checkout_field_monthdays_span').hide();
+    	element.parents('.conditional-row').find('.checkout_field_weekday_span').hide();
+    	element.parents('.conditional-row').find('.checkout_field_date_time_span').show();
+    	element.parents('.conditional-row').find('.checkout_field_time_span').hide();
+        element.parents('.conditional-row').find('.checkout_field_date_span').hide();
+		element.parents('.conditional-row').find('.checkout_field_category_span').hide();
+		element.parents('.conditional-row').find('.checkout_field_roles_span').hide();
+		element.parents('.conditional-row').find('.checkout_field_products_span').hide();  
+		element.parents('.conditional-row').find('.show_if_contains_rule_div').show(); 
+		element.parents('.conditional-row').find('.checkout_field_dynamic_rule_date_time').datetimepicker({		
+	    			
+	    }); 	 
+	break;
+
+
+    case "weekday":
+    	element.parents('.conditional-row').find('.checkout_field_coupons_span').hide();
+    	element.parents('.conditional-row').find('.checkout_field_months_span').hide();
+    	element.parents('.conditional-row').find('.checkout_field_monthdays_span').hide();
+    	element.parents('.conditional-row').find('.checkout_field_weekday_span').show();
+    	element.parents('.conditional-row').find('.checkout_field_date_time_span').hide();
+    	element.parents('.conditional-row').find('.checkout_field_time_span').hide();
+        element.parents('.conditional-row').find('.checkout_field_date_span').hide();
+		element.parents('.conditional-row').find('.checkout_field_category_span').hide();
+		element.parents('.conditional-row').find('.checkout_field_roles_span').hide();
+		element.parents('.conditional-row').find('.checkout_field_products_span').hide();  
+		element.parents('.conditional-row').find('.show_if_contains_rule_div').show(); 
+		element.parents('.conditional-row').find('.show_if_contains_rule_div').find('.checkout_field_weekday').select2({
+	         width:"250px" 
+        });
+		 	 
+	break;
+
+
+	case "monthdays":
+		element.parents('.conditional-row').find('.checkout_field_coupons_span').hide();
+		element.parents('.conditional-row').find('.checkout_field_months_span').hide();
+		element.parents('.conditional-row').find('.checkout_field_monthdays_span').show();
+    	element.parents('.conditional-row').find('.checkout_field_weekday_span').hide();
+    	element.parents('.conditional-row').find('.checkout_field_date_time_span').hide();
+    	element.parents('.conditional-row').find('.checkout_field_time_span').hide();
+        element.parents('.conditional-row').find('.checkout_field_date_span').hide();
+		element.parents('.conditional-row').find('.checkout_field_category_span').hide();
+		element.parents('.conditional-row').find('.checkout_field_roles_span').hide();
+		element.parents('.conditional-row').find('.checkout_field_products_span').hide();  
+		element.parents('.conditional-row').find('.show_if_contains_rule_div').show(); 
+		element.parents('.conditional-row').find('.show_if_contains_rule_div').find('.checkout_field_monthdays').select2({
+	         width:"250px" 
+        });
+		 	 
+	break;
+
+
+    case "months":
+    	element.parents('.conditional-row').find('.checkout_field_coupons_span').hide();
+    	element.parents('.conditional-row').find('.checkout_field_months_span').show();
+		element.parents('.conditional-row').find('.checkout_field_monthdays_span').hide();
+    	element.parents('.conditional-row').find('.checkout_field_weekday_span').hide();
+    	element.parents('.conditional-row').find('.checkout_field_date_time_span').hide();
+    	element.parents('.conditional-row').find('.checkout_field_time_span').hide();
+        element.parents('.conditional-row').find('.checkout_field_date_span').hide();
+		element.parents('.conditional-row').find('.checkout_field_category_span').hide();
+		element.parents('.conditional-row').find('.checkout_field_roles_span').hide();
+		element.parents('.conditional-row').find('.checkout_field_products_span').hide();  
+		element.parents('.conditional-row').find('.show_if_contains_rule_div').show(); 
+		element.parents('.conditional-row').find('.show_if_contains_rule_div').find('.checkout_field_months').select2({
+	         width:"250px" 
+        });
+		 	 
+	break;
+
+	case "coupons":
+    	element.parents('.conditional-row').find('.checkout_field_coupons_span').show();
+    	element.parents('.conditional-row').find('.checkout_field_months_span').hide();
+		element.parents('.conditional-row').find('.checkout_field_monthdays_span').hide();
+    	element.parents('.conditional-row').find('.checkout_field_weekday_span').hide();
+    	element.parents('.conditional-row').find('.checkout_field_date_time_span').hide();
+    	element.parents('.conditional-row').find('.checkout_field_time_span').hide();
+        element.parents('.conditional-row').find('.checkout_field_date_span').hide();
+		element.parents('.conditional-row').find('.checkout_field_category_span').hide();
+		element.parents('.conditional-row').find('.checkout_field_roles_span').hide();
+		element.parents('.conditional-row').find('.checkout_field_products_span').hide();  
+		element.parents('.conditional-row').find('.show_if_contains_rule_div').show(); 
+		element.parents('.conditional-row').find('.show_if_contains_rule_div').find('.checkout_field_coupons').select2({
+
+			ajax: {
+    			url: ajaxurl, // AJAX URL is predefined in WordPress admin
+    			dataType: 'json',
+    			delay: 250, // delay in ms while typing when to perform a AJAX search
+    			data: function (params) {
+    				return {
+        				q: params.term, // search query
+        				action: 'pdfmegetajaxcouponslist' // AJAX action for admin-ajax.php
+        			};
+        		},
+        		processResults: function( data ) {
+        			var options = [];
+        			if ( data ) {
+
+					// data is the array of arrays, and each of them contains ID and the Label of the option
+					$.each( data, function( index, text ) { // do not forget that "index" is just auto incremented value
+						options.push( { id: text[0], text: text[1]  } );
+					});
+
+				}
+				return {
+					results: options
+				};
+			    },
+			    cache: true
+		    },
+		    minimumInputLength: 3 ,
+		    minimumResultsForSearch: -1,
+	        width: "300px"// the minimum of symbols to input before perform a search
+	    });
+		 	 
+	break;
+
+	case "none":
+		element.parents('.conditional-row').find('.checkout_field_coupons_span').hide();
+		element.parents('.conditional-row').find('.checkout_field_months_span').hide();
+		element.parents('.conditional-row').find('.checkout_field_monthdays_span').hide();
+		element.parents('.conditional-row').find('.checkout_field_weekday_span').hide();
+		element.parents('.conditional-row').find('.checkout_field_date_time_span').hide();
+		element.parents('.conditional-row').find('.checkout_field_time_span').hide();
+		element.parents('.conditional-row').find('.checkout_field_category_span').hide();
+		element.parents('.conditional-row').find('.checkout_field_roles_span').hide();
+		element.parents('.conditional-row').find('.checkout_field_date_span').hide();
+		element.parents('.conditional-row').find('.checkout_field_products_span').hide();   
+		element.parents('.conditional-row').find('.show_if_contains_rule_div').hide(); 	 
+	break;
+
+
+	}
+}
+
+
+
+
+$('.checkout_field_dynamic_rule_type').on("change",function(event){
+
+	event.preventDefault();
+
+	var type_val = $(this).val();
+	var element = $(this);
+    
+    pcfme_change_type_val_toggle(type_val,element);
+
 
 	return false;
 
 });
 
 
-$('.checkout_field_quantity_specific_product_fees,.checkout_field_products,.checkout_field_quantity_specific_product').select2({
+$('.checkout_field_quantity_specific_product_fees,.checkout_field_products,.checkout_field_products_variations,.checkout_field_quantity_specific_product').select2({
 
 	ajax: {
     			url: ajaxurl, // AJAX URL is predefined in WordPress admin
@@ -535,6 +826,40 @@ $('.checkout_field_quantity_specific_product_fees,.checkout_field_products,.chec
     				return {
         				q: params.term, // search query
         				action: 'pdfmegetajaxproductslist' // AJAX action for admin-ajax.php
+        			};
+        		},
+        		processResults: function( data ) {
+        			var options = [];
+        			if ( data ) {
+
+					// data is the array of arrays, and each of them contains ID and the Label of the option
+					$.each( data, function( index, text ) { // do not forget that "index" is just auto incremented value
+						options.push( { id: text[0], text: text[1]  } );
+					});
+
+				}
+				return {
+					results: options
+				};
+			},
+			cache: true
+		},
+		minimumInputLength: 3 ,
+		minimumResultsForSearch: -1,
+	    width: "300px"// the minimum of symbols to input before perform a search
+});
+
+
+$('.checkout_field_coupons').select2({
+
+	ajax: {
+    			url: ajaxurl, // AJAX URL is predefined in WordPress admin
+    			dataType: 'json',
+    			delay: 250, // delay in ms while typing when to perform a AJAX search
+    			data: function (params) {
+    				return {
+        				q: params.term, // search query
+        				action: 'pdfmegetajaxcouponslist' // AJAX action for admin-ajax.php
         			};
         		},
         		processResults: function( data ) {
@@ -721,8 +1046,13 @@ $('.add-rule-button').on('click',function(event){
 	var select1  = pcfmeadmin.rule_type_select1;
 	var ruleselect2  = pcfmeadmin.rule_type_select2;
 	var ruleselect3  = pcfmeadmin.rule_type_select3;
+	var ruleselect4  = pcfmeadmin.rule_type_select4;
+	var ruleselect5  = pcfmeadmin.rule_type_select5;
 	var rule_type_number = pcfmeadmin.rule_type_number;
     var rule_type_number2 = pcfmeadmin.rule_type_number2;
+    var rule_type_number3 = pcfmeadmin.rule_type_number3;
+    var rule_type_number4 = pcfmeadmin.rule_type_number4;
+    var rule_type_number5 = pcfmeadmin.rule_type_number5;
 
 	var deletei  = '&nbsp;<span class="dashicons dashicons-remove pcfme-remove-condition-dynamic"></span>';
 
@@ -730,7 +1060,7 @@ $('.add-rule-button').on('click',function(event){
 
 	var checkbox = '&nbsp;<input type="checkbox" class="rule_enabled_checkbox" value="yes" checked>&nbsp;';
 
-	html        += '<div class="conditional-row conditional_row_'+event.mnindex+'_'+fieldkey+'">'+sort_icon+''+checkbox+''+select1+'&nbsp;'+ruleselect2+'&nbsp'+ruleselect3+'&nbsp;&nbsp;&nbsp;'+rule_type_number+''+rule_type_number2+''+deletei+'</div>';
+	html        += '<div class="conditional-row conditional_row_'+event.mnindex+'_'+fieldkey+'">'+sort_icon+''+checkbox+''+select1+'&nbsp;'+ruleselect2+'&nbsp'+ruleselect3+'&nbsp'+ruleselect4+''+ruleselect5+'&nbsp;&nbsp;&nbsp;'+rule_type_number+''+rule_type_number2+''+rule_type_number3+''+rule_type_number4+''+rule_type_number5+''+deletei+'</div>';
 
 
    
@@ -777,6 +1107,8 @@ $('.add-rule-button').on('click',function(event){
     trigger_dynamic_rule_change_pfcme(this_element,checkout_tr_,conditional_row_,rule_type_compare,dynamic_rule_type_compare,dynamic_rule_type_compare_add,event,fieldkey,dynamic_name_compare);
 
     
+    
+
 
     var rule_type_contains         = '.checkout_field_dynamic_rule_type_contains';
 
@@ -789,6 +1121,28 @@ $('.add-rule-button').on('click',function(event){
     trigger_dynamic_rule_change_pfcme(this_element,checkout_tr_,conditional_row_,rule_type_contains,dynamic_rule_type_contains,dynamic_rule_type_contains_add,event,fieldkey,dynamic_name_contains);
 
 
+    var rule_type_from_to_specific         = '.checkout_field_dynamic_rule_type_from_to_specific';
+
+    var dynamic_rule_type_from_to_specific_add = 'checkout_field_dynamic_rule_type_from_to_specific_'+event.mnindex+'_'+fieldkey+'';
+
+    var dynamic_rule_type_from_to_specific = '.checkout_field_dynamic_rule_type_from_to_specific_'+event.mnindex+'_'+fieldkey+'';
+
+    var dynamic_name_from_to_specific      = 'pcfme_'+event.mntype+'_settings['+fieldkey+'][dynamic_rules]['+event.mnindex+'][from_to_specific]';
+
+    trigger_dynamic_rule_change_pfcme(this_element,checkout_tr_,conditional_row_,rule_type_from_to_specific,dynamic_rule_type_from_to_specific,dynamic_rule_type_from_to_specific_add,event,fieldkey,dynamic_name_from_to_specific);
+
+
+    var rule_type_from_to         = '.checkout_field_dynamic_rule_type_from_to';
+
+    var dynamic_rule_type_from_to_add = 'checkout_field_dynamic_rule_type_from_to_'+event.mnindex+'_'+fieldkey+'';
+
+    var dynamic_rule_type_from_to = '.checkout_field_dynamic_rule_type_from_to_'+event.mnindex+'_'+fieldkey+'';
+
+    var dynamic_name_from_to      = 'pcfme_'+event.mntype+'_settings['+fieldkey+'][dynamic_rules]['+event.mnindex+'][from_to]';
+
+    trigger_dynamic_rule_change_pfcme(this_element,checkout_tr_,conditional_row_,rule_type_from_to,dynamic_rule_type_from_to,dynamic_rule_type_from_to_add,event,fieldkey,dynamic_name_from_to);
+
+
     var rule_type_product_multiple        = '.checkout_field_products';
 
     var dynamic_rule_type_product_add = 'rule_type_product_multiple_'+event.mnindex+'_'+fieldkey+'';
@@ -798,7 +1152,56 @@ $('.add-rule-button').on('click',function(event){
     var dynamic_name_products      = 'pcfme_'+event.mntype+'_settings['+fieldkey+'][dynamic_rules]['+event.mnindex+'][rule_type_products][]';
 
     trigger_dynamic_rule_change_pfcme_multiselect(this_element,checkout_tr_,conditional_row_,rule_type_product_multiple,dynamic_rule_type_product,dynamic_rule_type_product_add,event,fieldkey,dynamic_name_products);
-   
+    
+
+    //for weekday pickers
+    var weekday_multiple  = '.checkout_field_weekday';
+
+    var weekday_add       = 'rule_type_weekday_multiple_'+event.mnindex+'_'+fieldkey+'';
+
+    var weekday           = '.rule_type_weekday_multiple_'+event.mnindex+'_'+fieldkey+'';
+
+    var name_weekday      = 'pcfme_'+event.mntype+'_settings['+fieldkey+'][dynamic_rules]['+event.mnindex+'][rule_type_days][]';
+
+    pfcme_multiselect_normal(this_element,checkout_tr_,conditional_row_,weekday_multiple,weekday,weekday_add,event,fieldkey,name_weekday);
+    
+
+
+    //for monthday pickers
+    var monthdays_multiple  = '.checkout_field_monthdays';
+
+    var monthdays_add       = 'rule_type_monthdays_multiple_'+event.mnindex+'_'+fieldkey+'';
+
+    var monthdays           = '.rule_type_monthdays_multiple_'+event.mnindex+'_'+fieldkey+'';
+
+    var name_monthdays      = 'pcfme_'+event.mntype+'_settings['+fieldkey+'][dynamic_rules]['+event.mnindex+'][rule_type_monthdays][]';
+
+    pfcme_multiselect_normal(this_element,checkout_tr_,conditional_row_,monthdays_multiple,monthdays,monthdays_add,event,fieldkey,name_monthdays);
+     
+    
+
+    //for months pickers
+    var months_multiple     = '.checkout_field_months';
+
+    var months_add       = 'rule_type_months_multiple_'+event.mnindex+'_'+fieldkey+'';
+
+    var months           = '.rule_type_months_multiple_'+event.mnindex+'_'+fieldkey+'';
+
+    var name_months      = 'pcfme_'+event.mntype+'_settings['+fieldkey+'][dynamic_rules]['+event.mnindex+'][rule_type_months][]';
+
+    pfcme_multiselect_normal(this_element,checkout_tr_,conditional_row_,months_multiple,months,months_add,event,fieldkey,name_months);
+
+
+
+    var rule_type_coupons_multiple        = '.checkout_field_coupons';
+
+    var dynamic_rule_type_coupons_add = 'rule_type_coupons_multiple_'+event.mnindex+'_'+fieldkey+'';
+
+    var dynamic_rule_type_coupons = '.rule_type_coupons_multiple_'+event.mnindex+'_'+fieldkey+'';
+
+    var dynamic_name_coupons      = 'pcfme_'+event.mntype+'_settings['+fieldkey+'][dynamic_rules]['+event.mnindex+'][rule_type_coupons][]';
+
+    trigger_dynamic_rule_change_pfcme_coupons(this_element,checkout_tr_,conditional_row_,rule_type_coupons_multiple,dynamic_rule_type_coupons,dynamic_rule_type_coupons_add,event,fieldkey,dynamic_name_coupons);
     
 
     var rule_type_category_multiple        = '.checkout_field_category';
@@ -833,7 +1236,39 @@ $('.add-rule-button').on('click',function(event){
     var dynamic_name_number      = 'pcfme_'+event.mntype+'_settings['+fieldkey+'][dynamic_rules]['+event.mnindex+'][rule_type_number]';
 
     trigger_dynamic_rule_change_pfcme(this_element,checkout_tr_,conditional_row_,rule_type_number,dynamic_rule_type_number,dynamic_rule_type_number_add,event,fieldkey,dynamic_name_number);
+    
 
+    var rule_type_date         = '.checkout_field_dynamic_rule_date';
+
+    var dynamic_rule_type_date_add = 'checkout_field_dynamic_rule_date_'+event.mnindex+'_'+fieldkey+'';
+
+    var dynamic_rule_type_date = '.checkout_field_dynamic_rule_date_'+event.mnindex+'_'+fieldkey+'';
+
+    var dynamic_name_date      = 'pcfme_'+event.mntype+'_settings['+fieldkey+'][dynamic_rules]['+event.mnindex+'][rule_type_date]';
+
+    trigger_dynamic_rule_change_pfcme(this_element,checkout_tr_,conditional_row_,rule_type_date,dynamic_rule_type_date,dynamic_rule_type_date_add,event,fieldkey,dynamic_name_date);
+    
+
+    var rule_type_time         = '.checkout_field_dynamic_rule_time';
+
+    var dynamic_rule_type_time_add = 'checkout_field_dynamic_rule_time_'+event.mnindex+'_'+fieldkey+'';
+
+    var dynamic_rule_type_time = '.checkout_field_dynamic_rule_time_'+event.mnindex+'_'+fieldkey+'';
+
+    var dynamic_name_time      = 'pcfme_'+event.mntype+'_settings['+fieldkey+'][dynamic_rules]['+event.mnindex+'][rule_type_time]';
+
+    trigger_dynamic_rule_change_pfcme(this_element,checkout_tr_,conditional_row_,rule_type_time,dynamic_rule_type_time,dynamic_rule_type_time_add,event,fieldkey,dynamic_name_time);
+    
+    
+     var rule_type_date_time         = '.checkout_field_dynamic_rule_date_time';
+
+     var dynamic_rule_type_date_time_add = 'checkout_field_dynamic_rule_date_tim_'+event.mnindex+'_'+fieldkey+'';
+
+     var dynamic_rule_type_date_time = '.checkout_field_dynamic_rule_date_tim_'+event.mnindex+'_'+fieldkey+'';
+
+     var dynamic_name_date_time      = 'pcfme_'+event.mntype+'_settings['+fieldkey+'][dynamic_rules]['+event.mnindex+'][rule_type_date_time]';
+
+     trigger_dynamic_rule_change_pfcme(this_element,checkout_tr_,conditional_row_,rule_type_date_time,dynamic_rule_type_date_time,dynamic_rule_type_date_time_add,event,fieldkey,dynamic_name_date_time);
     
     $(this).parents(checkout_tr_).find(conditional_row_).find('.checkout_field_dynamic_rule_type').on("change",function(event){
 
@@ -841,92 +1276,9 @@ $('.add-rule-button').on('click',function(event){
 
     	var type_val = $(this).val();
 
-    	switch(type_val) {
-
-    	case "cart__quantity":
-    		$row_mode = 'quantity';
-    		$filter_mode = 'none';
-    		break;
-
-    	case "cart__count":
-    		$row_mode = 'quantity';
-    		$filter_mode = 'none';
-    		break;
-
-    	case "cart__weight":
-    		$row_mode = 'quantity';
-    		$filter_mode = 'none';
-    		break;
-
-    	case "cart_items__products":
-    		$row_mode = 'contains';
-    		$filter_mode  = 'products';
-    		break;
-
-
-    	case "cart_items__product_categories":
-    		$row_mode = 'contains';
-    		$filter_mode  = 'categories';
-    		break;
-
-    	case "user_role":
-    		$row_mode = 'contains';
-    		$filter_mode  = 'roles';
-    		break;
-
-    	default:
-    		$row_mode = 'quantity';
-    		$filter_mode  = 'products';
-    		break;
-    	}
-
-    	if ($row_mode == "quantity") {
-    		$(this).parents('.conditional-row').find('.show_if_quantity_rule').show();
-    		$(this).parents('.conditional-row').find('.show_if_contains_rule').hide();
-    	} else {
-    		$(this).parents('.conditional-row').find('.show_if_quantity_rule').hide();
-    		$(this).parents('.conditional-row').find('.show_if_contains_rule').show();
-    	}
-
-    	switch($filter_mode) {
-
-    	case "products":
-    		
-    		$(this).parents('.conditional-row').find('.checkout_field_category_span').hide();
-    		$(this).parents('.conditional-row').find('.checkout_field_products_span').show();
-    		$(this).parents('.conditional-row').find('.checkout_field_roles_span').hide();
-    		$(this).parents('.conditional-row').find('.show_if_contains_rule').show(); 
-
-    		break;
-
-    	case "roles":
-    		
-    		$(this).parents('.conditional-row').find('.checkout_field_roles_span').show();
-			
-    		$(this).parents('.conditional-row').find('.checkout_field_category_span').hide();
-    		$(this).parents('.conditional-row').find('.checkout_field_products_span').hide();
-    		$(this).parents('.conditional-row').find('.show_if_contains_rule').show(); 
-    		break;
-
-    	case "categories":
-    		
-    		$(this).parents('.conditional-row').find('.checkout_field_category_span').show();
-    		$(this).parents('.conditional-row').find('.checkout_field_roles_span').hide();
-
-    		$(this).parents('.conditional-row').find('.checkout_field_products_span').hide();  
-    		$(this).parents('.conditional-row').find('.show_if_contains_rule').show();   	 
-    		break;
-
-    	case "none":
-    		$(this).parents('.conditional-row').find('.checkout_field_category_span').hide();
-    		$(this).parents('.conditional-row').find('.checkout_field_roles_span').hide();
-
-    		$(this).parents('.conditional-row').find('.checkout_field_products_span').hide();   
-    		$(this).parents('.conditional-row').find('.show_if_contains_rule').hide(); 	 
-    		break;
-
-
-    	}
+    	var element = $(this);
+    
+        pcfme_change_type_val_toggle(type_val,element);
 
     	return false;
 
@@ -999,15 +1351,16 @@ $('.add-condition-button').on('click',function(event){
 
 	var showtext   = pcfmeadmin.showtext;
 	var hidetext   = pcfmeadmin.hidetext;
+	
 	var valuetext  = pcfmeadmin.valuetext
 	var equaltext  = pcfmeadmin.equaltext;
 
 	var select1  = '<select class="checkout_field_conditional_showhide" name="pcfme_'+event.mntype+'_settings['+fieldkey+'][conditional]['+event.mnindex+'][showhide]"><option value="open" selected="">'+showtext+'</option><option value="hide">'+hidetext+'</option></select>';
-	var span1    = '<span class="pcfmeformfield "><strong>&emsp;'+valuetext+'&emsp;&nbsp;&nbsp;</strong></span>';
-	var span2    = '<span class="pcfmeformfield pcfmeformfield_equal_to"><strong>&emsp;'+equaltext+'&nbsp;</strong></span>';
+	var span1    = '<span class="pcfmeformfield_first pcfmeformfield_first_'+event.mnindex+'_'+fieldkey+'">'+valuetext+'</span>';
+	var span2    = '<span class="pcfmeformfield pcfmeformfield_equal_to pcfmeformfield_'+event.mnindex+'_'+fieldkey+'">'+equaltext+'</span>';
 
 	var input1   = '<input type="text" class="checkout_field_conditional_equalto" name="pcfme_'+event.mntype+'_settings['+fieldkey+'][conditional]['+event.mnindex+'][equalto]" value="">&nbsp;&nbsp;';
-	var select2  = '<select style="display:none;" class="checkout_field_conditional_select" name="pcfme_'+event.mntype+'_settings['+fieldkey+'][conditional]['+event.mnindex+'][equalto]"></select>';
+	var select2  = '<select style="display:none;" class="checkout_field_conditional_select" name="pcfme_'+event.mntype+'_settings['+fieldkey+'][conditional]['+event.mnindex+'][equalto2]"></select>';
 	
 	var s_hid_type  = '<input type="hidden" style="display:none;" class="conditional_select_hidden_type" name="pcfme_'+event.mntype+'_settings['+fieldkey+'][conditional]['+event.mnindex+'][hidden_type]" value="text">';
 	var s_hid_type2  = '<input type="hidden" style="display:none;" class="conditional_select_hidden_array" name="pcfme_'+event.mntype+'_settings['+fieldkey+'][conditional]['+event.mnindex+'][hidden_array]" value="">';
@@ -1024,8 +1377,13 @@ $('.add-condition-button').on('click',function(event){
 	$(this).parents('.checkout_field_conditional_tr_new').find('.conditional_fields_div_wrapper').append(html);
 
 	$(this).parents('.checkout_field_conditional_tr_new').find('.checkout_field_conditional_showhide').select2({
-		width: "100px",
+		width: "200px",
 		minimumResultsForSearch: -1
+	});
+
+
+	$(this).parents('.checkout_field_conditional_tr_new').find('.checkout_field_conditional_showhide').on("change",function(){
+		
 	});
 
 
@@ -1292,7 +1650,9 @@ $('.datetimepicker_lang_class').select2({
 });
 
 
-
+$('.checkout_field_weekday,.checkout_field_monthdays,.checkout_field_months').select2({
+	width:"250px" 
+});
 
 
 $('.checkout_field_rule_showhide').select2({
@@ -1336,22 +1696,7 @@ $('.pcfme_label_input').keyup(function(event_child){
 	return false;
 });
 
-$(window).on("load", function (event) {
 
-	event.preventDefault();
-
-	$.ajax({
-		data: {action: "pcfme_check_entire_validation"  },
-		type: 'POST',
-		url: ajaxurl,
-		success: function( response ) { 
-             console.log(response);
-		}
-	});
-
-	return false;
-
-});
 
 
 
@@ -1384,7 +1729,7 @@ $(".pcfme_duplicate_field").on('click', function() {
 	
 	cloned_field.find('.pcfme_edit_icon_a').attr("href",'#pcfme'+rowno+'');
 
-	cloned_field.find('.panel-collapse').attr("id",'customize-my-account-for-woocommerce'+rowno+'');
+	cloned_field.find('.panel-collapse').attr("id",'customize-my-account-pro'+rowno+'');
 
 	
 	
@@ -1575,6 +1920,104 @@ function trigger_dynamic_rule_change_pfcme(this_element,checkout_tr_,conditional
 	this_element.parents(checkout_tr_).find(dynamic_rule_type_).attr("mnkey",fieldkey);
 
 
+
+}
+
+function trigger_dynamic_rule_change_pfcme_from_to(this_element,checkout_tr_,conditional_row_,rule_type_,dynamic_rule_type_,dynamic_rule_type_add,event,fieldkey,dynamic_name_) {
+
+
+	this_element.parents(checkout_tr_).find(conditional_row_).find(rule_type_).addClass(dynamic_rule_type_add);
+
+   
+
+	this_element.parents(checkout_tr_).find(dynamic_rule_type_).attr('name',dynamic_name_);
+
+
+
+	this_element.parents(checkout_tr_).find(dynamic_rule_type_).attr("mtype",event.mntype);
+	this_element.parents(checkout_tr_).find(dynamic_rule_type_).attr("mntext",event.mnindex);
+	this_element.parents(checkout_tr_).find(dynamic_rule_type_).attr("mnkey",fieldkey);
+
+
+
+}
+
+
+function trigger_dynamic_rule_change_pfcme_coupons(this_element,checkout_tr_,conditional_row_,rule_type_,dynamic_rule_type_,dynamic_rule_type_add,event,fieldkey,dynamic_name_) {
+
+
+	this_element.parents(checkout_tr_).find(conditional_row_).find(rule_type_).addClass(dynamic_rule_type_add);
+
+   
+
+	this_element.parents(checkout_tr_).find(dynamic_rule_type_).attr('name',dynamic_name_);
+    
+
+    this_element.parents(checkout_tr_).find(dynamic_rule_type_).select2({
+
+	ajax: {
+    			url: ajaxurl, // AJAX URL is predefined in WordPress admin
+    			dataType: 'json',
+    			delay: 250, // delay in ms while typing when to perform a AJAX search
+    			data: function (params) {
+    				return {
+        				q: params.term, // search query
+        				action: 'pdfmegetajaxcouponslist' // AJAX action for admin-ajax.php
+        			};
+        		},
+        		processResults: function( data ) {
+
+        			var options = [];
+        			if ( data ) {
+
+					// data is the array of arrays, and each of them contains ID and the Label of the option
+					jQuery.each( data, function( index, text ) { // do not forget that "index" is just auto incremented value
+						options.push( { id: text[0], text: text[1]  } );
+					});
+
+				}
+				return {
+					results: options
+				};
+			},
+			cache: true
+		},
+		minimumInputLength: 3 ,
+		minimumResultsForSearch: -1,
+	    width: "300px"// the minimum of symbols to input before perform a search
+    });
+
+
+    this_element.parents(checkout_tr_).find(dynamic_rule_type_).next('span.select2-container').css("display","inline-grid");
+
+	this_element.parents(checkout_tr_).find(dynamic_rule_type_).attr("mtype",event.mntype);
+	this_element.parents(checkout_tr_).find(dynamic_rule_type_).attr("mntext",event.mnindex);
+	this_element.parents(checkout_tr_).find(dynamic_rule_type_).attr("mnkey",fieldkey);
+
+}
+
+
+function pfcme_multiselect_normal(this_element,checkout_tr_,conditional_row_,rule_type_,dynamic_rule_type_,dynamic_rule_type_add,event,fieldkey,dynamic_name_) {
+
+
+	this_element.parents(checkout_tr_).find(conditional_row_).find(rule_type_).addClass(dynamic_rule_type_add);
+
+   
+
+	this_element.parents(checkout_tr_).find(dynamic_rule_type_).attr('name',dynamic_name_);
+    
+
+    this_element.parents(checkout_tr_).find(dynamic_rule_type_).select2({
+		minimumResultsForSearch: -1,
+	    width: "300px"// the minimum of symbols to input before perform a search
+    });
+
+
+    this_element.parents(checkout_tr_).find(dynamic_rule_type_).next('span.select2-container').css("display","inline-grid");
+
+	this_element.parents(checkout_tr_).find(dynamic_rule_type_).attr("mtype",event.mntype);
+	this_element.parents(checkout_tr_).find(dynamic_rule_type_).attr("mntext",event.mnindex);
+	this_element.parents(checkout_tr_).find(dynamic_rule_type_).attr("mnkey",fieldkey);
 
 }
 

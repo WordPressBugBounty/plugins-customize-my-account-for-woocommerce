@@ -4,17 +4,17 @@ var $vaz = jQuery.noConflict();
 
 	$vaz(function() {
 
-        if ($vaz('.syscmafwpl-datepicker').length) {
+        if ($vaz('.pcfme-datepicker').length) {
 
-		    $vaz('.syscmafwpl-datepicker').datepicker({
+		    $vaz('.pcfme-datepicker').datepicker({
                 dateFormat : 'dd-mm-yy'
             });
 	    }
 	              
 	    var dateToday = new Date(); 
 	             
-		if ($vaz('.syscmafwpl-datepicker-disable-past').length) {
-		    $vaz('.syscmafwpl-datepicker-disable-past').datepicker({
+		if ($vaz('.pcfme-datepicker-disable-past').length) {
+		    $vaz('.pcfme-datepicker-disable-past').datepicker({
                 dateFormat : 'dd-mm-yy',
 		        minDate: dateToday
             });
@@ -24,18 +24,18 @@ var $vaz = jQuery.noConflict();
    	
     $vaz(function() {
 	 
-	    if ($vaz('.syscmafwpl-multiselect').length) {
-		    $vaz('.syscmafwpl-multiselect').select2();
+	    if ($vaz('.pcfme-multiselect').length) {
+		    $vaz('.pcfme-multiselect').select2();
 	    }
 	 
-	    if ($vaz('.syscmafwpl-singleselect').length) {
-		    $vaz('.syscmafwpl-singleselect').select2();
+	    if ($vaz('.pcfme-singleselect').length) {
+		    $vaz('.pcfme-singleselect').select2();
 	    }
       
     });
 	
 	
-	$vaz('.syscmafwpl-opener').change(function(e){ 
+	$vaz('.pcfme-opener').change(function(e){ 
                     
         var this_obj=$vaz(this);
         var id= this_obj.attr('id');
@@ -66,9 +66,9 @@ var $vaz = jQuery.noConflict();
                 
                  
                 
-    $vaz('.syscmafwpl-opener').trigger('change');
+    $vaz('.pcfme-opener').trigger('change');
 				
-	$vaz('.syscmafwpl-hider').change(function(e){ 
+	$vaz('.pcfme-hider').change(function(e){ 
                     
         var this_obj=$vaz(this);
         var id= this_obj.attr('id');
@@ -99,5 +99,5 @@ var $vaz = jQuery.noConflict();
                 
                  
                 
-    $vaz('.syscmafwpl-hider').trigger('change');
+    $vaz('.pcfme-hider').trigger('change');
 })(jQuery);

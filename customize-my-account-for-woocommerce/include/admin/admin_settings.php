@@ -8,7 +8,7 @@ class wcmamtx_add_settings_page_class {
 
 	private $wcmamtx_plugin_options_key    = 'wcmamtx_plugin_options';
 	private $wcmamtx_notices_settings_page = 'wcmamtx_advanced_settings';
-	private $wcmamtx_order_settings_page   = 'wcmamtx_order_settings';
+	private $wcmamtx_order_settings_page   = 'wcmamtx_module_settings';
 	private $wcmamtx_order_actions_page    = 'wcmamtx_order_actions';
     private $wcmamtx_avatar_settings_page  = 'wcmamtx_avatar_settings';
     private $wcmamtx_wizard_page           = 'wcmamtx_wizard_settings';
@@ -725,13 +725,45 @@ class wcmamtx_add_settings_page_class {
 	
 	public function wcmamtx_register_settings_settings() {
 
+        $user_avatar_enable = wcmamtx_is_module_enabled("user-avatar");
+
+        $elementor_module_enable = wcmamtx_is_module_enabled("elementor-templates");
+
+                
+        
+
+
 		$this->wcmamtx_plugin_settings_tab[$this->wcmamtx_notices_settings_page] = esc_html__( 'Endpoints' ,'customize-my-account-for-woocommerce');
 
-		$this->wcmamtx_plugin_settings_tab[$this->wcmamtx_order_settings_page] = esc_html__( 'Order Columns & Actions' ,'customize-my-account-for-woocommerce');
+		$this->wcmamtx_plugin_settings_tab[$this->wcmamtx_order_settings_page] = esc_html__( 'Modules' ,'customize-my-account-for-woocommerce');
 
-        $this->wcmamtx_plugin_settings_tab[$this->wcmamtx_avatar_settings_page] = esc_html__( 'User Avatar' ,'customize-my-account-for-woocommerce');
+        if (isset($user_avatar_enable) && ($user_avatar_enable == "yes")) { 
 
-         $this->wcmamtx_plugin_settings_tab[$this->wcmamtx_plugin_options_key]    = esc_html__( 'Elementor Templates' ,'customize-my-account-for-woocommerce');
+            $this->wcmamtx_plugin_settings_tab[$this->wcmamtx_avatar_settings_page] = esc_html__( 'User Avatar' ,'customize-my-account-for-woocommerce');
+
+            register_setting( $this->wcmamtx_avatar_settings_page, $this->wcmamtx_avatar_settings_page );
+
+            add_settings_section( 'wcmamtx_avatar_section', '', '', $this->wcmamtx_avatar_settings_page );
+
+            add_settings_field( 'avatar_option', '', array( $this, 'wcmamtx_avatar_page' ), $this->wcmamtx_avatar_settings_page, 'wcmamtx_avatar_section' );
+
+        }
+
+
+        if (isset($elementor_module_enable) && ($elementor_module_enable == "yes")) { 
+
+           $this->wcmamtx_plugin_settings_tab[$this->wcmamtx_plugin_options_key]    = esc_html__( 'Elementor Templates' ,'customize-my-account-for-woocommerce');
+
+
+           register_setting( $this->wcmamtx_plugin_options_key, $this->wcmamtx_plugin_options_key );
+
+           add_settings_section( 'wcmamtx_general_section', '', '', $this->wcmamtx_plugin_options_key );
+
+           add_settings_field( 'general_option', '', array( $this, 'wcmamtx_options_page' ), $this->wcmamtx_plugin_options_key, 'wcmamtx_general_section' );
+
+       }
+
+        
 
         $this->wcmamtx_plugin_settings_tab[$this->wcmamtx_wizard_page] = esc_html__( 'Setup Wizard' ,'customize-my-account-for-woocommerce');
        
@@ -753,19 +785,11 @@ class wcmamtx_add_settings_page_class {
 
         
 
-        register_setting( $this->wcmamtx_avatar_settings_page, $this->wcmamtx_avatar_settings_page );
-
-        add_settings_section( 'wcmamtx_avatar_section', '', '', $this->wcmamtx_avatar_settings_page );
-
-        add_settings_field( 'avatar_option', '', array( $this, 'wcmamtx_avatar_page' ), $this->wcmamtx_avatar_settings_page, 'wcmamtx_avatar_section' );
+        
 
 
 
-        register_setting( $this->wcmamtx_plugin_options_key, $this->wcmamtx_plugin_options_key );
-
-        add_settings_section( 'wcmamtx_general_section', '', '', $this->wcmamtx_plugin_options_key );
-
-        add_settings_field( 'general_option', '', array( $this, 'wcmamtx_options_page' ), $this->wcmamtx_plugin_options_key, 'wcmamtx_general_section' );
+        
 
 
         
@@ -838,8 +862,9 @@ class wcmamtx_add_settings_page_class {
      */
 	
 	public function linked_product_swatches_order() { 
-
-        wcmamtx_load_pro_reminder_div();
+         
+         include ('forms/modules_form.php');
+        
     }
 
 

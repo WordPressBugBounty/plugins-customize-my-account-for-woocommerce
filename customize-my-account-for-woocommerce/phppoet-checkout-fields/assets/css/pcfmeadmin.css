@@ -210,10 +210,14 @@ span.pcfme_ucfirst_class {
     font-weight: bold;
 }
 span.pcfmeformfield.pcfmeformfield_equal_to {
-    font-size: 12px;
-    margin-left: 5px;
+    width: 150px;
     font-weight: bold;
     font-style: italic;
+    margin-right: 10px;
+    margin-left: 10px;
+    /* text-align: center; */
+    font-size: 14px;
+    min-width: 20% !important;
 }
 
 tr.conditional-row input[type="number"] {
@@ -542,11 +546,76 @@ span.dashicons.dashicons-remove.pcfme-remove-condition {
 }
 
 .show_if_contains_rule select[style*="display:none;"] + .select2 { display:none; }
+p.pcfme_extra_notice_wrapper1 {
+    background-color: #e8e88b;
+    padding: 10px;
+    color: black;
+}
 
-.alert.alert-primary {
-    background-color: #dedefa;
-    color: #000000;
-    font-size: 14px;
+.pcfme_extra_notice_wrapper {
+    margin-bottom: 10px;
+}
+
+p.pcfme_extra_notice_wrapper2 {
+    background-color: #d6d9e4;
+    padding: 10px;
+    color: #352e2e;
+}
+
+.select2-selection__choice__display {
+    padding-left: 14px !important;
+}
+
+.select2-selection__rendered {
+    line-height: 14px !important;
+}
+.select2-container .select2-selection--multiple {
+
+    line-height: 0.9 !important;
+}
+
+.conditional-row .select2-selection__rendered {
+    line-height: 28px !important;
+}
+
+span.pcfmeformfield_first {
+    width: 150px;
     font-weight: bold;
     font-style: italic;
+    margin-right: 10px;
+    margin-left: 10px;
+    /* text-align: center; */
+    font-size: 14px;
+    min-width: 20% !important;
+}
+
+.pcfmeformfield_notice {
+    background-color: #e8e88b;
+    padding: 10px;
+    color: black;
+    margin-top:5px;
+}
+
+span.pcfme_show_if_multiple_clone_on_div {
+    margin-top: 2px;
+    margin-left: 5px;
+    font-size: 14px;
+    font-style: italic;
+    /* font-weight: bold; */
+}
+span.pcfme_show_if_multiple_clone_on_prducts_span,span.pcfme_show_if_multiple_clone_on_div  {
+    margin-left: 10px;
+}
+
+span.pcfme_show_if_multiple_clone_on_prducts_span span.select2-selection__rendered,span.pcfme_show_if_multiple_clone_on_div  span.select2-selection__rendered {
+    margin-top: 10px;
+}
+
+a.btn.btn-primary.wcmamtx_pro_link.nav-wrap {
+    float: right;
+    margin-right: 10px;
+}
+
+div#wcmamtx_upgrade_modal {
+    margin-top: 140px;
 }

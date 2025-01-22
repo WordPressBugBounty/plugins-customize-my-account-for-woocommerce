@@ -2,9 +2,9 @@ var $iaz = jQuery.noConflict();
 (function( $iaz ) {
     'use strict';
 
-    $iaz.datetimepicker.setLocale(syscmafwplfrontend.datetimepicker_lang);
+    $iaz.datetimepicker.setLocale(pcfmefrontend.datetimepicker_lang);
 
-    function syscmafwpl_convert_datesdisable_to_format($disable_days) {
+    function pcfme_convert_datesdisable_to_format($disable_days) {
 
     	
 
@@ -24,7 +24,9 @@ var $iaz = jQuery.noConflict();
     }
 
 
-	var datepicker_format = syscmafwplfrontend.datepicker_format;
+
+
+	var datepicker_format = pcfmefrontend.datepicker_format;
 
     switch(datepicker_format) {
           case "01":
@@ -54,9 +56,9 @@ var $iaz = jQuery.noConflict();
 
     var gdays ='';
     
-    if ((syscmafwplfrontend.days_to_exclude) && (syscmafwplfrontend.days_to_exclude != '')) {
+    if ((pcfmefrontend.days_to_exclude) && (pcfmefrontend.days_to_exclude != '')) {
 
-    	gdays = syscmafwplfrontend.days_to_exclude.split(',');
+    	gdays = pcfmefrontend.days_to_exclude.split(',');
     	
     }
 
@@ -66,19 +68,19 @@ var $iaz = jQuery.noConflict();
 	$iaz(function() {
 
 
-		if (jQuery('.syscmafwpl-datepicker').length) {
+		if (jQuery('.pcfme-datepicker').length) {
 
-			jQuery('.syscmafwpl-datepicker').each(function(){
+			jQuery('.pcfme-datepicker').each(function(){
 
 				var dates_to_disable = jQuery(this).attr("dates_to_disable");
 
-				dates_to_disable = syscmafwpl_convert_datesdisable_to_format(dates_to_disable);
+				dates_to_disable = pcfme_convert_datesdisable_to_format(dates_to_disable);
 
 				jQuery(this).datetimepicker({
 					format:dtformat,
 					timepicker:false,
 					disabledWeekDays: gdays,
-					dayOfWeekStart: syscmafwplfrontend.dt_week_starts_on,
+					dayOfWeekStart: pcfmefrontend.dt_week_starts_on,
 					disabledDates: dates_to_disable,
 					formatDate:'d.m.Y'
 				});
@@ -93,13 +95,13 @@ var $iaz = jQuery.noConflict();
 
 	    var dateToday = new Date(); 
 
-	    if (jQuery('.syscmafwpl-datepicker-disable-past').length) {
+	    if (jQuery('.pcfme-datepicker-disable-past').length) {
 
-	    	jQuery('.syscmafwpl-datepicker-disable-past').each(function(){
+	    	jQuery('.pcfme-datepicker-disable-past').each(function(){
 
 	    		var dates_to_disable = jQuery(this).attr("dates_to_disable");
 
-	    		dates_to_disable = syscmafwpl_convert_datesdisable_to_format(dates_to_disable);
+	    		dates_to_disable = pcfme_convert_datesdisable_to_format(dates_to_disable);
 
 
 	    		jQuery(this).datetimepicker({
@@ -107,7 +109,7 @@ var $iaz = jQuery.noConflict();
 	    			minDate: dateToday,
 	    			timepicker:false,
 	    			disabledWeekDays: gdays,
-	    			dayOfWeekStart: syscmafwplfrontend.dt_week_starts_on,
+	    			dayOfWeekStart: pcfmefrontend.dt_week_starts_on,
 	    			disabledDates: dates_to_disable,
 					  formatDate:'d.m.Y'
 	    		});
@@ -117,36 +119,36 @@ var $iaz = jQuery.noConflict();
 
 
 
-	   if (jQuery('.syscmafwpl-daterangepicker').length) {
-		  jQuery('.syscmafwpl-daterangepicker').dateRangePicker({
+	   if (jQuery('.pcfme-daterangepicker').length) {
+		  jQuery('.pcfme-daterangepicker').dateRangePicker({
             format: 'DD/MM/YYYY',
-            language: syscmafwplfrontend.datetimepicker_lang,
-            startOfWeek:syscmafwplfrontend.week_starts_on,
-            separator: ' '+syscmafwplfrontend.separater_text+' '
+            language: pcfmefrontend.datetimepicker_lang,
+            startOfWeek:pcfmefrontend.week_starts_on,
+            separator: ' '+pcfmefrontend.separater_text+' '
             
           });
 	   }
 
 	   var dateToday = new Date(); 
-	   if (jQuery('.syscmafwpl-daterangepicker-disable-past').length) {
-		  jQuery('.syscmafwpl-daterangepicker-disable-past').dateRangePicker({
+	   if (jQuery('.pcfme-daterangepicker-disable-past').length) {
+		  jQuery('.pcfme-daterangepicker-disable-past').dateRangePicker({
             format: 'DD/MM/YYYY',
 		    startDate: dateToday,
-		    language: syscmafwplfrontend.datetimepicker_lang,
-		    startOfWeek:syscmafwplfrontend.week_starts_on,
-		    separator: ' '+syscmafwplfrontend.separater_text+' '
+		    language: pcfmefrontend.datetimepicker_lang,
+		    startOfWeek:pcfmefrontend.week_starts_on,
+		    separator: ' '+pcfmefrontend.separater_text+' '
 		    
           });
 	   }
 
 
 
-	    if (jQuery('.syscmafwpl-datetimerangepicker').length) {
-		  jQuery('.syscmafwpl-datetimerangepicker').dateRangePicker({
-                separator: ' '+syscmafwplfrontend.separater_text+' ',
+	    if (jQuery('.pcfme-datetimerangepicker').length) {
+		  jQuery('.pcfme-datetimerangepicker').dateRangePicker({
+                separator: ' '+pcfmefrontend.separater_text+' ',
                 format: 'DD/MM/YYYY HH:mm',
-                language: syscmafwplfrontend.datetimepicker_lang,
-                startOfWeek:syscmafwplfrontend.week_starts_on,
+                language: pcfmefrontend.datetimepicker_lang,
+                startOfWeek:pcfmefrontend.week_starts_on,
                 time: {
 		          enabled: true
 	            }
@@ -155,14 +157,14 @@ var $iaz = jQuery.noConflict();
 	    }
 
 	    var dateToday = new Date(); 
-	    if (jQuery('.syscmafwpl-datetimerangepicker-disable-past').length) {
+	    if (jQuery('.pcfme-datetimerangepicker-disable-past').length) {
 
-		    jQuery('.syscmafwpl-datetimerangepicker-disable-past').dateRangePicker({
-            separator: ' '+syscmafwplfrontend.separater_text+' ',
+		    jQuery('.pcfme-datetimerangepicker-disable-past').dateRangePicker({
+            separator: ' '+pcfmefrontend.separater_text+' ',
             format: 'DD/MM/YYYY HH:mm',
 		        startDate: dateToday,
-		        language: syscmafwplfrontend.datetimepicker_lang,
-		        startOfWeek:syscmafwplfrontend.week_starts_on,
+		        language: pcfmefrontend.datetimepicker_lang,
+		        startOfWeek:pcfmefrontend.week_starts_on,
 		        time: {
 		         enabled: true
 	            }
@@ -176,16 +178,16 @@ var $iaz = jQuery.noConflict();
 
 	$iaz(function() {
 
-		if (jQuery('.syscmafwpl-datetimepicker').length) {
+		if (jQuery('.pcfme-datetimepicker').length) {
 
-			jQuery('.syscmafwpl-datetimepicker').each(function() {
+			jQuery('.pcfme-datetimepicker').each(function() {
 
 				var dates_to_disable = jQuery(this).attr("dates_to_disable");
 
-				dates_to_disable = syscmafwpl_convert_datesdisable_to_format(dates_to_disable);
+				dates_to_disable = pcfme_convert_datesdisable_to_format(dates_to_disable);
 
 
-				var allowed_times_global = syscmafwplfrontend.allowed_times;
+				var allowed_times_global = pcfmefrontend.allowed_times;
 
 				var allowed_times_field = jQuery(this).attr("t_allowed");
 
@@ -200,7 +202,7 @@ var $iaz = jQuery.noConflict();
 
 				jQuery(this).datetimepicker({
 					format:''+ dtformat + ' H:i',
-					dayOfWeekStart: syscmafwplfrontend.dt_week_starts_on,
+					dayOfWeekStart: pcfmefrontend.dt_week_starts_on,
 					disabledDates: dates_to_disable,
 					formatDate:'d.m.Y',
 					allowTimes: function getArr() {
@@ -225,16 +227,16 @@ var $iaz = jQuery.noConflict();
 
 		var dateToday = new Date(); 
 
-		if (jQuery('.syscmafwpl-datetimepicker-disable-past').length) {
+		if (jQuery('.pcfme-datetimepicker-disable-past').length) {
 
-			jQuery('.syscmafwpl-datetimepicker-disable-past').each(function() {
+			jQuery('.pcfme-datetimepicker-disable-past').each(function() {
 
 				var dates_to_disable = jQuery(this).attr("dates_to_disable");
 
-				dates_to_disable = syscmafwpl_convert_datesdisable_to_format(dates_to_disable);
+				dates_to_disable = pcfme_convert_datesdisable_to_format(dates_to_disable);
 
 
-				var allowed_times_global = syscmafwplfrontend.allowed_times;
+				var allowed_times_global = pcfmefrontend.allowed_times;
 
 				var allowed_times_field = jQuery(this).attr("t_allowed");
 
@@ -249,7 +251,7 @@ var $iaz = jQuery.noConflict();
 				jQuery(this).datetimepicker({
 					minDate: dateToday,
 					format:''+ dtformat + ' H:i',
-					dayOfWeekStart: syscmafwplfrontend.dt_week_starts_on,
+					dayOfWeekStart: pcfmefrontend.dt_week_starts_on,
 					disabledDates: dates_to_disable,
 					formatDate:'d.m.Y',
 					allowTimes: function getArr() {
@@ -276,11 +278,11 @@ var $iaz = jQuery.noConflict();
 
 	$iaz(function() {
 
-		if (jQuery('.syscmafwpl-timepicker').length) {
+		if (jQuery('.pcfme-timepicker').length) {
 
-			jQuery('.syscmafwpl-timepicker').each(function() {
+			jQuery('.pcfme-timepicker').each(function() {
 
-				var allowed_times_global = syscmafwplfrontend.allowed_times;
+				var allowed_times_global = pcfmefrontend.allowed_times;
 
 				var allowed_times_field = jQuery(this).attr("t_allowed");
 
@@ -299,8 +301,8 @@ var $iaz = jQuery.noConflict();
 
 					format:'H:i',
 					datepicker:false,
-					dayOfWeekStart: syscmafwplfrontend.dt_week_starts_on,
-					step:syscmafwplfrontend.timepicker_interval,
+					dayOfWeekStart: pcfmefrontend.dt_week_starts_on,
+					step:pcfmefrontend.timepicker_interval,
 					allowTimes: function getArr() {
 
 
@@ -327,8 +329,8 @@ var $iaz = jQuery.noConflict();
    	
 	$iaz(function() {
 
-		if ($iaz('.syscmafwpl-multiselect').length) {
-			$iaz('.syscmafwpl-multiselect').select2({});
+		if ($iaz('.pcfme-multiselect').length) {
+			$iaz('.pcfme-multiselect').select2({});
 		}
 
 
@@ -342,7 +344,7 @@ var $iaz = jQuery.noConflict();
 	
 	$iaz(function() {
 
-		$iaz('.syscmafwpl-opener').on('change',function(){
+		$iaz('.pcfme-opener').on('change',function(){
 			var this_obj=$iaz(this);
 			var id= this_obj.attr('id');
 			var name= this_obj.attr('name');
@@ -351,14 +353,14 @@ var $iaz = jQuery.noConflict();
 
 
 
-			if (this_obj.hasClass('syscmafwpl-singleselect')){
+			if (this_obj.hasClass('pcfme-singleselect')){
 
 
 				$iaz('.open_by_'+ id +'_'+ uval).each(function() {
 
 					var child_input = $iaz(this).find('input');
 					var child_input_number = $iaz(this).find('input[type="number"]');
-					var child_input_select = $iaz(this).find('.syscmafwpl-singleselect');
+					var child_input_select = $iaz(this).find('.pcfme-singleselect');
 
 					var entered_value = child_input.val();
 					var entered_value_number = child_input_number.val();
@@ -422,7 +424,7 @@ var $iaz = jQuery.noConflict();
 
 					var child_input = $iaz(this).find('input');
 					var child_input_number = $iaz(this).find('input[type="number"]');
-					var child_input_select = $iaz(this).find('.syscmafwpl-singleselect');
+					var child_input_select = $iaz(this).find('.pcfme-singleselect');
 
 
 					var previous_value = child_input.val();
@@ -456,14 +458,14 @@ var $iaz = jQuery.noConflict();
 
 					};
 
-					$iaz(this).find('.syscmafwpl-singleselect').val('selectedIndex',0).trigger("change");
+					$iaz(this).find('.pcfme-singleselect').val('selectedIndex',0).trigger("change");
 
 				});
 
 
 			
 
-			} else if (this_obj.hasClass('syscmafwpl-multiselect')){
+			} else if (this_obj.hasClass('pcfme-multiselect')){
 
 
 				$iaz('.open_by_'+ id +'_'+uval ).closest('.form-row').show();
@@ -494,8 +496,8 @@ var $iaz = jQuery.noConflict();
 						$iaz(this).closest('.form-row').show();
 						var child_input = $iaz(this).find('input');
 						var child_input_number = $iaz(this).find('input[type="number"]');
-						var child_input_select = $iaz(this).find('.syscmafwpl-singleselect');
-            var child_input_hidden_file = $iaz(this).find('input.syscmafwpl_hidden_input_file');
+						var child_input_select = $iaz(this).find('.pcfme-singleselect');
+            var child_input_hidden_file = $iaz(this).find('input.pcfme_hidden_input_file');
             child_input_hidden_file.val("");
 
 						child_input.val('');
@@ -543,7 +545,7 @@ var $iaz = jQuery.noConflict();
 						var child_input = $iaz(this).find('input');
             var child_input_number = $iaz(this).find('input[type="number"]');
             var child_input_select = $iaz(this).find('select');
-            var child_input_hidden_file = $iaz(this).find('input.syscmafwpl_hidden_input_file');
+            var child_input_hidden_file = $iaz(this).find('input.pcfme_hidden_input_file');
             child_input_hidden_file.val("empty");
             
             
@@ -598,7 +600,7 @@ var $iaz = jQuery.noConflict();
 
 					var child_input = $iaz(this).find('input');
 					var child_input_number = $iaz(this).find('input[type="number"]');
-					var child_input_select = $iaz(this).find('.syscmafwpl-singleselect');
+					var child_input_select = $iaz(this).find('.pcfme-singleselect');
 
 					var entered_value = child_input.val();
 					var entered_value_number = child_input_number.val();
@@ -662,7 +664,7 @@ var $iaz = jQuery.noConflict();
 
 					var child_input = $iaz(this).find('input');
 					var child_input_number = $iaz(this).find('input[type="number"]');
-					var child_input_select = $iaz(this).find('.syscmafwpl-singleselect');
+					var child_input_select = $iaz(this).find('.pcfme-singleselect');
 
 
 					var previous_value = child_input.val();
@@ -696,7 +698,7 @@ var $iaz = jQuery.noConflict();
 						
 					};
 
-					$iaz(this).find('.syscmafwpl-singleselect').val('selectedIndex',0).trigger("change");
+					$iaz(this).find('.pcfme-singleselect').val('selectedIndex',0).trigger("change");
 
 				});
 
@@ -765,11 +767,11 @@ var $iaz = jQuery.noConflict();
 
 		});
 	  
-	  $iaz('.syscmafwpl-opener').trigger('change');
+	  $iaz('.pcfme-opener').trigger('change');
 
-    $iaz('.syscmafwpl-price-changer').trigger('change');
+    $iaz('.pcfme-price-changer').trigger('change');
 
-    $iaz('.syscmafwpl-price-changer').on('change',function(){
+    $iaz('.pcfme-price-changer').on('change',function(){
 
             
       	jQuery('body').trigger('update_checkout');
@@ -777,6 +779,244 @@ var $iaz = jQuery.noConflict();
 
     });
 
+
+    $iaz('.pcfme-action-changer').trigger('change');
+
+    $iaz('.pcfme-action-changer').on('change',function(){
+
+    	  var thiskey = $iaz(this).attr('id');
+
+    	  var thisval = $iaz(this).val();
+
+    	 
+
+    	  var payment_methods = $iaz('ul.payment_methods li');
+        payment_methods.show();
+
+    	  var shipping_methods = $iaz('.woocommerce-shipping-methods li');
+    	  shipping_methods.show();
+
+        $iaz.ajax({
+            type : "POST",
+            dataType : "json",
+            url : wc_checkout_params.ajax_url,
+            data : { action: "pcfme_get_action_data" ,
+                     key : thiskey,
+                     thisval : thisval
+                   },
+            success: function(response) {
+                var data = response.data;
+                if (data) {
+
+                	$iaz.each(data,function( index, value ) {
+
+                      if (value['target'].includes("shipping_method")) {
+
+                      	
+
+
+
+                      	if (value['action'] == "hide") {
+
+                      		  var somevalue = value['target'].substring(16);
+
+                      		  $iaz(".shipping_method").each(function () {
+
+                      		  	  var eachvalue = $iaz(this).val();
+
+                      		  	  if (eachvalue.includes(somevalue)) {
+                      		  	  	  $iaz(this).parents('li').hide();
+                      		  	  	  $iaz(this).prop('checked', false);
+                      		  	  } 
+
+                      		  });
+                		  	  
+                		    } else if (value['action'] == "show") {
+
+                		    	var somevalue = value['target'].substring(16);
+
+                      		  $iaz(".shipping_method").each(function () {
+
+                      		  	  var eachvalue = $iaz(this).val();
+
+                      		  	  if (eachvalue.includes(somevalue)) {
+                      		  	  	  $iaz(this).parents('li').show();
+                      		  	  } 
+
+                      		  });
+                		  	   
+                		    }
+
+                      	  
+                      } else {
+
+                      	if (value['action'] == "hide") {
+                		  	  $iaz("."+value['target']+"").hide();
+                		  	  $iaz("."+value['target']+"").prop('checked', false);
+                		    } else {
+                		  	  $iaz("."+value['target']+"").show();
+                		    }
+
+                      }
+                		  
+                	});
+                }
+                
+            }
+        }); 
+
+
+    });
+
+
+
+
+
+    $iaz(window).load(function() {
+      	if ($iaz('.shipping_method').length > 0) {
+
+
+      		$iaz.each($iaz('.shipping_method'),function(){
+      			var xvalue = $iaz(this).val();
+
+      			xvalue = xvalue.slice(0,-2);
+
+
+
+
+
+      			if ($iaz(this).is(":checked")) {
+
+
+
+
+
+      				$iaz("[class^='show_by_shipping_method_"+ xvalue +"'],[class*='show_by_shipping_method_"+ xvalue +"']").not('.hide_by_shipping_method_'+ xvalue +'').closest('.form-row').show();
+      				$iaz("[class^='show_by_shipping_method_"+ xvalue +"'],[class*='show_by_shipping_method_"+ xvalue +"']").not('.hide_by_shipping_method_'+ xvalue +'').closest('.form-row').val('');
+      				$iaz("[class^='hide_by_shipping_method_"+ xvalue +"'],[class*='hide_by_shipping_method_"+ xvalue +"']").not('.show_by_shipping_method_'+ xvalue +'').closest('.form-row').hide();
+      				$iaz("[class^='hide_by_shipping_method_"+ xvalue +"'],[class*='hide_by_shipping_method_"+ xvalue +"']").not('.show_by_shipping_method_'+ xvalue +'').closest('.form-row').val('empty');
+
+      			} else {
+
+
+
+      				$iaz("[class^='show_by_shipping_method_"+ xvalue +"'],[class*='show_by_shipping_method_"+ xvalue +"']").not('.hide_by_shipping_method_'+ xvalue +'').closest('.form-row').hide();
+      				$iaz("[class^='show_by_shipping_method_"+ xvalue +"'],[class*='show_by_shipping_method_"+ xvalue +"']").not('.hide_by_shipping_method_'+ xvalue +'').closest('.form-row').val('empty');
+      				$iaz("[class^='hide_by_shipping_method_"+ xvalue +"'],[class*='hide_by_shipping_method_"+ xvalue +"']").not('.show_by_shipping_method_'+ xvalue +'').closest('.form-row').show();
+      				$iaz("[class^='hide_by_shipping_method_"+ xvalue +"'],[class*='hide_by_shipping_method_"+ xvalue +"']").not('.show_by_shipping_method_'+ xvalue +'').closest('.form-row').val('');
+      			}
+
+      		});
+      	}
+    });
+
+    $iaz(window).load(function() {
+      	if ($iaz('input[name="payment_method"]').length > 0) {
+
+
+      		$iaz.each($iaz('input[name="payment_method"]'),function(){
+      			var xvalue = $iaz(this).val();
+                
+
+    
+
+      			if ($iaz(this).is(":checked")) {
+
+
+                    
+
+
+      				$iaz("[class^='show_by_payment_gateway_"+ xvalue +"'],[class*='show_by_payment_gateway_"+ xvalue +"']").not('.hide_by_payment_gateway_'+ xvalue +'').closest('.form-row').show();
+      				$iaz("[class^='show_by_payment_gateway_"+ xvalue +"'],[class*='show_by_payment_gateway_"+ xvalue +"']").not('.hide_by_payment_gateway_'+ xvalue +'').closest('.form-row').val('');
+      				$iaz("[class^='hide_by_payment_gateway_"+ xvalue +"'],[class*='hide_by_payment_gateway_"+ xvalue +"']").not('.show_by_payment_gateway_'+ xvalue +'').closest('.form-row').hide();
+      				$iaz("[class^='hide_by_payment_gateway_"+ xvalue +"'],[class*='hide_by_payment_gateway_"+ xvalue +"']").not('.show_by_payment_gateway_'+ xvalue +'').closest('.form-row').val('empty');
+
+      			} else {
+
+
+
+      				$iaz("[class^='show_by_payment_gateway_"+ xvalue +"'],[class*='show_by_payment_gateway_"+ xvalue +"']").not('.hide_by_payment_gateway_'+ xvalue +'').closest('.form-row').hide();
+      				$iaz("[class^='show_by_payment_gateway_"+ xvalue +"'],[class*='show_by_payment_gateway_"+ xvalue +"']").not('.hide_by_payment_gateway_'+ xvalue +'').closest('.form-row').val('empty');
+      				$iaz("[class^='hide_by_payment_gateway_"+ xvalue +"'],[class*='hide_by_payment_gateway_"+ xvalue +"']").not('.show_by_payment_gateway_'+ xvalue +'').closest('.form-row').show();
+      				$iaz("[class^='hide_by_payment_gateway_"+ xvalue +"'],[class*='hide_by_payment_gateway_"+ xvalue +"']").not('.show_by_payment_gateway_'+ xvalue +'').closest('.form-row').val('');
+      			}
+
+      		});
+      	}
+    });
+
+
+        
+
+
+    $iaz(document).ready(function(){
+    	$iaz(document).on("click", ".shipping_method" ,function(e) {   
+    		var xvalue = $iaz(this).val();
+
+    		xvalue = xvalue.slice(0,-2);
+
+                
+
+    		if ($iaz(this).is(":checked")) {
+
+    			$iaz('.hide_on_load').hide();
+
+    			$iaz('.show_on_load').show();
+
+    			$iaz("[class^='show_by_shipping_method_"+ xvalue +"'],[class*='show_by_shipping_method_"+ xvalue +"']").not('.hide_by_shipping_method_'+ xvalue +'').closest('.form-row').show();
+    			$iaz("[class^='show_by_shipping_method_"+ xvalue +"'],[class*='show_by_shipping_method_"+ xvalue +"']").not('.hide_by_shipping_method_'+ xvalue +'').closest('.form-row').val('');
+    			$iaz("[class^='hide_by_shipping_method_"+ xvalue +"'],[class*='hide_by_shipping_method_"+ xvalue +"']").not('.show_by_shipping_method_'+ xvalue +'').closest('.form-row').hide();
+    			$iaz("[class^='hide_by_shipping_method_"+ xvalue +"'],[class*='hide_by_shipping_method_"+ xvalue +"']").not('.show_by_shipping_method_'+ xvalue +'').closest('.form-row').val('empty');
+    		} else {
+
+    			$iaz('.hide_on_load').hide();
+
+    			$iaz('.show_on_load').show();
+
+    			$iaz("[class^='show_by_shipping_method_"+ xvalue +"'],[class*='show_by_shipping_method_"+ xvalue +"']").not('.hide_by_shipping_method_'+ xvalue +'').closest('.form-row').hide();
+    			$iaz("[class^='show_by_shipping_method_"+ xvalue +"'],[class*='show_by_shipping_method_"+ xvalue +"']").not('.hide_by_shipping_method_'+ xvalue +'').closest('.form-row').val('empty');
+    			$iaz("[class^='hide_by_shipping_method_"+ xvalue +"'],[class*='hide_by_shipping_method_"+ xvalue +"']").not('.show_by_shipping_method_'+ xvalue +'').closest('.form-row').show();
+    			$iaz("[class^='hide_by_shipping_method_"+ xvalue +"'],[class*='hide_by_shipping_method_"+ xvalue +"']").not('.show_by_shipping_method_'+ xvalue +'').closest('.form-row').val('');
+    		}
+    	}); 
+
+
+    });
+
+
+    $iaz(document).ready(function(){
+    	$iaz(document).on("change", 'input[name="payment_method"]' ,function(e) {   
+    		var xvalue = $iaz(this).val();
+
+    		
+
+            
+
+    		if ($iaz(this).is(":checked")) {
+
+    			$iaz('.hide_on_load2').hide();
+
+    			$iaz('.show_on_load2').show();
+
+    			$iaz("[class^='show_by_payment_gateway_"+ xvalue +"'],[class*='show_by_payment_gateway_"+ xvalue +"']").not('.hide_by_payment_gateway_'+ xvalue +'').closest('.form-row').show();
+    			$iaz("[class^='show_by_payment_gateway_"+ xvalue +"'],[class*='show_by_payment_gateway_"+ xvalue +"']").not('.hide_by_payment_gateway_'+ xvalue +'').closest('.form-row').val('');
+    			$iaz("[class^='hide_by_payment_gateway_"+ xvalue +"'],[class*='hide_by_payment_gateway_"+ xvalue +"']").not('.show_by_payment_gateway_'+ xvalue +'').closest('.form-row').hide();
+    			$iaz("[class^='hide_by_payment_gateway_"+ xvalue +"'],[class*='hide_by_payment_gateway_"+ xvalue +"']").not('.show_by_payment_gateway_'+ xvalue +'').closest('.form-row').val('empty');
+    		} else {
+
+    			$iaz('.hide_on_load2').hide();
+
+    			$iaz('.show_on_load2').show();
+
+    			$iaz("[class^='show_by_payment_gateway_"+ xvalue +"'],[class*='show_by_payment_gateway_"+ xvalue +"']").not('.hide_by_payment_gateway_'+ xvalue +'').closest('.form-row').hide();
+    			$iaz("[class^='show_by_payment_gateway_"+ xvalue +"'],[class*='show_by_payment_gateway_"+ xvalue +"']").not('.hide_by_payment_gateway_'+ xvalue +'').closest('.form-row').val('empty');
+    			$iaz("[class^='hide_by_payment_gateway_"+ xvalue +"'],[class*='hide_by_payment_gateway_"+ xvalue +"']").not('.show_by_payment_gateway_'+ xvalue +'').closest('.form-row').show();
+    			$iaz("[class^='hide_by_payment_gateway_"+ xvalue +"'],[class*='hide_by_payment_gateway_"+ xvalue +"']").not('.show_by_payment_gateway_'+ xvalue +'').closest('.form-row').val('');
+    		}
+    	}); 
+
+
+    });
 
 
     $iaz('.hide_on_load').hide();
@@ -788,7 +1028,7 @@ var $iaz = jQuery.noConflict();
     $iaz('.show_on_load2').show();  
 	  
 	  
-    $iaz('.syscmafwpl-hider').on('change',function(){
+    $iaz('.pcfme-hider').on('change',function(){
 
 
     	var this_obj=$iaz(this);
@@ -796,7 +1036,7 @@ var $iaz = jQuery.noConflict();
     	var name= this_obj.attr('name');
     	var hval = this_obj.val();
 
-    	if (this_obj.hasClass('syscmafwpl-singleselect')){
+    	if (this_obj.hasClass('pcfme-singleselect')){
 
     		$iaz('.hide_by_'+ id +'_'+hval ).closest('.form-row').hide();
     		var child_input = $iaz('.hide_by_'+ id +'_'+ hval +' input');
@@ -810,7 +1050,7 @@ var $iaz = jQuery.noConflict();
         $iaz("[class^='hide_by_"+ id +"_'],[class*=' hide_by_"+ id+"_']").not('.hide_by_'+ id +'_'+hval).closest('.form-row').find('input[type="number"]').val("");
     	
 
-    	} else if (this_obj.hasClass('syscmafwpl-multiselect')){
+    	} else if (this_obj.hasClass('pcfme-multiselect')){
 
     		$iaz('.hide_by_'+ id +'_'+hval ).closest('.form-row').hide();
     		var child_input = $iaz('.hide_by_'+ id +'_'+ hval +' input');
@@ -835,7 +1075,7 @@ var $iaz = jQuery.noConflict();
 						var child_input = $iaz(this).find('input');
             var child_input_number = $iaz(this).find('input[type="number"]');
             var child_input_select = $iaz(this).find('select');
-            var child_input_hidden_file = $iaz(this).find('input.syscmafwpl_hidden_input_file');
+            var child_input_hidden_file = $iaz(this).find('input.pcfme_hidden_input_file');
             child_input_hidden_file.val("empty");
             
             
@@ -893,8 +1133,8 @@ var $iaz = jQuery.noConflict();
 						$iaz(this).closest('.form-row').show();
 						var child_input = $iaz(this).find('input');
 						var child_input_number = $iaz(this).find('input[type="number"]');
-						var child_input_select = $iaz(this).find('.syscmafwpl-singleselect');
-						var child_input_hidden_file = $iaz(this).find('input.syscmafwpl_hidden_input_file');
+						var child_input_select = $iaz(this).find('.pcfme-singleselect');
+						var child_input_hidden_file = $iaz(this).find('input.pcfme_hidden_input_file');
 						child_input_hidden_file.val("");
 
 						child_input.val('');
@@ -993,6 +1233,6 @@ var $iaz = jQuery.noConflict();
     	} 
     });
 	  
-	   $iaz('.syscmafwpl-hider').trigger('change');
+	   $iaz('.pcfme-hider').trigger('change');
 	});
 })(jQuery);

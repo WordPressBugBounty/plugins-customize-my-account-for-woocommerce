@@ -11,7 +11,7 @@ class pcfme_add_settings_page_class {
 	private $additional_fees_key        = 'pcfme_additional_fees';
 	private $extra_settings_key         = 'pcfme_extra_settings';
 	private $pcfme_plugin_options       = 'pcfme_plugin_options';
-	private $pcfme_license_settings     = 'pcfme_license_settings';
+
     private $pcfme_plugin_settings_tabs = array();	
 	
 	
@@ -28,6 +28,8 @@ class pcfme_add_settings_page_class {
         add_action( 'wp_ajax_restore_billing_fields', array( $this, 'restore_billing_fields' ) );
 		add_action( 'wp_ajax_restore_shipping_fields', array( $this, 'restore_shipping_fields' ) );
 		add_action( 'wp_ajax_pdfmegetajaxproductslist', array( $this, 'pcfme_get_posts_ajax_callback' ) );
+
+		add_action( 'wp_ajax_pdfmegetajaxcouponslist', array( $this, 'pcfme_get_coupons_ajax_callback' ) );
         
         add_action( 'wp_ajax_pcfme_get_child_field_options', array( $this, 'pcfme_get_child_field_options_function' ) );
 
@@ -113,7 +115,7 @@ class pcfme_add_settings_page_class {
 			wp_redirect($redirect_tab);
 			exit;
 		} else {
-			wp_die( __( 'Invalid nonce specified','customize-my-account-for-woocommerce' ), __( 'Error','customize-my-account-for-woocommerce' ), array(
+			wp_die( __( 'Invalid nonce specified' ), __( 'Error' ), array(
 				'response' 	=> 403,
 				'back_link' => 'admin.php?page=pcfme_plugin_options',
 
@@ -233,7 +235,7 @@ class pcfme_add_settings_page_class {
 			wp_redirect($redirect_tab);
 			exit;
 		} else {
-			wp_die( __( 'Invalid nonce specified','customize-my-account-for-woocommerce' ), __( 'Error','customize-my-account-for-woocommerce' ), array(
+			wp_die( __( 'Invalid nonce specified' ), __( 'Error' ), array(
 				'response' 	=> 403,
 				'back_link' => 'admin.php?page=pcfme_plugin_options',
 
@@ -268,6 +270,34 @@ class pcfme_add_settings_page_class {
 	
 	  $return = array();
       $post_type_array = array('product', 'product_variation');
+	  // you can use WP_Query, query_posts() or get_posts() here - it doesn't matter
+	  $search_results = new WP_Query( array( 
+		's'=> $_GET['q'], // the search query
+		'post_status' => 'publish', // if you don't want drafts to be returned
+		'ignore_sticky_posts' => 1,
+		'post_type'           => $post_type_array,
+		'posts_per_page' => 50 // how much to show at once
+	  ) );
+	  
+	
+	  if( $search_results->have_posts() ) :
+		while( $search_results->have_posts() ) : $search_results->the_post();	
+			// shorten the title a little
+			$title = ( mb_strlen( $search_results->post->post_title ) > 50 ) ? mb_substr( $search_results->post->post_title, 0, 49 ) . '...' : $search_results->post->post_title;
+			$finaltitle='#'. $search_results->post->ID.'- '.$title.'';
+			$return[] = array( $search_results->post->ID, $finaltitle ); // array( Post ID, Post Title )
+		endwhile;
+	  endif;
+	   echo json_encode( $return );
+	  die;
+    }
+
+
+    public function pcfme_get_coupons_ajax_callback(){
+ 
+	
+	  $return = array();
+      $post_type_array = array('shop_coupon');
 	  // you can use WP_Query, query_posts() or get_posts() here - it doesn't matter
 	  $search_results = new WP_Query( array( 
 		's'=> $_GET['q'], // the search query
@@ -357,6 +387,13 @@ class pcfme_add_settings_page_class {
 		    wp_enqueue_script( 'pcfme-frontend1', ''.pcfme_PLUGIN_URL.'assets/js/frontend1.js' );
 		    wp_enqueue_style( 'jquery-ui', ''.pcfme_PLUGIN_URL.'assets/css/jquery-ui.css' );
 		    wp_enqueue_style( 'pcfme-frontend', ''.pcfme_PLUGIN_URL.'assets/css/frontend.css' );
+
+
+
+
+		    wp_enqueue_script( 'jquery.datetimepicker', ''.pcfme_PLUGIN_URL.'assets/js/jquery.datetimepicker.js',array('jquery') );
+         
+            wp_enqueue_style( 'jquery.datetimepicker', ''.pcfme_PLUGIN_URL.'assets/css/jquery.datetimepicker.css' );
 		 
             
 
@@ -372,28 +409,105 @@ class pcfme_add_settings_page_class {
 
             $rule_type_select2 .= '</select>';
 
-             $rule_type_select3 = '<select style="display:none;" mtype="" mntext="" mnkey="" class="checkout_field_dynamic_rule_type_contains show_if_contains_rule" name="">';
+            $rule_type_select3 = '<select style="display:none;" mtype="" mntext="" mnkey="" class="checkout_field_dynamic_rule_type_contains show_if_contains_rule" name="">';
 
             $rule_type_select3 .= pcfme_get_dynamic_rule_types_contains_optionhtml();
 
             $rule_type_select3 .= '</select>';
+
+
+            $rule_type_select4 = '<select style="display:none;" mtype="" mntext="" mnkey="" class="show_if_from_to_specific_rule checkout_field_dynamic_rule_type_from_to_specific" name="">';
+
+            $rule_type_select4 .= pcfme_get_dynamic_rule_types_fromtospecific_optionhtml();
+
+            $rule_type_select4 .= '</select>';
+
+            $rule_type_select5 = '<select style="display:none;" mtype="" mntext="" mnkey="" class="show_if_from_to_rule" name="">';
+
+            $rule_type_select5 .= pcfme_get_dynamic_rule_types_fromto_optionhtml();
+
+            $rule_type_select5 .= '</select>';
+
+
 
             $rule_type_number   = '<span style="" class="show_if_quantity_rule"><input type="number" class="checkout_field_dynamic_rule_number" val=""></span>';
 
             $rule_type_number2   = '<span style="display:none;" class="show_if_contains_rule">';
 
 
-            $rule_type_number2   .= '<span  class="checkout_field_products_span" style="display:none;"><select class="checkout_field_products" data-placeholder="'.esc_html__('Choose Products','customize-my-account-for-woocommerce').'" name="" multiple>
+            $rule_type_number2   .= '<span  class="checkout_field_products_span" style="display:none;"><select class="checkout_field_products" data-placeholder="'.esc_html__('Choose Products','customize-my-account-pro').'" name="" multiple>
             </select></span>';
 
 
-            $rule_type_number2   .= '<span  class="checkout_field_category_span" style="display:none;"><select  class="checkout_field_category" data-placeholder="'. esc_html__('Choose Categories','customize-my-account-for-woocommerce').'" name=""  multiple>';
+            $rule_type_number2   .= '<span  class="checkout_field_category_span" style="display:none;"><select  class="checkout_field_category" data-placeholder="'. esc_html__('Choose Categories','customize-my-account-pro').'" name=""  multiple>';
 
             $catargs = array(
             	'orderby'                  => 'name',
             	'taxonomy'                 => 'product_cat',
             	'hide_empty'               => 0
             );
+
+
+        $days  = array(
+	    	'mon' => __('Monday','customize-my-account-pro'),
+	    	'tue' => __('Tuesday','customize-my-account-pro'),
+	    	'wed' => __('Wednesday','customize-my-account-pro'),
+	    	'thu' => __('Thursday','customize-my-account-pro'),
+	    	'fri' => __('Friday','customize-my-account-pro'),
+	    	'sat' => __('Saturday','customize-my-account-pro'),
+	    	'sun' => __('Sunday','customize-my-account-pro')
+	    	
+	    );
+
+	    $months  = array(
+	    	'jan' => __('January','customize-my-account-pro'),
+	    	'feb' => __('Tuesday','customize-my-account-pro'),
+	    	'mar' => __('Wednesday','customize-my-account-pro'),
+	    	'apr' => __('Thursday','customize-my-account-pro'),
+	    	'may' => __('Friday','customize-my-account-pro'),
+	    	'jun' => __('Saturday','customize-my-account-pro'),
+	    	'jul' => __('Sunday','customize-my-account-pro'),
+	    	'aug' => __('January','customize-my-account-pro'),
+	    	'sep' => __('Tuesday','customize-my-account-pro'),
+	    	'oct' => __('Wednesday','customize-my-account-pro'),
+	    	'nov' => __('Thursday','customize-my-account-pro'),
+	    	'dec' => __('Friday','customize-my-account-pro') 	
+	    );
+
+	    $monthdays  = array(
+	    	'01' => '01',
+	    	'02' => '02',
+	    	'03' => '03',
+	    	'04' => '04',
+	    	'05' => '05',
+	    	'06' => '06',
+	    	'07' => '07',
+	    	'08' => '08',
+	    	'09' => '09',
+	    	'10' => '10',
+	    	'11' => '11',
+	    	'12' => '12',
+	    	'13' => '13',
+	    	'14' => '14',
+	    	'15' => '15',
+	    	'16' => '16',
+	    	'17' => '17',
+	    	'18' => '18',
+	    	'19' => '19',
+	    	'20' => '20',
+	    	'21' => '21',
+	    	'22' => '22',
+	    	'23' => '23',
+	    	'24' => '24',
+	    	'25' => '25',
+	    	'26' => '26',
+	    	'27' => '27',
+	    	'28' => '28',
+	    	'29' => '29',
+	    	'30' => '30',
+	    	'31' => '31',
+	    	'last_day' => __('Last day of month','customize-my-account-pro')
+	    );
 
 
             $categories           = get_categories( $catargs );  
@@ -416,7 +530,7 @@ class pcfme_add_settings_page_class {
 
             $roles = $wp_roles->roles;
 
-            $rule_type_number2   .= '<span  class="checkout_field_roles_span" style="display:none;"><select  class="checkout_field_role" data-placeholder="'. esc_html__('Choose Roles','customize-my-account-for-woocommerce').'" name=""  multiple>';
+            $rule_type_number2   .= '<span  class="checkout_field_roles_span" style="display:none;"><select  class="checkout_field_role" data-placeholder="'. esc_html__('Choose Roles','customize-my-account-pro').'" name=""  multiple>';
 
 
             foreach ($roles as $rkey=>$rvalue) { 
@@ -431,6 +545,69 @@ class pcfme_add_settings_page_class {
 
             $rule_type_number2   .= '</span>';
 
+
+            $rule_type_number2   .= '<span  class="checkout_field_products_span" style="display:none;"><select class="checkout_field_products" data-placeholder="'.esc_html__('Choose Products','customize-my-account-pro').'" name="" multiple>
+            </select></span>';
+
+
+            $rule_type_number2   .= '<span  class="checkout_field_coupons_span" style="display:none;"><select class="checkout_field_coupons" data-placeholder="'.esc_html__('Choose Coupons','customize-my-account-pro').'" name="" multiple>
+            </select></span>';
+
+
+
+
+            $rule_type_number3   .= '<span  class="checkout_field_date_span" style="display:none;"><input type="text" class="checkout_field_dynamic_rule_date" name="" value="">';
+
+ 
+
+            $rule_type_number3   .= '</span>';
+
+            $rule_type_number4   .= '<span  class="checkout_field_time_span" style="display:none;"> <input type="text" class=" checkout_field_dynamic_rule_time" name="" value="">';
+
+ 
+
+            $rule_type_number4   .= '</span>';
+
+            $rule_type_number5   .= '<span  class="checkout_field_date_time_span" style="display:none;"><input type="text" class=" checkout_field_dynamic_rule_date_time" name="" value="">';
+
+ 
+
+            $rule_type_number5   .= '</span>';
+
+
+            $rule_type_number5   .= '<span  class="checkout_field_weekday_span" style="display:none;"><select class="checkout_field_weekday" data-placeholder="'.esc_html__('Choose Days','customize-my-account-pro').'" name=""  multiple>';
+            
+
+            foreach ($days as $dkey=>$dvalue) {
+
+            	$rule_type_number5   .= '<option value="'.$dkey.'">'.$dvalue.'</option>';
+            	
+             }
+            $rule_type_number5   .='</select></span>';
+
+            $rule_type_number5   .= '<span  class="checkout_field_monthdays_span" style="display:none;"><select class="checkout_field_monthdays" data-placeholder="'.esc_html__('Choose Month Days','customize-my-account-pro').'" name=""  multiple>';
+            
+
+            foreach ($monthdays as $mdkey=>$mdvalue) {
+
+            	$rule_type_number5   .= '<option value="'.$mdkey.'">'.$mdvalue.'</option>';
+            	
+             }
+            $rule_type_number5   .='</select></span>';
+
+
+            $rule_type_number5   .= '<span  class="checkout_field_months_span" style="display:none;"><select class="checkout_field_months" data-placeholder="'.esc_html__('Choose Months','customize-my-account-pro').'" name=""  multiple>';
+            
+
+            foreach ($months as $mkey=>$mvalue) {
+
+            	$rule_type_number5   .= '<option value="'.$mkey.'">'.$mvalue.'</option>';
+            	
+             }
+            $rule_type_number5   .='</select></span>';
+
+
+
             $billing_settings = (array) get_option('pcfme_billing_settings');
 
             $shipping_settings = (array) get_option('pcfme_shipping_settings');
@@ -443,7 +620,7 @@ class pcfme_add_settings_page_class {
 
 		    $billing_select .= '<select mtype="" mntext="" mnkey="" class="checkout_field_conditional_parentfield" name=""><option></option>';
 		    $fees_select    .= '<select class="checkout_field_conditional_parentfield" name="">';
-		    $fees_select    .= '<optgroup label="'.esc_html__( 'Billing Fields' ,'customize-my-account-for-woocommerce').'">';
+		    $fees_select    .= '<optgroup label="'.esc_html__( 'Billing Fields' ,'customize-my-account-pro').'">';
 
 		    $action_select    = '';
 
@@ -454,7 +631,7 @@ class pcfme_add_settings_page_class {
             $action_select    .= '<select class="checkout_field_rule_actionfield" name="">';
 
 
-		    $action_select    .= '<optgroup label="'.esc_html__( 'Payment Gateway' ,'customize-my-account-for-woocommerce').'">';
+		    $action_select    .= '<optgroup label="'.esc_html__( 'Payment Gateway' ,'customize-my-account-pro').'">';
 
 
 		    
@@ -475,7 +652,7 @@ class pcfme_add_settings_page_class {
 		    $shipping_methods = WC()->shipping->get_shipping_methods();
 
 
-		    $action_select    .= '<optgroup label="'.esc_html__( 'Shipping Method' ,'customize-my-account-for-woocommerce').'">';
+		    $action_select    .= '<optgroup label="'.esc_html__( 'Shipping Method' ,'customize-my-account-pro').'">';
 
 
 		    
@@ -549,7 +726,7 @@ class pcfme_add_settings_page_class {
 
 		    $shipping_select .= '<select mtype="" mntext="" mnkey=""class="checkout_field_conditional_parentfield" name=""><option></option>';
 
-		    $fees_select     .= '<optgroup label="'.esc_html__( 'Shipping Fields' ,'customize-my-account-for-woocommerce').'">';
+		    $fees_select     .= '<optgroup label="'.esc_html__( 'Shipping Fields' ,'customize-my-account-pro').'">';
 
 				     
 	        foreach ($shipping_settings as $optionkey=>$optionvalue) { 
@@ -618,7 +795,7 @@ class pcfme_add_settings_page_class {
 		    
 		    if (count($conditional_fields_dropdown) != 0) {
 
-		    	$fees_select .= '<optgroup label="'.esc_html__( 'Additional Fields' ,'customize-my-account-for-woocommerce').'">';
+		    	$fees_select .= '<optgroup label="'.esc_html__( 'Additional Fields' ,'customize-my-account-pro').'">';
 
 		    }
 
@@ -679,11 +856,11 @@ class pcfme_add_settings_page_class {
 
 		    if( current_user_can('manage_woocommerce') ) {
 
-		        $restore_warning_text = esc_html__( 'Restoring Default fields will undo all your Changes. Are you sure you want to do this ?' ,'customize-my-account-for-woocommerce');
+		        $restore_warning_text = esc_html__( 'Restoring Default fields will undo all your Changes. Are you sure you want to do this ?' ,'customize-my-account-pro');
 
 		    } else {
 
-		    	$restore_warning_text = esc_html__( 'You can not restore fields in plugin demo.Of course this will work on your site.' ,'customize-my-account-for-woocommerce');
+		    	$restore_warning_text = esc_html__( 'You can not restore fields in plugin demo.Of course this will work on your site.' ,'customize-my-account-pro');
 
 		    }
 
@@ -698,40 +875,45 @@ class pcfme_add_settings_page_class {
 		
 		 
 		    $translation_array = array( 
-		        'removealert'               => esc_html__( 'Are you sure you want to delete?' ,'customize-my-account-for-woocommerce'),
-		        'checkoutfieldtext'         => esc_html__( 'billing_field_' ,'customize-my-account-for-woocommerce'),
-		        'checkoutfieldtext2'        => esc_html__( 'shipping_field_' ,'customize-my-account-for-woocommerce'),
-		        'checkoutfieldtext3'        => esc_html__( 'additional_field_' ,'customize-my-account-for-woocommerce'),
-		        'checkoutfieldtext4'        => esc_html__( 'Billing field ' ,'customize-my-account-for-woocommerce'),
-		        'checkoutfieldtext5'        => esc_html__( 'Shipping field ' ,'customize-my-account-for-woocommerce'),
-		        'checkoutfieldtext6'        => esc_html__( 'Additional field ' ,'customize-my-account-for-woocommerce'),
-		        'placeholder'               => esc_html__( 'Search and Select ' ,'customize-my-account-for-woocommerce'),
+		        'removealert'               => esc_html__( 'Are you sure you want to delete?' ,'customize-my-account-pro'),
+		        'checkoutfieldtext'         => esc_html__( 'billing_field_' ,'customize-my-account-pro'),
+		        'checkoutfieldtext2'        => esc_html__( 'shipping_field_' ,'customize-my-account-pro'),
+		        'checkoutfieldtext3'        => esc_html__( 'additional_field_' ,'customize-my-account-pro'),
+		        'checkoutfieldtext4'        => esc_html__( 'Billing field ' ,'customize-my-account-pro'),
+		        'checkoutfieldtext5'        => esc_html__( 'Shipping field ' ,'customize-my-account-pro'),
+		        'checkoutfieldtext6'        => esc_html__( 'Additional field ' ,'customize-my-account-pro'),
+		        'placeholder'               => esc_html__( 'Search and Select ' ,'customize-my-account-pro'),
 		        'restorealert'              => $restore_warning_text,
-			    'optionplaceholder'         => esc_html__( 'Enter Option' ,'customize-my-account-for-woocommerce'),
-			    'classplaceholder'          => esc_html__( 'Enter Class' ,'customize-my-account-for-woocommerce'),
+			    'optionplaceholder'         => esc_html__( 'Enter Option' ,'customize-my-account-pro'),
+			    'classplaceholder'          => esc_html__( 'Enter Class' ,'customize-my-account-pro'),
 			    'billing_select'            => $billing_select,
 			    'shipping_select'           => $shipping_select,
 			    'additional_select'         => $additional_select,
 			    'fees_select'               => $fees_select,
 			    'action_select'             => $action_select,
-			    'amountplaceholder'         => esc_html__( 'Amount' ,'customize-my-account-for-woocommerce'),
-			    'showtext'                  => esc_html__( 'Show' ,'customize-my-account-for-woocommerce'),
-			    'addtext'                   => esc_html__( 'Add' ,'customize-my-account-for-woocommerce'),
-			    'deducttext'                => esc_html__( 'Deduct' ,'customize-my-account-for-woocommerce'),
-			    'hidetext'                  => esc_html__( 'Hide' ,'customize-my-account-for-woocommerce'),
-			    'valuetext'                 => esc_html__( 'If value of' ,'customize-my-account-for-woocommerce'),
-			    'equaltext'                 => esc_html__( 'is equal to' ,'customize-my-account-for-woocommerce'),
-			    'fixedtext'                 => esc_html__( 'Fixed Amount' ,'customize-my-account-for-woocommerce'),
-			    'percentagetext'            => esc_html__( 'Percentage' ,'customize-my-account-for-woocommerce'),
-			    'is_checked'                => esc_html__( 'Is Checked' ,'customize-my-account-for-woocommerce'),
-			    'copiedalert'               => esc_html__( 'Field key successfully copied to clipboard.' ,'customize-my-account-for-woocommerce'),
-			    'input_label_text'          => esc_html__( 'Custom Label' ,'customize-my-account-for-woocommerce'),
-			    'copy_text'                 => esc_html__( 'Copy' ,'customize-my-account-for-woocommerce'),
+			    'amountplaceholder'         => esc_html__( 'Amount' ,'customize-my-account-pro'),
+			    'showtext'                  => esc_html__( 'Show' ,'customize-my-account-pro'),
+			    'addtext'                   => esc_html__( 'Add' ,'customize-my-account-pro'),
+			    'deducttext'                => esc_html__( 'Deduct' ,'customize-my-account-pro'),
+			    'hidetext'                  => esc_html__( 'Hide' ,'customize-my-account-pro'),
+			    'valuetext'                 => esc_html__( 'If value of' ,'customize-my-account-pro'),
+			    'equaltext'                 => esc_html__( 'is equal to' ,'customize-my-account-pro'),
+			    'fixedtext'                 => esc_html__( 'Fixed Amount' ,'customize-my-account-pro'),
+			    'percentagetext'            => esc_html__( 'Percentage' ,'customize-my-account-pro'),
+			    'is_checked'                => esc_html__( 'Is Checked' ,'customize-my-account-pro'),
+			    'copiedalert'               => esc_html__( 'Field key successfully copied to clipboard.' ,'customize-my-account-pro'),
+			    'input_label_text'          => esc_html__( 'Custom Label' ,'customize-my-account-pro'),
+			    'copy_text'                 => esc_html__( 'Copy' ,'customize-my-account-pro'),
 			    'rule_type_select1'         => $rule_type_select1,
 			    'rule_type_select2'         => $rule_type_select2,
 			    'rule_type_number'          => $rule_type_number,
 			    'rule_type_select3'         => $rule_type_select3,
-			    'rule_type_number2'         => $rule_type_number2
+			    'rule_type_select4'         => $rule_type_select4,
+			    'rule_type_select5'         => $rule_type_select5,
+			    'rule_type_number2'         => $rule_type_number2,
+			    'rule_type_number3'         => $rule_type_number3,
+			    'rule_type_number4'         => $rule_type_number4,
+			    'rule_type_number5'         => $rule_type_number5
 		    );
          
             wp_localize_script( 'pcfmeadmin', 'pcfmeadmin', $translation_array );
@@ -744,27 +926,38 @@ class pcfme_add_settings_page_class {
 	
 	
 	public function register_billing_settings() {
-		
+		$this->pcfme_plugin_settings_tabs['pcfme_billing_settings'] = esc_html__( 'Billing Fields' ,'customize-my-account-pro');
 
-		$this->pcfme_plugin_settings_tabs['pcfme_additional_settings'] = esc_html__( 'Edit Account Fields' ,'customize-my-account-for-woocommerce');
+		$this->pcfme_plugin_settings_tabs['pcfme_shipping_settings'] = esc_html__( 'Shipping Fields' ,'customize-my-account-pro');
 
-		
+		$this->pcfme_plugin_settings_tabs['pcfme_additional_settings'] = esc_html__( 'Additional Fields' ,'customize-my-account-pro');
 
-		$this->pcfme_plugin_settings_tabs['pcfme_extra_settings'] = esc_html__( 'Settings' ,'customize-my-account-for-woocommerce');
+		$this->pcfme_plugin_settings_tabs['pcfme_additional_fees'] = esc_html__( 'Fees & Discounts' ,'customize-my-account-pro');
 
-
-
-
-
+		$this->pcfme_plugin_settings_tabs['pcfme_extra_settings'] = esc_html__( 'Settings' ,'customize-my-account-pro');
 
 		
 
+
+
+
+		
+		register_setting( $this->billing_settings_key, $this->billing_settings_key );
+		add_settings_section( 'pcfme_section_billing', '', '', $this->billing_settings_key );
+		add_settings_field( 'pcfme_billing_option', '', array( $this, 'pcfme_field_billing_option' ), $this->billing_settings_key, 'pcfme_section_billing' );
+
+
+		register_setting( $this->shipping_settings_key, $this->shipping_settings_key );
+		add_settings_section( 'pcfme_section_shipping', '', '', $this->shipping_settings_key );
+		add_settings_field( 'pcfme_shipping_option', '', array( $this, 'pcfme_field_shipping_option' ), $this->shipping_settings_key, 'pcfme_section_shipping' );
 
 		register_setting( $this->additional_settings_key, $this->additional_settings_key );
 		add_settings_section( 'pcfme_section_additional', '', '', $this->additional_settings_key );
 		add_settings_field( 'pcfme_additional_option', '', array( $this, 'pcfme_field_additional_option' ), $this->additional_settings_key, 'pcfme_section_additional' );
 
-		
+		register_setting( $this->additional_fees_key, $this->additional_fees_key );
+		add_settings_section( 'pcfme_section_fees', '', '', $this->additional_fees_key );
+		add_settings_field( 'pcfme_additional_fees', '', array( $this, 'pcfme_field_additional_fees' ), $this->additional_fees_key, 'pcfme_section_fees' );
 
 		register_setting( $this->extra_settings_key, $this->extra_settings_key );
 		add_settings_section( 'pcfme_section_extra', '', '', $this->extra_settings_key );
@@ -774,7 +967,27 @@ class pcfme_add_settings_page_class {
 	}
 	
 	
+	public function pcfme_field_billing_option() {
+        
 
+        	include ('forms/pcfme_admin_billing_fields_form.php');
+
+
+        
+  
+		
+	}
+	
+	public function pcfme_field_shipping_option() { 
+
+
+        	include ('forms/pcfme_admin_shipping_fields_form.php');
+
+
+		
+	 
+		 
+	 }
 
 	 public function pcfme_field_additional_option() { 
 
@@ -788,7 +1001,14 @@ class pcfme_add_settings_page_class {
 	 }
 
 
+	 public function pcfme_field_additional_fees() { 
 
+
+	 		include ('forms/pcfme_admin_additional_fees_form.php');
+
+ 
+		 
+	 }
 
 
 	public function pcfme_field_extra_option() { 
@@ -809,7 +1029,7 @@ class pcfme_add_settings_page_class {
 	   global $billing_pcfmesettings_page;
 
 	    add_menu_page(
-          esc_html__( 'sysbasics','customize-my-account-for-woocommerce' ),
+          esc_html__( 'sysbasics', 'customize-my-account-for-woocommerce' ),
          'SysBasics',
          'manage_woocommerce',
          'sysbasics',
@@ -821,16 +1041,13 @@ class pcfme_add_settings_page_class {
 
         
 	   
-	    $billing_pcfmesettings_page = add_submenu_page( 'sysbasics', esc_html__('My Account Fields','customize-my-account-for-woocommerce'), esc_html__('My Account Fields','customize-my-account-for-woocommerce'), 'manage_woocommerce', $this->pcfme_plugin_options, array($this, 'plugin_options_page'));
+	    $billing_pcfmesettings_page = add_submenu_page( 'sysbasics', esc_html__('Easy Checkout fields','customize-my-account-for-woocommerce'), esc_html__('Easy Checkout fields','customize-my-account-for-woocommerce'), 'manage_woocommerce', $this->pcfme_plugin_options, array($this, 'plugin_options_page'));
 	}
 	
 	
 	public function plugin_options_page() {
 	    global $woocommerce;
-
-
-
-		$tab = isset( $_GET['tab'] ) ? sanitize_text_field($_GET['tab']) : 'pcfme_additional_settings';
+		$tab = isset( $_GET['tab'] ) ? sanitize_text_field($_GET['tab']) : $this->billing_settings_key;
 		global $billing_fields;
 		$billing_fields = '';
 		?>
@@ -841,35 +1058,38 @@ class pcfme_add_settings_page_class {
 				<?php wp_nonce_field( 'update-options' ); ?>
 				<?php settings_fields( $tab ); ?>
 				
-                
+                <?php pcfme_check_for_checkout_pages(); ?>
 				<?php do_settings_sections( $tab ); ?>
 				
 				
 				
-				<center><input type="submit" name="submit" id="submit" class="btn btn-success" value="<?php echo esc_html__('Save Changes','customize-my-account-for-woocommerce'); ?>"></center>
+				<center><input type="submit" name="submit" id="submit" class="btn btn-success" value="<?php echo esc_html__('Save Changes','customize-my-account-pro'); ?>"></center>
 				
 				
 				<?php 
 
-				$checkout_url = '#';
-				$checkout_url = wc_get_account_endpoint_url( 'edit-account' );
-				?>
-				<div class="pcfme_additional_buttons">
-					<a type="button" target="_blank" href="<?php echo $checkout_url; ?>" id="pcfme_frontend_link" class="btn btn-primary pcfme_frontend_link">
-						<span class="dashicons dashicons-welcome-view-site"></span>
-						<?php echo esc_html__('Frontend','customize-my-account-for-woocommerce'); ?>
-					</a>
+				
 
-					<?php 
-					if ($tab != $this->extra_settings_key) {
-						do_action( 'pcfme_add_author_links' ); 
-					}
-
+				if (isset($tab) && (($tab == $this->extra_settings_key) || ($tab == $this->additional_fees_key))) {
+					global $woocommerce;
+					$checkout_url = '#';
+					$checkout_url = wc_get_checkout_url();
 					?>
-				</div>
-				<?php
+					<div class="pcfme_additional_buttons">
+						<a type="button" target="_blank" href="<?php echo $checkout_url; ?>" id="pcfme_frontend_link" class="btn btn-primary pcfme_frontend_link">
+							<span class="dashicons dashicons-welcome-view-site"></span>
+							<?php echo esc_html__('Frontend','customize-my-account-pro'); ?>
+						</a>
 
-
+						<?php 
+						if ($tab != $this->extra_settings_key) {
+							do_action( 'pcfme_add_author_links' ); 
+						}
+						
+						?>
+					</div>
+					<?php
+				}
 
 				?> 
 				<div class="modal fade" id="pcfme_example_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -888,9 +1108,14 @@ class pcfme_add_settings_page_class {
 									<?php pcfme_show_modal_popup("pcfme-field-type"); ?>
 								</div>
 
-								<button type="button" class="btn btn-secondary" data-dismiss="modal"><?php echo esc_html__( 'Close' ,'customize-my-account-for-woocommerce'); ?></button>
-
-								<a href="#" mnkey="" mselected="" id="pcfme_modal_popup_select_button" class="btn btn-primary pcfme_new_select"><?php echo esc_html__( 'Select' ,'customize-my-account-for-woocommerce'); ?>
+								<button type="button" class="btn btn-secondary" data-dismiss="modal"><?php echo esc_html__( 'Close' ,'customize-my-account-pro'); ?></button>
+								<span class="pcfme_developer_doc_text">
+									<?php echo esc_html__( 'You can create your own custom field type here' ,'customize-my-account-pro'); ?>&emsp;
+									<a target="_blank" href="https://www.sysbasics.com/knowledge-base/programatically-create-new-checkout-field-type/">
+										<?php echo esc_html__( 'Developer Docs' ,'customize-my-account-pro'); ?>
+									</a>
+								</span>
+								<a href="#" mnkey="" mselected="" id="pcfme_modal_popup_select_button" class="btn btn-primary pcfme_new_select"><?php echo esc_html__( 'Select' ,'customize-my-account-pro'); ?>
 
 							    </a>
 							
@@ -919,7 +1144,7 @@ class pcfme_add_settings_page_class {
 
 
 
-								<input  required id="sdfsd-user_meta_key" type="text" name="<?php echo "nds"; ?>[label]" value="" placeholder="<?php echo esc_html__('Enter Label','customize-my-account-for-woocommerce'); ?>" />
+								<input  required id="sdfsd-user_meta_key" type="text" name="<?php echo "nds"; ?>[label]" value="" placeholder="<?php echo esc_html__('Enter Label','customize-my-account-pro'); ?>" />
 								<input type="hidden" nonce="<?php echo wp_create_nonce( 'pcfme_nonce_hidden' ); ?>" name="<?php echo "nds"; ?>[section]" id="pcfme_hidden_field_section" value="">
 								<input type="hidden" id="pcfme_hidden_field_type" nonce="<?php echo wp_create_nonce( 'pcfme_nonce_hidden' ); ?>" name="<?php echo "nds"; ?>[field_type]" id="pcfme_hidden_field_type" value="text">
 								
@@ -933,11 +1158,16 @@ class pcfme_add_settings_page_class {
 
 								
 
-								<button type="button" class="btn btn-secondary" data-dismiss="modal"><?php echo esc_html__( 'Close' ,'customize-my-account-for-woocommerce'); ?></button>
+								<button type="button" class="btn btn-secondary" data-dismiss="modal"><?php echo esc_html__( 'Close' ,'customize-my-account-pro'); ?></button>
 								
-								
+								<span class="pcfme_developer_doc_text">
+									<?php echo esc_html__( 'You can create your own custom field type here' ,'customize-my-account-pro'); ?>&emsp;
+									<a target="_blank" href="https://www.sysbasics.com/knowledge-base/programatically-create-new-checkout-field-type/">
+										<?php echo esc_html__( 'Developer Docs' ,'customize-my-account-pro'); ?>
+									</a>
+								</span>
 
-								<button type="submit" id="pcfme_new_field_etype" etype="" name="submit"  class="btn btn-primary wcmamtx_new_end_point"><?php echo esc_html__( 'Add New Field' ,'customize-my-account-for-woocommerce'); ?>
+								<button type="submit" id="pcfme_new_field_etype" etype="" name="submit"  class="btn btn-primary wcmamtx_new_end_point"><?php echo esc_html__( 'Add New Field' ,'customize-my-account-pro'); ?>
 
                                 </button>
                             </form>
@@ -963,7 +1193,7 @@ class pcfme_add_settings_page_class {
 								<input type="hidden" name="pcfme_add_fees_nonce" value="<?php echo wp_create_nonce( 'pcfme_nonce_hidden_fees' ); ?>" />	
                                 
                                 <div class="form-group">
-									<label><?php echo esc_html__( 'Rule Type' ,'customize-my-account-for-woocommerce'); ?></label>
+									<label><?php echo esc_html__( 'Rule Type' ,'customize-my-account-pro'); ?></label>
 									<select  nonce="<?php echo wp_create_nonce( 'pcfme_nonce_hidden_fees' ); ?>" required id="sdfsd-user_meta_key" type="text" name="<?php echo "nds2"; ?>[rule_type]" >
 										
 										<?php
@@ -983,11 +1213,11 @@ class pcfme_add_settings_page_class {
 								
 								
 
-								<button type="button" class="btn btn-secondary" data-dismiss="modal"><?php echo esc_html__( 'Close' ,'customize-my-account-for-woocommerce'); ?></button>
+								<button type="button" class="btn btn-secondary" data-dismiss="modal"><?php echo esc_html__( 'Close' ,'customize-my-account-pro'); ?></button>
 								
 
 
-								<button type="submit" id="pcfme_new_field_etype" etype="" name="submit"  class="btn btn-primary wcmamtx_new_end_point"><?php echo esc_html__( 'Add New Rule' ,'customize-my-account-for-woocommerce'); ?>
+								<button type="submit" id="pcfme_new_field_etype" etype="" name="submit"  class="btn btn-primary wcmamtx_new_end_point"><?php echo esc_html__( 'Add New Rule' ,'customize-my-account-pro'); ?>
 
                                 </button>
                             </form>
@@ -1014,26 +1244,26 @@ class pcfme_add_settings_page_class {
 					switch ($key) {
                         case "billing_address_1":
 						case "shipping_address_1":
-                          $label = esc_html__('Address','customize-my-account-for-woocommerce');
+                          $label = esc_html__('Address','customize-my-account-pro');
                         break;
                         case "billing_address_2":
 						case "shipping_address_2":
-                          $label = esc_html__('Address 2','customize-my-account-for-woocommerce');;
+                          $label = esc_html__('Address 2','customize-my-account-pro');;
                         break;
                         
 						case "billing_city":
 						case "shipping_city":
-                          $label = esc_html__('Town / City','customize-my-account-for-woocommerce');
+                          $label = esc_html__('Town / City','customize-my-account-pro');
                         break;
 						
 						case "billing_state":
 						case "shipping_state":
-                          $label = esc_html__('State / County','customize-my-account-for-woocommerce');
+                          $label = esc_html__('State / County','customize-my-account-pro');
                         break;
 						
 						case "billing_postcode":
 						case "shipping_postcode":
-                          $label = esc_html__('Postcode / Zip','customize-my-account-for-woocommerce');
+                          $label = esc_html__('Postcode / Zip','customize-my-account-pro');
                         break;
 						
 						
@@ -1144,17 +1374,17 @@ class pcfme_add_settings_page_class {
         switch($slug) {
 		
 		  case "pcfme_billing_settings":
-		    $headlingtext  =''.esc_html__('billing_field_','customize-my-account-for-woocommerce').''.$noticerowno.'';
+		    $headlingtext  =''.esc_html__('billing_field_','customize-my-account-pro').''.$noticerowno.'';
 		    $mntext        ='billing';
 		   break;
 	
           case "pcfme_shipping_settings":
-		    $headlingtext =''.esc_html__('shipping_field_','customize-my-account-for-woocommerce').''.$noticerowno.'';
+		    $headlingtext =''.esc_html__('shipping_field_','customize-my-account-pro').''.$noticerowno.'';
 		    $mntext       ='shipping';
 		   break;
 
 		   case "pcfme_additional_settings":
-		     $headlingtext =''.esc_html__('additional_field_','customize-my-account-for-woocommerce').''.$noticerowno.'';
+		     $headlingtext =''.esc_html__('additional_field_','customize-my-account-pro').''.$noticerowno.'';
 		     $mntext       ='additional';
 		   break;
 		
@@ -1180,7 +1410,7 @@ class pcfme_add_settings_page_class {
 	     				<span class="glyphicon glyphicon-edit pcfme_edit_icon"></span>
 	     			</a>
 
-	     			<span title="<?php echo esc_html__('Clone this field','customize-my-account-for-woocommerce'); ?>" rowno="<?php echo $noticerowno; ?>" pkey="<?php echo $key; ?>" mslug="<?php echo $slug; ?>" class="dashicons dashicons-admin-page pcfme_duplicate_field"></span>
+	     			
 	     		</td>
 
 	     		<?php $this->display_visual_preview($key,$field,$noticerowno); ?>
@@ -1196,7 +1426,7 @@ class pcfme_add_settings_page_class {
 			 
 
 		     <tr class="pcfme_field_key_tr">
-			    <td width="15%"><label for="<?php echo $key; ?>_type"><?php echo esc_html__('Field Key','customize-my-account-for-woocommerce'); ?></label></td>
+			    <td width="15%"><label for="<?php echo $key; ?>_type"><?php echo esc_html__('Field Key','customize-my-account-pro'); ?></label></td>
 			    <td width="85%" class="pcfme_field_key_tr">
 			    	<?php 
                         if (isset($field['field_key']) && ($field['field_key'] != "")) { 
@@ -1210,14 +1440,14 @@ class pcfme_add_settings_page_class {
 			    	<?php } ?>
 
 			   	    <span class="pcfme_field_key pcfme_field_key_<?php echo $key; ?>"><?php echo $field_key ?></span>
-			   	    <span onclick="pcfme_copyToClipboard('.pcfme_copy_key_icon_<?php echo $key; ?>')" cpkey="<?php echo $field_key; ?>" title="<?php echo esc_html__('Copy to clipboard','customize-my-account-for-woocommerce'); ?>" class="glyphicon glyphicon-book pcfme_copy_key_icon pcfme_copy_key_icon_<?php echo $key; ?> "></span>
+			   	    <span onclick="pcfme_copyToClipboard('.pcfme_copy_key_icon_<?php echo $key; ?>')" cpkey="<?php echo $field_key; ?>" title="<?php echo esc_html__('Copy to clipboard','customize-my-account-pro'); ?>" class="glyphicon glyphicon-book pcfme_copy_key_icon pcfme_copy_key_icon_<?php echo $key; ?> "></span>
 
 			   	</td>
 		     </tr> 
 
 			 <?php if (!preg_match('/\b'.$key.'\b/', $country_fields )) { ?>   
 		       <tr>
-	           <td width="15%"><label for="<?php echo $key; ?>_type"><?php echo esc_html__('Field Type','customize-my-account-for-woocommerce'); ?></label></td>
+	           <td width="15%"><label for="<?php echo $key; ?>_type"><?php echo esc_html__('Field Type','customize-my-account-pro'); ?></label></td>
 		       <td width="85%">
 		          <select id="checkout_field_type_<?php echo $key; ?>" class="checkout_field_type" name="<?php echo $slug; ?>[<?php echo $key; ?>][type]" >
 
@@ -1233,7 +1463,7 @@ class pcfme_add_settings_page_class {
 			       </select>
 			        <a href="#" mnkey="<?php echo $key; ?>" class="pcfme-btn btn btn-primary browse-fields">
 						<i class="pcfme-icon-browse fa fa-bars"></i>
-						<?php echo esc_html__('Browse Fields','customize-my-account-for-woocommerce'); ?>
+						<?php echo esc_html__('Browse Fields','customize-my-account-pro'); ?>
 					</a>
 		       </td>
 	           </tr>
@@ -1244,19 +1474,15 @@ class pcfme_add_settings_page_class {
                
                if (!preg_match('/\b'.$key.'\b/', $address2_field )) { ?>
 			   <tr>
-                <td width="15%"><label for="<?php echo $key; ?>_label"><?php  echo esc_html__('Label','customize-my-account-for-woocommerce'); ?></label></td>
+                <td width="15%"><label for="<?php echo $key; ?>_label"><?php  echo esc_html__('Label','customize-my-account-pro'); ?></label></td>
 	            <td width="85%">
 	            	<input type="text" clkey="<?php echo $key; ?>" class="pcfme_label_input" name="<?php echo $slug; ?>[<?php echo $key; ?>][label]" value="<?php 
 	                if (isset($field['label']) && ($field['label'] != '')) { 
 	            	    echo $field['label']; 
-
-	            	    $cpm_lable = $field['label'];
 	            	} elseif ($key == "order_comments") {
-                        echo esc_html__('Order notes','customize-my-account-for-woocommerce');
+                        echo esc_html__('Order notes','customize-my-account-pro');
 	            	} else { 
 	            		echo $headlingtext; 
-
-	            		 $cpm_lable = $headlingtext;
 
 	            	} ?>" size="100"></td>
                </tr>
@@ -1264,13 +1490,27 @@ class pcfme_add_settings_page_class {
 			
 			   
 			   
+			<tr>
+			   	<td width="15%">
+			   		<label for="<?php echo $key; ?>_width"><?php echo esc_html__('Width','customize-my-account-pro'); ?></label>
+			   	</td>
+			   	<td width="85%">
+			   		<select class="checkout_field_width" name="<?php echo $slug; ?>[<?php echo $key; ?>][width]" >
 
+			   			<option value="form-row-wide" <?php if (isset($fieldwidth) && ($fieldwidth == "form-row-wide" )) { echo 'selected'; } ?>><?php echo esc_html__('Full Width','customize-my-account-pro'); ?></option>
+			   			<option value="form-row-first" <?php if (isset($fieldwidth) && ($fieldwidth == "form-row-first" )) { echo 'selected'; } ?>><?php echo esc_html__('First Half','customize-my-account-pro'); ?></option>
+			   			<option value="form-row-last" <?php if (isset($fieldwidth) && ($fieldwidth == "form-row-last" )) { echo 'selected'; } ?>><?php echo esc_html__('Second Half','customize-my-account-pro'); ?></option>
+
+
+			   		</select>
+			   	</td>
+			</tr>
 
             <?php if (isset($field['type']) && ($field['type'] == "hidden_field")) {  ?>
 
 				<tr>
 					<td width="15%">
-						<label for="<?php echo $key; ?>_charlimit"><?php echo esc_html__('Default Value','customize-my-account-for-woocommerce'); ?></label>
+						<label for="<?php echo $key; ?>_charlimit"><?php echo esc_html__('Default Value','customize-my-account-pro'); ?></label>
 					</td>
 					<td width="85%">
 						<?php $hidden_default = isset($field['hidden_default']) ? $field['hidden_default'] : "Yes"; ?>
@@ -1285,33 +1525,33 @@ class pcfme_add_settings_page_class {
 
 				<tr>
 					<td width="15%">
-						<label for="<?php echo $key; ?>_charlimit"><?php echo esc_html__('Default Date','customize-my-account-for-woocommerce'); ?></label>
+						<label for="<?php echo $key; ?>_charlimit"><?php echo esc_html__('Default Date','customize-my-account-pro'); ?></label>
 					</td>
 					<td width="85%">
 						<input type="checkbox" class="" name="<?php echo $slug; ?>[<?php echo $key; ?>][enable_default_date]" value="1" <?php if (isset($field['enable_default_date']) && ($field['enable_default_date'] == 1)) { echo "checked";} ?>>
-						<?php echo esc_html__('Today plus','customize-my-account-for-woocommerce'); ?>
+						<?php echo esc_html__('Today plus','customize-my-account-pro'); ?>
 						<?php $default_date_add = isset($field['default_date_add']) ? $field['default_date_add'] : 0; ?>
 						&emsp;<input type="number" class="pcfme_default_date_input" name="<?php echo $slug; ?>[<?php echo $key; ?>][default_date_add]" value="<?php echo $default_date_add; ?>" size="20">
-						<?php echo esc_html__('Days','customize-my-account-for-woocommerce'); ?>
+						<?php echo esc_html__('Days','customize-my-account-pro'); ?>
 					</td>
 				</tr>
 
 				<tr>
 					<td width="15%">
-						<label for="<?php echo $key; ?>_charlimit"><?php echo esc_html__('Default Time','customize-my-account-for-woocommerce'); ?></label>
+						<label for="<?php echo $key; ?>_charlimit"><?php echo esc_html__('Default Time','customize-my-account-pro'); ?></label>
 					</td>
 					<td width="85%">
 						<input type="checkbox" class="" name="<?php echo $slug; ?>[<?php echo $key; ?>][enable_default_time]" value="1" <?php if (isset($field['enable_default_time']) && ($field['enable_default_time'] == 1)) { echo "checked";} ?>>
 						
 						<?php $default_time = isset($field['default_time']) ? $field['default_time'] : "08:00"; ?>
 						&emsp;<input type="text" class="pcfme_default_date_input" name="<?php echo $slug; ?>[<?php echo $key; ?>][default_time]" value="<?php echo $default_time; ?>" size="20">
-						<?php echo esc_html__('Format 24 hour','customize-my-account-for-woocommerce'); ?>
+						<?php echo esc_html__('Format 24 hour','customize-my-account-pro'); ?>
 					</td>
 				</tr>
 
 				<tr>
 					<td width="15%">
-						<label for="<?php echo $key; ?>_charlimit"><?php echo esc_html__('Disable Specific Dates','customize-my-account-for-woocommerce'); ?></label>
+						<label for="<?php echo $key; ?>_charlimit"><?php echo esc_html__('Disable Specific Dates','customize-my-account-pro'); ?></label>
 					</td>
 					<td width="85%">
 						
@@ -1319,7 +1559,7 @@ class pcfme_add_settings_page_class {
 						<?php $disable_specific_dates = isset($field['disable_specific_dates']) ? $field['disable_specific_dates'] : ""; ?>
 						<input type="text" class="pcfme_disable_dates_input" name="<?php echo $slug; ?>[<?php echo $key; ?>][disable_specific_dates]" value="<?php echo $disable_specific_dates; ?>">
 
-						<p><?php echo esc_html__('Enter comma separated list of dates in d.m.Y format only you want to disable like 01.01.2024,02.01.2024,03.01.2024,04.01.2024 ','customize-my-account-for-woocommerce'); ?></p>
+						<p><?php echo esc_html__('Enter comma separated list of dates in d.m.Y format only you want to disable like 01.01.2024,02.01.2024,03.01.2024,04.01.2024 ','customize-my-account-pro'); ?></p>
 						
 					</td>
 				</tr>
@@ -1327,7 +1567,7 @@ class pcfme_add_settings_page_class {
 
 				<tr>
 					<td width="15%">
-						<label for="<?php echo $key; ?>_charlimit"><?php echo esc_html__('Allowed Times','customize-my-account-for-woocommerce'); ?></label>
+						<label for="<?php echo $key; ?>_charlimit"><?php echo esc_html__('Allowed Times','customize-my-account-pro'); ?></label>
 					</td>
 					<td width="85%">
 						
@@ -1344,7 +1584,7 @@ class pcfme_add_settings_page_class {
 						
 						<input type="text" class="pcfme_allowed_times_input" name="<?php echo $slug; ?>[<?php echo $key; ?>][allowed_times]" value="<?php echo $allowed_times; ?>">
 
-						<p><?php echo esc_html__('Enter values separated by comma(,) for example 11:00,11:30,12:00 Leave blank to show all.','customize-my-account-for-woocommerce'); ?></p>
+						<p><?php echo esc_html__('Enter values separated by comma(,) for example 11:00,11:30,12:00 Leave blank to show all.','customize-my-account-pro'); ?></p>
 						
 					</td>
 				</tr>			
@@ -1355,7 +1595,7 @@ class pcfme_add_settings_page_class {
 
 				<tr>
 					<td width="15%">
-						<label for="<?php echo $key; ?>_charlimit"><?php echo esc_html__('Max Characters Allowed','customize-my-account-for-woocommerce'); ?></label>
+						<label for="<?php echo $key; ?>_charlimit"><?php echo esc_html__('Max Characters Allowed','customize-my-account-pro'); ?></label>
 					</td>
 					<td width="85%">
 						<?php $charlimit = isset($field['charlimit']) ? $field['charlimit'] : 200; ?>
@@ -1368,9 +1608,9 @@ class pcfme_add_settings_page_class {
 			    <?php if (isset($field['type']) && ($field['type'] == "checkbox")) {  ?>
 
 				<tr>
-					<td width="15%"><label for="<?php echo $key; ?>_required"><?php  echo esc_html__('Checked by default','customize-my-account-for-woocommerce'); ?></label></td>
+					<td width="15%"><label for="<?php echo $key; ?>_required"><?php  echo esc_html__('Checked by default','customize-my-account-pro'); ?></label></td>
 					<td width="85%">
-						<input type="checkbox" data-toggle="toggle" data-size="mini" data-on="<?php  echo esc_html__('Yes','customize-my-account-for-woocommerce'); ?>" data-off="<?php  echo esc_html__('No','customize-my-account-for-woocommerce'); ?>" name="<?php echo $slug; ?>[<?php echo $key; ?>][checked_by_default]" <?php if (isset($field['checked_by_default']) && ($field['checked_by_default'] == 1)) { echo "checked";} ?> value="1">
+						<input type="checkbox" data-toggle="toggle" data-size="mini" data-on="<?php  echo esc_html__('Yes','customize-my-account-pro'); ?>" data-off="<?php  echo esc_html__('No','customize-my-account-pro'); ?>" name="<?php echo $slug; ?>[<?php echo $key; ?>][checked_by_default]" <?php if (isset($field['checked_by_default']) && ($field['checked_by_default'] == 1)) { echo "checked";} ?> value="1">
 					</td>
 				</tr>
 
@@ -1378,79 +1618,67 @@ class pcfme_add_settings_page_class {
 			   
 			   <?php if (!preg_match('/\b'.$key.'\b/', $required_slugs )) { ?>
 		       <tr>
-                <td width="15%"><label for="<?php echo $key; ?>_required"><?php  echo esc_html__('Required','customize-my-account-for-woocommerce'); ?></label></td>
+                <td width="15%"><label for="<?php echo $key; ?>_required"><?php  echo esc_html__('Required','customize-my-account-pro'); ?></label></td>
                 <td width="85%">
-                	<input type="checkbox" data-toggle="toggle" data-size="mini" data-on="<?php  echo esc_html__('Yes','customize-my-account-for-woocommerce'); ?>" data-off="<?php  echo esc_html__('No','customize-my-account-for-woocommerce'); ?>" name="<?php echo $slug; ?>[<?php echo $key; ?>][required]" <?php if (isset($field['required']) && ($field['required'] == 1)) { echo "checked";} ?> value="1"></td>
+                	<input type="checkbox" data-toggle="toggle" data-size="mini" data-on="<?php  echo esc_html__('Yes','customize-my-account-pro'); ?>" data-off="<?php  echo esc_html__('No','customize-my-account-pro'); ?>" name="<?php echo $slug; ?>[<?php echo $key; ?>][required]" <?php if (isset($field['required']) && ($field['required'] == 1)) { echo "checked";} ?> value="1"></td>
 			   </tr>
 			   <?php } ?>
 			   
-			   <tr>
-                <td width="15%"><label for="<?php echo $key; ?>_required"><?php  echo esc_html__('Dashboard notice','customize-my-account-for-woocommerce'); ?></label></td>
-                <td width="85%">
-                	<input type="checkbox" data-toggle="toggle" class="wcmamtx_dash_notice_toggle" data-size="mini" data-on="<?php  echo esc_html__('Yes','customize-my-account-for-woocommerce'); ?>" data-off="<?php  echo esc_html__('No','customize-my-account-for-woocommerce'); ?>" name="<?php echo $slug; ?>[<?php echo $key; ?>][dashboard_notice]" <?php if (isset($field['dashboard_notice']) && ($field['dashboard_notice'] == 1)) { echo "checked";} ?> value="1">
+			   <?php if (!preg_match('/\b'.$key.'\b/', $required_slugs ) && ($slug == "pcfme_additional_settings")) {  ?>
 
-                    <p><?php  echo esc_html__('if set yes customer will see notice on dashboard unless they enter it','customize-my-account-for-woocommerce'); ?></p>
+			   	
+			   	<tr>
+			   		<td width="15%"><label for="<?php echo $key; ?>_required"><?php  echo esc_html__('Multiple Clone','customize-my-account-pro'); ?></label></td>
+			   		<td width="85%">
+			   			<input type="checkbox" trkey="<?php echo $key; ?>" class="pcfme_show_if_multiple_clone_on" data-toggle="toggle" data-size="mini" data-on="<?php  echo esc_html__('Yes','customize-my-account-pro'); ?>" data-off="<?php  echo esc_html__('No','customize-my-account-pro'); ?>" name="<?php echo $slug; ?>[<?php echo $key; ?>][multiple_clone]" <?php if (isset($field['multiple_clone']) && ($field['multiple_clone'] == 1)) { echo "checked";} ?> value="1">
 
-                </td>
-			   </tr>
+			   			<span class="pcfme_show_if_multiple_clone_on_div <?php echo $key; ?>" style="<?php if (isset($field['multiple_clone']) && ($field['multiple_clone'] == 1)) { echo "display:;";} else {echo 'display:none;';} ?>">
+			   				<span></span>
+			   				<select  mtype="<?php echo $slug; ?>"  mnkey="<?php echo $key; ?>" class="checkout_field_products_variations_conditions" data-placeholder="<?php echo esc_html__('Choose Products/Variation','customize-my-account-pro'); ?>" name="<?php echo $slug; ?>[<?php echo $key; ?>][multiclone_condition]">
+			   						<option value="each_quantity" <?php if (isset($field['multiclone_condition']) && ($field['multiclone_condition'] == "each_quantity")) { echo 'selected'; } ?>><?php  echo esc_html__('Each quantity of product or variation','customize-my-account-pro'); ?></option>
+			   					    
+			   					    
 
+			   				</select>
+			   			</span>
 
+			   			<span  class="pcfme_show_if_multiple_clone_on_prducts_span <?php echo $key; ?>" style="<?php if (isset($field['multiclone_condition']) && ($field['multiclone_condition'] == "each_quantity")) { echo "display:;";} else {echo 'display:none;';} ?>">
 
-			   <tr class="wcmamtx_dash_notice_tr" style="<?php if (isset($field['dashboard_notice']) && ($field['dashboard_notice'] == 1)) { echo "display:table-row;";} else { echo 'display:none;'; } ?>">
-			   	<?php 
+			   				<select  mtype="<?php echo $slug; ?>"  mnkey="<?php echo $key; ?>" class="checkout_field_products_variations" data-placeholder="<?php echo esc_html__('Choose Product/Variation','customize-my-account-pro'); ?>" name="<?php echo $slug; ?>[<?php echo $key; ?>][multiclone_product]">
+			   					<?php if (isset($field['multiclone_product']) && ($field['multiclone_product'] != "")) { ?>
+			   						<option value="<?php echo $field['multiclone_product']; ?>" selected>#<?php echo $field['multiclone_product']; ?>- <?php echo get_the_title($field['multiclone_product']); ?></option>
+			   					<?php } ?>
 
-			   			$default_dash_notice = ''.__( 'Kindly Enter required details','customize-my-account-for-woocommerce').'<a href="{edit_account_link}">'.$cpm_lable.'</a>';
+			   				</select>
 
-			   			if (isset($field['dash_notice_text']) && ($field['dash_notice_text'] != "")) { 
-			   				$ds_text_default = $field['dash_notice_text']; 
-			   			} else {
-			   				$ds_text_default =  $default_dash_notice;
-			   			}
-			   			?>
-			   	<td width="15%"><label for="<?php echo $key; ?>_required"><?php  echo esc_html__('Dashboard Notice Text','customize-my-account-for-woocommerce'); ?></label></td>
-			   	<td width="85%">
-			   		<textarea name="<?php echo $slug; ?>[<?php echo $key; ?>][dash_notice_text]" rows="4" cols="70"><?php echo $ds_text_default; ?></textarea>
+			   			</span>
 
-			   		<p><?php  echo esc_html__('{edit_account_link} - your edit account page link','customize-my-account-for-woocommerce'); ?></p>
+			   			<div class="pcfme_extra_notice_wrapper">
+			        		<p class="pcfme_extra_notice_wrapper1">
+			        			<?php echo esc_html__('Inside field label or placeholder you can use variables like {quantity_index} and {product_title} .','customize-my-account-pro'); ?>
+			        			
+			        		</p>
 
-			   	</td>
-			   </tr>
-
-
-			   <tr>
-			   	<td width="15%"><label for="<?php echo $key; ?>_required"><?php  echo esc_html__('Show in User Admin UI Column','customize-my-account-for-woocommerce'); ?></label></td>
-			   	<td width="85%">
-			   		<input type="checkbox" data-toggle="toggle" class="" data-size="mini" data-on="<?php  echo esc_html__('Yes','customize-my-account-for-woocommerce'); ?>" data-off="<?php  echo esc_html__('No','customize-my-account-for-woocommerce'); ?>" name="<?php echo $slug; ?>[<?php echo $key; ?>][show_adminui]" <?php if (isset($field['show_adminui']) && ($field['show_adminui'] == 1)) { echo "checked";} ?> value="1">
-
-			   		
-
-			   	</td>
-			   </tr>
-
-			   <tr>
-			   	<td width="15%"><label for="<?php echo $key; ?>_required"><?php  echo esc_html__('Show in Registration Form','customize-my-account-for-woocommerce'); ?></label></td>
-			   	<td width="85%">
-			   		<input type="checkbox" data-toggle="toggle" class="" data-size="mini" data-on="<?php  echo esc_html__('Yes','customize-my-account-for-woocommerce'); ?>" data-off="<?php  echo esc_html__('No','customize-my-account-for-woocommerce'); ?>" name="<?php echo $slug; ?>[<?php echo $key; ?>][show_register]" <?php if (isset($field['show_register']) && ($field['show_register'] == 1)) { echo "checked";} ?> value="1">
-
-			   		
-
-			   	</td>
-			   </tr>
-
+			        		
+			        	</div>
+			   		</td>
+			   	</tr>
+			   
+			   <?php } ?>
 			   
 			   
 			   <tr>
-                <td width="15%"><label for="<?php echo $key; ?>_label"><?php  echo esc_html__('Placeholder ','customize-my-account-for-woocommerce'); ?></label></td>
+                <td width="15%"><label for="<?php echo $key; ?>_label"><?php  echo esc_html__('Placeholder ','customize-my-account-pro'); ?></label></td>
 	            <td width="85%"><input type="text" name="<?php echo $slug; ?>[<?php echo $key; ?>][placeholder]" value="<?php if (isset($field['placeholder'])) { echo $field['placeholder']; } ?>" size="35"></td>
                </tr>
 			   
                 <tr class="add-field-extraclass" style="">
                	    <td width="15%">
-               		    <label for="<?php echo $key; ?>_extraclass"><?php echo esc_html__('Extra Class','customize-my-account-for-woocommerce'); ?></label>
+               		    <label for="<?php echo $key; ?>_extraclass"><?php echo esc_html__('Extra Class','customize-my-account-pro'); ?></label>
                	    </td>
                	    <td width="85%">
                		    <input type="text" class="pcfme_checkout_field_extraclass" name="<?php echo $slug; ?>[<?php echo $key; ?>][extraclass]" value="<?php if (isset($field['extraclass'])) { echo $field['extraclass']; } ?>" size="35">
-               		    <?php echo esc_html__('Use space key or comma to separate class','customize-my-account-for-woocommerce'); ?>
+               		    <?php echo esc_html__('Use space key or comma to separate class','customize-my-account-pro'); ?>
                	    </td>
                 </tr>
 
@@ -1460,7 +1688,7 @@ class pcfme_add_settings_page_class {
 
                	<tr class="pcfme_field_options_tr" style="<?php if (isset($field['type']) && (($field['type'] == "pcfmeselect") || ($field['type'] == "multiselect") || ($field['type'] == "radio"))) { echo "display:table-row;";} else { echo 'display:none;'; } ?>">
                		<td width="15%">
-               			<label for="<?php echo $key; ?>_options"><?php echo esc_html__('Options','customize-my-account-for-woocommerce'); ?></label>
+               			<label for="<?php echo $key; ?>_options"><?php echo esc_html__('Options','customize-my-account-pro'); ?></label>
                		</td>
                		<td width="85%">
                			
@@ -1490,8 +1718,8 @@ class pcfme_add_settings_page_class {
                              <table class="table pcfme_sortable_table_heading" >
                              	<tr>
                              		<th ></td>
-                             		<th ><?php echo esc_html__('Value','customize-my-account-for-woocommerce'); ?></td>
-                             		<th ><?php echo esc_html__('Text','customize-my-account-for-woocommerce'); ?></td>
+                             		<th ><?php echo esc_html__('Value','customize-my-account-pro'); ?></td>
+                             		<th ><?php echo esc_html__('Text','customize-my-account-pro'); ?></td>
                              	</tr>
                              </table>
                              <table class="table pcfme_sortable_table_options pcfme_sortable_table_options_<?php echo $key; ?>" >
@@ -1530,7 +1758,7 @@ class pcfme_add_settings_page_class {
                              	<td></td>
                              	<td>
                              		<button type="button" mnindex="<?php echo $new_options_array_index; ?>" mntype="<?php if (isset($mntext)) { echo $mntext; } ?>" keyno="<?php echo $key; ?>" class="btn button-primary add-option-button" >
-                             			<span class="pcfme-dashicons dashicons dashicons-insert"></span><?php echo esc_html__('Add Option','customize-my-account-for-woocommerce'); ?>
+                             			<span class="pcfme-dashicons dashicons dashicons-insert"></span><?php echo esc_html__('Add Option','customize-my-account-pro'); ?>
                              		</button>
                              	</td>
                              	
@@ -1549,7 +1777,7 @@ class pcfme_add_settings_page_class {
 
                	    	<tr>
                	    		<td width="15%">
-               	    			<label for="<?php echo $key; ?>_default_option"><?php echo esc_html__('Default Option','customize-my-account-for-woocommerce'); ?></label>
+               	    			<label for="<?php echo $key; ?>_default_option"><?php echo esc_html__('Default Option','customize-my-account-pro'); ?></label>
                	    		</td>
                	    		<td width="85%">
                	    			<?php 
@@ -1559,7 +1787,7 @@ class pcfme_add_settings_page_class {
 
                	    			    <select class="pcfme_default_option_select" name="<?php echo $slug; ?>[<?php echo $key; ?>][default_option]">
                	    			    	    <option  selected="true">
-               	    			    	    	<?php echo esc_html__('Choose Default Option','customize-my-account-for-woocommerce'); ?>
+               	    			    	    	<?php echo esc_html__('Choose Default Option','customize-my-account-pro'); ?>
                	    			    	    		
                	    			    	    </option>
                                             <?php
@@ -1618,7 +1846,7 @@ class pcfme_add_settings_page_class {
 			   
 			   ?>
 			   <tr>
-                <td width="15%"><label><?php  echo esc_html__('Visibility','customize-my-account-for-woocommerce'); ?></label></td>
+                <td width="15%"><label><?php  echo esc_html__('Visibility','customize-my-account-pro'); ?></label></td>
 	            <td width="85%">
 		            <select class="checkout_field_visibility" name="<?php echo $slug; ?>[<?php echo $key; ?>][visibility]" >
 
@@ -1634,7 +1862,7 @@ class pcfme_add_settings_page_class {
 		                
 
 			       </select>
-			       <input type="checkbox" data-width="200" data-height="25" data-onstyle="success" data-offstyle="danger" class="pcfme_dynamically_visible_toggle" data-toggle="toggle" data-on="<?php  echo esc_html__('Dynamic Visibility On','customize-my-account-for-woocommerce'); ?>" data-off="<?php  echo esc_html__('Dynamic Visibility Off','customize-my-account-for-woocommerce'); ?>" <?php if (isset($field['visibility']) && ($field['visibility'] == "dynamically-visible")) { echo "checked";} ?> value="1">
+			       <input type="checkbox" data-width="200" data-height="25" data-onstyle="success" data-offstyle="danger" class="pcfme_dynamically_visible_toggle" data-toggle="toggle" data-on="<?php  echo esc_html__('Dynamic Visibility On','customize-my-account-pro'); ?>" data-off="<?php  echo esc_html__('Dynamic Visibility Off','customize-my-account-pro'); ?>" <?php if (isset($field['visibility']) && ($field['visibility'] == "dynamically-visible")) { echo "checked";} ?> value="1">
 		        </td>
 	           </tr>
 
@@ -1645,15 +1873,15 @@ class pcfme_add_settings_page_class {
 
 			    <tr class="checkout_field_shipping_tr" style="<?php if (isset($field['visibility']) && ($field['visibility'] == "shipping-specific" )) { echo "display:;"; } else { echo 'display:none;'; } ?>" >
 			        <td width="15%">
-                        <label><span class="pcfmeformfield"><?php echo esc_html__('Choose Shipping Method','customize-my-account-for-woocommerce'); ?></span></label>
+                        <label><span class="pcfmeformfield"><?php echo esc_html__('Choose Shipping Method','customize-my-account-pro'); ?></span></label>
 	                </td>
 			        <td width="85%">
 			        	<select class="checkout_field_shipping_showhide" name="<?php echo $slug; ?>[<?php echo $key; ?>][shipping][showhide]" style="width:100px">
-                            <option value="show" <?php if (isset($field['shipping']['showhide']) && ($field['shipping']['showhide'] != "hide")) { echo 'selected';}?>><?php echo esc_html__('show','customize-my-account-for-woocommerce'); ?></option>
-				            <option value="hide" <?php if (isset($field['shipping']['showhide']) && ($field['shipping']['showhide'] == "hide")) { echo 'selected';}?>><?php echo esc_html__('hide','customize-my-account-for-woocommerce'); ?></option>
+                            <option value="show" <?php if (isset($field['shipping']['showhide']) && ($field['shipping']['showhide'] != "hide")) { echo 'selected';}?>><?php echo esc_html__('show','customize-my-account-pro'); ?></option>
+				            <option value="hide" <?php if (isset($field['shipping']['showhide']) && ($field['shipping']['showhide'] == "hide")) { echo 'selected';}?>><?php echo esc_html__('hide','customize-my-account-pro'); ?></option>
                         </select>&emsp;
-                        <span><?php echo esc_html__('by','customize-my-account-for-woocommerce'); ?></span>&emsp;
-			            <select class="checkout_field_shipping" data-placeholder="<?php echo esc_html__('Choose Shipping Method','customize-my-account-for-woocommerce'); ?>" name="<?php echo $slug; ?>[<?php echo $key; ?>][shipping][method]" style="width:600px">
+                        <span><?php echo esc_html__('by','customize-my-account-pro'); ?></span>&emsp;
+			            <select class="checkout_field_shipping" data-placeholder="<?php echo esc_html__('Choose Shipping Method','customize-my-account-pro'); ?>" name="<?php echo $slug; ?>[<?php echo $key; ?>][shipping][method]" style="width:600px">
                             <?php foreach ($shipping_methods as $rkey=>$rvalue) { ?>
 				                <option value="<?php echo $rkey; ?>" <?php if (isset($field['shipping']['method']) && ($field['shipping']['method'] == $rkey)) { echo 'selected';}?>><?php echo $rkey; ?></option>
 				            <?php } ?>
@@ -1664,15 +1892,15 @@ class pcfme_add_settings_page_class {
 
 			    <tr class="checkout_field_payment_tr" style="<?php if (isset($field['visibility']) && ($field['visibility'] == "payment-specific" )) { echo "display:;"; } else { echo 'display:none;'; } ?>" >
 			        <td width="15%">
-                        <label><span class="pcfmeformfield"><?php echo esc_html__('Choose Payment Gateway','customize-my-account-for-woocommerce'); ?></span></label>
+                        <label><span class="pcfmeformfield"><?php echo esc_html__('Choose Payment Gateway','customize-my-account-pro'); ?></span></label>
 	                </td>
 			        <td width="85%">
 			        	<select class="checkout_field_payment_showhide" name="<?php echo $slug; ?>[<?php echo $key; ?>][payment][showhide]" style="width:100px">
-                            <option value="show" <?php if (isset($field['payment']['showhide']) && ($field['payment']['showhide'] != "hide")) { echo 'selected';}?>><?php echo esc_html__('show','customize-my-account-for-woocommerce'); ?></option>
-				            <option value="hide" <?php if (isset($field['payment']['showhide']) && ($field['payment']['showhide'] == "hide")) { echo 'selected';}?>><?php echo esc_html__('hide','customize-my-account-for-woocommerce'); ?></option>
+                            <option value="show" <?php if (isset($field['payment']['showhide']) && ($field['payment']['showhide'] != "hide")) { echo 'selected';}?>><?php echo esc_html__('show','customize-my-account-pro'); ?></option>
+				            <option value="hide" <?php if (isset($field['payment']['showhide']) && ($field['payment']['showhide'] == "hide")) { echo 'selected';}?>><?php echo esc_html__('hide','customize-my-account-pro'); ?></option>
                         </select>&emsp;
-                        <span><?php echo esc_html__('by','customize-my-account-for-woocommerce'); ?></span>&emsp;
-			            <select class="checkout_field_payment" data-placeholder="<?php echo esc_html__('Choose Payment Gateway','customize-my-account-for-woocommerce'); ?>" name="<?php echo $slug; ?>[<?php echo $key; ?>][payment][gateway]" style="width:600px">
+                        <span><?php echo esc_html__('by','customize-my-account-pro'); ?></span>&emsp;
+			            <select class="checkout_field_payment" data-placeholder="<?php echo esc_html__('Choose Payment Gateway','customize-my-account-pro'); ?>" name="<?php echo $slug; ?>[<?php echo $key; ?>][payment][gateway]" style="width:600px">
                             <?php foreach ($payment_gateways as $rkey=>$rvalue) { ?>
 				                <option value="<?php echo $rkey; ?>" <?php if (isset($field['payment']['gateway']) && ($field['payment']['gateway'] == $rkey)) { echo 'selected';}?>><?php echo $rkey; ?></option>
 				            <?php } ?>
@@ -1685,11 +1913,15 @@ class pcfme_add_settings_page_class {
 			    <tr class="checkout_field_dynamic_tr_new display_if_field_type_dynamic" style="<?php if (isset($field['visibility']) && ($field['visibility'] == "dynamically-visible" )) { echo "display:;"; } else { echo 'display:none;'; } ?>">
 			        <td width="15%">
                         <label for="notice_category"><span class="pcfmeformfield">
-                        	<?php echo esc_html__('Dynamic Visibility Rules','customize-my-account-for-woocommerce'); ?></span>
+                        	<?php echo esc_html__('Dynamic Visibility Rules','customize-my-account-pro'); ?></span>
                         </label>
 	                </td>
 			        <td width="85%">
-                          <?php echo esc_html__('This feature is available in pro version','customize-my-account-for-woocommerce'); ?>
+			        	<p><?php echo esc_html__('This feature is available in pro version of Easy Checkout Field Editor','customize-my-account-pro'); ?></p>
+						<a type="button" href="#" data-toggle="modal" data-target="#wcmamtx_upgrade_modal"  class="btn btn-primary wcmamtx_pro_linkw nav-wrap" >
+							<span class="dashicons dashicons-lock"></span>
+							<?php echo esc_html__( 'Upgrade to pro' ,'customize-my-account-for-woocommerce'); ?>
+						</a>
 			        </td>
 			    </tr>
 
@@ -1698,29 +1930,61 @@ class pcfme_add_settings_page_class {
 				<tr class="checkout_field_conditional_tr_new" style="">
 					<td width="15%">
 						<label for="notice_category"><span class="pcfmeformfield">
-							<?php echo esc_html__('Field Conditional Rules','customize-my-account-for-woocommerce'); ?></span>
+							<?php echo esc_html__('Field Conditional Rules','customize-my-account-pro'); ?></span>
 						</label>
 					</td>
 					<td width="85%">
-						<?php echo esc_html__('This feature is available in pro version','customize-my-account-for-woocommerce'); ?>
+						<p><?php echo esc_html__('This feature is available in pro version of Easy Checkout Field Editor','customize-my-account-pro'); ?></p>
+						<a type="button" href="#" data-toggle="modal" data-target="#wcmamtx_upgrade_modal"  class="btn btn-primary wcmamtx_pro_linkw nav-wrap" >
+							<span class="dashicons dashicons-lock"></span>
+							<?php echo esc_html__( 'Upgrade to pro' ,'customize-my-account-for-woocommerce'); ?>
+						</a>
 					</td>
 				</tr>
 
 			 <?php if (($slug != 'pcfme_additional_settings') && ($key != 'order_comments')) { ?>
 			   <tr>
-                <td width="15%"><label for="<?php echo $key; ?>_label"><?php  echo esc_html__('Validate','customize-my-account-for-woocommerce'); ?></label></td>
+                <td width="15%"><label for="<?php echo $key; ?>_label"><?php  echo esc_html__('Validate','customize-my-account-pro'); ?></label></td>
 	            <td width="85%">
 		           <select name="<?php echo $slug; ?>[<?php echo $key; ?>][validate][]" class="row-validate-multiselect" multiple>
-			         <option value="state" <?php if (preg_match('/\bstate\b/', $validatearray )) { echo 'selected'; } ?>><?php echo esc_html__('state','customize-my-account-for-woocommerce'); ?></option>
-			         <option value="postcode" <?php if (preg_match('/\bpostcode\b/', $validatearray )) { echo 'selected'; } ?>><?php echo esc_html__('postcode','customize-my-account-for-woocommerce'); ?></option>
-			         <option value="email" <?php if (preg_match('/\bemail\b/', $validatearray )) { echo 'selected'; } ?>><?php echo esc_html__('email','customize-my-account-for-woocommerce'); ?></option>
-			         <option value="phone" <?php if (preg_match('/\bphone\b/', $validatearray )) { echo 'selected'; } ?>><?php echo esc_html__('phone','customize-my-account-for-woocommerce'); ?></option>
+			         <option value="state" <?php if (preg_match('/\bstate\b/', $validatearray )) { echo 'selected'; } ?>><?php echo esc_html__('state','customize-my-account-pro'); ?></option>
+			         <option value="postcode" <?php if (preg_match('/\bpostcode\b/', $validatearray )) { echo 'selected'; } ?>><?php echo esc_html__('postcode','customize-my-account-pro'); ?></option>
+			         <option value="email" <?php if (preg_match('/\bemail\b/', $validatearray )) { echo 'selected'; } ?>><?php echo esc_html__('email','customize-my-account-pro'); ?></option>
+			         <option value="phone" <?php if (preg_match('/\bphone\b/', $validatearray )) { echo 'selected'; } ?>><?php echo esc_html__('phone','customize-my-account-pro'); ?></option>
 			       </select>
 		        </td>
 	           </tr>
 			 <?php } ?>
 			   
+			   <tr>
+			     <td width="15%"><label for="<?php echo $key; ?>_clear"><?php  echo esc_html__('Chose Options','customize-my-account-pro'); ?></label></td>
+			     <td  width="85%">
+			      <table>
+			       
+			   
+			        <tr class="disable_datepicker_tr" style="<?php if (isset($field['type']) && (($field['type'] == "datepicker") || ($field['type'] == "datetimepicker") || ($field['type'] == "daterangepicker")|| ($field['type'] == "datetimerangepicker"))) { echo "display:;";} else { echo "display:none;"; } ?>">
+                     <td><input class="checkout_field_disable_past_dates" type="checkbox" name="<?php echo $slug; ?>[<?php echo $key; ?>][disable_past]" <?php if (isset($field['disable_past']) && ($field['disable_past'] == 1)) { echo "checked";} ?> value="1"></td>
+			         <td><label ><?php  echo esc_html__('Disable Past Date Selection In Datepicker','customize-my-account-pro'); ?></label></td>
+					</tr>
+					
+					<tr>
+			        <td><input type="checkbox" name="<?php echo $slug; ?>[<?php echo $key; ?>][orderedition]" <?php if (isset($field['orderedition']) && ($field['orderedition'] == 1)) { echo "checked";} ?> value="1"></td>
+                    <td><label for="<?php echo $key; ?>_clear"><?php  echo esc_html__('Show field detail along with orders','customize-my-account-pro'); ?></label></td>
+                    </tr>
+					
+					<tr>
+			        <td><input type="checkbox" name="<?php echo $slug; ?>[<?php echo $key; ?>][emailfields]" <?php if (isset($field['emailfields']) && ($field['emailfields'] == 1)) { echo "checked";} ?> value="1"></td>
+                    <td><label><?php  echo esc_html__('Show field detail on woocommerce order email','customize-my-account-pro'); ?></label></td>
+                    </tr>
+					
+					<tr>
+			        <td><input type="checkbox" name="<?php echo $slug; ?>[<?php echo $key; ?>][pdfinvoice]" <?php if (isset($field['pdfinvoice']) && ($field['pdfinvoice'] == 1)) { echo "checked";} ?> value="1"></td>
+                    <td><label><?php  echo esc_html__('Show field detail on WooCommerce PDF Invoices & Packing Slips Invoice','customize-my-account-pro'); ?></label></td>
+                    </tr>
 
+			        </table>
+				   </td>
+				 </tr>
 				 <?php do_action('pcfme_after_field_content_end',$key,$field); ?>
 			   </table>
 
@@ -1739,10 +2003,52 @@ class pcfme_add_settings_page_class {
 
 		do_action('sysbasics_extra_button_admin');
 
-		
+		echo '<a target="_blank" class="btn pcfme_docs_buton btn-success" href="https://www.sysbasics.com/knowledge-base/category/woocommerce-easy-checkout-field-editor/"><span class="pcfme_docs_icon dashicons dashicons-welcome-learn-more"></span>Documentation</a>';
+        
+
+        echo '<a target="_blank" class="btn pcfme_support_buton btn-warning" href="https://www.sysbasics.com/support/"><span class="pcfme_docs_icon dashicons dashicons-admin-generic"></span>Support</a>';
+
+        
+        ?>
+
+            <a type="button" href="#" data-toggle="modal" data-target="#wcmamtx_upgrade_modal"  class="btn btn-primary wcmamtx_pro_link nav-wrap" >
+                <span class="dashicons dashicons-lock"></span>
+                <?php echo esc_html__( 'Upgrade to pro' ,'customize-my-account-for-woocommerce'); ?>
+            </a>
 
 
 
+            <div class="modal fade" id="wcmamtx_upgrade_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+
+                        <div class="modal-body">
+
+                            <a type="button" target="_blank" href="https://www.sysbasics.com/go/easy-checkout/" name="submit" id="wcmamtx_frontend_link" class="btn btn-primary wcmamtx_frontend_link" >
+                                <span class="dashicons dashicons-lock"></span>
+                                <?php echo esc_html__( 'Visit Pro Version Page' ,'customize-my-account-for-woocommerce'); ?>
+                            </a>
+
+                            <a type="button" target="_blank" href="https://www.sysbasics.com/go/checkout-demo/" name="submit" id="wcmamtx_frontend_link" class="btn btn-success wcmamtx_frontend_link" >
+                                <span class="dashicons dashicons-lock"></span>
+                                <?php echo esc_html__( 'Visit Pro Version Demo' ,'customize-my-account-for-woocommerce'); ?>
+                            </a>
+
+                            <br><br>
+
+                            
+
+                        </div>
+                        <div class="modal-footer">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        <?php
+ 
 
         echo '<h2 class="nav-tab-wrapper">';
 		foreach ( $this->pcfme_plugin_settings_tabs as $tab_key => $tab_caption ) {

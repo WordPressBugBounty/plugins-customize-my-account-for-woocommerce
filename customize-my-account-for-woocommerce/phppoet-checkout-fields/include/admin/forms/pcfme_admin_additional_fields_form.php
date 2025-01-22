@@ -22,13 +22,7 @@ if (isset($additional_settings) && (sizeof($additional_settings) >= 1)) {
 
 $noticerowno3 = 1;
 ?>
-
 <center>
-	
-	<div class="alert alert-primary" role="alert">
-		<?php echo esc_html__('Click on Add Account Field button to add new field.To manage existing fields visit settings tab.','customize-my-account-for-woocommerce'); ?>
-	</div>
-
 	<div class="panel-group pcfme-sortable-list" id="accordion" >
 		<?php if (isset($additional_settings) && (sizeof($additional_settings) >= 1)) { 
 			foreach ($additional_settings as $key =>$field) { 
@@ -47,14 +41,17 @@ $noticerowno3 = 1;
 		?>	  
 		<button type="button" href="#" data-etype="additional" id="wcmamtx_add_field" class="btn btn-primary" >
 			<span class="dashicons dashicons-insert"></span>
-			<?php echo esc_html__('Add Account Field','customize-my-account-for-woocommerce'); ?>
+			<?php echo esc_html__('Add Additional Field','customize-my-account-pro'); ?>
 		</button>
 
-		
+		<a type="button" target="_blank" href="<?php echo $checkout_url; ?>" id="pcfme_frontend_link" class="btn btn-primary pcfme_frontend_link">
+			<span class="dashicons dashicons-welcome-view-site"></span>
+			<?php echo esc_html__('Frontend','customize-my-account-pro'); ?>
+		</a>
 
 		<?php do_action( 'pcfme_add_author_links' ); ?>
 		
 	</div>
 	</center> <?php
 	
-$this->show_new_form($conditional_fields_dropdown,$this->additional_settings_key,$country_fields);
+	$this->show_new_form($conditional_fields_dropdown,$this->additional_settings_key,$country_fields);

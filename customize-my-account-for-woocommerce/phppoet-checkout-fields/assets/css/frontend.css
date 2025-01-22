@@ -1,3 +1,4 @@
+/* 4.0.5 */
 .month-wrapper {
     width: 400px !important;
 }
@@ -24,7 +25,7 @@ table.month2 td {
 	position:relative ;
 }
 
-select.syscmafwpl-singleselect {
+select.pcfme-singleselect {
     min-height: 50px;
     padding: 10px;
     border-radius: 5px;
