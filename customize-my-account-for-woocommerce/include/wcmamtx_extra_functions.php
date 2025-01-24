@@ -157,7 +157,7 @@ if (!function_exists('wcmamtx_load_pro_feature_preview')) {
 if (!function_exists('wcmamtx_pro_added_endpoint')) {
 
 	function wcmamtx_pro_added_endpoint($value) {
-		if (($value["content"] != "") && ($value["third_party"] != "yes")) {
+		if ((isset($value["content"]) && ($value["content"] != "")) && (!isset($value["third_party"]) || ($value["third_party"] != "yes"))) {
 			$pro_added = "yes";
 		} else {
 			$pro_added = "no";
