@@ -35,7 +35,7 @@ class pcfme_add_settings_page_class {
 
         
 
-        add_action( 'admin_post_add_field_form_response', array( $this, 'add_field_form_response' ));
+        add_action( 'admin_post_pcfme_add_field_form_response', array( $this, 'pcfme_add_field_form_response' ));
 
 		add_action( 'admin_post_add_fees_form_response', array( $this, 'add_fees_form_response' ));
 
@@ -123,7 +123,7 @@ class pcfme_add_settings_page_class {
 		}
 	}
 
-	public function add_field_form_response() {
+	public function pcfme_add_field_form_response() {
 
 		if( isset( $_POST['pcfme_add_field_nonce'] ) && wp_verify_nonce( $_POST['pcfme_add_field_nonce'], 'pcfme_nonce_hidden') ) {
 
@@ -553,7 +553,7 @@ class pcfme_add_settings_page_class {
             $rule_type_number2   .= '<span  class="checkout_field_coupons_span" style="display:none;"><select class="checkout_field_coupons" data-placeholder="'.esc_html__('Choose Coupons','customize-my-account-pro').'" name="" multiple>
             </select></span>';
 
-
+            $rule_type_number3   = '';
 
 
             $rule_type_number3   .= '<span  class="checkout_field_date_span" style="display:none;"><input type="text" class="checkout_field_dynamic_rule_date" name="" value="">';
@@ -562,11 +562,15 @@ class pcfme_add_settings_page_class {
 
             $rule_type_number3   .= '</span>';
 
+            $rule_type_number4    = '';
+
             $rule_type_number4   .= '<span  class="checkout_field_time_span" style="display:none;"> <input type="text" class=" checkout_field_dynamic_rule_time" name="" value="">';
 
  
 
             $rule_type_number4   .= '</span>';
+
+            $rule_type_number5    = '';
 
             $rule_type_number5   .= '<span  class="checkout_field_date_time_span" style="display:none;"><input type="text" class=" checkout_field_dynamic_rule_date_time" name="" value="">';
 
@@ -1136,10 +1140,10 @@ class pcfme_add_settings_page_class {
 
 						<div class="modal-body">
 
-							<form action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" method="post" id="add_field_form_response" >			
+							<form action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" method="post" id="pcfme_add_field_form_response" >			
 
 
-								<input type="hidden" name="action" value="add_field_form_response">
+								<input type="hidden" name="action" value="pcfme_add_field_form_response">
 								<input type="hidden" name="pcfme_add_field_nonce" value="<?php echo wp_create_nonce( 'pcfme_nonce_hidden' ); ?>" />	
 
 

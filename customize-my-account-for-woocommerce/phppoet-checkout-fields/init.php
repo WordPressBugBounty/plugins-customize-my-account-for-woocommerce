@@ -28,7 +28,7 @@ if (is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
 
 
 
-$plugin_data = get_plugin_data( __FILE__ );
+$plugin_data = get_plugin_data( __FILE__,false ,false );
 $plugin_version = $plugin_data['Version'];
 
 
