@@ -1045,7 +1045,7 @@ class pcfme_add_settings_page_class {
 
         
 	   
-	    $billing_pcfmesettings_page = add_submenu_page( 'sysbasics', esc_html__('Easy Checkout Fields','customize-my-account-for-woocommerce'), esc_html__('Easy Checkout Fields','customize-my-account-for-woocommerce'), 'manage_woocommerce', $this->pcfme_plugin_options, array($this, 'plugin_options_page'));
+	    $billing_pcfmesettings_page = add_submenu_page( 'sysbasics', esc_html__('Edit Address Fields','customize-my-account-for-woocommerce'), esc_html__('Edit Address Fields','customize-my-account-for-woocommerce'), 'manage_woocommerce', $this->pcfme_plugin_options, array($this, 'plugin_options_page'));
 	}
 	
 	
