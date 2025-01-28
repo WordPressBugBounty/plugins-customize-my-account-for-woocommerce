@@ -20,7 +20,7 @@ if (is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
   include dirname( __FILE__ ) . '/include/manage_extrafield_class.php';
   include dirname( __FILE__ ) . '/include/admin/pcfme_admin_settings.php';
   include dirname( __FILE__ ) . '/easy-checkout-file-upload/easy-checkout-file-upload.php';
-
+  include dirname( __FILE__ ) . '/my-address-fields/init.php';
 }
 
 

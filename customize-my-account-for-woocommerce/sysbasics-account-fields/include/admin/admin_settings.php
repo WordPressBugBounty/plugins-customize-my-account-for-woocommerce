@@ -8,7 +8,7 @@ class syscmafwpl_add_settings_page_class_free {
 
 	private $additional_settings_key         = 'syscmafwpl_additional_settings';
 	private $extra_settings_key              = 'syscmafwpl_extra_settings';
-	private $forms_settings_key              = 'syscmafwpl_forms_settings';
+	//private $forms_settings_key              = 'syscmafwpl_forms_settings';
     private $syscmafwpl_plugin_settings_tabs = array();	
 	
 	
@@ -743,7 +743,7 @@ class syscmafwpl_add_settings_page_class_free {
 
 		$this->syscmafwpl_plugin_settings_tabs['syscmafwpl_additional_settings'] = esc_html__( 'Edit Account/Registration Fields' ,'customize-my-account-for-woocommerce');
 
-		$this->syscmafwpl_plugin_settings_tabs['syscmafwpl_forms_settings'] = esc_html__( 'Field Forms' ,'customize-my-account-for-woocommerce');
+		//$this->syscmafwpl_plugin_settings_tabs['syscmafwpl_forms_settings'] = esc_html__( 'Field Forms' ,'customize-my-account-for-woocommerce');
 
 		$this->syscmafwpl_plugin_settings_tabs['syscmafwpl_extra_settings'] = esc_html__( 'Settings' ,'customize-my-account-for-woocommerce');
 
@@ -759,10 +759,11 @@ class syscmafwpl_add_settings_page_class_free {
 		add_settings_section( 'syscmafwpl_section_additional', '', '', $this->additional_settings_key );
 		add_settings_field( 'syscmafwpl_additional_option', '', array( $this, 'syscmafwpl_field_additional_option' ), $this->additional_settings_key, 'syscmafwpl_section_additional' );
 
+		/*
 		register_setting( $this->forms_settings_key, $this->forms_settings_key );
 		add_settings_section( 'syscmafwpl_section_forms', '', '', $this->forms_settings_key );
 		add_settings_field( 'syscmafwpl_forms_option', '', array( $this, 'syscmafwpl_field_forms_option' ), $this->forms_settings_key, 'syscmafwpl_section_forms' );
-
+        */
 		
 
 		register_setting( $this->extra_settings_key, $this->extra_settings_key );
