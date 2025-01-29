@@ -25,8 +25,6 @@ $module_settings = (array) get_option( 'wcmamtx_module_settings' );
         $el_widgets1 = array(
           'user-avatar'=>esc_html__('User Avatar (Included)','customize-my-account-for-woocommerce'),
           'elementor-templates'=>esc_html__('User Avatar (Included)','customize-my-account-for-woocommerce'),
-          'my-account-fields'=>esc_html__('My Account Fields','customize-my-account-for-woocommerce'),
-          'easy-checkout-fields'=>esc_html__('Easy Checkout Fields','customize-my-account-for-woocommerce'),
           'sample'=>esc_html__('sample','customize-my-account-for-woocommerce')
         );
 
@@ -34,13 +32,9 @@ $module_settings = (array) get_option( 'wcmamtx_module_settings' );
         $el_widgets2 = array(
           'user-avatar'=>esc_html__('User Avatar (Included)','customize-my-account-for-woocommerce'),
           'elementor-templates'=>esc_html__('Elementor Templates (Included)','customize-my-account-for-woocommerce'),
-          'my-account-fields'=>esc_html__('My Account Fields (Included)','customize-my-account-for-woocommerce'),
-          'easy-checkout-fields'=>esc_html__('Easy Checkout Fields','customize-my-account-for-woocommerce'),
-          'my-account-fields-pro'=>esc_html__('My Account Fields Pro (Pro Module)','customize-my-account-for-woocommerce'),
           'Order-actions'=>esc_html__('Order Actions (Pro Module)','customize-my-account-for-woocommerce'),
           'Order-columns'=>esc_html__('Order Columns (Pro Module)','customize-my-account-for-woocommerce'),
           'Download-columns'=>esc_html__('Download Columns (Pro Module)','customize-my-account-for-woocommerce'),
-          'easy-checkout-fields-pro'=>esc_html__('Easy Checkout Fields Editor Pro (Pro Module)','customize-my-account-for-woocommerce'),
           'sample'=>esc_html__('sample','customize-my-account-for-woocommerce')
         );
 

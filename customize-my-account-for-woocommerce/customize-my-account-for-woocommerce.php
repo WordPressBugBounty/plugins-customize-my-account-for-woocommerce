@@ -3,7 +3,7 @@
     Plugin Name: SysBasics Customize My Account for WooCommerce
     Plugin URI: https://sysbasics.com
     Description: Customize My account page. Add/Edit/Remove Endpoints.
-    Version: 2.13.8
+    Version: 2.13.9
     Author: SysBasics
     Author URI: https://sysbasics.com
     Domain Path: /languages
@@ -120,8 +120,6 @@ if (!function_exists('wcmamtx_is_module_enabled')) {
         $el_widgets1 = array(
           'user-avatar'=>esc_html__('User Avatar (Included)','customize-my-account-for-woocommerce'),
           'elementor-templates'=>esc_html__('User Avatar (Included)','customize-my-account-for-woocommerce'),
-          'my-account-fields'=>esc_html__('My Account Fields','customize-my-account-for-woocommerce'),
-          'easy-checkout-fields'=>esc_html__('Easy Checkout Fields','customize-my-account-for-woocommerce'),
           'sample'=>esc_html__('sample','customize-my-account-for-woocommerce')
         );
 
@@ -129,13 +127,9 @@ if (!function_exists('wcmamtx_is_module_enabled')) {
         $el_widgets2 = array(
           'user-avatar'=>esc_html__('User Avatar (Included)','customize-my-account-for-woocommerce'),
           'elementor-templates'=>esc_html__('Elementor Templates (Included)','customize-my-account-for-woocommerce'),
-          'my-account-fields'=>esc_html__('My Account Fields (Included)','customize-my-account-for-woocommerce'),
-          'easy-checkout-fields'=>esc_html__('Easy Checkout Fields','customize-my-account-for-woocommerce'),
-          'my-account-fields-pro'=>esc_html__('My Account Fields Pro (Pro Module)','customize-my-account-for-woocommerce'),
           'Order-actions'=>esc_html__('Order Actions (Pro Module)','customize-my-account-for-woocommerce'),
           'Order-columns'=>esc_html__('Order Columns (Pro Module)','customize-my-account-for-woocommerce'),
           'Download-columns'=>esc_html__('Download Columns (Pro Module)','customize-my-account-for-woocommerce'),
-          'easy-checkout-fields-pro'=>esc_html__('Easy Checkout Fields Editor Pro (Pro Module)','customize-my-account-for-woocommerce'),
           'sample'=>esc_html__('sample','customize-my-account-for-woocommerce')
         );
 
@@ -155,8 +149,8 @@ if (!function_exists('wcmamtx_is_module_enabled')) {
 
 $user_avatar_enable = wcmamtx_is_module_enabled("user-avatar");
 $elementor_module_enable = wcmamtx_is_module_enabled("elementor-templates");
-$my_account_fields_enable = wcmamtx_is_module_enabled('my-account-fields');
-$easy_checkout_fields_enable = wcmamtx_is_module_enabled('easy-checkout-fields');
+
+
    /**
     * check weather woocommerce is active or not
     */
@@ -174,13 +168,9 @@ $easy_checkout_fields_enable = wcmamtx_is_module_enabled('easy-checkout-fields')
 
     }
     
-     if ((!is_plugin_active( 'sysbasics-my-account-fields-pro/sysbasics-my-account-fields-pro.php' ) ) && ($my_account_fields_enable == "yes")) {
-        include dirname( __FILE__ ) . '/sysbasics-account-fields/init.php';
-    }
 
-    if ((!is_plugin_active( 'phppoet-checkout-fields/phppoet-checkout-fields.php' ) ) && ($easy_checkout_fields_enable == "yes")) {
-        include dirname( __FILE__ ) . '/phppoet-checkout-fields/init.php';
-    }
+
+    
 
     
 
