@@ -101,6 +101,26 @@ if (!function_exists('wcmamtx_placeholder_img_src')) {
 }
 
 
+
+/**
+ * Get account menu item classes.
+ *
+ * @since 1.0.0
+ * @param string $endpoint Endpoint.
+ * @return string
+ */
+
+if (!function_exists('wcmamtx_show_disabled_toggle_image')) {
+
+	function wcmamtx_show_disabled_toggle_image() {
+		echo '<a href="#" data-toggle="modal" data-target="#wcmamtx_upgrade_modal" class=""><img class="wcmamtx_disabled_image_popup" src="'.wcmamtx_PLUGIN_URL.'assets/images/disabled_pro_toggle.png"></a>';
+	}
+
+}
+
+
+
+
 /**
  * Get account menu item classes.
  *

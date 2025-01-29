@@ -569,3 +569,7 @@ table.pro_preview_table {
     margin-bottom: 20px;
 
 }
+
+.toggle.btn.btn-light.off.disabled {
+    display: none;
+}

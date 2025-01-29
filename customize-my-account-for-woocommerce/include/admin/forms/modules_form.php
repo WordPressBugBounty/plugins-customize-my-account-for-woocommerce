@@ -54,8 +54,11 @@ $module_settings = (array) get_option( 'wcmamtx_module_settings' );
           <li class="wcmamtx_module_<?php echo $key; ?>">
             <label><?php echo esc_attr($value); ?></label>
             <input type="checkbox" data-toggle="toggle" data-on="<?php echo esc_html__('Yes','customize-my-account-for-woocommerce'); ?>" data-off="<?php echo esc_html__('No','customize-my-account-for-woocommerce'); ?>" class="wcmamtx_widget_checkbox" name="wcmamtx_module_settings[el_widgets][<?php echo $key; ?>]" value="yes" <?php if (isset($el_widgets[$key])) { echo 'checked';}?> <?php if (isset($el_widgets2[$key]) && (!isset($el_widgets1[$key]))) { echo 'disabled';}?> >
+            <?php 
 
-             <?php
+            if (isset($el_widgets2[$key]) && (!isset($el_widgets1[$key]))) { 
+               wcmamtx_show_disabled_toggle_image();
+            }
 
              switch($key) {
               case "user-avatar":
@@ -66,17 +69,9 @@ $module_settings = (array) get_option( 'wcmamtx_module_settings' );
                 echo '<p class="wcmamtx_module_info">Elementor users can create custom my account elementor templates, plugin supports all widgets related to my account page, You can override login , register page and much more.</p>';
               break;
 
-              case "my-account-fields":
-                echo '<p class="wcmamtx_module_info">Manage user fields on my account page , create custom fields , create custom fields form inside my account endpoints and much more.</p>';
-              break;
+              
 
-              case "easy-checkout-fields":
-                echo '<p class="wcmamtx_module_info">Checkout field module that easily intergrates with my account fields module, collect required details from user on checkout page and display them on view order page.</p>';
-              break;
-
-              case "my-account-fields-pro":
-                echo '<p class="wcmamtx_module_info">All the features of my account fields module plus show fields as per multiple dynamic rules plus show/hide fields conditionaly based on value of other fields. <a href="https://www.sysbasics.com/go/my-account-fields/" target="_blank">More Details</a></p>';
-              break;
+              
 
               case "Order-actions":
                 echo '<p class="wcmamtx_module_info">Manage existing order actions as well as add new custom order actions. <a href="https://www.sysbasics.com/go/customize/" target="_blank">More Details</a></p>';
@@ -90,9 +85,7 @@ $module_settings = (array) get_option( 'wcmamtx_module_settings' );
                 echo '<p class="wcmamtx_module_info">Manage existing Download Columns as well as add new custom Download Columns where you can display user data collected from checkout fields module. <a href="https://www.sysbasics.com/go/customize/" target="_blank">More Details</a></p>';
               break;
 
-              case "easy-checkout-fields-pro":
-                echo '<p class="wcmamtx_module_info">All the features of checkout module  plus show fields as per multiple dynamic rules plus show/hide fields conditionaly based on value of other fields. <a href="https://www.sysbasics.com/go/easy-checkout/" target="_blank">More Details</a></p>';
-              break;
+              
             }
 
              ?>

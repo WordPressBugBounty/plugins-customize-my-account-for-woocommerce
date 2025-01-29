@@ -12,6 +12,7 @@ class wcmamtx_add_settings_page_class {
 	private $wcmamtx_order_actions_page    = 'wcmamtx_order_actions';
     private $wcmamtx_avatar_settings_page  = 'wcmamtx_avatar_settings';
     private $wcmamtx_wizard_page           = 'wcmamtx_wizard_settings';
+    private $wcmamtx_pro_settings          = 'wcmamtx_pro_settings';
 	private $wcmamtx_plugin_settings_tab   = array();
 	
 
@@ -799,9 +800,23 @@ class wcmamtx_add_settings_page_class {
 
         add_settings_field( 'wizard_option', '', array( $this, 'wcmamtx_wizard_page' ), $this->wcmamtx_wizard_page, 'wcmamtx_wizard_section' );
 
+
+        $this->wcmamtx_plugin_settings_tab[$this->wcmamtx_pro_settings] = esc_html__( 'Settings' ,'customize-my-account-for-woocommerce');
+
+
+        register_setting( $this->wcmamtx_pro_settings, $this->wcmamtx_pro_settings );
+
+        add_settings_section( 'wcmamtx_pro_settings_section', '', '', $this->wcmamtx_pro_settings );
+
+        add_settings_field( 'pro_settings_option', '', array( $this, 'wcmamtx_pro_settings_page' ), $this->wcmamtx_pro_settings, 'wcmamtx_pro_settings_section' );
+
 		
 
 	}
+
+    public function wcmamtx_pro_settings_page() {
+        include ('forms/pro_settings.php');
+    }
 
 
     public function wcmamtx_wizard_page() {
