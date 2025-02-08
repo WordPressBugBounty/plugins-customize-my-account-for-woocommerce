@@ -6,7 +6,8 @@ Tested up to: 6.7.1
 WC Tested up to: 9.6.0
 WC Requires at least: 4.0
 Requires PHP: 5.2
-Stable tag: 2.13.10
+Stable tag: 2.13.11
+Requires Plugins: woocommerce
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -144,8 +145,9 @@ Learn more about how [Appsero collects and uses this data](https://Appsero.com/p
 
 == Changelog ==
 
-Version 2.13.10 - 29 January 2025
+Version 2.13.11 - 29 January 2025
 
+- Version 2.13.11 (29 January 2025)  - Added Require WooCommerce Tag.
 - Version 2.13.10 (29 January 2025)  - Show pro popup on disabled toggles.
 - Version 2.13.8 (28 January 2025)   - Changed menu text to Edit Adress Fields.
 - Version 2.13.7 (28 January 2025)   - Reintroduced Field Forms.

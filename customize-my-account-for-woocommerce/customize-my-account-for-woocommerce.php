@@ -3,7 +3,7 @@
     Plugin Name: SysBasics Customize My Account for WooCommerce
     Plugin URI: https://sysbasics.com
     Description: Customize My account page. Add/Edit/Remove Endpoints.
-    Version: 2.13.10
+    Version: 2.13.11
     Author: SysBasics
     Author URI: https://sysbasics.com
     Domain Path: /languages
@@ -13,6 +13,7 @@
     Tested up to: 6.7.1
     WC requires at least: 3.0.0
     WC tested up to: 9.6.0
+    Requires Plugins: woocommerce
 */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -151,11 +152,7 @@ $user_avatar_enable = wcmamtx_is_module_enabled("user-avatar");
 $elementor_module_enable = wcmamtx_is_module_enabled("elementor-templates");
 
 
-   /**
-    * check weather woocommerce is active or not
-    */
-
-   if (is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
+ 
 
 
       //include the classes
@@ -182,21 +179,7 @@ $elementor_module_enable = wcmamtx_is_module_enabled("elementor-templates");
 }
 
 
-} else {
 
-    /**
-     * Display Notice if woocommerce is not installed
-     */
-
-    function wcmamtx__installation_notice_woocommerce() {
-        echo '<div class="updated" style="padding:15px; position:relative;"><a href="http://wordpress.org/plugins/woocommerce/">'.esc_html__('customize-my-account-for-woocommerce','customize-my-account-for-woocommerce').'</a> '.esc_html__('must be activated before activating Customize My Account For WooCommerce ','customize-my-account-for-woocommerce').' </div>';
-    }
-
-    add_action('admin_notices', 'wcmamtx__installation_notice_woocommerce');
-
-    return;
-
-}
 
 
 
