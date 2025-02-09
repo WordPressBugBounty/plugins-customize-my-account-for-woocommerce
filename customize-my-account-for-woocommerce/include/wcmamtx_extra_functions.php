@@ -794,7 +794,7 @@ if (!function_exists('wcmamtx_get_account_menu_li_html')) {
 		<li  class="<?php echo wcmamtx_get_account_menu_item_classes( $key , $value ); ?> <?php echo $extraclass; ?> <?php if ($icon_source == "custom") { echo $icon_extra_class; } ?>">
 			<a class="woocommerce-MyAccount-navigation-link_a"  href="<?php echo wcmamtx_get_account_endpoint_url( $key ); ?>" <?php if (isset($value['wcmamtx_type']) && ($value['wcmamtx_type'] == "link") && (isset($value['link_targetblank'])) && ($value['link_targetblank'] == 01) ) { echo 'target="_blank"'; } ?>>
 				<?php wcmamtx_get_account_menu_li_icon_html($icon_source,$value,$key); ?>
-				<?php echo esc_html( $name ); ?>
+				<span class="wcmamtx_sticky_icon_name"><?php echo esc_html( $name ); ?></span>
 			</a>
 		</li>
 
@@ -1079,7 +1079,7 @@ if (!function_exists('wcmamtx_get_account_menu_group_html')) {
 
 				}
 				?>
-				<?php echo esc_html( $name ); ?>
+				<span class="wcmamtx_sticky_icon_name"><?php echo esc_html( $name ); ?></span>
 			</a>
 			<?php
 

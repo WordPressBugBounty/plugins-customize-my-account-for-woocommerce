@@ -34,6 +34,24 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
       add_filter('woodmart_override_heading_my_account_menu', array( $this, 'wp_nav_menu_items_function' ), 10, 1 );
 
        add_action( 'wp_nav_menu_items', array( $this, 'wcmamtx_add_menu_items' ), 10, 2 );
+
+       add_filter('body_class',array( $this, 'wcmamtx_add_body_classes' ));
+
+    }
+
+    public function wcmamtx_add_body_classes($classes) {
+
+        if (is_account_page()) {
+            $wcmamtx_pro_settings  = (array) get_option('wcmamtx_pro_settings'); 
+
+            if (isset($wcmamtx_pro_settings['sticky_sidebar']) && ($wcmamtx_pro_settings['sticky_sidebar'] == "yes")) {
+
+                $classes[] = 'wcmamtx_full_size_content';
+
+            }
+        }
+
+        return $classes;
     }
 
 
@@ -669,7 +687,7 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
             $template = wcmamtx_plugin_path() . '/templates/myaccount/dashboard.php';
         }
 
-
+        
 
 
         
