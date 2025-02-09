@@ -191,6 +191,19 @@ $var( function() {
         }
     });
 
+
+    $var('.sticky_sidebar_checkbox').on("change",function() {
+     
+        if($var(this).prop("checked")) {
+            $var(".wcmamtx_align_stick_right_tr").show();
+        } else {
+            $var(".wcmamtx_align_stick_right_tr").hide();
+        }
+    });
+
+
+    
+
     $var(".wcmamtx_load_elementor_template").select2({
            ajax: {
                 url: wcmamtxadmin.ajax_url, // AJAX URL is predefined in WordPress admin

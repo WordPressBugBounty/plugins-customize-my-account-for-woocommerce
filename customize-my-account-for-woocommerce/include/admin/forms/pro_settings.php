@@ -8,13 +8,23 @@ $wcmamtx_pro_settings  = (array) get_option('wcmamtx_pro_settings');
 		<td><label><?php echo esc_html__('Enable Mobile Friendly Sticky Sidebar Menu','customize-my-account-for-woocommerce-pro'); ?></label> <br />
 		</td>
 		<td>
-			<input type="checkbox" data-toggle="toggle"  data-on="<?php echo esc_html__('Yes','customize-my-account-for-woocommerce-pro'); ?>" data-off="<?php echo esc_html__('No','customize-my-account-for-woocommerce-pro'); ?>" class="" name="<?php  echo esc_html__($this->wcmamtx_pro_settings); ?>[sticky_sidebar]" value="yes" <?php if (isset($wcmamtx_pro_settings['sticky_sidebar']) && ($wcmamtx_pro_settings['sticky_sidebar'] == "yes")) { echo 'checked'; } ?>>
+			<input type="checkbox" data-toggle="toggle"  data-on="<?php echo esc_html__('Yes','customize-my-account-for-woocommerce-pro'); ?>" data-off="<?php echo esc_html__('No','customize-my-account-for-woocommerce-pro'); ?>" class="sticky_sidebar_checkbox" name="<?php  echo esc_html__($this->wcmamtx_pro_settings); ?>[sticky_sidebar]" value="yes" <?php if (isset($wcmamtx_pro_settings['sticky_sidebar']) && ($wcmamtx_pro_settings['sticky_sidebar'] == "yes")) { echo 'checked'; } ?>>
 			
 			<p>
 				<a href="https://www.sysbasics.com/knowledge-base/sticky-sidebar-menu-compatible-themes-list/" target="_blank">
 					<?php echo esc_html__('List of supported themes','customize-my-account-for-woocommerce-pro'); ?>
 				</a>
 			</p>
+		</td>
+	</tr>
+
+	<tr class="wcmamtx_align_stick_right_tr" style="<?php if (isset($wcmamtx_pro_settings['sticky_sidebar']) && ($wcmamtx_pro_settings['sticky_sidebar'] == "yes")) { echo 'display:table-row;'; } else { echo 'display:none;'; } ?>">
+		<td><label><?php echo esc_html__('Float sticky sidebar to right side','customize-my-account-for-woocommerce-pro'); ?></label> <br />
+		</td>
+		<td>
+			<input type="checkbox" data-toggle="toggle"  data-on="<?php echo esc_html__('Yes','customize-my-account-for-woocommerce-pro'); ?>" data-off="<?php echo esc_html__('No','customize-my-account-for-woocommerce-pro'); ?>" class="" name="<?php  echo esc_html__($this->wcmamtx_pro_settings); ?>[sticky_sidebar_right]" value="yes" <?php if (isset($wcmamtx_pro_settings['sticky_sidebar_right']) && ($wcmamtx_pro_settings['sticky_sidebar_right'] == "yes")) { echo 'checked'; } ?>>
+			
+			
 		</td>
 	</tr>
 

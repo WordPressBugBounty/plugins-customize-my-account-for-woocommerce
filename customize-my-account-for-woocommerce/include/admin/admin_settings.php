@@ -642,7 +642,7 @@ class wcmamtx_add_settings_page_class {
 
 		    wp_enqueue_script( 'select2', ''.wcmamtx_PLUGIN_URL.'assets/js/select2.js' );
 
-		    if (isset($current_tab) && ($current_tab == "wcmamtx_advanced_settings")) {
+		    if (isset($current_tab) && (($current_tab == "wcmamtx_advanced_settings") || ($current_tab == "wcmamtx_pro_settings") )) {
 
 		         wp_enqueue_script( 'wcmamtxadmin', ''.wcmamtx_PLUGIN_URL.'assets/js/admin.js',array('jquery-ui-accordion'), '1.0.0', true );
 
