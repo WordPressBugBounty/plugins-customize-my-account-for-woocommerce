@@ -23,6 +23,7 @@ $module_settings = (array) get_option( 'wcmamtx_module_settings' );
         <?php 
 
         $el_widgets1 = array(
+          'my-account-fields'    =>esc_html__('My Account Fields','customize-my-account-for-woocommerce'),
           'user-avatar'=>esc_html__('User Avatar (Included)','customize-my-account-for-woocommerce'),
           'elementor-templates'=>esc_html__('User Avatar (Included)','customize-my-account-for-woocommerce'),
           'sample'=>esc_html__('sample','customize-my-account-for-woocommerce')
@@ -30,9 +31,10 @@ $module_settings = (array) get_option( 'wcmamtx_module_settings' );
 
 
         $el_widgets2 = array(
-          'user-avatar'=>esc_html__('User Avatar (Included)','customize-my-account-for-woocommerce'),
-          'elementor-templates'=>esc_html__('Elementor Templates (Included)','customize-my-account-for-woocommerce'),
-          'Order-actions'=>esc_html__('Order Actions (Pro Module)','customize-my-account-for-woocommerce'),
+          'my-account-fields'    =>esc_html__('My Account Fields','customize-my-account-for-woocommerce'),
+          'user-avatar'          =>esc_html__('User Avatar (Included)','customize-my-account-for-woocommerce'),
+          'elementor-templates'  =>esc_html__('Elementor Templates (Included)','customize-my-account-for-woocommerce'),
+          'Order-actions'        =>esc_html__('Order Actions (Pro Module)','customize-my-account-for-woocommerce'),
           'Order-columns'=>esc_html__('Order Columns (Pro Module)','customize-my-account-for-woocommerce'),
           'Download-columns'=>esc_html__('Download Columns (Pro Module)','customize-my-account-for-woocommerce'),
           'sample'=>esc_html__('sample','customize-my-account-for-woocommerce')
@@ -53,7 +55,15 @@ $module_settings = (array) get_option( 'wcmamtx_module_settings' );
 
           <li class="wcmamtx_module_<?php echo $key; ?>">
             <label><?php echo esc_attr($value); ?></label>
-            <input type="checkbox" data-toggle="toggle" data-on="<?php echo esc_html__('Yes','customize-my-account-for-woocommerce'); ?>" data-off="<?php echo esc_html__('No','customize-my-account-for-woocommerce'); ?>" class="wcmamtx_widget_checkbox" name="wcmamtx_module_settings[el_widgets][<?php echo $key; ?>]" value="yes" <?php if (isset($el_widgets[$key])) { echo 'checked';}?> <?php if (isset($el_widgets2[$key]) && (!isset($el_widgets1[$key]))) { echo 'disabled';}?> >
+
+            <?php if ($key != "my-account-fields") { ?>
+              <input type="checkbox" data-toggle="toggle" data-on="<?php echo esc_html__('Yes','customize-my-account-for-woocommerce'); ?>" data-off="<?php echo esc_html__('No','customize-my-account-for-woocommerce'); ?>" class="wcmamtx_widget_checkbox" name="wcmamtx_module_settings[el_widgets][<?php echo $key; ?>]" value="yes" <?php if (isset($el_widgets[$key])) { echo 'checked';}?> <?php if (isset($el_widgets2[$key]) && (!isset($el_widgets1[$key]))) { echo 'disabled';}?> >
+            <?php } else { ?>
+              
+              <a class="button-sm button button-primary" target="_blank" href="https://wordpress.org/plugins/my-account-custom-fields-for-woocommerce/">
+                <?php echo esc_html__( 'Install Free Plugin' ,'customize-my-account-for-woocommerce'); ?>
+              </a>
+            <?php  } ?>
             <?php 
 
             if (isset($el_widgets2[$key]) && (!isset($el_widgets1[$key]))) { 
@@ -63,6 +73,10 @@ $module_settings = (array) get_option( 'wcmamtx_module_settings' );
              switch($key) {
               case "user-avatar":
                 echo '<p class="wcmamtx_module_info">User avatar modules allows users to upload custom avatar instead of gravtar, display username before navigation.</p>';
+              break;
+
+              case "my-account-fields":
+                echo '<p class="wcmamtx_module_info">Free Plugin to manage my account fields in my account page , register form , also create custom my account forms to use inside custom endpoints.</p>';
               break;
 
               case "elementor-templates":

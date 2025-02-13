@@ -35,24 +35,11 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
 
        add_action( 'wp_nav_menu_items', array( $this, 'wcmamtx_add_menu_items' ), 10, 2 );
 
-       add_filter('body_class',array( $this, 'wcmamtx_add_body_classes' ));
+       
 
     }
 
-    public function wcmamtx_add_body_classes($classes) {
 
-        if (is_account_page()) {
-            $wcmamtx_pro_settings  = (array) get_option('wcmamtx_pro_settings'); 
-
-            if (isset($wcmamtx_pro_settings['sticky_sidebar']) && ($wcmamtx_pro_settings['sticky_sidebar'] == "yes")) {
-
-                $classes[] = 'wcmamtx_full_size_content';
-
-            }
-        }
-
-        return $classes;
-    }
 
 
     public function wcmamtx_add_myaccount_links() { 

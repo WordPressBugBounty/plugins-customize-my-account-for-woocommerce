@@ -149,11 +149,9 @@ if (isset($menu_position) && ($menu_position != '')) {
 
 if ($menu_shape == 'vertical') {
 
-   if (isset($wcmamtx_pro_settings['sticky_sidebar']) && ($wcmamtx_pro_settings['sticky_sidebar'] == "yes")) { 
-       include ("sidebar/index.php"); 
-   } else {
-       include ("vertical_menu_shape.php");
-   } 
+   
+    include ("vertical_menu_shape.php");
+   
 
 
   
