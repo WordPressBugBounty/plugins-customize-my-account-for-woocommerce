@@ -593,3 +593,7 @@ ul.wcmamtx_vertical_menu li.is-active {
 }
 
 
+.wcmamtx_notice_div.dashboard_text {
+    padding: 20px;
+    background-color: #d2d2ff;
+}

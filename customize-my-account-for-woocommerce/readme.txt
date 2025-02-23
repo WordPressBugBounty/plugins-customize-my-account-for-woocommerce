@@ -6,7 +6,7 @@ Tested up to: 6.7.2
 WC Tested up to: 9.6.2
 WC Requires at least: 4.0
 Requires PHP: 5.2
-Stable tag: 2.14.3
+Stable tag: 2.2.0
 Requires Plugins: woocommerce
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -144,6 +144,10 @@ Learn more about how [Appsero collects and uses this data](https://Appsero.com/p
 
 
 == Changelog ==
+
+Version 2.2.0 - 23 February 2025
+
+- Enhancement - Admin only dismissible instructional notice on dashboard endpoint.
 
 Version 2.14.3 - 13 February 2025
 

@@ -721,7 +721,7 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
 
 	public function wcmamtx_load_assets() {
 
-		$wcmamtx_locals = array();
+		$wcmamtx_locals = array('ajax_url'              => admin_url( 'admin-ajax.php' ));
 
         $wcmamtx_plugin_options = (array) get_option('wcmamtx_plugin_options');
 

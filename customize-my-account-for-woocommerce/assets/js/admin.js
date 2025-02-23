@@ -162,6 +162,9 @@ $var( function() {
     });
 
 
+    
+
+
     $var(".wcmamtx_dismiss_renew_notice").on('click',function(event) {
         
         event.preventDefault();

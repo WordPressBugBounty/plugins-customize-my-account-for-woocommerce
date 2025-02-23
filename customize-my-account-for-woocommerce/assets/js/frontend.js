@@ -3,6 +3,25 @@ var $vas = jQuery.noConflict();
     'use strict';
 
     $vas(function() {
+
+      $vas(".wcmamtx_dismiss_dashboard_text_notice").on('click',function(event) {
+        
+        event.preventDefault();
+
+        $vas(".wcmamtx_notice_div").remove();
+
+        $vas.ajax({
+                data: {action: "wcmamtx_dismiss_dashboard_text_notice"  },
+                type: 'POST',
+                url: wcmamtxfrontend.ajax_url,
+                success: function( response ) { 
+                    
+                }
+        });
+
+        return false;
+
+    });
         
       $vas(".wcmamtx_group").on('click',function(event) {
           event.preventDefault();

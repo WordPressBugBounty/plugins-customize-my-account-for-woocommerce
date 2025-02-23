@@ -228,6 +228,32 @@ if (!function_exists('wcmamtx_review_reminder_div')) {
 }
 
 
+if (!function_exists('wcmamtx_dashboard_text_reminder_div')) {
+
+	function wcmamtx_dashboard_text_reminder_div() { 
+		?>
+
+		<div class="wcmamtx_notice_div dashboard_text">
+
+			<div class="wcmamtx_notice_div_uppertext">
+				<?php 
+
+				echo esc_html__( 'You can customize default dashboard texts from Endpoints/Dashboard tab, To hide user avatar visit user avatar tab.This notice is visible to admins only.','customize-my-account-for-woocommerce'); ?>
+
+				<a type="button" target="_blank" href="#"  class="wcmamtx_dismiss_dashboard_text_notice" >
+						
+						<?php echo esc_html__( 'Dismiss notice' ,'customize-my-account-for-woocommerce'); ?>
+				</a>
+
+				
+			</div>
+		</div>
+
+		<?php 
+	}
+}
+
+
 
 /**
  * License activation reminder.
