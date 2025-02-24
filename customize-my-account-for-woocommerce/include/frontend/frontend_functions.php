@@ -31,38 +31,47 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
 
       add_action('the_content', array( $this, 'wcmamtx_modify_post_content' ));
 
+
+
       add_filter('woodmart_override_heading_my_account_menu', array( $this, 'wp_nav_menu_items_function' ), 10, 1 );
 
        add_action( 'wp_nav_menu_items', array( $this, 'wcmamtx_add_menu_items' ), 10, 2 );
 
-       
+       add_shortcode('sysbasics_dashboard_menu', array( $this, 'sysbasics_dashboard_menu_function' ));
 
+    }
+
+
+    public function sysbasics_dashboard_menu_function() {
+        ob_start();
+
+        $this->wcmamtx_add_myaccount_links();
+
+        return ob_get_clean();
     }
 
 
 
 
     public function wcmamtx_add_myaccount_links() { 
-
-
         $wcmamtx_tabs   = get_option('wcmamtx_advanced_settings');
 
-        $plugin_options = (array) get_option( 'wcmamtx_plugin_options' );
-
-        $plugin_options = (array) get_option( 'wcmamtx_plugin_options' );
-
-        $show_dash_links = apply_filters('wcmamtx_show_dashboard_links',"no");
+        $plugin_options = (array) get_option( 'wcmamtx_pro_settings' );
          
-        if ( $show_dash_links == "no") {
+        if ( (isset($plugin_options['disable_dashboard_links'])) && ($plugin_options['disable_dashboard_links'] == "yes")) {
             return;
         }
 
         if (!isset($wcmamtx_tabs) || (empty($wcmamtx_tabs))) {
-           $wcmamtx_tabs = wc_get_account_menu_items();
-       } 
-       ?>
-       <div class="wcmtx-my-account-links wcmtx-grid">
-        <?php foreach ( $wcmamtx_tabs as $key => $value ) : 
+             $wcmamtx_tabs = wc_get_account_menu_items();
+        } 
+
+
+       
+        
+        ?>
+        <div class="wcmtx-my-account-links wcmtx-grid">
+            <?php foreach ( $wcmamtx_tabs as $key => $value ) : 
 
 
             $should_show = 'yes';
@@ -71,71 +80,71 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
 
 
             if (isset($value['show']) && ($value['show'] == "no")) {
+                
+                 $should_show = 'no';
+                
+            }
 
-               $should_show = 'no';
+            if (isset($value['visibleto']) && ($value['visibleto'] != "all")) {
 
-           }
+                $allowedroles  = isset($value['roles']) ? $value['roles'] : "";
 
-           if (isset($value['visibleto']) && ($value['visibleto'] != "all")) {
+                $allowedusers  = isset($value['users']) ? $value['users'] : array();
 
-            $allowedroles  = isset($value['roles']) ? $value['roles'] : "";
+                $is_visible    = wcmamtx_check_role_visibility($allowedroles,$value['visibleto'],$allowedusers);
 
-            $allowedusers  = isset($value['users']) ? $value['users'] : array();
+            } else {
 
-            $is_visible    = wcmamtx_check_role_visibility($allowedroles,$value['visibleto'],$allowedusers);
-
-        } else {
-
-            $is_visible = 'yes';
-        }
-
-
-
-
-        $icon_source       = isset($value['icon_source']) ? $value['icon_source'] : "default";
-        if (isset($value['endpoint_name']) && ($value['endpoint_name'] != '')) {
-            $name = $value['endpoint_name'];
-        } else {
-            $name = $value;
-        }  
+                $is_visible = 'yes';
+            }
 
 
 
-        $wcmamtx_type = isset($value['wcmamtx_type']) ? $value['wcmamtx_type'] : "default";
 
-        $hide_in_link_toggle = isset($value['hide_dashboard_links']) && ($value['hide_dashboard_links'] == "01") ? "enabled" : "disabled";
+            $icon_source       = isset($value['icon_source']) ? $value['icon_source'] : "default";
+               if (isset($value['endpoint_name']) && ($value['endpoint_name'] != '')) {
+                $name = $value['endpoint_name'];
+            } else {
+                $name = $value;
+            }  
 
-        if (isset($hide_in_link_toggle) && ($hide_in_link_toggle == "enabled")) {
+            
 
-           $should_show = 'no';
+            $wcmamtx_type = isset($value['wcmamtx_type']) ? $value['wcmamtx_type'] : "default";
 
-       }
+            $hide_in_link_toggle = isset($value['hide_dashboard_links']) && ($value['hide_dashboard_links'] == "01") ? "enabled" : "disabled";
+
+            if (isset($hide_in_link_toggle) && ($hide_in_link_toggle == "enabled")) {
+                
+                 $should_show = 'no';
+                
+            }
 
 
-       if (($wcmamtx_type != "group") && ($should_show == 'yes') && ( $is_visible == "yes")) {
-         $key = isset($value['endpoint_key']) ? $value['endpoint_key'] : $key;
+            if (($wcmamtx_type != "group") && ($should_show == 'yes') && ( $is_visible == "yes")) {
+               $key = isset($value['endpoint_key']) ? $value['endpoint_key'] : $key;
 
-         $wcmamtx_plugin_options = (array) get_option('wcmamtx_plugin_options');
+               $wcmamtx_plugin_options = (array) get_option('wcmamtx_plugin_options');
 
-         $ajax_class = isset($wcmamtx_plugin_options['ajax_navigation']) && ($wcmamtx_plugin_options['ajax_navigation'] == "yes") ? "wcmamtx_ajax_enabled" : "";
-         ?>
-         <div class="wcmamtx_dashboard_link <?php echo esc_attr( $key ); ?>-link <?php echo $ajax_class; ?>">
+               $ajax_class = isset($wcmamtx_plugin_options['ajax_navigation']) && ($wcmamtx_plugin_options['ajax_navigation'] == "yes") ? "wcmamtx_ajax_enabled" : "";
+               ?>
+                <div class="wcmamtx_dashboard_link <?php echo esc_attr( $key ); ?>-link <?php echo $ajax_class; ?>">
+                    
+                    <a href="<?php echo wcmamtx_get_account_endpoint_url( $key ); ?>">
+                        
+                        <p class="wcmtx_icon_src">
+                             <?php wcmamtx_get_account_menu_li_icon_html($icon_source,$value,$key); ?>
+                        </p>
 
-            <a href="<?php echo wcmamtx_get_account_endpoint_url( $key ); ?>">
-
-                <p class="wcmtx_icon_src">
-                   <?php wcmamtx_get_account_menu_li_icon_html($icon_source,$value,$key); ?>
-               </p>
-
-               <?php echo esc_html( $name ); ?>
-
-           </a>
-       </div>
-   <?php } ?>
-<?php endforeach; ?>
-</div>
-<?php 
-}
+                        <?php echo esc_html( $name ); ?>
+                            
+                    </a>
+                </div>
+            <?php } ?>
+            <?php endforeach; ?>
+        </div>
+        <?php 
+    }
 
 
     public function wp_nav_menu_items_function($out) {
