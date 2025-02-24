@@ -12,7 +12,7 @@ $avatar_settings = (array) get_option( 'wcmamtx_avatar_settings' );
 
 
 	<tr>
-		<td><label><?php echo esc_html__('Do not display avatar','customize-my-account-for-woocommerce'); ?></label> <br />
+		<td><label><?php echo esc_html__('Display avatar','customize-my-account-for-woocommerce'); ?></label> <br />
 		</td>
 		<td>
 			<input type="checkbox" data-toggle="toggle"  data-on="<?php echo 'Yes'; ?>" data-off="<?php echo 'No'; ?>" class="wcmamtx_show_avatar_checkbox" name="<?php  echo $this->wcmamtx_avatar_settings_page; ?>[disable_avatar]" value="yes" <?php if (isset($avatar_settings['disable_avatar']) && ($avatar_settings['disable_avatar'] == "yes")) { echo 'checked'; } ?>>

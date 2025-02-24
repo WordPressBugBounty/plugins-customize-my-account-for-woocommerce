@@ -8,9 +8,9 @@
 
     if (isset($avatar_settings['disable_avatar']) && ($avatar_settings['disable_avatar'] == "yes")) {
 
-        $show_avatar = 'no';
-    } else {
         $show_avatar = 'yes';
+    } else {
+        $show_avatar = 'no';
     }
 
     $user_avatar_enable = wcmamtx_is_module_enabled("user-avatar");
@@ -24,7 +24,7 @@
 
     
 
-    if (isset($avatar_settings['intro_text_hello']) && ($avatar_settings['intro_text_hello'] == "yes")) {
+    if (isset($avatar_settings['intro_text_hello']) && ($avatar_settings['intro_text_hello'] == "yes") && ($show_avatar == "yes")) {
 
         $intro_text_hello = 'no';
     } else {
@@ -32,7 +32,7 @@
     }
     
 
-    if (($intro_text_hello == "yes") && ($user_avatar_enable == "yes")) { 
+    if (($intro_text_hello == "yes") && ($user_avatar_enable == "yes") && ($show_avatar == "yes")) { 
 
         global $current_user;
         wp_get_current_user();
