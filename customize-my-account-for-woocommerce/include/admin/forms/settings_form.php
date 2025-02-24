@@ -49,29 +49,7 @@ if ((sizeof($advancedsettings) != 1)) {
     }
   }
 
-  $frontend_menu_items_updated = get_option('frontend_menu_items_updated');
 
-
-
-  foreach ($frontend_menu_items_updated as $zkey=>$zvalue) {
-
-    $match = wcmtxka_find_string_match_pro($zkey,$advancedsettings);
-
-    if (!array_key_exists($zkey, $advancedsettings) && !array_key_exists($zkey, $core_fields_array) && ($match == "notfound")) {
-
-      
-
-      $advancedsettings[$zkey] = array(
-        'show' => 'yes',
-        'third_party' => 'yes',
-        'endpoint_key' => $zkey,
-        'wcmamtx_type' => 'endpoint',
-        'parent'       => 'none',
-        'endpoint_name'=> $zvalue,
-      );           
-
-    }
-  }
 
   
 
@@ -80,7 +58,7 @@ if ((sizeof($advancedsettings) != 1)) {
       
 
 
-      
+     
 
       if (!isset($advancedsettings) || (sizeof($advancedsettings) == 1)) {
         ?>

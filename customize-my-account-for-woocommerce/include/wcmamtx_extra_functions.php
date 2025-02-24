@@ -82,7 +82,94 @@ if (!function_exists('wcmamtx_placeholder_img_src')) {
 
 
 
+/**
+ * Get account menu item classes.
+ *
+ * @since 1.0.0
+ * @param string $endpoint Endpoint.
+ * @return string
+ */
 
+if (!function_exists('load_wcmamtx_optional_class')) {
+
+	function load_wcmamtx_optional_class() {
+
+		$default_class = '';
+		
+		$advancedsettings  = (array) get_option('wcmamtx_advanced_settings');  
+
+		$tabs              = wc_get_account_menu_items();
+
+		$core_fields       = 'dashboard,orders,downloads,edit-address,edit-account,customer-logout';
+
+
+
+
+
+		$core_fields_array =  array(
+			'dashboard'       => esc_html__('Dashboard','woocommerce'),
+			'orders'          => esc_html__('Orders','woocommerce'),
+			'downloads'       => esc_html__('Downloads','woocommerce'),
+			'edit-address'    => esc_html__('Addresses','woocommerce'),
+			'edit-account'    => esc_html__('Account Details','woocommerce'),
+			'customer-logout' => esc_html__('Log out','woocommerce')
+		);
+
+		$tabs                = apply_filters( 'woocommerce_account_menu_items', $tabs, $core_fields_array );
+
+
+
+		$frontend_menu_items = get_option('wcmamtx_frontend_items');
+
+
+
+
+		if ((sizeof($advancedsettings) != 1)) {
+
+			foreach ($tabs as $ikey=>$ivalue) {
+
+				$match = wcmtxka_find_string_match_pro($ikey,$advancedsettings);
+
+				if (!array_key_exists($ikey, $advancedsettings) && !array_key_exists($ikey, $core_fields_array) && ($match == "notfound")) {
+
+
+
+					$advancedsettings[$ikey] = array(
+						'show' => 'yes',
+						'third_party' => 'yes',
+						'endpoint_key' => $ikey,
+						'wcmamtx_type' => 'endpoint',
+						'parent'       => 'none',
+						'endpoint_name'=> $ivalue,
+					);           
+
+				}
+			}
+
+
+
+
+
+
+		}
+
+
+
+
+
+		if (!isset($advancedsettings) || (sizeof($advancedsettings) == 1)) {
+			$default_class = "wcmamtx_one_time_save";
+
+		} else {
+
+			$default_class = "";
+		}
+
+		return $default_class;
+
+	}
+
+}
 
 /**
  * Get account menu item classes.
@@ -238,7 +325,7 @@ if (!function_exists('wcmamtx_dashboard_text_reminder_div')) {
 			<div class="wcmamtx_notice_div_uppertext">
 				<?php 
 
-				echo esc_html__( 'You can customize default dashboard texts from Endpoints/Dashboard tab, To hide user avatar visit user avatar tab.This notice is visible to admins only.','customize-my-account-for-woocommerce'); ?>
+				echo esc_html__( 'You can customize default dashboard texts from Endpoints/Dashboard tab.This notice is visible to admins only.','customize-my-account-for-woocommerce'); ?>
 
 				<a type="button" target="_blank" href="#"  class="wcmamtx_dismiss_dashboard_text_notice" >
 						

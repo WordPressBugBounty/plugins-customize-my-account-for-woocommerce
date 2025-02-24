@@ -258,6 +258,8 @@ li.wcmamtx_group2.woocommerce-MyAccount-navigation-link.open {
 
 a.woocommerce-MyAccount-navigation-link_a i.fa {
     float: right;
+    font-size: 22px;
+    color: black;
 }
 
 .theme-blocksy a.woocommerce-MyAccount-navigation-link_a::before {

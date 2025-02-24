@@ -309,6 +309,13 @@ $var( function() {
     });
 
 
+    if ($var(".wcmamtx_one_time_save").length > 0){
+
+        $var(".wcmamtx_one_time_save").trigger("click");
+
+    }
+
+
     $var("#wcmamtx_reset_order_button").on('click',function() {
         var result = confirm(wcmamtxadmin.restorealert);
         
