@@ -599,3 +599,7 @@ ul.wcmamtx_vertical_menu li.is-active {
     padding: 20px;
     background-color: #d2d2ff;
 }
+
+.wcmamtx_dashboard_link i.fa {
+    font-size: 44px;
+}
