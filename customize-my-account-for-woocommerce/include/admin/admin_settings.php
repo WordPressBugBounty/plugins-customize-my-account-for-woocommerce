@@ -1214,14 +1214,11 @@ $current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : sanitize_text_field($this-
 
                             <?php wcmamtx_load_pro_feature_preview(); ?>
 
-                            <a type="button" target="_blank" href="<?php echo pro_url; ?>" name="submit" id="wcmamtx_frontend_link" class="btn btn-primary wcmamtx_frontend_link" >
-                                <span class="dashicons dashicons-lock"></span>
-                                <?php echo esc_html__( 'Visit Pro Version Page' ,'customize-my-account-for-woocommerce'); ?>
-                            </a>
+                            
 
                             <a type="button" target="_blank" href="https://www.sysbasics.com/go/customize-demo/" name="submit" id="wcmamtx_frontend_link" class="btn btn-success wcmamtx_frontend_link" >
                                 <span class="dashicons dashicons-lock"></span>
-                                <?php echo esc_html__( 'Visit Pro Version Demo' ,'customize-my-account-for-woocommerce'); ?>
+                                <?php echo esc_html__( 'More Details Here' ,'customize-my-account-for-woocommerce'); ?>
                             </a>
 
                             <br><br>

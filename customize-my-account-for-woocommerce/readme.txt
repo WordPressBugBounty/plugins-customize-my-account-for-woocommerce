@@ -3,10 +3,10 @@ Contributors: phppoet
 Tags: woocommerce, my account, customize, endpoints, user avatar
 Requires at least: 4.0
 Tested up to: 6.7.2
-WC Tested up to: 9.6.2
+WC Tested up to: 9.7.1
 WC Requires at least: 4.0
 Requires PHP: 5.2
-Stable tag: 2.3.9
+Stable tag: 2.4.0
 Requires Plugins: woocommerce
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -21,7 +21,7 @@ SysBasics Customize My Account for WooCommerce Plugin add dashboard links , user
 
 <p><a href="https://sysbasics.com/go/customize/" title="Customize My Account for WooCommerce pro" rel="nofollow">Upgrade to pro</a></p>
 
-<p>Check <a href="https://sysbasics.com/go/customize-demo/" title="Customize My Account for WooCommerce pro" rel="nofollow">Live Demo</a> for Pro version features</p>
+
 
 == Description ==
 
@@ -144,6 +144,11 @@ Learn more about how [Appsero collects and uses this data](https://Appsero.com/p
 
 
 == Changelog ==
+
+Version 2.4.0 - 10 March 2025
+
+- Enhancement - Verified compatibility with latest WooCommerce and updated readme tags.
+- Enhancement - Removed unnecessory links in backend.
 
 
 Version 2.3.9 - 24 February 2025

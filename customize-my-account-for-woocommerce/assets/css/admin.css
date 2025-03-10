@@ -573,3 +573,8 @@ table.pro_preview_table {
 .toggle.btn.btn-light.off.disabled {
     display: none;
 }
+
+.modal-content a#wcmamtx_frontend_link,.wcmamtx_notice_div_lowerbutton a.wcmamtx_frontend_link {
+    float: left;
+    width: 100%;
+}
