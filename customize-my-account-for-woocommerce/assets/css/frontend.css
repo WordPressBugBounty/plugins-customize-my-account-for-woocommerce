@@ -603,3 +603,17 @@ ul.wcmamtx_vertical_menu li.is-active {
 .wcmamtx_dashboard_link i.fa {
     font-size: 44px;
 }
+
+@media (max-width: 768px) {
+
+    .wcmtx-grid {
+        width: 100% !important;
+        display: block !important;
+       
+    }
+    
+    .wcmamtx_dashboard_link {
+        margin-top:10px;
+    }
+
+}

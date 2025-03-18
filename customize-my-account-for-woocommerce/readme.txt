@@ -1,12 +1,12 @@
 === SysBasics Customize My Account for WooCommerce ===
-Contributors: phppoet
+Contributors: phppoet,sysbasics
 Tags: woocommerce, my account, customize, endpoints, user avatar
 Requires at least: 4.0
 Tested up to: 6.7.2
 WC Tested up to: 9.7.1
 WC Requires at least: 4.0
 Requires PHP: 5.2
-Stable tag: 2.4.0
+Stable tag: 2.4.1
 Requires Plugins: woocommerce
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -145,8 +145,9 @@ Learn more about how [Appsero collects and uses this data](https://Appsero.com/p
 
 == Changelog ==
 
-Version 2.4.0 - 10 March 2025
+Version 2.4.1 - 18 March 2025
 
+- Version 2.4.1 - 18 March 2025 - Fix Frontend mobile specific css.
 - Enhancement - Verified compatibility with latest WooCommerce and updated readme tags.
 - Enhancement - Removed unnecessory links in backend.
 
