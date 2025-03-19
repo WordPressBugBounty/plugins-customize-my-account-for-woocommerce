@@ -224,7 +224,38 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
 
 
 
+    public function wcmamtx_override_template_child_theme_or_direct_free($template_slug) {
 
+        $template = wcmamtx_plugin_path() . '/templates/myaccount/'.$template_slug.'.php';
+
+       
+
+        if ( locate_template( [ 'sysbasics-myaccount/' ] ) ) {
+            $overrides_exist = true;
+        } else {
+            $overrides_exist = false;
+        }
+
+
+        
+        if ( $overrides_exist ) {
+            // check the theme for specific file requested
+            $file = locate_template( [ 'sysbasics-myaccount/'.$template_slug.'.php' ], false, false );
+            if ( ! $file ) {
+
+                
+                return $template;
+            } else {
+                $file = apply_filters( 'sysbasics_myaccount_template_override', $file, $template );
+                
+               
+                return $file;
+            }
+        }
+        
+
+        return $template;
+    }
 
 
     public function wpml_sl_blacklist_requests( $blacklist, $sitepress ) {
@@ -678,10 +709,10 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
         }
          
         if ( strstr($template, 'navigation.php') ) {
-            $template = wcmamtx_plugin_path() . '/templates/myaccount/navigation.php';
+            $template = $this->wcmamtx_override_template_child_theme_or_direct_free("navigation");
         } else if ( strstr($template, 'dashboard.php') ) {
-            $template = wcmamtx_plugin_path() . '/templates/myaccount/dashboard.php';
-        }
+            $template = $this->wcmamtx_override_template_child_theme_or_direct_free("dashboard");
+        } 
 
         
 
@@ -694,7 +725,7 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
 
 
             if ( strstr($template, 'orders.php') && (isset($plugin_options['custom_templates']['orders'])) && ($plugin_options['custom_templates']['orders'] != "default")) {
-                $template = wcmamtx_plugin_path() . '/templates/myaccount/orders.php';
+                $template = $this->wcmamtx_override_template_child_theme_or_direct_free("orders");
 
                 if (class_exists("\\Elementor\\Plugin")) {
                     $post_ID = $plugin_options['custom_templates']['orders'];
@@ -710,7 +741,7 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
 
                 echo $pluginElementor->frontend->get_builder_content($post_ID);
 
-                $template = wcmamtx_plugin_path() . '/templates/myaccount/empty_form.php';
+                $template = $this->wcmamtx_override_template_child_theme_or_direct_free("empty_form");
                
             }
            

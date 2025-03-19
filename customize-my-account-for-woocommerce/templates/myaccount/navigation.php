@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Navigation.php template
+ *
+ * Shows main navigation menu.
+ *
+ * This template can be overridden by copying it to your theme your-theme/sysbasics-myaccount/navigation.php , for better practice create your child theme and copy it to your-child-theme/sysbasics-myaccount/navigation.php.
+ *
+ */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

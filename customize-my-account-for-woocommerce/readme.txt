@@ -6,7 +6,7 @@ Tested up to: 6.7.2
 WC Tested up to: 9.7.1
 WC Requires at least: 4.0
 Requires PHP: 5.2
-Stable tag: 2.4.1
+Stable tag: 2.5.0
 Requires Plugins: woocommerce
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -144,6 +144,11 @@ Learn more about how [Appsero collects and uses this data](https://Appsero.com/p
 
 
 == Changelog ==
+
+Version 2.5.0 - 19 March 2025
+
+- Enhancement - Posibility to override plugin template files by simply copying it to your-theme/sysbasics-myaccount/ 
+              - Detailed Documentation at https://www.sysbasics.com/knowledge-base/template-override-documentation/
 
 Version 2.4.1 - 18 March 2025
 
