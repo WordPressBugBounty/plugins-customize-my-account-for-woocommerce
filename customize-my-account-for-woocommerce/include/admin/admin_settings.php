@@ -1186,7 +1186,7 @@ $current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : sanitize_text_field($this-
         if (isset($current_tab)  && ($current_tab != "wcmamtx_wizard_settings")) {
 
             echo '<a target="_blank" class="btn wcmamtx_docs_buton btn-success" href="https://www.sysbasics.com/knowledge-base/category/woocommerce-customize-my-account-pro/"><span class="wcmamtx_docs_icon dashicons dashicons-welcome-learn-more"></span>'.esc_html__( 'Documentation' ,'customize-my-account-for-woocommerce').'</a>';
-            echo '<a target="_blank" class="btn wcmamtx_support_buton btn-warning" href="https://www.sysbasics.com/go/customize-free-help/"><span class="wcmamtx_docs_icon dashicons dashicons-admin-generic"></span>'.esc_html__( 'Support (Paid)' ,'customize-my-account-for-woocommerce').'</a>';
+            echo '<a target="_blank" class="btn wcmamtx_support_buton btn-warning" href="https://www.sysbasics.com/go/customize-free-help/"><span class="wcmamtx_docs_icon dashicons dashicons-admin-generic"></span>'.esc_html__( 'Support (Live Chat)' ,'customize-my-account-for-woocommerce').'</a>';
         } else {
 
             echo '<a class="btn wcmamtx_exit_setup btn-danger" href="?page=' .$this->wcmamtx_notices_settings_page. '&wcmamtx_disable_wizard=yes"><span class="wcmamtx_docs_icon dashicons dashicons-controls-forward"></span>'.esc_html__( 'Skip Quick Setup Wizard' ,'customize-my-account-for-woocommerce').'</a>';
@@ -1216,9 +1216,14 @@ $current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : sanitize_text_field($this-
 
                             
 
-                            <a type="button" target="_blank" href="https://www.sysbasics.com/go/customize-demo/" name="submit" id="wcmamtx_frontend_link" class="btn btn-success wcmamtx_frontend_link" >
+                            <a type="button" target="_blank" href="https://sysbasics.com/go/customize-demo/"  class="btn btn-success wcmamtx_frontend_link" >
                                 <span class="dashicons dashicons-lock"></span>
-                                <?php echo esc_html__( 'More Details Here' ,'customize-my-account-for-woocommerce'); ?>
+                                <?php echo esc_html__( 'Pro Version Demo' ,'customize-my-account-for-woocommerce'); ?>
+                            </a>
+
+                            <a type="button" target="_blank" href="https://sysbasics.com/go/customize/"  class="btn btn-success wcmamtx_frontend_link" >
+                                <span class="dashicons dashicons-lock"></span>
+                                <?php echo esc_html__( 'Pro Version Page' ,'customize-my-account-for-woocommerce'); ?>
                             </a>
 
                             <br><br>

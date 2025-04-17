@@ -2,11 +2,11 @@
 Contributors: phppoet,sysbasics
 Tags: woocommerce, my account, customize, endpoints, user avatar
 Requires at least: 4.0
-Tested up to: 6.7.2
-WC Tested up to: 9.7.1
+Tested up to: 6.8.0
+WC Tested up to: 9.8.1
 WC Requires at least: 4.0
 Requires PHP: 5.2
-Stable tag: 3.0.0
+Stable tag: 3.1.0
 Requires Plugins: woocommerce
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -144,6 +144,10 @@ Learn more about how [Appsero collects and uses this data](https://Appsero.com/p
 
 
 == Changelog ==
+
+Version 3.1.0 - 17 April 2025
+
+- Added pro version demo and product links.
 
 Version 3.0.0 - 07 April 2025
 

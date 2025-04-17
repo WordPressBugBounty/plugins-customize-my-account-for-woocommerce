@@ -578,3 +578,8 @@ table.pro_preview_table {
     float: left;
     width: 100%;
 }
+
+a.btn.btn-success.wcmamtx_frontend_link {
+    margin-right: 5px;
+    width: 45%;
+}

@@ -940,9 +940,14 @@ if (!function_exists('wcmamtx_load_pro_reminder_div')) {
 			<div class="wcmamtx_notice_div_lowerbutton">
 				
 
+				<a type="button" target="_blank" href="https://sysbasics.com/go/customize-demo/"  class="btn btn-success wcmamtx_frontend_link" >
+					<span class="dashicons dashicons-lock"></span>
+					<?php echo esc_html__( 'Pro Version Demo' ,'customize-my-account-for-woocommerce'); ?>
+				</a>
+
 				<a type="button" target="_blank" href="https://sysbasics.com/go/customize/"  class="btn btn-success wcmamtx_frontend_link" >
 					<span class="dashicons dashicons-lock"></span>
-					<?php echo esc_html__( 'More Details Here' ,'customize-my-account-for-woocommerce'); ?>
+					<?php echo esc_html__( 'Pro Version Page' ,'customize-my-account-for-woocommerce'); ?>
 				</a>
 
 				<br><br>
