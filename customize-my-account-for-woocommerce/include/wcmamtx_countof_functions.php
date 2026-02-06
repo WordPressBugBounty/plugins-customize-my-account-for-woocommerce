@@ -241,6 +241,11 @@ if (!function_exists('wcmamtx_counter_bubble')) {
 
          switch($key) {
             case "orders":
+
+                if (is_array($value) && ($value['count_bubble'] != "03")) {
+                    $value['count_bubble'] = "01";
+                }
+
                 $count_bubble = isset($value['count_bubble']) && ($value['count_bubble'] == "01") ? "yes" : "no";
 
                 $hide_empty = isset($value['hide_empty']) && ($value['hide_empty'] == "01") ? "yes" : "no";
@@ -250,6 +255,11 @@ if (!function_exists('wcmamtx_counter_bubble')) {
             break;
 
             case "downloads":
+
+                if (is_array($value) && ($value['count_bubble'] != "03")) {
+                    $value['count_bubble'] = "01";
+                }
+                
                 $count_bubble = isset($value['count_bubble']) && ($value['count_bubble'] == "01") ? "yes" : "no";
 
                 $hide_empty = isset($value['hide_empty']) && ($value['hide_empty'] == "01") ? "yes" : "no";

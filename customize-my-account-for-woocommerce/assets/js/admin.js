@@ -277,12 +277,13 @@ $var( function() {
         
         if ($var(this).is(":checked")) {
             $var(this).parents("li."+ parentkey +"").find('.wcmamtx_count_div_section').show();
+            $var(this).parents("li."+ parentkey +"").find('.count_bubble2').prop('checked', false);
             
 
         } else {
             
             $var(this).parents("li."+ parentkey +"").find('.wcmamtx_count_div_section').hide();
-            
+            $var(this).parents("li."+ parentkey +"").find('.count_bubble2').prop('checked', true);
         }
     });
 

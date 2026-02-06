@@ -641,3 +641,6 @@ a.wcmamtx-custom-countof-link p.bubble{
     margin-top: 16px;
     /* margin-right: 100px !important; */
 }
+input.wcmamtx_accordion_input.count_bubble2.wcmamtx_accordion_checkbox.checkmark2 {
+    display: none;
+}
