@@ -88,11 +88,7 @@ if (isset($advanced_settings['dashboard'])) {
 
 }
 
-$dismiss_dash_text = get_option("wcmamtx_dismiss_dashboard_text_notice_permanately","no");
 
-if ( current_user_can( 'administrator' )  && ($dismiss_dash_text != "yes")) {
-    wcmamtx_dashboard_text_reminder_div();
-}
 
 ?>
 

@@ -39,7 +39,200 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
 
        add_shortcode('sysbasics_dashboard_menu', array( $this, 'sysbasics_dashboard_menu_function' ));
 
+       add_action( 'admin_bar_menu', array( $this, 'register_custom_menu_link' ),999);
+
+       
+
     }
+
+
+    /**
+     * Process the smart tags.
+     *
+     * @since 1.0.0
+     */
+    public function wcmamtx_parse_smart_tag( $content, $endpoint ) {
+        preg_match_all( '/\{(.*?)\}/', $content, $other_tags );
+
+        if ( ! empty( $other_tags[1] ) ) {
+
+            foreach ( $other_tags[1] as $key => $tag ) {
+                $other_tag = explode( ' ', $tag )[0];
+                switch ( $other_tag ) {
+
+                    case 'endpoint_label':
+                        
+                        $content     = str_replace( '{' . $other_tag . '}', $endpoint, $content );
+                        break;
+
+                    case 'default_content':
+                        $default_content = esc_html__( 'Hey {display_name}, Hope you are doing well.To modify this content, Click on Customize my account link above and visit {endpoint_label} tab.' ,'customize-my-account-for-woocommerce');
+
+                        $default_content = $this->wcmamtx_parse_smart_tag($default_content,$endpoint);
+                        $content     = str_replace( '{' . $other_tag . '}', $default_content, $content );
+                        break;
+
+
+                    case 'admin_email':
+                        $admin_email = sanitize_email( get_option( 'admin_email' ) );
+                        $content     = str_replace( '{' . $other_tag . '}', $admin_email, $content );
+                        break;
+
+                    case 'site_name':
+                        $site_name = get_option( 'blogname' );
+                        $content   = str_replace( '{' . $other_tag . '}', $site_name, $content );
+                        break;
+
+                    case 'site_url':
+                        $site_url = get_option( 'siteurl' );
+                        $content  = str_replace( '{' . $other_tag . '}', $site_url, $content );
+                        break;
+
+                    
+
+                    case 'user_ip_address':
+                        $user_ip_add = tgwc_get_ip_address();
+                        $content     = str_replace( '{' . $other_tag . '}', $user_ip_add, $content );
+                        break;
+
+                    case 'user_id':
+                        $user_id = is_user_logged_in() ? get_current_user_id() : '';
+                        $content = str_replace( '{' . $other_tag . '}', $user_id, $content );
+                        break;
+
+                    case 'user_email':
+                        if ( is_user_logged_in() ) {
+                            $user  = wp_get_current_user();
+                            $email = sanitize_email( $user->user_email );
+                        } else {
+                            $email = '';
+                        }
+                        $content = str_replace( '{' . $other_tag . '}', $email, $content );
+                        break;
+
+                    case 'username':
+                        if ( is_user_logged_in() ) {
+                            $user = wp_get_current_user();
+                            $name = sanitize_text_field( $user->user_login );
+                        } else {
+                            $name = '';
+                        }
+                        $content = str_replace( '{' . $other_tag . '}', $name, $content );
+                        break;
+
+                    case 'display_name':
+                        if ( is_user_logged_in() ) {
+                            $user = wp_get_current_user();
+                            $name = sanitize_text_field( $user->display_name );
+                        } else {
+                            $name = '';
+                        }
+                        $content = str_replace( '{' . $other_tag . '}', $name, $content );
+                        break;
+
+                    case 'first_name':
+                        if ( is_user_logged_in() ) {
+                            $user = wp_get_current_user();
+                            $name = sanitize_text_field( $user->user_firstname );
+                        } else {
+                            $name = '';
+                        }
+                        $content = str_replace( '{' . $other_tag . '}', $name, $content );
+                        break;
+
+                    case 'last_name':
+                        if ( is_user_logged_in() ) {
+                            $user = wp_get_current_user();
+                            $name = sanitize_text_field( $user->user_lastname );
+                        } else {
+                            $name = '';
+                        }
+                        $content = str_replace( '{' . $other_tag . '}', $name, $content );
+                        break;
+
+                    case 'current_date':
+                        $current_date = date_i18n( get_option( 'date_format' ) );
+                        $content      = str_replace( '{' . $other_tag . '}', sanitize_text_field( $current_date ), $content );
+                        break;
+                    case 'current_time':
+                        $current_time = date_i18n( get_option( 'time_format' ) );
+                        $content      = str_replace( '{' . $other_tag . '}', sanitize_text_field( $current_time ), $content );
+                        break;
+                    case 'billing_address':
+                    case 'shipping_address':
+                        if ( is_user_logged_in() ) {
+                            $meta_prefix = ( 'billing_address' === $other_tag ) ? 'billing_' : 'shipping_';
+                            $user_id     = get_current_user_id();
+                            $address     = array(
+                                'first_name' => get_user_meta( $user_id, $meta_prefix . 'first_name', true ),
+                                'last_name'  => get_user_meta( $user_id, $meta_prefix . 'last_name', true ),
+                                'company'    => get_user_meta( $user_id, $meta_prefix . 'company', true ),
+                                'address_1'  => get_user_meta( $user_id, $meta_prefix . 'address_1', true ),
+                                'address_2'  => get_user_meta( $user_id, $meta_prefix . 'address_2', true ),
+                                'city'       => get_user_meta( $user_id, $meta_prefix . 'city', true ),
+                                'state'      => get_user_meta( $user_id, $meta_prefix . 'state', true ),
+                                'postcode'   => get_user_meta( $user_id, $meta_prefix . 'postcode', true ),
+                                'country'    => get_user_meta( $user_id, $meta_prefix . 'country', true ),
+                            );
+
+                            $address = array_filter( $address );
+                            if ( ! empty( $address ) ) {
+                                $formatted_address = $this->get_formatted_address( $address );
+                                $content           = str_replace( '{' . $other_tag . '}', $formatted_address, $content );
+                            } else {
+                                $content = str_replace( '{' . $other_tag . '}', esc_html__( 'You have not set up this type of address yet.', 'customize-my-account-for-woocommerce' ), $content );
+                            }
+                        }
+                        break;
+                    case 'billing_company':
+                    case 'shipping_company':
+                        if ( is_user_logged_in() ) {
+                            $meta_prefix  = ( 'billing_address' === $other_tag ) ? 'billing_' : 'shipping_';
+                            $company_name = get_user_meta( $user_id, $meta_prefix . 'company', true );
+
+                            if ( empty( $company_name ) ) {
+                                $company_name = '';
+                            }
+
+                            $content = str_replace( '{' . $other_tag . '}', $company_name, $content );
+                        }
+                        break;
+                }
+            }
+        }
+        return apply_filters('wcmamtx_modify_existing_content_variables',$content,$endpoint);
+    }
+
+
+
+
+    public function register_custom_menu_link($wp_admin_bar){
+
+        if ( ! current_user_can( 'manage_options' )  || (!is_account_page()) ) {
+            return;
+        }
+
+        if (is_account_page()) {
+
+            $args = array(
+                'id'    => 'wcmamtx_customize_myaccount', // Unique ID for your link
+                'title' => 'Customize My Account', // The text that will appear in the admin bar
+                'href'  => ''.admin_url().'admin.php?page=wcmamtx_advanced_settings', // The URL the link will point to
+                'meta'  => array(
+                    'class'  => 'wcmamtx_customize_myaccount-class', // Custom CSS class
+                ),
+            );
+
+        } 
+
+
+
+
+        $wp_admin_bar->add_node($args);
+    }
+
+
+
 
 
     public function sysbasics_dashboard_menu_function() {
@@ -64,9 +257,14 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
 
         if (!isset($wcmamtx_tabs) || (empty($wcmamtx_tabs))) {
              $wcmamtx_tabs = wc_get_account_menu_items();
-        } 
+        }
 
+        
 
+        
+
+        
+        $wcmamtx_tabs   = apply_filters('wcmamtx_override_dashlinks',$wcmamtx_tabs);
        
         
         ?>
@@ -101,7 +299,7 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
 
 
 
-            $icon_source       = isset($value['icon_source']) ? $value['icon_source'] : "default";
+            $icon_source       = "default";
                if (isset($value['endpoint_name']) && ($value['endpoint_name'] != '')) {
                 $name = $value['endpoint_name'];
             } else {
@@ -120,6 +318,52 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
                 
             }
 
+            $third_party = isset($value['third_party']) ? $value['third_party'] : null; 
+
+            $third_party_go_ahead = 'yes';
+
+            if (isset($third_party)) {
+           
+                 $third_party_go_ahead = wcmamtx_third_party_goahead_check($key);
+
+                 if ($third_party_go_ahead == "no") {
+                    $should_show = 'no';
+                 }
+            }
+            
+
+
+
+            /**
+             *  dashboard background color data starts
+             */
+
+            $default_color = '#e9e9ef';
+
+            $default_colors = array(
+                'dashboard'=>'#93c1a1',
+                'orders'   =>'#b4b771',
+                'downloads'=>'#789ebf',
+                'edit-address'=>'#9ffcec',
+                'edit-account'   =>'#e8b9b0',
+                'customer-logout'=>'#dd7575'
+            );
+
+            $default_color = isset($default_colors[$key]) ? $default_colors[$key] : $default_color;
+
+            $default_color = isset($value['dash_back_color']) ? $value['dash_back_color'] : $default_color;
+
+
+
+            $default_color_font = '#334155';
+
+            $default_color_font = isset($value['dash_font_color']) ? $value['dash_font_color'] : $default_color_font;
+
+
+            /**
+             *  dashboard background color data ends
+             */
+
 
             if (($wcmamtx_type != "group") && ($should_show == 'yes') && ( $is_visible == "yes")) {
                $key = isset($value['endpoint_key']) ? $value['endpoint_key'] : $key;
@@ -128,11 +372,13 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
 
                $ajax_class = isset($wcmamtx_plugin_options['ajax_navigation']) && ($wcmamtx_plugin_options['ajax_navigation'] == "yes") ? "wcmamtx_ajax_enabled" : "";
                ?>
-                <div class="wcmamtx_dashboard_link <?php echo esc_attr( $key ); ?>-link <?php echo $ajax_class; ?>">
+                <div class="wcmamtx_dashboard_link <?php echo esc_attr( $key ); ?>-link <?php echo $ajax_class; ?>" style="background-color: <?php echo $default_color; ?>; color:<?php echo $default_color_font; ?>;">
                     
-                    <a href="<?php echo wcmamtx_get_account_endpoint_url( $key ); ?>">
+                    <a href="<?php echo wcmamtx_get_account_endpoint_url( $key ); ?>" style="color:<?php echo $default_color_font; ?>;">
+
+                        <?php wcmamtx_counter_bubble($key,$value); ?>
                         
-                        <p class="wcmtx_icon_src">
+                        <p class="wcmtx_icon_src" style="color:<?php echo $default_color_font; ?>;">
                              <?php wcmamtx_get_account_menu_li_icon_html($icon_source,$value,$key); ?>
                         </p>
 
@@ -145,6 +391,8 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
         </div>
         <?php 
     }
+
+
 
 
     public function wp_nav_menu_items_function($out) {
@@ -542,14 +790,7 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
         return $rewind;
     }
 
-    public function wcmamtx_flush_rewrite_rules() {
-        
 
-            flush_rewrite_rules();
-
-        
-        
-    }
 
 
     public function process_column_values($order,$column_id){
@@ -650,6 +891,7 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
 
     public function wcmamtx_add_custom_endpoint_page() {
         $wcmamtx_tabs = get_option('wcmamtx_advanced_settings');
+        add_option('wcmamtx_allowed_endpoint_trial', 02);
 
         $core_fields       = 'dashboard,orders,downloads,edit-address,edit-account,customer-logout';
 
@@ -675,7 +917,16 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
 
                 if (isset($value['wcmamtx_type']) && ($value['wcmamtx_type'] == "endpoint") ) {
                     add_rewrite_endpoint( $new_key, EP_ROOT | EP_PAGES );
-                    add_action( 'wp_loaded', array($this,'wcmamtx_flush_rewrite_rules') );
+
+                    $flush_cache = get_option('wcmamtx_flush_rewrite_cache_required',"no");
+
+                    if ($flush_cache == "yes") {
+                        add_action( 'wp_loaded', array($this,'wcmamtx_flush_rewrite_rules') );
+                    }
+
+                    
+                    
+                    
                 }
             }
 
@@ -684,6 +935,13 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
         $this->wcmamtx_core_endpoint_contents();
 
         
+    }
+
+    public function wcmamtx_flush_rewrite_rules() {
+        
+
+            flush_rewrite_rules();
+    
     }
 
 
@@ -960,9 +1218,17 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
 
         foreach ($wcmamtx_tabs as $key=>$value) {
 
+            
+            if (isset($value['endpoint_name']) && ($value['endpoint_name'] != '')) {
+                $endpoint_name = $value['endpoint_name'];
+            } else {
+                $endpoint_name = $value;
+            } 
+
             if (preg_match('/\b'.$key.'\b/', $core_content_fields )) {
 
                 $content           = isset($value['content']) ? $value['content'] : "";
+                $content           = $this->wcmamtx_parse_smart_tag($content,$endpoint_name);
                 $content_settings  = isset($value['content_settings']) ? $value['content_settings'] : "after";
 
                 switch($key) {
@@ -1021,7 +1287,43 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
                     break;
                 }
 
-            } 
+            } elseif ((!preg_match('/\b'.$key.'\b/', $core_fields )) && (isset($value['wcmamtx_type']) && ($value['wcmamtx_type'] == "endpoint") )) {
+
+                $content            = isset($value['content']) ? $value['content'] : "";
+                $content           = $this->wcmamtx_parse_smart_tag($content,$endpoint_name);
+                
+
+                $plugin_options = (array) get_option( 'wcmamtx_plugin_options' );
+
+                if (isset($plugin_options['override_endpoints']) && ($plugin_options['override_endpoints'] == "yes") && isset($plugin_options['custom_templates'][$key]) && ($plugin_options['custom_templates'][$key] != "default") && ($plugin_options['custom_templates'][$key] != "") ) {
+                     $contentElementor = "";
+
+                     if (class_exists("\\Elementor\\Plugin")) {
+                        $post_ID = $plugin_options['custom_templates'][$key];
+                        $pluginElementor = \Elementor\Plugin::instance();
+                        $contentElementor = $pluginElementor->frontend->get_builder_content($post_ID);
+                    }
+
+                    $content = $contentElementor;
+                }
+
+
+                global $end_key;
+                $end_key = $key;
+
+                add_filter( 'query_vars', array( $this, 'wcmamtx_do_query_vars' ), 0 );
+
+                $endkey             = isset($value['endpoint_key']) ? $value['endpoint_key'] : $key;
+
+                if ($content != '') {
+
+                    add_action( 'woocommerce_account_'.$endkey.'_endpoint', function() use ( $content ) {
+
+                       echo apply_filters('the_content',$content);
+                   });
+                }
+
+            }
         }
     }
 

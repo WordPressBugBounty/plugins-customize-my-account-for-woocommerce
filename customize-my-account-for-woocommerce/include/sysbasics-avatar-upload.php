@@ -162,7 +162,7 @@ class wcmamtx_upload_avatar_tab {
 
 			// Need to be more secure since low privelege users can upload
 			if ( strstr( $_FILES['basic-user-avatar']['name'], '.php' ) )
-				wp_die( 'For security reasons, the extension ".php" cannot be in your file name.' );
+				wp_die( 'For security reasons, the extension ".php" cannot be in your file name.',"customize-my-account-for-woocommerce" );
 
 			// Make user_id known to unique_filename_callback function
 			$this->user_id_being_edited = $user_id; 

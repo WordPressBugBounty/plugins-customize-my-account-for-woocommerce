@@ -14,9 +14,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
 "X-Loco-Version: 2.6.3; wp-6.1.1\n"
-"X-Domain: customize-my-account-for-woocommerce-pro"
+"X-Domain: customize-my-account-for-woocommerce"
 
-#: customize-my-account-for-woocommerce-pro.php:177
+#: customize-my-account-for-woocommerce.php:177
 msgid ".To enable dashboard updates "
 msgstr ""
 
@@ -58,7 +58,7 @@ msgstr ""
 msgid "Avatar size"
 msgstr ""
 
-#: customize-my-account-for-woocommerce-pro.php:108
+#: customize-my-account-for-woocommerce.php:108
 msgid "Buy pro version"
 msgstr ""
 
@@ -70,7 +70,7 @@ msgstr ""
 msgid "Custom Icon Position"
 msgstr ""
 
-#: customize-my-account-for-woocommerce-pro.php:24
+#: customize-my-account-for-woocommerce.php:24
 msgid "Customize My Account"
 msgstr ""
 
@@ -86,11 +86,11 @@ msgstr ""
 msgid "Default My Account tab"
 msgstr ""
 
-#: customize-my-account-for-woocommerce-pro.php:125
+#: customize-my-account-for-woocommerce.php:125
 msgid "Docs"
 msgstr ""
 
-#: customize-my-account-for-woocommerce-pro.php:105
+#: customize-my-account-for-woocommerce.php:105
 msgid "Enable dashboad updates"
 msgstr ""
 
@@ -114,7 +114,7 @@ msgstr ""
 msgid "Enter name for new link"
 msgstr ""
 
-#: customize-my-account-for-woocommerce-pro.php:177
+#: customize-my-account-for-woocommerce.php:177
 msgid "Follow this"
 msgstr ""
 
@@ -159,7 +159,7 @@ msgstr ""
 msgid "Set the avatar border radius between 0 to 10."
 msgstr ""
 
-#: customize-my-account-for-woocommerce-pro.php:100
+#: customize-my-account-for-woocommerce.php:100
 #: include/admin/admin_settings.php:290
 msgid "Settings"
 msgstr ""
@@ -168,7 +168,7 @@ msgstr ""
 msgid "Show avatar"
 msgstr ""
 
-#: customize-my-account-for-woocommerce-pro.php:126
+#: customize-my-account-for-woocommerce.php:126
 msgid "Support"
 msgstr ""
 

@@ -136,7 +136,16 @@ $var( function() {
     
     $var(".wcmamtx_accordion_remove").on('click',function() {
         var parentkey = $var(this).attr("parentkey");
-        if (!confirm(wcmamtxadmin.endpoint_remove_alert)){
+
+        var third_party = $var(this).attr("third_party");
+
+        var alerttext  = wcmamtxadmin.endpoint_remove_alert;
+
+        if (third_party == "yes") {
+            alerttext = wcmamtxadmin.endpoint_remove_alert_thirdparty;
+        }
+
+        if (!confirm(alerttext)){
           return false;
         }
 
@@ -157,8 +166,10 @@ $var( function() {
         } else {
             $var(parentitem).fadeOut('slow').remove();
         }
+
+       
         
-        
+        return false;
     });
 
 
@@ -255,6 +266,22 @@ $var( function() {
             
             $var(this).parents("li."+ parentkey +"").addClass('wcmamtx_disabled');
             $var("."+ parentkey +"_hidden_checkbox").val("no");
+            
+        }
+    });
+
+
+    $var('.count_bubble').on("change",function() {
+
+        var parentkey = $var(this).attr("parentkey");
+        
+        if ($var(this).is(":checked")) {
+            $var(this).parents("li."+ parentkey +"").find('.wcmamtx_count_div_section').show();
+            
+
+        } else {
+            
+            $var(this).parents("li."+ parentkey +"").find('.wcmamtx_count_div_section').hide();
             
         }
     });
@@ -562,7 +589,23 @@ $var( function() {
         
         return false;
     });
+    
 
+    $var('.wcmamtx_countof_dropdown').on('change',function(event){
+        event.preventDefault();
+        var dval = $var(this).val();
+
+        var mkey = $var(this).attr("mkey");
+
+        if ((dval == "cpt_count") || (dval == "usermeta_count"))   {
+            $var('.wcmamtx_pro_link').trigger("click");
+           
+        } 
+
+
+        
+        return false;
+    });
 
 
     //loads Media upload for each media upload input
@@ -814,25 +857,20 @@ $var( function() {
         
     });
 
-    $var(".wcmamtx_activate_license").on('click',function(event) {
+    $var('.wcmamtx_color_input,.wcmamtx_color_input_font').wpColorPicker();
+
+
+
+    $var(".wcmamtx_restore_dash_color").on('click',function(event) {
 
          event.preventDefault();
 
-         var licensekey = $var(".wcmamtx_license_key_input").val();
+         
+         var pkey = $var(this).attr("pkey");
 
-         $var.ajax({
-            data: {
-                action    : "wcmamtx_activate_license",
-                licensekey  : licensekey
 
-            },
-            type: 'POST',
-            url: wcmamtxadmin.ajax_url,
-            success: function( response ) { 
-                console.log(response);
-                window.location.reload();
-            }
-        });
+         $var('li.'+pkey+'').find('.wcmamtx_color_input').wpColorPicker('color', '#e9e9ef');
+         $var('li.'+pkey+'').find('.wcmamtx_color_input_font').wpColorPicker('color', '#334155');
 
          return false;
 

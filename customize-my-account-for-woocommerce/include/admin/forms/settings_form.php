@@ -3,6 +3,36 @@ $advancedsettings  = (array) get_option('wcmamtx_advanced_settings');
 
 $tabs              = wc_get_account_menu_items();
 
+$new_entries       = get_option('wcmamtx_tabs_to_add_third_party');
+
+if ((isset($new_entries)) && (!empty($new_entries))) {
+
+    
+
+    foreach ($new_entries as $itkey=>$itvalue) {
+        if (!array_key_exists($itkey, $tabs)) {
+
+            $third_party_goahead = wcmamtx_third_party_goahead_check($itkey);
+
+            if ($third_party_goahead == "yes") {
+                $tabs[$itkey] = $itvalue;
+
+                if (array_key_exists($itkey, $advancedsettings)) {
+                    unset($new_entries[$itkey]);
+
+                    update_option('wcmamtx_tabs_to_add_third_party',$new_entries);
+                }
+
+                
+            }
+
+            
+            
+        }
+    }
+
+}
+
 $core_fields       = 'dashboard,orders,downloads,edit-address,edit-account,customer-logout';
 
 

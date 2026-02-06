@@ -60,8 +60,8 @@ $module_settings = (array) get_option( 'wcmamtx_module_settings' );
               <input type="checkbox" data-toggle="toggle" data-on="<?php echo esc_html__('Yes','customize-my-account-for-woocommerce'); ?>" data-off="<?php echo esc_html__('No','customize-my-account-for-woocommerce'); ?>" class="wcmamtx_widget_checkbox" name="wcmamtx_module_settings[el_widgets][<?php echo $key; ?>]" value="yes" <?php if (isset($el_widgets[$key])) { echo 'checked';}?> <?php if (isset($el_widgets2[$key]) && (!isset($el_widgets1[$key]))) { echo 'disabled';}?> >
             <?php } else { ?>
               
-              <a class="button-sm button button-primary" target="_blank" href="https://wordpress.org/plugins/my-account-custom-fields-for-woocommerce/">
-                <?php echo esc_html__( 'Install Free Plugin' ,'customize-my-account-for-woocommerce'); ?>
+              <a class="button-sm button button-primary" target="_blank" href="https://www.sysbasics.com/product/woocommerce-my-account-fields/">
+                <?php echo esc_html__( 'Get the Plugin' ,'customize-my-account-for-woocommerce'); ?>
               </a>
             <?php  } ?>
             <?php 
@@ -76,7 +76,7 @@ $module_settings = (array) get_option( 'wcmamtx_module_settings' );
               break;
 
               case "my-account-fields":
-                echo '<p class="wcmamtx_module_info">Free Plugin to manage my account fields in my account page , register form , also create custom my account forms to use inside custom endpoints.</p>';
+                echo '<p class="wcmamtx_module_info">Plugin to manage my account fields in my account page , register form , also create custom my account forms to use inside custom endpoints.</p>';
               break;
 
               case "elementor-templates":
@@ -96,7 +96,7 @@ $module_settings = (array) get_option( 'wcmamtx_module_settings' );
               break;
 
               case "Download-columns":
-                echo '<p class="wcmamtx_module_info">Manage existing Download Columns as well as add new custom Download Columns where you can display user data collected from checkout fields module. <a href="https://www.sysbasics.com/go/customize/" target="_blank">More Details</a></p>';
+                echo '<p class="wcmamtx_module_info">Manage existing Download Columns. <a href="https://www.sysbasics.com/go/customize/" target="_blank">More Details</a></p>';
               break;
 
               

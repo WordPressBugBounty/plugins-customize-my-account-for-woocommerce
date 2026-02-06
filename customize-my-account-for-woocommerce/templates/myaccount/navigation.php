@@ -23,7 +23,13 @@ $wcmamtx_pro_settings  = (array) get_option('wcmamtx_pro_settings');
 
 $items                 =  wc_get_account_menu_items();
 
+foreach ($items as $itkey=>$itvalue) {
+    if (!array_key_exists($itkey, $wcmamtx_tabs)) {
 
+        $new_array = array($itkey=>$itvalue);
+        update_option('wcmamtx_tabs_to_add_third_party',$new_array);
+    }
+}
 
 $core_fields    = 'dashboard,orders,downloads,edit-address,edit-account,customer-logout';
 
@@ -67,6 +73,8 @@ foreach ($items as $ikey=>$ivalue) {
     }
 }
 
+
+
 $plugin_options = get_option('wcmamtx_plugin_options');
 
 
@@ -95,6 +103,8 @@ if (!isset($wcmamtx_tabs) || (sizeof($wcmamtx_tabs) === 1) || isset($wcmamtx_tab
     $wcmamtx_tabs = $items;
     
 }
+
+
 
 if (isset($plugin_options['icon_position']) && ($plugin_options['icon_position'] != '')) {
     $icon_position = $plugin_options['icon_position'];
@@ -148,13 +158,12 @@ if ($menu_shape == 'vertical') {
    
     include ("vertical_menu_shape.php");
    
-
-
   
  
 } else {
 
-include ("menu_default.php");
+    include ("menu_default.php");
+
 
 }
 

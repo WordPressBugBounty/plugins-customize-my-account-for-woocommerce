@@ -21,7 +21,27 @@ var $vas = jQuery.noConflict();
 
         return false;
 
-    });
+      });
+
+
+      $vas(".wcmamtx_dismiss_dashboard_text_notice2").on('click',function(event) {
+        
+        event.preventDefault();
+
+        $vas(".wcmamtx_notice_div2").remove();
+
+        $vas.ajax({
+                data: {action: "wcmamtx_dismiss_dashboard_text_notice2"  },
+                type: 'POST',
+                url: wcmamtxfrontend.ajax_url,
+                success: function( response ) { 
+                    
+                }
+        });
+
+        return false;
+
+      });
         
       $vas(".wcmamtx_group").on('click',function(event) {
           event.preventDefault();

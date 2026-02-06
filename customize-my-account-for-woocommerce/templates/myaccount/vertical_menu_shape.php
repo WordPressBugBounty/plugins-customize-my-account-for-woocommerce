@@ -16,7 +16,7 @@
     $user_avatar_enable = wcmamtx_is_module_enabled("user-avatar");
 
 
-    if (($show_avatar == 'yes') && ($user_avatar_enable == "yes") ) {
+    if (($show_avatar == 'yes') && (isset($user_avatar_enable) && ($user_avatar_enable == "yes")) ) {
         echo do_shortcode('[sysBasics-user-avatar]');
     }
 
@@ -69,6 +69,8 @@
 	<ul class="wcmamtx_vertical">
 		<?php foreach ( $wcmamtx_tabs as $key => $value ) { 
 
+
+
 			if (isset($value['endpoint_name']) && ($value['endpoint_name'] != '')) {
                 $name = $value['endpoint_name'];
             } else {
@@ -118,7 +120,7 @@
 
 
             
-            $icon_source       = isset($value['icon_source']) ? $value['icon_source'] : "default";
+            $icon_source       = "default";
 
             $hide_in_navigation = isset($value['hide_in_navigation']) && ($value['hide_in_navigation'] == "01") ? "enabled" : "disabled";
 
@@ -127,6 +129,21 @@
                  $should_show = 'no';
                 
             }
+
+
+            $third_party = isset($value['third_party']) ? $value['third_party'] : null; 
+
+            $third_party_go_ahead = 'yes';
+
+            if (isset($third_party)) {
+           
+                 $third_party_go_ahead = wcmamtx_third_party_goahead_check($key);
+
+                 if ($third_party_go_ahead == "no") {
+                    $should_show = 'no';
+                 }
+            }
+
 
             if (($should_show == "yes") && ($is_visible == "yes")) {
             
@@ -140,9 +157,9 @@
             
                 } else {
 
-                    $pro_added = wcmamtx_pro_added_endpoint($value);
+                   
 
-                    if (($parent == "none") && ($pro_added == "no")) {
+                    if (($parent == "none")) {
 
 
                         wcmamtx_get_account_menu_li_html( $name,$key ,$value ,$icon_extra_class,$extraclass,$icon_source );

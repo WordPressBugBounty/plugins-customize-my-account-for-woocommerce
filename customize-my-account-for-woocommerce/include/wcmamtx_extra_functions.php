@@ -1,6 +1,6 @@
 <?php
 
-
+include('wcmamtx_countof_functions.php');
 /**
  * Get account menu item classes.
  *
@@ -78,6 +78,101 @@ if (!function_exists('wcmamtx_placeholder_img_src')) {
 
 	return $item_output;
      }
+}
+
+
+/**
+ * Check weather module is enabled or not.
+ *
+ * @since 2.12.0
+ * @param string $key equals to module slug.
+ * @return string
+ */
+
+
+
+if (!function_exists('wcmamtx_is_module_enabled')) {
+
+    function wcmamtx_is_module_enabled($key) {
+
+        $matchstick =  "yes";
+
+
+        $module_settings = (array) get_option( 'wcmamtx_module_settings' );
+
+        $el_widgets1 = array(
+          'sample'=>esc_html__('sample','customize-my-account-for-woocommerce')
+        );
+
+
+        $el_widgets2 = array(
+          'user-avatar'=>esc_html__('User Avatar (Included)','customize-my-account-for-woocommerce'),
+          'elementor-templates'=>esc_html__('Elementor Templates (Included)','customize-my-account-for-woocommerce'),
+          'Order-actions'=>esc_html__('Order Actions (Pro Module)','customize-my-account-for-woocommerce'),
+          'Order-columns'=>esc_html__('Order Columns (Pro Module)','customize-my-account-for-woocommerce'),
+          'Download-columns'=>esc_html__('Download Columns (Pro Module)','customize-my-account-for-woocommerce'),
+          'sample'=>esc_html__('sample','customize-my-account-for-woocommerce')
+        );
+
+        $el_widgets = isset($module_settings['el_widgets']) && !empty($module_settings['el_widgets']) ? $module_settings['el_widgets'] : $el_widgets1;
+
+        if (isset($el_widgets[$key])) {
+            $matchstick =  "yes";
+        } else {
+            $matchstick =  "no";
+        }
+
+        return $matchstick;
+    }
+
+}
+
+/**
+ * Check weather module is enabled or not.
+ *
+ * @since 2.12.0
+ * @param string $key equals to module slug.
+ * @return string
+ */
+
+
+
+if (!function_exists('wcmamtx_is_module_enabled_init')) {
+
+    function wcmamtx_is_module_enabled_init($key) {
+
+        $matchstick =  "yes";
+
+
+        $module_settings = (array) get_option( 'wcmamtx_module_settings' );
+
+        $el_widgets1 = array(
+          'user-avatar',
+          'elementor-templates',
+          'sample'
+        );
+
+
+        $el_widgets2 = array(
+          'user-avatar',
+          'elementor-templates',
+          'Order-actions',
+          'Order-columns',
+          'Download-columns',
+          'sample'
+        );
+
+        $el_widgets = isset($module_settings['el_widgets']) && !empty($module_settings['el_widgets']) ? $module_settings['el_widgets'] : $el_widgets1;
+
+        if (isset($el_widgets[$key])) {
+            $matchstick =  "yes";
+        } else {
+            $matchstick =  "no";
+        }
+
+        return $matchstick;
+    }
+
 }
 
 
@@ -206,6 +301,79 @@ if (!function_exists('wcmamtx_show_disabled_toggle_image')) {
 }
 
 
+/**
+ * Get account menu item classes.
+ *
+ * @since 1.0.0
+ * @param string $endpoint Endpoint.
+ * @return string
+ */
+
+if (!function_exists('wcmamtx_third_party_goahead_check')) {
+
+	function wcmamtx_third_party_goahead_check($key) {
+		$third_party_go_ahead = 'yes';
+
+		$third_party_plug_array = array(
+			'woo-wallet'=>array('woo-wallet/woo-wallet.php'),
+			'wt-smart-coupon'=>array('wt-smart-coupons-for-woocommerce/wt-smart-coupon.php'),
+			'wps_subscriptions'=>array('subscriptions-for-woocommerce/subscriptions-for-woocommerce.php'),
+			'my-auction-setting'=>array('ultimate-woocommerce-auction/ultimate-woocommerce-auction.php'),
+			'my-auction'=>array('ultimate-woocommerce-auction/ultimate-woocommerce-auction.php'),
+			'my-auction-watchlist'=>array('ultimate-woocommerce-auction/ultimate-woocommerce-auction.php'),
+			'affiliate-dashboard'=>array('yith-woocommerce-affiliates-premium/init.php','yith-woocommerce-affiliates/init.php'),
+			'subscriptions'=>array('woocommerce-subscriptions/woocommerce-subscriptions.php'),
+			'rtwalwm_affiliate_menu'=>array('affiliaa-affiliate-program-with-mlm/wp-wc-affiliate-program.php'),
+		);
+
+		$third_party_plug_array = apply_filters('wcmamtx_overide_supported_plugin_slugs',$third_party_plug_array);
+
+		if (isset($third_party_plug_array[$key])) {
+			$third_party_plug_slugs = $third_party_plug_array[$key];
+		} else {
+			return 'yes';
+		}
+
+		$match_index = 0;
+
+
+		include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+
+		foreach ($third_party_plug_slugs as $ptvalue) {
+
+			if ( is_plugin_active( $ptvalue )) {
+                $match_index++;
+		    }
+
+		}
+
+		if ( $match_index == 0) {
+            $third_party_go_ahead = 'no';
+		}
+
+		return $third_party_go_ahead;
+	}
+
+}
+
+
+/**
+ * Get account menu item classes.
+ *
+ * @since 1.0.0
+ * @param string $endpoint Endpoint.
+ * @return string
+ */
+
+if (!function_exists('wcmamtx_show_disabled_input')) {
+
+	function wcmamtx_show_disabled_input() {
+		echo '<a href="#" data-toggle="modal" data-target="#wcmamtx_upgrade_modal" class=""><img class="wcmamtx_disabled_image_popup" src="'.wcmamtx_PLUGIN_URL.'assets/images/disabled_pro_toggle.png"></a>';
+	}
+
+}
+
+
 
 
 /**
@@ -221,6 +389,8 @@ if (!function_exists('wcmamtx_load_pro_feature_preview')) {
 	function wcmamtx_load_pro_feature_preview() { ?>
         <br/>
 		<strong><?php echo esc_html__( 'Pro Version Features' ,'customize-my-account-for-woocommerce'); ?></strong>
+		<br/>
+		<strong style="color:green;"><?php echo esc_html__( 'Lifetime license starts from $49 USD' ,'customize-my-account-for-woocommerce'); ?></strong>
       
       	<table class="pro_preview_table">
 
@@ -228,7 +398,7 @@ if (!function_exists('wcmamtx_load_pro_feature_preview')) {
 
       		<tr><td><i class="fa fa-check"></i></td><td><?php echo esc_html__( 'Unlimited Groups' ,'customize-my-account-for-woocommerce'); ?></td></tr>
 
-      		<tr><td><i class="fa fa-check"></i></td><td><?php echo esc_html__( 'Dashboard Links' ,'customize-my-account-for-woocommerce'); ?>&emsp;<a target="_blank" href="https://i0.wp.com/www.sysbasics.com/wp-content/uploads/2023/11/1-2.png?w=1233&ssl=1"><?php echo esc_html__( 'Preview' ,'customize-my-account-for-woocommerce'); ?></a></td></tr>
+      		<tr><td><i class="fa fa-check"></i></td><td><?php echo esc_html__( 'Custom Content Before and After third party endpoints' ,'customize-my-account-for-woocommerce'); ?></td></tr>
 
       		<tr><td><i class="fa fa-check"></i></td><td><?php echo esc_html__( 'Change Default Dashboard Page' ,'customize-my-account-for-woocommerce'); ?></td></tr>
 
@@ -267,7 +437,7 @@ if (!function_exists('wcmamtx_pro_added_endpoint')) {
 		if ((isset($value["content"]) && ($value["content"] != "")) && (!isset($value["third_party"]) || ($value["third_party"] != "yes"))) {
 			$pro_added = "yes";
 		} else {
-			$pro_added = "no";
+			$pro_added = "yes";
 		}
 
 		return $pro_added;
@@ -276,79 +446,7 @@ if (!function_exists('wcmamtx_pro_added_endpoint')) {
 }
 
 
-/**
- * License activation reminder.
- *
- * @since 1.0.0
- * @param string .
- * @return string
- */
 
-if (!function_exists('wcmamtx_review_reminder_div')) {
-
-	function wcmamtx_review_reminder_div() { 
-		?>
-
-		<div class="wcmamtx_notice_div review">
-
-			<div class="wcmamtx_notice_div_uppertext">
-				<?php echo esc_html__( 'If you like our plugin kindly rate it.','customize-my-account-for-woocommerce'); ?>
-
-				<a type="button" target="_blank" href="https://wordpress.org/support/plugin/customize-my-account-for-woocommerce/reviews/#new-post"  class="" >
-						
-						<?php echo esc_html__( 'Rate now' ,'customize-my-account-for-woocommerce'); ?>
-					</a>
-
-				<div class="sysbasics_review_buttons">
-					
-
-					<a type="button" target="_blank" href="#"  class="wcmamtx_dismiss_renew_notice wcmamtx_frontend_link" >
-						
-						<?php echo esc_html__( 'Dismiss notice' ,'customize-my-account-for-woocommerce'); ?>
-					</a>
-				</div>
-			</div>
-		</div>
-
-		<?php 
-	}
-}
-
-
-if (!function_exists('wcmamtx_dashboard_text_reminder_div')) {
-
-	function wcmamtx_dashboard_text_reminder_div() { 
-		?>
-
-		<div class="wcmamtx_notice_div dashboard_text">
-
-			<div class="wcmamtx_notice_div_uppertext">
-				<?php 
-
-				echo esc_html__( 'You can customize default dashboard texts from Endpoints/Dashboard tab.This notice is visible to admins only.','customize-my-account-for-woocommerce'); ?>
-
-				<a type="button" target="_blank" href="#"  class="wcmamtx_dismiss_dashboard_text_notice" >
-						
-						<?php echo esc_html__( 'Dismiss notice' ,'customize-my-account-for-woocommerce'); ?>
-				</a>
-
-				
-			</div>
-		</div>
-
-		<?php 
-	}
-}
-
-
-
-/**
- * License activation reminder.
- *
- * @since 1.0.0
- * @param string .
- * @return string
- */
 
 if (!function_exists('wcmamtx_get_menu_shortcode_content')) {
 
@@ -429,7 +527,7 @@ if (!function_exists('wcmamtx_get_account_menu_item_classes')) {
 
 		$core_fields       = 'dashboard,orders,downloads,edit-address,edit-account,customer-logout';
 
-		$icon_source       = isset($value['icon_source']) ? $value['icon_source'] : "default";
+		$icon_source       = "default";
 
 		switch($icon_source) {
 
@@ -657,7 +755,7 @@ if ( ! function_exists( 'wcmamtx_get_my_account_menu_plain_li' ) ) {
 
 
 
-			$icon_source       = isset($value['icon_source']) ? $value['icon_source'] : "default";
+			$icon_source       = "default";
 
 			$hide_myaccount_widget = isset($value['hide_myaccount_widget']) && ($value['hide_myaccount_widget'] == "01") ? "enabled" : "disabled";
 
@@ -730,7 +828,7 @@ if ( ! function_exists( 'wcmamtx_get_my_account_menu_plain_li' ) ) {
 								$is_visible = 'yes';
 							}
 
-							$icon_source_child       = isset($mvalue['icon_source']) ? $mvalue['icon_source'] : "default";
+							$icon_source_child       = "default";
 
 							if (isset($mvalue['class']) && ($mvalue['class'] != '')) {
 								$mextraclass = str_replace(',',' ', $mvalue['class']);
@@ -907,12 +1005,20 @@ if (!function_exists('wcmamtx_get_account_menu_li_html')) {
 		<li  class="<?php echo wcmamtx_get_account_menu_item_classes( $key , $value ); ?> <?php echo $extraclass; ?> <?php if ($icon_source == "custom") { echo $icon_extra_class; } ?>">
 			<a class="woocommerce-MyAccount-navigation-link_a"  href="<?php echo wcmamtx_get_account_endpoint_url( $key ); ?>" <?php if (isset($value['wcmamtx_type']) && ($value['wcmamtx_type'] == "link") && (isset($value['link_targetblank'])) && ($value['link_targetblank'] == 01) ) { echo 'target="_blank"'; } ?>>
 				<?php wcmamtx_get_account_menu_li_icon_html($icon_source,$value,$key); ?>
-				<span class="wcmamtx_sticky_icon_name"><?php echo esc_html( $name ); ?></span>
+				<span class="wcmamtx_sticky_icon_name">
+					<?php echo esc_html( $name ); ?>
+					
+				</span>
+				<?php echo wcmamtx_counter_bubble($key,$value,"yes"); ?>
 			</a>
 		</li>
 
 	<?php }
 }
+
+
+
+
 
 
 /**
@@ -940,14 +1046,11 @@ if (!function_exists('wcmamtx_load_pro_reminder_div')) {
 			<div class="wcmamtx_notice_div_lowerbutton">
 				
 
-				<a type="button" target="_blank" href="https://sysbasics.com/go/customize-demo/"  class="btn btn-success wcmamtx_frontend_link" >
-					<span class="dashicons dashicons-lock"></span>
-					<?php echo esc_html__( 'Pro Version Demo' ,'customize-my-account-for-woocommerce'); ?>
-				</a>
+				
 
 				<a type="button" target="_blank" href="https://sysbasics.com/go/customize/"  class="btn btn-success wcmamtx_frontend_link" >
 					<span class="dashicons dashicons-lock"></span>
-					<?php echo esc_html__( 'Pro Version Page' ,'customize-my-account-for-woocommerce'); ?>
+					<?php echo esc_html__( 'Upgrade to Pro' ,'customize-my-account-for-woocommerce'); ?>
 				</a>
 
 				<br><br>
@@ -982,10 +1085,7 @@ if (!function_exists('wcmamtx_show_limit_info')) {
 			</div>
 
 			<div class="wcmamtx_notice_div_lowerbutton">
-				<a type="button" href="https://sysbasics.com/go/customize-demo/"  class="btn btn-primary " >
-					<span class="dashicons dashicons-lock"></span>
-					<?php echo esc_html__( 'Pro Version Demo' ,'customize-my-account-for-woocommerce'); ?>
-				</a>
+				
 
 				<a type="button" target="_blank" href="https://sysbasics.com/go/customize/"  class="btn btn-success wcmamtx_frontend_link" >
 					<span class="dashicons dashicons-lock"></span>
@@ -1461,7 +1561,7 @@ if ( ! function_exists( 'wcmamtx_get_my_account_menu' ) ) {
 
 
 
-			$icon_source       = isset($value['icon_source']) ? $value['icon_source'] : "default";
+			$icon_source       = "default";
 
 			$hide_myaccount_widget = isset($value['hide_myaccount_widget']) && ($value['hide_myaccount_widget'] == "01") ? "enabled" : "disabled";
 
@@ -1549,7 +1649,7 @@ if ( ! function_exists( 'wcmamtx_get_my_account_menu' ) ) {
 								$is_visible = 'yes';
 							}
 
-							$icon_source_child       = isset($mvalue['icon_source']) ? $mvalue['icon_source'] : "default";
+							$icon_source_child       = "default";
 
 							if (isset($mvalue['class']) && ($mvalue['class'] != '')) {
 								$mextraclass = str_replace(',',' ', $mvalue['class']);
@@ -1819,7 +1919,7 @@ if (!function_exists('wcmtxka_find_string_match_pro')) {
 
 		foreach ($array as $key=>$value) {
 
-			$endpoint_key = $value['endpoint_key'];
+			$endpoint_key = isset($value['endpoint_key']) ? $value['endpoint_key'] : $key;
 			
             if ($endpoint_key == $string) { // Yoshi version
 

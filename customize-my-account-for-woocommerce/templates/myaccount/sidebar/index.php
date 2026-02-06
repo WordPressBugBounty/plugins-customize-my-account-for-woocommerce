@@ -74,7 +74,7 @@
 
 
         
-        $icon_source       = isset($value['icon_source']) ? $value['icon_source'] : "default";
+        $icon_source       = "default";
 
         $hide_in_navigation = isset($value['hide_in_navigation']) && ($value['hide_in_navigation'] == "01") ? "enabled" : "disabled";
 

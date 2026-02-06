@@ -464,7 +464,7 @@ class Insights
 
         $notice .= ' (<a class="' . $this->client->slug . '-insights-data-we-collect" href="#">' . $this->client->__trans('what we collect') . '</a>)';
         $notice .= '<p class="description" style="display:none;">' . implode(', ', $this->data_we_collect()) . '. ';
-        $notice .= 'We are using wcmamtx_Appsero to collect your data. <a href="' . $policy_url . '" target="_blank">Learn more</a> about how wcmamtx_Appsero collects and handle your data.</p>';
+        $notice .= 'We are using Appsero to collect your data. <a href="' . $policy_url . '" target="_blank">Learn more</a> about how Appsero collects and handle your data.</p>';
 
         echo '<div class="updated"><p>';
         echo $notice;
@@ -923,7 +923,7 @@ class Insights
                     <p class="wd-dr-modal-reasons-bottom">
                         <?php
                         echo sprintf(
-                            $this->client->__trans('We share your data with <a href="%1$s" target="_blank">wcmamtx_Appsero</a> to troubleshoot problems &amp; make product improvements. <a href="%2$s" target="_blank">Learn more</a> about how wcmamtx_Appsero handles your data.'),
+                            $this->client->__trans('We share your data with <a href="%1$s" target="_blank">Appsero</a> to troubleshoot problems &amp; make product improvements. <a href="%2$s" target="_blank">Learn more</a> about how Appsero handles your data.'),
                             esc_url('https://Appsero.com/'),
                             esc_url('https://Appsero.com/privacy-policy')
                         );
@@ -934,7 +934,7 @@ class Insights
                 <div class="wd-dr-modal-footer">
                     <a href="#" class="dont-bother-me wd-dr-button-secondary"><?php $this->client->_etrans('Skip & Deactivate'); ?></a>
 
-                    <a target="_blank" style="background-color:green;color:white;float:left;" href="https://www.sysbasics.com/customize-my-account-free-plugin-support/" class="wd-dr-button-secondary"><?php $this->client->_etrans('Contact Support (Live Chat)'); ?></a>
+                    <a target="_blank" style="background-color:green;color:white;float:left;" href="https://www.sysbasics.com/customize-my-account-free-plugin-support/" class="wd-dr-button-secondary"><?php $this->client->_etrans('Contact Support'); ?></a>
                     <button class="wd-dr-button-secondary wd-dr-cancel-modal"><?php $this->client->_etrans('Cancel'); ?></button>
                     <button class="wd-dr-submit-modal"><?php $this->client->_etrans('Submit & Deactivate'); ?></button>
                 </div>

@@ -3,16 +3,16 @@
     Plugin Name: SysBasics Customize My Account for WooCommerce
     Plugin URI: https://sysbasics.com
     Description: Customize My account page. Add/Edit/Remove Endpoints.
-    Version: 3.2.0
+    Version: 3.7.13
     Author: SysBasics
     Author URI: https://sysbasics.com
     Domain Path: /languages
     License: GPL v2 or later
     License URI: https://www.gnu.org/licenses/gpl-2.0.html
     Requires at least: 3.3
-    Tested up to: 6.8.1
+    Tested up to: 6.9.0
     WC requires at least: 3.0.0
-    WC tested up to: 9.9.5
+    WC tested up to: 10.4.3
     Requires Plugins: woocommerce
 */
 
@@ -22,12 +22,9 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 if( !defined( 'wcmamtx_PLUGIN_URL' ) )
     define( 'wcmamtx_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
-if( !defined( 'wcmamtx_plugin_slug' ) )
-    define( 'wcmamtx_plugin_slug', 'customize-my-account-for-woocommerce' );
 
 
-if( !defined( 'wcmamtx_PLUGIN_name' ) )
-    define( 'wcmamtx_PLUGIN_name', esc_html__( 'Customize My Account' ,'customize-my-account-for-woocommerce') );
+
 
 if( !defined( 'wcmamtx_update_doc_url' ) )
     define( 'wcmamtx_update_doc_url', 'https://www.sysbasics.com/knowledge-base/category/woocommerce-customize-my-account-pro/' );
@@ -56,7 +53,7 @@ add_action( 'before_woocommerce_init', function() {
 } );
 
 
-
+add_action( 'init', 'wcmamtx_translate_test_load_plugin_textdomain' );
 
 
 function wcmamtx_translate_test_load_plugin_textdomain() {
@@ -64,7 +61,7 @@ function wcmamtx_translate_test_load_plugin_textdomain() {
 
 }
 
-add_action( 'init', 'wcmamtx_translate_test_load_plugin_textdomain' );
+
 
 
 
@@ -101,55 +98,11 @@ if ( is_plugin_active( 'sysbasics-account-fields/sysbasics-account-fields.php' )
     define( 'sysbasics_checkout_mode', 'off' );
 }
 
-/**
- * Check weather module is enabled or not.
- *
- * @since 2.12.0
- * @param string $key equals to module slug.
- * @return string
- */
 
-if (!function_exists('wcmamtx_is_module_enabled')) {
+include dirname( __FILE__ ) . '/include/wcmamtx_extra_functions.php';
 
-    function wcmamtx_is_module_enabled($key) {
-
-        $matchstick =  "yes";
-
-
-        $module_settings = (array) get_option( 'wcmamtx_module_settings' );
-
-        $el_widgets1 = array(
-          'user-avatar'=>esc_html__('User Avatar (Included)','customize-my-account-for-woocommerce'),
-          'elementor-templates'=>esc_html__('User Avatar (Included)','customize-my-account-for-woocommerce'),
-          'sample'=>esc_html__('sample','customize-my-account-for-woocommerce')
-        );
-
-
-        $el_widgets2 = array(
-          'user-avatar'=>esc_html__('User Avatar (Included)','customize-my-account-for-woocommerce'),
-          'elementor-templates'=>esc_html__('Elementor Templates (Included)','customize-my-account-for-woocommerce'),
-          'Order-actions'=>esc_html__('Order Actions (Pro Module)','customize-my-account-for-woocommerce'),
-          'Order-columns'=>esc_html__('Order Columns (Pro Module)','customize-my-account-for-woocommerce'),
-          'Download-columns'=>esc_html__('Download Columns (Pro Module)','customize-my-account-for-woocommerce'),
-          'sample'=>esc_html__('sample','customize-my-account-for-woocommerce')
-        );
-
-        $el_widgets = isset($module_settings['el_widgets']) && !empty($module_settings['el_widgets']) ? $module_settings['el_widgets'] : $el_widgets1;
-
-        if (isset($el_widgets[$key])) {
-            $matchstick =  "yes";
-        } else {
-            $matchstick =  "no";
-        }
-
-        return $matchstick;
-    }
-
-}
-
-
-$user_avatar_enable = wcmamtx_is_module_enabled("user-avatar");
-$elementor_module_enable = wcmamtx_is_module_enabled("elementor-templates");
+$user_avatar_enable = wcmamtx_is_module_enabled_init("user-avatar");
+$elementor_module_enable = wcmamtx_is_module_enabled_init("elementor-templates");
 
 
  
@@ -158,7 +111,9 @@ $elementor_module_enable = wcmamtx_is_module_enabled("elementor-templates");
       //include the classes
     include dirname( __FILE__ ) . '/include/admin/admin_settings.php';
     include dirname( __FILE__ ) . '/include/frontend/frontend_functions.php';
-    include dirname( __FILE__ ) . '/include/wcmamtx_extra_functions.php';
+    
+
+    
 
     if (isset($user_avatar_enable) && ($user_avatar_enable == "yes")) { 
         include dirname( __FILE__ ) . '/include/sysbasics-avatar-upload.php';
@@ -190,6 +145,8 @@ if (wcmamtx_elementor_mode !== null) {
 }
 
 
+
+
 register_activation_hook(__FILE__, 'wcmamtx_plugin_activation_hook');
 
 add_action('admin_init', 'wcmamtx_admin_plugin_redirect');
@@ -206,8 +163,8 @@ if (!function_exists('wcmamtx_plugin_activation_hook')) {
 
         // Don't forget to exit() because wp_redirect doesn't exit automatically
         add_option('wcmamtx_do_activation_redirect', true);
-
-
+        
+        
 
 
     }
@@ -402,8 +359,8 @@ if (!function_exists('wcmamtx_get_plugin_version_number')) {
          require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
     
        
-       $plugin_folder = get_plugins( '/' . ''.wcmamtx_plugin_slug.'' );
-       $plugin_file = ''.wcmamtx_plugin_slug.'.php';
+       $plugin_folder = get_plugins( '/customize-my-account-for-woocommerce' );
+       $plugin_file = 'customize-my-account-for-woocommerce.php';
     
     
        if ( isset( $plugin_folder[$plugin_file]['Version'] ) ) {

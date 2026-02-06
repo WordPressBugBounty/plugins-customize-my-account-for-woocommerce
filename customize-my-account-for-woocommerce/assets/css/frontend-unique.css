@@ -3,9 +3,10 @@
 }
 
 i.fa.fa-chevron-down.wcmamtx_nav_chevron,i.fa.wcmamtx_group_fa.fa-chevron-up,i.fa.wcmamtx_group_fa.fa-chevron-down {
-    font-size: 11px;
+    font-size: 16px;
     margin-left: 7px !important;
     margin-top: 5px;
+    margin-right: 3px;
 }
 
 ul.wcmamtx_sub_level li {
@@ -46,4 +47,11 @@ li.woocommerce-MyAccount-navigation-link {
 }
 .single-breadcrumbs nav.woocommerce-MyAccount-navigation {
     display: none !important;
+}
+#wpadminbar #wp-admin-bar-wcmamtx_customize_myaccount>.ab-item:before {
+    content: "\f540" / '';
+    top: 2px;
+}
+.woocommerce-account h1.entry-title {
+    display:none;
 }

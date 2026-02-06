@@ -758,9 +758,10 @@ ul.wcmamtx_vertical_menu li.is-active {
     } else {
         $show_avatar = 'yes';
     }
+    
+    $user_avatar_enable = wcmamtx_is_module_enabled_init("user-avatar");
 
-
-    if ($show_avatar == 'yes') {
+    if (($show_avatar == 'yes') && (isset($user_avatar_enable) && ($user_avatar_enable == "yes")) ) {
         echo do_shortcode('[sysBasics-user-avatar]');
     }
 
@@ -862,7 +863,7 @@ ul.wcmamtx_vertical_menu li.is-active {
 
 
             
-            $icon_source       = isset($value['icon_source']) ? $value['icon_source'] : "default";
+            $icon_source       = "default";
 
             $hide_in_navigation = isset($value['hide_in_navigation']) && ($value['hide_in_navigation'] == "01") ? "enabled" : "disabled";
 
@@ -952,7 +953,7 @@ ul.wcmamtx_vertical_menu li.is-active {
 
 
             
-            $icon_source       = isset($value['icon_source']) ? $value['icon_source'] : "default";
+            $icon_source       = "default";
 
             $hide_in_navigation = isset($value['hide_in_navigation']) && ($value['hide_in_navigation'] == "01") ? "enabled" : "disabled";
 
@@ -1000,9 +1001,10 @@ ul.wcmamtx_vertical_menu li.is-active {
     } else {
         $show_avatar = 'yes';
     }
+    
+      $user_avatar_enable = wcmamtx_is_module_enabled_init("user-avatar");
 
-
-    if ($show_avatar == 'yes') {
+    if (($show_avatar == 'yes') && (isset($user_avatar_enable) && ($user_avatar_enable == "yes")) ) {
         echo do_shortcode('[sysBasics-user-avatar]');
     }
 

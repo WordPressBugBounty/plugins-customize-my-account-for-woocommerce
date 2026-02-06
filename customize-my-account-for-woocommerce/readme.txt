@@ -2,16 +2,16 @@
 Contributors: phppoet,sysbasics
 Tags: woocommerce, my account, customize, endpoints, user avatar
 Requires at least: 4.0
-Tested up to: 6.8.1
-WC Tested up to: 9.9.5
+Tested up to: 6.9.0
+WC Tested up to: 10.4.3
 WC Requires at least: 4.0
 Requires PHP: 5.2
-Stable tag: 3.2.0
+Stable tag: 3.7.13
 Requires Plugins: woocommerce
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Manage/customize WooCommerce My Account Page along with endpoints, user avatar , account/registration fields and much more 
+Optimize your WooCommerce My account page also add new endpoints and manage existing endpoints with ease. 
 
 == Description ==
 
@@ -144,6 +144,59 @@ Learn more about how [Appsero collects and uses this data](https://Appsero.com/p
 
 
 == Changelog ==
+
+Version 3.7.7   - 01 February 2026
+
+- Fix - Automatic disable of user avatar.
+- Enhancement - Modular countof for count bubble.
+- Enhancement - Show orders or downloads count on any custom endpoint.
+- Enhancement - Added Count bubble for orders and downloads.
+
+Version: 3.6.24 - 30 January 2026
+
+- Version 3.6.24 (30 January 2026) - Improved compatibility with third party endpoints.
+- Version 3.6.16 (30 January 2026) - Hook to add custom content variable.
+- Version 3.6.14 (30 January 2026) - Support for custom variables inside content.
+- Version 3.6.13 (29 January 2026) - Review reminder notice on admin pages only.
+- Version 3.6.11 (29 January 2026) - Manage dashboard fonts color as well as option to restore default colors.
+- Version 3.6.10 (29 January 2026) - Fix debug error Function  
+   _load_textdomain_just_in_time was called incorrectly.
+
+- Version 3.6.9 (29 January 2026) - Flush rewrite cache only if new endpoint is added.
+- Version 3.6.8 (29 January 2026) - broken custom endpoint links.
+- Version 3.6.6 (27 January 2026) - fix missing default icons for dashboard links.
+- Version 3.6.5 (26 January 2026) - improved font awesome icon compatibility.
+- Version 3.6.4 (26 January 2026) - reminder to use font awesome free plugin along with this plugin if icons are missing.
+- Version 3.6.3 (26 January 2026) - h1 entry title is hidden by default.
+- Version 3.6.2 (26 January 2026) - css bugfix related previous update.
+- Version 3.6.1 (26 January 2026) - Minor changes in default dashboard link background color.
+- Enhancement - Added default background colors to dashboard links.
+- Enhancement - Use custom background color for dashboard links.
+
+Version: 3.5.0 - 25 January 2026
+
+- Version 3.5.2 (25 January 2026) - Minor text change on deactivation feedback modal.
+- Version 3.5.1 (25 January 2026) - Minor text change on deactivation feedback modal.
+- Frontend admin bar link for easy backend admin.
+
+Version: 3.4.16 - 12 January 2026
+
+- Fix - Added missing font awesome fonts. 
+- Enhancement - removal of hover effects for dashboard links.
+- Enhancement - Display notice if permalink is default(plain ?p=123).
+- Enhancement - Group Endpoints are now supported.
+- Fix - included missing language string.
+- Fix - conditional use of flush rewrite cache.
+- Fix - content not showing on added endpoints.
+- Enhancement - Endpoints are now supported.
+
+Version: 3.3.11 - 20 December 2025
+
+- Enhancement - Updated plugin links.
+- Fix - removed flush_rewrite_rules condition.
+- Enhancement - Modified plugin settings text.
+- Fix         - Debug error.
+- Enhancement - Update compatibility tags.
 
 Version 3.2.0 - 14 June 2025
 
