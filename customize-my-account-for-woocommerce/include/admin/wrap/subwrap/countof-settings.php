@@ -19,9 +19,17 @@
 
         switch($key) {
             case "orders":
-                if (is_array($value) && ($value['count_bubble'] != "03")) {
-                    $value['count_bubble'] = "01";
+                if (is_array($value) ) {
+
+                    if (!isset($value['count_bubble'])) {
+                         $value['count_bubble'] = "01";
+                    } else {
+                        $value['count_bubble'] = $value['count_bubble'];
+                    }
+                   
                 }
+
+
                 
                 $count_bubble = isset($value['count_bubble']) && ($value['count_bubble'] == "01") ? "yes" : "no";
 
@@ -34,8 +42,14 @@
             break;
 
             case "downloads":
-                if (is_array($value) && ($value['count_bubble'] != "03")) {
-                    $value['count_bubble'] = "01";
+                if (is_array($value) ) {
+
+                    if (!isset($value['count_bubble'])) {
+                         $value['count_bubble'] = "01";
+                    } else {
+                        $value['count_bubble'] = $value['count_bubble'];
+                    }
+                   
                 }
                 $count_bubble = isset($value['count_bubble']) && ($value['count_bubble'] == "01") ? "yes" : "no";
 
@@ -72,7 +86,7 @@
             <td>
                 <div class="wcmamtx_count_div">
                     <div class="wcmamtx_count_div_section_main">
-                        <input class="wcmamtx_accordion_input count_bubble2 wcmamtx_accordion_checkbox checkmark2" type="checkbox" name="wcmamtx_advanced_settings[<?php echo $key; ?>][count_bubble]" value="03">
+                        <input class="wcmamtx_accordion_input count_bubble2 wcmamtx_accordion_checkbox checkmark2" type="checkbox" name="wcmamtx_advanced_settings[<?php echo $key; ?>][count_bubble]" value="03" <?php if (isset($value['count_bubble']) && ($value['count_bubble'] == "03")) { echo 'checked'; }  ?>>
                         <input parentkey = "<?php echo $key; ?>" type="checkbox" data-toggle="toggle" data-on="<?php  echo esc_html__('Yes','customize-my-account-for-woocommerce'); ?>" data-off="<?php  echo esc_html__('No','customize-my-account-for-woocommerce'); ?>" data-size="sm" class="wcmamtx_accordion_input count_bubble wcmamtx_accordion_checkbox checkmark" type="checkbox" name="wcmamtx_advanced_settings[<?php echo $key; ?>][count_bubble]" value="01" <?php if (isset($count_bubble) && ($count_bubble == "yes")) { echo 'checked'; } elseif (!isset($value)) { echo 'checked'; }
                             // code...
                          ?>>
