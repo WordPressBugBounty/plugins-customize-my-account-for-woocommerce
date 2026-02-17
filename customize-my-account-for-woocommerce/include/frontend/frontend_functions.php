@@ -338,7 +338,7 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
              *  dashboard background color data starts
              */
 
-            $default_color = '#e9e9ef';
+            $default_color = wcmamtx_get_default_tab_color($key);
 
             $default_colors = array(
                 'dashboard'=>'#93c1a1',

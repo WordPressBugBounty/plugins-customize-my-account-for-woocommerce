@@ -283,6 +283,28 @@ if (!function_exists('wcmamtx_placeholder_img_src')) {
 }
 
 
+/**
+ * Get account menu item classes.
+ *
+ * @since 1.0.0
+ * @param string $endpoint Endpoint.
+ * @return string
+ */
+
+if (!function_exists('wcmamtx_get_default_tab_color')) {
+
+	function wcmamtx_get_default_tab_color($key) {
+		$default_color = '#e9e9ef';
+
+		$default_colors  = array("#8d9897","#d19cdc","#b7e272","#f3a4ba","#c38181","#a4c6f3","#a5eba7","#f3e1a4","#d1c594","#d19cdc5c","#818ea95c","#d9e6ff","#edf2d0");
+		$default_color_i = array_rand($default_colors);
+        $default_color   = $default_colors[$default_color_i];
+		return $default_color;
+	}
+
+}
+
+
 
 /**
  * Get account menu item classes.

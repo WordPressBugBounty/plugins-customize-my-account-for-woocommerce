@@ -39,7 +39,7 @@ $third_party = isset($value['third_party']) ? $value['third_party'] : $third_par
  *  dashboard background color data starts
  */
 
-$default_color = '#e9e9ef';
+$default_color = wcmamtx_get_default_tab_color($key);
 
 $default_colors = array(
                 'dashboard'=>'#93c1a1',
