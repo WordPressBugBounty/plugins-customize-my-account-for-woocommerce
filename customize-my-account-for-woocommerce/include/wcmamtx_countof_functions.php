@@ -63,7 +63,7 @@ if (!function_exists('wcmamtx_get_total_woowallet_count')) {
 				$wallet_balance = $wpdb->get_var( $wpdb->prepare( "SELECT SUM(CASE WHEN t.type = 'credit' THEN t.amount ELSE -t.amount END) as balance FROM {$wpdb->base_prefix}woo_wallet_transactions AS t WHERE t.user_id=%d AND t.deleted=0", $user_id ) ); // @codingStandardsIgnoreLine
 				$wallet_balance = (float) apply_filters( 'woo_wallet_current_balance', $wallet_balance, $user_id );
 			}
-			return wc_price( $wallet_balance);
+			return $wallet_balance;
 
         
     }
@@ -203,7 +203,7 @@ if (!function_exists('wcmamtx_render_woo_wallet_count_bubble_html')) {
 		if (($count_bubble == "yes") &&  ($empty_goahead == 'yes')) {
 			?>
 			<span class="<?php if (isset($sidebar)) { echo 'wcmamtx-banner-counter-sidebar'; } else {  echo 'wcmamtx-banner-counter';} ?>">
-				<?php echo wcmamtx_get_total_woowallet_count(); ?>
+				<?php echo wc_price(wcmamtx_get_total_woowallet_count()); ?>
 
 			</span>
 			<?php

@@ -158,6 +158,19 @@ $default_color_font = '#334155';
 
         </td>
     </tr>
+    <tr>
+        <td>
+            <label class=" wcmamtx_accordion_label">
+                <?php echo esc_html__('Content After','customize-my-account-for-woocommerce'); ?>
+                <?php echo $key; ?>   
+                <?php echo esc_html__('Content','customize-my-account-for-woocommerce'); ?>
+            </label>
+        </td>
+        <td>
+            <?php wcmamtx_show_disabled_toggle_image(); ?>
+
+        </td>
+    </tr>
 <?php } ?>
 
 
@@ -626,7 +639,7 @@ $default_color_font = '#334155';
                     <td>
 
                      <input type="hidden" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][third_party]" value="yes">
-                     <input type="hidden" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][endpoint_name]" value="<?php if (isset($name)) { echo $name; } ?>">
+                     
                  </td>
 
                 </tr>

@@ -139,7 +139,7 @@
                     </div>
                     <?php 
 
-                    if  (($key != "orders") && ($key != "downloads")) {
+                    if  (($key != "orders") && ($key != "downloads") && ($key != "woo-wallet")) {
                         ?>
                         <div class="wcmamtx_count_div_section" style="<?php echo $section_style; ?>">
                             <select mkey="<?php echo $key; ?>" class="wcmamtx_countof_dropdown" name="wcmamtx_advanced_settings[<?php echo $key; ?>][count_of]">
