@@ -10,7 +10,13 @@
 
     $count_of_selectable = apply_filters('wcmamtx_override_count_of_array',$count_of_selectable);
 
-   
+
+    include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+
+
+    if ( is_plugin_active( 'woo-wallet/woo-wallet.php' ) ) {
+        $count_of_selectable['woo-wallet-balance'] = esc_html__('Tera Wallet Balance','customize-my-account-for-woocommerce');
+    } 
 
 
     if (($wcmamtx_type != "group")) {
@@ -18,6 +24,30 @@
 
 
         switch($key) {
+            case "woo-wallet":
+                if (is_array($value) ) {
+
+                    if (!isset($value['count_bubble'])) {
+                         $value['count_bubble'] = "01";
+                    } else {
+                        $value['count_bubble'] = $value['count_bubble'];
+                    }
+                   
+                }
+
+                $count_of = isset($value['count_of']) ? $value['count_of'] : "woo-wallet-balance";
+                
+                $count_bubble = isset($value['count_bubble']) && ($value['count_bubble'] == "01") ? "yes" : "no";
+
+                $hide_empty = isset($value['hide_empty']) && ($value['hide_empty'] == "01") ? "yes" : "no";
+
+                $section_style = isset($value['count_bubble']) && ($value['count_bubble'] == "01") ? "display:block;" : "display:none;";
+
+                $hide_sidebar = isset($value['hide_sidebar']) && ($value['hide_sidebar'] == "01") ? "yes" : "no";
+                
+            break;
+
+
             case "orders":
                 if (is_array($value) ) {
 
@@ -37,7 +67,7 @@
 
                 $section_style = isset($value['count_bubble']) && ($value['count_bubble'] == "01") ? "display:block;" : "display:none;";
 
-                
+                $hide_sidebar = isset($value['hide_sidebar']) && ($value['hide_sidebar'] == "01") ? "yes" : "no";
                 
             break;
 
@@ -56,7 +86,9 @@
                 $hide_empty = isset($value['hide_empty']) && ($value['hide_empty'] == "01") ? "yes" : "no";
 
                 $section_style = isset($value['count_bubble']) && ($value['count_bubble'] == "01") ? "display:block;" : "display:none;";
+                
 
+                $hide_sidebar = isset($value['hide_sidebar']) && ($value['hide_sidebar'] == "01") ? "yes" : "no";
                
                 
             break;
@@ -74,6 +106,9 @@
                 $section_style_cpt = isset($count_of) && ($count_of == "cpt_count") ? "display:block;" : "display:none;";
 
                 $section_style_usermeta = isset($count_of) && ($count_of == "usermeta_count") ? "display:block;" : "display:none;";
+
+
+                $hide_sidebar = isset($value['hide_sidebar']) && ($value['hide_sidebar'] == "01") ? "yes" : "no";
 
                 
             break;
@@ -94,7 +129,13 @@
                     <div class="wcmamtx_count_div_section" style="<?php echo $section_style; ?>">
                         <label class=" wcmamtx_accordion_label"><?php echo esc_html__('Hide Empty','customize-my-account-for-woocommerce'); ?></label>
 
-                        <input type="checkbox" data-toggle="toggle" data-on="<?php  echo esc_html__('Yes','customize-my-account-for-woocommerce'); ?>" data-off="<?php  echo esc_html__('No','customize-my-account-for-woocommerce'); ?>" data-size="sm" class="wcmamtx_accordion_input wcmamtx_accordion_checkbox checkmark" ype="checkbox" name="wcmamtx_advanced_settings[<?php echo $key; ?>][hide_empty]" value="01" <?php if (isset($hide_empty) && ($hide_empty == "yes")) { echo 'checked'; } ?>>
+                        <input type="checkbox" data-toggle="toggle" data-on="<?php  echo esc_html__('Yes','customize-my-account-for-woocommerce'); ?>" data-off="<?php  echo esc_html__('No','customize-my-account-for-woocommerce'); ?>" data-size="sm" class="wcmamtx_accordion_input wcmamtx_accordion_checkbox checkmark" type="checkbox" name="wcmamtx_advanced_settings[<?php echo $key; ?>][hide_empty]" value="01" <?php if (isset($hide_empty) && ($hide_empty == "yes")) { echo 'checked'; } ?>>
+
+                       
+                            <label class=" wcmamtx_accordion_label"><?php echo esc_html__('Hide in sidebar','customize-my-account-for-woocommerce'); ?></label>
+
+                            <input type="checkbox" data-toggle="toggle" data-on="<?php  echo esc_html__('Yes','customize-my-account-for-woocommerce'); ?>" data-off="<?php  echo esc_html__('No','customize-my-account-for-woocommerce'); ?>" data-size="sm" class="wcmamtx_accordion_input wcmamtx_accordion_checkbox checkmark" type="checkbox" name="wcmamtx_advanced_settings[<?php echo $key; ?>][hide_sidebar]" value="01" <?php if (isset($hide_sidebar) && ($hide_sidebar == "yes")) { echo 'checked'; } ?>>
+                        
                     </div>
                     <?php 
 

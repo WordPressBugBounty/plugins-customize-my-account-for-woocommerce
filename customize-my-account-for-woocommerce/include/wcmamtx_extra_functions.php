@@ -1009,7 +1009,14 @@ if (!function_exists('wcmamtx_get_account_menu_li_html')) {
 					<?php echo esc_html( $name ); ?>
 					
 				</span>
-				<?php echo wcmamtx_counter_bubble($key,$value,"yes"); ?>
+				<?php 
+				$hide_sidebar = isset($value['hide_sidebar']) && ($value['hide_sidebar'] == "01") ? "yes" : "no";
+
+				if ($hide_sidebar == "no") {
+					echo wcmamtx_counter_bubble($key,$value,"yes"); 
+				}
+				
+				?>
 			</a>
 		</li>
 

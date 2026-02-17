@@ -666,6 +666,7 @@ ul.wcmamtx_vertical_menu li.is-active {
     border-radius: 50%;
     font-weight: 600;
     padding: 0 5px;
+    width: auto;
 }
 .wcmamtx-banner-counter,.wcmamtx-banner-counter-sidebar {
     background: #29ac8f;

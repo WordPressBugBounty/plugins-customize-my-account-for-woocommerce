@@ -3,10 +3,10 @@ Contributors: phppoet,sysbasics
 Tags: woocommerce, my account, customize, endpoints, user avatar
 Requires at least: 4.0
 Tested up to: 6.9.1
-WC Tested up to: 10.5.1
+WC Tested up to: 10.5.2
 WC Requires at least: 4.0
 Requires PHP: 5.2
-Stable tag: 3.7.18
+Stable tag: 3.7.19
 Requires Plugins: woocommerce
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -145,8 +145,9 @@ Learn more about how [Appsero collects and uses this data](https://Appsero.com/p
 
 == Changelog ==
 
-Version 3.7.7   - 01 February 2026
+Version 3.7.19   - 17 February 2026
 
+- Enhancement - Inbuilt compatibility for Tera Wallet Plugin.
 - Fix - Automatic disable of user avatar.
 - Enhancement - Modular countof for count bubble.
 - Enhancement - Show orders or downloads count on any custom endpoint.

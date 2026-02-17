@@ -49,6 +49,36 @@ if (!function_exists('wcmamtx_get_total_orderid_count')) {
  * @return string
  */
 
+if (!function_exists('wcmamtx_get_total_woowallet_count')) {
+
+    function wcmamtx_get_total_woowallet_count() {
+
+       global $wpdb;
+			
+			$user_id = get_current_user_id();
+			
+			
+			$wallet_balance = 0;
+			if ( $user_id ) {
+				$wallet_balance = $wpdb->get_var( $wpdb->prepare( "SELECT SUM(CASE WHEN t.type = 'credit' THEN t.amount ELSE -t.amount END) as balance FROM {$wpdb->base_prefix}woo_wallet_transactions AS t WHERE t.user_id=%d AND t.deleted=0", $user_id ) ); // @codingStandardsIgnoreLine
+				$wallet_balance = (float) apply_filters( 'woo_wallet_current_balance', $wallet_balance, $user_id );
+			}
+			return wc_price( $wallet_balance);
+
+        
+    }
+
+}
+
+
+/**
+ * Get account li html.
+ *
+ * @since 1.0.0
+ * @param string $endpoint Endpoint.
+ * @return string
+ */
+
 if (!function_exists('wcmamtx_get_total_downloads_count')) {
 
 	function wcmamtx_get_total_downloads_count() {
@@ -136,6 +166,45 @@ if (!function_exists('wcmamtx_render_cpt_count_bubble_html')) {
 			?>
 			<span class="<?php if (isset($sidebar)) { echo 'wcmamtx-banner-counter-sidebar'; } else {  echo 'wcmamtx-banner-counter';} ?>">         
 				<?php echo wcmamtx_get_user_post_type_count($custom_post_type,$cpt_status); ?>
+			</span>
+			<?php
+		}
+
+
+	}
+
+}
+
+/**
+ * Get account li html.
+ *
+ * @since 1.0.0
+ * @param string $endpoint Endpoint.
+ * @return string
+ */
+
+if (!function_exists('wcmamtx_render_woo_wallet_count_bubble_html')) {
+
+	function wcmamtx_render_woo_wallet_count_bubble_html($count_bubble,$hide_empty,$sidebar = null) {
+
+		$empty_goahead = 'yes';
+
+		if ($hide_empty == "yes") {
+			$get_count = wcmamtx_get_total_woowallet_count();
+
+			if ($get_count == 0) {
+				$empty_goahead = 'no';
+			} else {
+				$empty_goahead = 'yes';
+			}
+
+		}
+
+		if (($count_bubble == "yes") &&  ($empty_goahead == 'yes')) {
+			?>
+			<span class="<?php if (isset($sidebar)) { echo 'wcmamtx-banner-counter-sidebar'; } else {  echo 'wcmamtx-banner-counter';} ?>">
+				<?php echo wcmamtx_get_total_woowallet_count(); ?>
+
 			</span>
 			<?php
 		}
@@ -240,6 +309,31 @@ if (!function_exists('wcmamtx_counter_bubble')) {
     	$count_of = 'none';
 
          switch($key) {
+         	case "woo-wallet":
+                if (is_array($value) ) {
+
+                    if (!isset($value['count_bubble'])) {
+                         $value['count_bubble'] = "01";
+                    } else {
+                        $value['count_bubble'] = $value['count_bubble'];
+                    }
+                   
+                }
+
+                $count_of = isset($value['count_of']) ? $value['count_of'] : "woo-wallet-balance";
+                
+                $count_bubble = isset($value['count_bubble']) && ($value['count_bubble'] == "01") ? "yes" : "no";
+
+                $hide_empty = isset($value['hide_empty']) && ($value['hide_empty'] == "01") ? "yes" : "no";
+
+                $section_style = isset($value['count_bubble']) && ($value['count_bubble'] == "01") ? "display:block;" : "display:none;";
+
+                $hide_sidebar = isset($value['hide_sidebar']) && ($value['hide_sidebar'] == "01") ? "yes" : "always";
+
+                wcmamtx_render_woo_wallet_count_bubble_html($count_bubble,$hide_empty,$sidebar);
+                
+            break;
+
             case "orders":
 
                 if (is_array($value) ) {
