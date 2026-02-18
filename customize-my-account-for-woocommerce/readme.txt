@@ -6,7 +6,7 @@ Tested up to: 6.9.1
 WC Tested up to: 10.5.2
 WC Requires at least: 4.0
 Requires PHP: 5.2
-Stable tag: 3.7.22
+Stable tag: 3.7.23
 Requires Plugins: woocommerce
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -48,9 +48,18 @@ third party endpoint. In certain cases if you want this plugin to take over thir
 the checkbox then create new endpoint with same slug and it will work fine. For example you have Rewards Endpoint that are sourced from any other plugin which has revwards slud. in that case if you want full control as other endpoints just hide existing endpoint and add new endpoint with rewards slug and it will just work fine. 
 
 
-<h3>Manage Custom fields on Edit My Account Page</h3>
+<h3>Show count bubble on navigation items</h3>
 
--You can hide the existing fields on WooCommerce Edit account page as well as add new fields there, Plugin supports 15 new field type including file upload for that. YOu can collect data from user for this fields plus you can conditionally show/hide these fields based on various conditions. 
+-You can show customers order count and customer’s download count to both sidebar menu as well as dashboard links added by our plugin. You can also show any chosen custom post type count by user like tickets , coupons or any other cpt. This function is fully modular so you can create your own function with any custom data like rewards, wallet balance etc.
+
+Plugin Supports following counts. 
+
+- Customer total orders count.
+- Customer total downloads count.
+- Wallet balance by <a href="https://wordpress.org/plugins/woo-wallet/">Wallet for WooCommerce
+</a>.
+- Points by <a href="https://wordpress.org/plugins/points-and-rewards-for-woocommerce/">Points and Rewards for WooCommerce by WP Swings
+</a>.
 
 <h3>Make your Dashboard Pretty with Dashboard links (Pro Feature)</h3>
 
@@ -145,8 +154,9 @@ Learn more about how [Appsero collects and uses this data](https://Appsero.com/p
 
 == Changelog ==
 
-Version 3.7.20   - 17 February 2026
+Version 3.7.23   - 18 February 2026
 
+- Enhancement - Inbuilt compatibility for Points and rewards Plugin by WP Swings.
 - Fix - label renaming not working on third party.
 - Enhancement - Inbuilt compatibility for Tera Wallet Plugin.
 - Fix - Automatic disable of user avatar.

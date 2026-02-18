@@ -18,6 +18,10 @@
         $count_of_selectable['woo-wallet-balance'] = esc_html__('Tera Wallet Balance','customize-my-account-for-woocommerce');
     } 
 
+    if ( is_plugin_active( 'points-and-rewards-for-woocommerce/points-rewards-for-woocommerce.php' ) ) {
+        $count_of_selectable['points'] = esc_html__('Total Points (WP Swings)','customize-my-account-for-woocommerce');
+    } 
+
 
     if (($wcmamtx_type != "group")) {
 
@@ -36,6 +40,30 @@
                 }
 
                 $count_of = isset($value['count_of']) ? $value['count_of'] : "woo-wallet-balance";
+                
+                $count_bubble = isset($value['count_bubble']) && ($value['count_bubble'] == "01") ? "yes" : "no";
+
+                $hide_empty = isset($value['hide_empty']) && ($value['hide_empty'] == "01") ? "yes" : "no";
+
+                $section_style = isset($value['count_bubble']) && ($value['count_bubble'] == "01") ? "display:block;" : "display:none;";
+
+                $hide_sidebar = isset($value['hide_sidebar']) && ($value['hide_sidebar'] == "01") ? "yes" : "no";
+                
+            break;
+
+
+            case "points":
+                if (is_array($value) ) {
+
+                    if (!isset($value['count_bubble'])) {
+                         $value['count_bubble'] = "01";
+                    } else {
+                        $value['count_bubble'] = $value['count_bubble'];
+                    }
+                   
+                }
+
+               
                 
                 $count_bubble = isset($value['count_bubble']) && ($value['count_bubble'] == "01") ? "yes" : "no";
 
@@ -139,7 +167,7 @@
                     </div>
                     <?php 
 
-                    if  (($key != "orders") && ($key != "downloads") && ($key != "woo-wallet")) {
+                    if  (($key != "orders") && ($key != "downloads") && ($key != "woo-wallet") && ($key != "points")) {
                         ?>
                         <div class="wcmamtx_count_div_section" style="<?php echo $section_style; ?>">
                             <select mkey="<?php echo $key; ?>" class="wcmamtx_countof_dropdown" name="wcmamtx_advanced_settings[<?php echo $key; ?>][count_of]">

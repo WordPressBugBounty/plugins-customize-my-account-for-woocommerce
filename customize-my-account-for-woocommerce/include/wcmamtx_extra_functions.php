@@ -346,6 +346,7 @@ if (!function_exists('wcmamtx_third_party_goahead_check')) {
 			'affiliate-dashboard'=>array('yith-woocommerce-affiliates-premium/init.php','yith-woocommerce-affiliates/init.php'),
 			'subscriptions'=>array('woocommerce-subscriptions/woocommerce-subscriptions.php'),
 			'rtwalwm_affiliate_menu'=>array('affiliaa-affiliate-program-with-mlm/wp-wc-affiliate-program.php'),
+			'points'=>array('points-and-rewards-for-woocommerce/points-rewards-for-woocommerce.php'),
 		);
 
 		$third_party_plug_array = apply_filters('wcmamtx_overide_supported_plugin_slugs',$third_party_plug_array);

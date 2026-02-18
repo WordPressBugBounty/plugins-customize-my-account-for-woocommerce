@@ -41,13 +41,26 @@ if (!function_exists('wcmamtx_get_total_orderid_count')) {
 }
 
 
-/**
- * Get account li html.
- *
- * @since 1.0.0
- * @param string $endpoint Endpoint.
- * @return string
- */
+if (!function_exists('wcmamtx_get_total_wpswings_points_count')) {
+
+    function wcmamtx_get_total_wpswings_points_count() {
+
+       global $wpdb;
+			
+			$user_id = get_current_user_id();
+
+			$wps_wpr_overall__accumulated_points = get_user_meta( $user_id, 'wps_wpr_overall__accumulated_points', true );
+            $user_points = ! empty( $wps_wpr_overall__accumulated_points ) ? $wps_wpr_overall__accumulated_points : 0;
+
+			return $user_points;
+
+        
+    }
+
+}
+
+
+
 
 if (!function_exists('wcmamtx_get_total_woowallet_count')) {
 
@@ -166,6 +179,41 @@ if (!function_exists('wcmamtx_render_cpt_count_bubble_html')) {
 			?>
 			<span class="<?php if (isset($sidebar)) { echo 'wcmamtx-banner-counter-sidebar'; } else {  echo 'wcmamtx-banner-counter';} ?>">         
 				<?php echo wcmamtx_get_user_post_type_count($custom_post_type,$cpt_status); ?>
+			</span>
+			<?php
+		}
+
+
+	}
+
+}
+
+
+
+
+
+if (!function_exists('wcmamtx_render_wpswings_points_count_bubble_html')) {
+
+	function wcmamtx_render_wpswings_points_count_bubble_html($count_bubble,$hide_empty,$sidebar = null) {
+
+		$empty_goahead = 'yes';
+
+		if ($hide_empty == "yes") {
+			$get_count = wcmamtx_get_total_wpswings_points_count();
+
+			if ($get_count == 0) {
+				$empty_goahead = 'no';
+			} else {
+				$empty_goahead = 'yes';
+			}
+
+		}
+
+		if (($count_bubble == "yes") &&  ($empty_goahead == 'yes')) {
+			?>
+			<span class="<?php if (isset($sidebar)) { echo 'wcmamtx-banner-counter-sidebar'; } else {  echo 'wcmamtx-banner-counter';} ?>">
+				<?php echo wcmamtx_get_total_wpswings_points_count(); ?>
+
 			</span>
 			<?php
 		}
@@ -309,6 +357,31 @@ if (!function_exists('wcmamtx_counter_bubble')) {
     	$count_of = 'none';
 
          switch($key) {
+         	case "points":
+                if (is_array($value) ) {
+
+                    if (!isset($value['count_bubble'])) {
+                         $value['count_bubble'] = "01";
+                    } else {
+                        $value['count_bubble'] = $value['count_bubble'];
+                    }
+                   
+                }
+
+               
+                
+                $count_bubble = isset($value['count_bubble']) && ($value['count_bubble'] == "01") ? "yes" : "no";
+
+                $hide_empty = isset($value['hide_empty']) && ($value['hide_empty'] == "01") ? "yes" : "no";
+
+                $section_style = isset($value['count_bubble']) && ($value['count_bubble'] == "01") ? "display:block;" : "display:none;";
+
+                $hide_sidebar = isset($value['hide_sidebar']) && ($value['hide_sidebar'] == "01") ? "yes" : "always";
+
+                wcmamtx_render_wpswings_points_count_bubble_html($count_bubble,$hide_empty,$sidebar);
+                
+            break;
+
          	case "woo-wallet":
                 if (is_array($value) ) {
 
