@@ -58,10 +58,10 @@ i.wcmamtx_custom_left {
 
 .wcmtx-my-account-links a {
     display: block;
-    padding: 20px;
+    padding: 20px !important;
     font-weight: 600;
     text-align: center;
-    color: var(--color-gray-700);
+    color: var(--color-gray-700) !important;
     border-radius: var(--wcmtx-brd-radius);
     box-shadow: 0 0 4px rgba(0,0,0,0.18);
 }
