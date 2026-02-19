@@ -296,16 +296,10 @@ a.woocommerce-MyAccount-navigation-link_a i.fa {
     margin-left: 80px;
 }
 
-@media screen and (min-width: 800px) {
-   .theme-flatsome nav.woocommerce-MyAccount-navigation {
-    float: left;
-    width: 25%;
-    margin-right: 30px;
-   }
-}
+
 
 .theme-flatsome div.woocommerce-MyAccount-content {
-    width: 70%;
+    
     float: left !important;
 }
 
@@ -642,17 +636,11 @@ ul.wcmamtx_vertical_menu li.is-active {
     height: 25px;
     top: 0px;
     right: 0px;
-    border-radius: 50%;
+    border-radius: 9px;
     font-weight: 600;
     padding: 0 14px;
 }
 
-.wcmamtx-banner-counter {
-    font-size: 16px;
-    line-height: 35px;
-    width: 35px;
-    height: 35px;
-}
 
 .wcmamtx-banner-counter {
     font-size: 14px;
@@ -662,14 +650,14 @@ ul.wcmamtx_vertical_menu li.is-active {
     display: inline-block;
     position: absolute;
     top: 10px;
-    right: 60px;
-    border-radius: 50%;
+    right: 40px;
+    border-radius: 9px;
     font-weight: 600;
     padding: 0 5px;
     width: auto;
 }
 .wcmamtx-banner-counter,.wcmamtx-banner-counter-sidebar {
-    background: #29ac8f;
+    background: #1d9843;
     color: #ffffff;
 }
 
@@ -682,4 +670,40 @@ ul.wcmamtx_vertical_menu li.is-active {
 
 .theme-dt-the7 .wcmamtx_dashboard_link p.wcmtx_icon_src {
     margin-bottom: 25px !important;
+}
+
+.theme-besa ul.wcmamtx_vertical a::before {
+    display: none !important;
+}
+
+.theme-royal-elementor-kit li.woocommerce-MyAccount-navigation-link{
+    padding: 10px;
+}
+
+.theme-royal-elementor-kit h1.page-title {
+    display: none;
+}
+
+.theme-woodmart span.wcmamtx-banner-counter-sidebar{
+    margin-left: 20px;
+    width: auto !important;
+    
+}
+
+.theme-woodmart span.wcmamtx-banner-counter-sidebar span.woocommerce-Price-amount.amount {
+    color: white !important; 
+}
+
+.theme-flatsome .nav.nav-vertical li.woocommerce-MyAccount-navigation-link {
+    
+    width: 100% !important;
+    min-width: 200px;
+}
+
+.theme-flatsome li.woocommerce-MyAccount-navigation-link a{
+    margin-left: 10px;
+}
+
+span.wcmamtx-banner-counter .amount {
+    color: #ffffff !important;
 }

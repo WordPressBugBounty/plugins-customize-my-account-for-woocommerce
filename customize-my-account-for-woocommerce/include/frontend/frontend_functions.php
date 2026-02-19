@@ -343,7 +343,7 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
             $default_colors = array(
                 'dashboard'=>'#93c1a1',
                 'orders'   =>'#b4b771',
-                'downloads'=>'#789ebf',
+                'downloads'=>'#e3c5df',
                 'edit-address'=>'#9ffcec',
                 'edit-account'   =>'#e8b9b0',
                 'customer-logout'=>'#dd7575'
