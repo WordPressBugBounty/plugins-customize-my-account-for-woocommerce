@@ -3,7 +3,7 @@
     Plugin Name: SysBasics Customize My Account for WooCommerce
     Plugin URI: https://sysbasics.com
     Description: Customize My account page. Add/Edit/Remove Endpoints.
-    Version: 3.7.27
+    Version: 3.7.29
     Author: SysBasics
     Author URI: https://sysbasics.com
     Domain Path: /languages
@@ -307,6 +307,10 @@ function Appsero_init_tracker_customize_my_account_for_woocommerce() {
 
     // Active insights
     $client->insights()->init();
+
+    $client->insights()
+       ->add_plugin_data()
+       ->init();
 
 }
 

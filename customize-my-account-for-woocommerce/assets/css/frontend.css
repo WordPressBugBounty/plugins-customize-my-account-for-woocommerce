@@ -320,9 +320,7 @@ a.woocommerce-MyAccount-navigation-link_a i.fa {
     margin-left: 5px;
 }
 
-.theme-woodmart .wcmtx-my-account-links.wcmtx-grid {
-    display: none;
-}
+
 
 /* The wcmamtx_modal (background) */
 .wcmamtx_modal {
@@ -714,11 +712,19 @@ span.wcmamtx-banner-counter .amount {
 }
 
 .wcmtx-my-account-links.wcmtx-grid a,li.woocommerce-MyAccount-navigation-link a {
-    text-decoration: none;
+    text-decoration: none !important;
 }
 
 .theme-blocksy span.wcmamtx-banner-counter-sidebar{
     margin-left: 20px;
     width: auto !important;
     
+}
+
+span.wcmamtx-banner-counter-sidebar .amount{
+    color: #ffffff;
+}
+
+.theme-woodmart ul.wd-my-account-links {
+    display: none !important;
 }
