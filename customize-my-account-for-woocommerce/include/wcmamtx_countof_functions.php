@@ -250,7 +250,7 @@ if (!function_exists('wcmamtx_render_woo_wallet_count_bubble_html')) {
 
 		if (($count_bubble == "yes") &&  ($empty_goahead == 'yes')) {
 			?>
-			<span class="<?php if (isset($sidebar)) { echo 'wcmamtx-banner-counter-sidebar'; } else {  echo 'wcmamtx-banner-counter';} ?>">
+			<span class="<?php if (isset($sidebar)) { echo 'wcmamtx-banner-counter-sidebar'; } else {  echo 'wcmamtx-banner-counter';} ?> amount">
 				<?php echo wc_price(wcmamtx_get_total_woowallet_count()); ?>
 
 			</span>
