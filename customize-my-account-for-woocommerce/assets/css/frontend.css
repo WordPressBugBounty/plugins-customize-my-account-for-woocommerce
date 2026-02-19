@@ -707,3 +707,18 @@ ul.wcmamtx_vertical_menu li.is-active {
 span.wcmamtx-banner-counter .amount {
     color: #ffffff !important;
 }
+
+.theme-Divi li.woocommerce-MyAccount-navigation-link {
+    padding : 10px;
+    
+}
+
+.wcmtx-my-account-links.wcmtx-grid a,li.woocommerce-MyAccount-navigation-link a {
+    text-decoration: none;
+}
+
+.theme-blocksy span.wcmamtx-banner-counter-sidebar{
+    margin-left: 20px;
+    width: auto !important;
+    
+}
