@@ -323,61 +323,8 @@ if (!function_exists('wcmamtx_show_disabled_toggle_image')) {
 }
 
 
-/**
- * Get account menu item classes.
- *
- * @since 1.0.0
- * @param string $endpoint Endpoint.
- * @return string
- */
 
-if (!function_exists('wcmamtx_third_party_goahead_check')) {
-
-	function wcmamtx_third_party_goahead_check($key) {
-		$third_party_go_ahead = 'yes';
-
-		$third_party_plug_array = array(
-			'woo-wallet'=>array('woo-wallet/woo-wallet.php'),
-			'wt-smart-coupon'=>array('wt-smart-coupons-for-woocommerce/wt-smart-coupon.php'),
-			'wps_subscriptions'=>array('subscriptions-for-woocommerce/subscriptions-for-woocommerce.php'),
-			'my-auction-setting'=>array('ultimate-woocommerce-auction/ultimate-woocommerce-auction.php'),
-			'my-auction'=>array('ultimate-woocommerce-auction/ultimate-woocommerce-auction.php'),
-			'my-auction-watchlist'=>array('ultimate-woocommerce-auction/ultimate-woocommerce-auction.php'),
-			'affiliate-dashboard'=>array('yith-woocommerce-affiliates-premium/init.php','yith-woocommerce-affiliates/init.php'),
-			'subscriptions'=>array('woocommerce-subscriptions/woocommerce-subscriptions.php'),
-			'rtwalwm_affiliate_menu'=>array('affiliaa-affiliate-program-with-mlm/wp-wc-affiliate-program.php'),
-			'points'=>array('points-and-rewards-for-woocommerce/points-rewards-for-woocommerce.php'),
-		);
-
-		$third_party_plug_array = apply_filters('wcmamtx_overide_supported_plugin_slugs',$third_party_plug_array);
-
-		if (isset($third_party_plug_array[$key])) {
-			$third_party_plug_slugs = $third_party_plug_array[$key];
-		} else {
-			return 'yes';
-		}
-
-		$match_index = 0;
-
-
-		include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-
-		foreach ($third_party_plug_slugs as $ptvalue) {
-
-			if ( is_plugin_active( $ptvalue )) {
-                $match_index++;
-		    }
-
-		}
-
-		if ( $match_index == 0) {
-            $third_party_go_ahead = 'no';
-		}
-
-		return $third_party_go_ahead;
-	}
-
-}
+include('wcmamtx_thirdparty_functions.php');
 
 
 /**
@@ -890,116 +837,9 @@ if ( ! function_exists( 'wcmamtx_get_my_account_menu_plain_li' ) ) {
 }
 
 
-/**
- * Get account li html.
- *
- * @since 1.0.0
- * @param string $endpoint Endpoint.
- * @return string
- */
-
-if (!function_exists('wcmamtx_get_account_menu_li_icon_html')) {
-
-	function wcmamtx_get_account_menu_li_icon_html($icon_source,$value,$key) {
-        
-        switch ($icon_source) {
-
-        	case "custom":
-
-        	$icon       = isset($value['icon']) ? $value['icon'] : "";
-
-        	if ($icon != '') { ?>
-        		<i class="<?php echo $icon; ?>"></i>
-        	<?php }
-        	break;
-
-        	case "dashicon":
-
-        	$icon       = isset($value['dashicon']) ? $value['dashicon'] : "";
-
-			if ($icon != '') { ?>
-				<span class="dashicons <?php echo $icon; ?>"></span>
-			<?php } else { ?>
-
-				<i class="fa fa-file-alt"></i>
-
-			<?php }
-        	break;
-
-        	case "noicon":
-
-        	break;
 
 
-        	case "upload":
-
-        	$swatchimage = isset($value['upload_icon']) ? $value['upload_icon'] : "";
-
-        	if (isset($swatchimage) && ($swatchimage != "")) {
-        		$swatchurl     = wp_get_attachment_thumb_url( $swatchimage );
-
-        		?>
-        		<img class="wcmamtx_upload_image_icon" src="<?php echo $swatchurl; ?>">
-        		<?php
-        	} else {
-        		?>
-        		<img class="wcmamtx_upload_image_icon" src="<?php echo wcmamtx_placeholder_img_src(); ?>">
-        		<?php
-        	}
-
-        	
-
-        	break;
-
-
-
-        	default:
-
-        	$icon ='fa fa-file-alt';
-
-			switch($key) {
-				case "dashboard":
-				$icon ='fa fa-tachometer-alt';
-				break;
-
-				case "orders":
-				$icon ='fa fa-shopping-basket';
-				break;
-
-				case "downloads":
-				$icon ='fa fa-file-download';
-				break;
-
-				case "edit-address":
-				$icon ='fa fa-home';
-				break;
-
-				case "edit-account":
-				$icon ='fa fa-user';
-				break;
-
-				case "customer-logout":
-				$icon ='fa fa-sign-out-alt';
-				break;
-
-
-
-
-			}
-
-			if ($icon != '') { ?>
-				<i class="<?php echo $icon; ?>"></i>
-			<?php } else { ?>
-				<i class="fa fa-file-alt"></i>
-			<?php }
-        	break;
-
-        }
-
-
-	}
-
-}
+include("wcmamtx_load_icon_functions.php");
 
 
 /**

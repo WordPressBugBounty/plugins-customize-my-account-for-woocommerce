@@ -1,11 +1,197 @@
 <?php
-/**
- * Get account li html.
- *
- * @since 1.0.0
- * @param string $endpoint Endpoint.
- * @return string
- */
+
+
+if (!function_exists('wcmamtx_counter_bubble')) {
+
+    function wcmamtx_counter_bubble($key,$value,$sidebar = null) {
+
+    	if (!is_account_page()) {
+    		return;
+    	}
+
+    	$count_of = 'none';
+
+         switch($key) {
+         	case "points":
+                if (is_array($value) ) {
+
+                    if (!isset($value['count_bubble'])) {
+                         $value['count_bubble'] = "01";
+                    } else {
+                        $value['count_bubble'] = $value['count_bubble'];
+                    }
+                   
+                }
+
+               
+                
+                $count_bubble = isset($value['count_bubble']) && ($value['count_bubble'] == "01") ? "yes" : "no";
+
+                $hide_empty = isset($value['hide_empty']) && ($value['hide_empty'] == "01") ? "yes" : "no";
+
+                $section_style = isset($value['count_bubble']) && ($value['count_bubble'] == "01") ? "display:block;" : "display:none;";
+
+                $hide_sidebar = isset($value['hide_sidebar']) && ($value['hide_sidebar'] == "01") ? "yes" : "always";
+
+                wcmamtx_render_wpswings_points_count_bubble_html($count_bubble,$hide_empty,$sidebar);
+                
+            break;
+
+         	case "woo-wallet":
+                if (is_array($value) ) {
+
+                    if (!isset($value['count_bubble'])) {
+                         $value['count_bubble'] = "01";
+                    } else {
+                        $value['count_bubble'] = $value['count_bubble'];
+                    }
+                   
+                }
+
+                $count_of = isset($value['count_of']) ? $value['count_of'] : "woo-wallet-balance";
+                
+                $count_bubble = isset($value['count_bubble']) && ($value['count_bubble'] == "01") ? "yes" : "no";
+
+                $hide_empty = isset($value['hide_empty']) && ($value['hide_empty'] == "01") ? "yes" : "no";
+
+                $section_style = isset($value['count_bubble']) && ($value['count_bubble'] == "01") ? "display:block;" : "display:none;";
+
+                $hide_sidebar = isset($value['hide_sidebar']) && ($value['hide_sidebar'] == "01") ? "yes" : "always";
+
+                wcmamtx_render_woo_wallet_count_bubble_html($count_bubble,$hide_empty,$sidebar);
+                
+            break;
+
+            case "orders":
+
+                if (is_array($value) ) {
+
+                    if (!isset($value['count_bubble'])) {
+                         $value['count_bubble'] = "01";
+                    } else {
+                        $value['count_bubble'] = $value['count_bubble'];
+                    }
+                   
+                }
+
+                $count_bubble = isset($value['count_bubble']) && ($value['count_bubble'] == "01") ? "yes" : "no";
+
+                $hide_empty = isset($value['hide_empty']) && ($value['hide_empty'] == "01") ? "yes" : "no";
+                
+                wcmamtx_render_order_count_bubble_html($count_bubble,$hide_empty,$sidebar);
+                
+            break;
+
+            case "downloads":
+
+                if (is_array($value) ) {
+
+                    if (!isset($value['count_bubble'])) {
+                         $value['count_bubble'] = "01";
+                    } else {
+                        $value['count_bubble'] = $value['count_bubble'];
+                    }
+                   
+                }
+                
+                $count_bubble = isset($value['count_bubble']) && ($value['count_bubble'] == "01") ? "yes" : "no";
+
+                $hide_empty = isset($value['hide_empty']) && ($value['hide_empty'] == "01") ? "yes" : "no";
+
+                wcmamtx_render_download_count_bubble_html($count_bubble,$hide_empty,$sidebar);
+                
+            break;
+
+            default:
+                $count_bubble = isset($value['count_bubble']) && ($value['count_bubble'] == "01") ? "yes" : "no";
+
+
+                $hide_empty = isset($value['hide_empty']) && ($value['hide_empty'] == "01") ? "yes" : "no";
+
+
+
+                $count_of = isset($value['count_of']) ? $value['count_of'] : "none";
+
+                if (isset($count_of) && ($count_of != null)) {
+
+                	if (($key != "orders") || ($key != "downloads")) {
+
+
+
+                		switch($count_of) {
+
+                			case "order_count":
+                			wcmamtx_render_order_count_bubble_html($count_bubble,$hide_empty,$sidebar);
+                			break;
+
+                			case "downloads_count":
+                			wcmamtx_render_download_count_bubble_html($count_bubble,$hide_empty,$sidebar);
+                			break;
+
+                			case "cpt_count":
+                			wcmamtx_render_cpt_count_bubble_html($count_bubble,$hide_empty,$value,$sidebar);
+                			break;
+
+                			case "yith_wishlist":
+                			if (function_exists('wcmamtx_render_yith_wishlist_count_bubble_html')) {
+                				if ( is_plugin_active( 'yith-woocommerce-wishlist/init.php' ) || is_plugin_active( 'yith-woocommerce-wishlist-premium/init.php' )) {
+                					wcmamtx_render_yith_wishlist_count_bubble_html($count_bubble,$hide_empty,$sidebar);
+                				}
+                				
+                			}
+                			break;
+
+                			case "wpc_wishlist":
+
+                			if ( is_plugin_active( 'woo-smart-wishlist/wpc-smart-wishlist.php' ) || is_plugin_active( 'woo-smart-wishlist-premium/wpc-smart-wishlist.php' )) {
+
+                				if ( class_exists( 'WPCleverWoosw' ) ) {
+                					wcmamtx_render_wpc_wishlist_count_bubble_html($count_bubble,$hide_empty,$sidebar);
+                				}
+                			}
+                			break;
+
+                            
+                			case "woodmart_wishlist":
+
+                			if ( is_plugin_active( 'woodmart-core/woodmart-core.php' ) && function_exists('woodmart_get_wishlist_count')) {
+
+                				$woodmart_wishlist_on = (array) get_option("xts-woodmart-options");
+
+                				$woodmart_wishlist_on = $woodmart_wishlist_on['wishlist'];
+
+                				$woodmart_wishlist_on = isset($woodmart_wishlist_on) && ($woodmart_wishlist_on == 1) ? "yes" : "no";
+
+                				if ($woodmart_wishlist_on == "yes") {
+                					wcmamtx_render_woodmart_wishlist_count_bubble_html($count_bubble,$hide_empty,$sidebar);
+                				}
+
+
+                			} 
+
+                			break;
+                			
+
+                			case "none":
+                			break;
+
+                		}
+
+                	}
+
+                	do_action("wcmamtx_cutom_count_of_html",$count_bubble,$hide_empty,$count_of,$sidebar);
+
+                }
+
+               
+                  
+            break;
+        }
+
+    }
+
+}
+
 
 if (!function_exists('wcmamtx_get_total_orderid_count')) {
 
@@ -263,6 +449,9 @@ if (!function_exists('wcmamtx_render_woo_wallet_count_bubble_html')) {
 }
 
 
+
+
+
 /**
  * Get account li html.
  *
@@ -342,157 +531,171 @@ if (!function_exists('wcmamtx_render_download_count_bubble_html')) {
 
 }
 
-/**
- * Get account li html.
- *
- * @since 1.0.0
- * @param string $endpoint Endpoint.
- * @return string
- */
-
-if (!function_exists('wcmamtx_counter_bubble')) {
-
-    function wcmamtx_counter_bubble($key,$value,$sidebar = null) {
-
-    	$count_of = 'none';
-
-         switch($key) {
-         	case "points":
-                if (is_array($value) ) {
-
-                    if (!isset($value['count_bubble'])) {
-                         $value['count_bubble'] = "01";
-                    } else {
-                        $value['count_bubble'] = $value['count_bubble'];
-                    }
-                   
-                }
-
-               
-                
-                $count_bubble = isset($value['count_bubble']) && ($value['count_bubble'] == "01") ? "yes" : "no";
-
-                $hide_empty = isset($value['hide_empty']) && ($value['hide_empty'] == "01") ? "yes" : "no";
-
-                $section_style = isset($value['count_bubble']) && ($value['count_bubble'] == "01") ? "display:block;" : "display:none;";
-
-                $hide_sidebar = isset($value['hide_sidebar']) && ($value['hide_sidebar'] == "01") ? "yes" : "always";
-
-                wcmamtx_render_wpswings_points_count_bubble_html($count_bubble,$hide_empty,$sidebar);
-                
-            break;
-
-         	case "woo-wallet":
-                if (is_array($value) ) {
-
-                    if (!isset($value['count_bubble'])) {
-                         $value['count_bubble'] = "01";
-                    } else {
-                        $value['count_bubble'] = $value['count_bubble'];
-                    }
-                   
-                }
-
-                $count_of = isset($value['count_of']) ? $value['count_of'] : "woo-wallet-balance";
-                
-                $count_bubble = isset($value['count_bubble']) && ($value['count_bubble'] == "01") ? "yes" : "no";
-
-                $hide_empty = isset($value['hide_empty']) && ($value['hide_empty'] == "01") ? "yes" : "no";
-
-                $section_style = isset($value['count_bubble']) && ($value['count_bubble'] == "01") ? "display:block;" : "display:none;";
-
-                $hide_sidebar = isset($value['hide_sidebar']) && ($value['hide_sidebar'] == "01") ? "yes" : "always";
-
-                wcmamtx_render_woo_wallet_count_bubble_html($count_bubble,$hide_empty,$sidebar);
-                
-            break;
-
-            case "orders":
-
-                if (is_array($value) ) {
-
-                    if (!isset($value['count_bubble'])) {
-                         $value['count_bubble'] = "01";
-                    } else {
-                        $value['count_bubble'] = $value['count_bubble'];
-                    }
-                   
-                }
-
-                $count_bubble = isset($value['count_bubble']) && ($value['count_bubble'] == "01") ? "yes" : "no";
-
-                $hide_empty = isset($value['hide_empty']) && ($value['hide_empty'] == "01") ? "yes" : "no";
-                
-                wcmamtx_render_order_count_bubble_html($count_bubble,$hide_empty,$sidebar);
-                
-            break;
-
-            case "downloads":
-
-                if (is_array($value) ) {
-
-                    if (!isset($value['count_bubble'])) {
-                         $value['count_bubble'] = "01";
-                    } else {
-                        $value['count_bubble'] = $value['count_bubble'];
-                    }
-                   
-                }
-                
-                $count_bubble = isset($value['count_bubble']) && ($value['count_bubble'] == "01") ? "yes" : "no";
-
-                $hide_empty = isset($value['hide_empty']) && ($value['hide_empty'] == "01") ? "yes" : "no";
-
-                wcmamtx_render_download_count_bubble_html($count_bubble,$hide_empty,$sidebar);
-                
-            break;
-
-            default:
-                $count_bubble = isset($value['count_bubble']) && ($value['count_bubble'] == "01") ? "yes" : "no";
-
-
-                $hide_empty = isset($value['hide_empty']) && ($value['hide_empty'] == "01") ? "yes" : "no";
 
 
 
-                $count_of = isset($value['count_of']) ? $value['count_of'] : "none";
 
-                if (isset($count_of) && ($count_of != null)) {
+if (!function_exists('wcmamtx_render_yith_wishlist_count_bubble_html')) {
 
-                	if (($key != "orders") || ($key != "downloads")) {
+	function wcmamtx_render_yith_wishlist_count_bubble_html($count_bubble,$hide_empty,$sidebar = null) {
+
+		$empty_goahead = 'yes';
+
+		if ($hide_empty == "yes") {
+			$get_count = wcmamtx_get_total_yith_wishlist_count();
+
+			if ($get_count == 0) {
+				$empty_goahead = 'no';
+			} else {
+				$empty_goahead = 'yes';
+			}
+
+		}
+
+		if (($count_bubble == "yes") &&  ($empty_goahead == 'yes')) {
+			?>
+			<span class="<?php if (isset($sidebar)) { echo 'wcmamtx-banner-counter-sidebar'; } else {  echo 'wcmamtx-banner-counter';} ?> wcmamtx_wishlist">
+				<?php echo wcmamtx_get_total_yith_wishlist_count(); ?>
+
+			</span>
+			<?php
+		}
 
 
+	}
 
-                		switch($count_of) {
+}
 
-                			case "order_count":
-                			wcmamtx_render_order_count_bubble_html($count_bubble,$hide_empty,$sidebar);
-                			break;
+if (!function_exists('wcmamtx_get_total_yith_wishlist_count')) {
 
-                			case "downloads_count":
-                			wcmamtx_render_download_count_bubble_html($count_bubble,$hide_empty,$sidebar);
-                			break;
+    function wcmamtx_get_total_yith_wishlist_count() {
 
-                			case "cpt_count":
-                			wcmamtx_render_cpt_count_bubble_html($count_bubble,$hide_empty,$value,$sidebar);
-                			break;
+        $user_id = get_current_user_id();
 
-                			case "none":
-                			break;
+        if ( is_plugin_active( 'yith-woocommerce-wishlist/init.php' ) || is_plugin_active( 'yith-woocommerce-wishlist-premium/init.php' )) {
 
-                		}
+        	$wishlist_count = YITH_WCWL()->count_products( $user_id );
 
-                	}
-
-                	do_action("wcmamtx_cutom_count_of_html",$count_bubble,$hide_empty,$count_of,$sidebar);
-
-                }
-
-               
-                  
-            break;
+            return $wishlist_count;
         }
 
+        
+        
+    }
+
+}
+
+
+if (!function_exists('wcmamtx_render_woodmart_wishlist_count_bubble_html')) {
+
+	function wcmamtx_render_woodmart_wishlist_count_bubble_html($count_bubble,$hide_empty,$sidebar = null) {
+
+		$empty_goahead = 'yes';
+
+		if ($hide_empty == "yes") {
+			$get_count = wcmamtx_get_total_woodmart_wishlist_count();
+
+			if ($get_count == 0) {
+				$empty_goahead = 'no';
+			} else {
+				$empty_goahead = 'yes';
+			}
+
+		}
+
+		if (($count_bubble == "yes") &&  ($empty_goahead == 'yes')) {
+			?>
+			<span class="<?php if (isset($sidebar)) { echo 'wcmamtx-banner-counter-sidebar'; } else {  echo 'wcmamtx-banner-counter';} ?> wcmamtx_wishlist">
+				<?php echo wcmamtx_get_total_woodmart_wishlist_count(); ?>
+
+			</span>
+			<?php
+		}
+
+
+	}
+
+}
+
+if (!function_exists('wcmamtx_get_total_woodmart_wishlist_count')) {
+
+    function wcmamtx_get_total_woodmart_wishlist_count() {
+
+        $user_id = get_current_user_id();
+
+
+        $woodmart_wishlist_on = (array) get_option("xts-woodmart-options");
+
+        $woodmart_wishlist_on = $woodmart_wishlist_on['wishlist'];
+
+        $woodmart_wishlist_on = isset($woodmart_wishlist_on) && ($woodmart_wishlist_on == 1) ? "yes" : "no";
+
+        if (($woodmart_wishlist_on == "yes") && function_exists('woodmart_get_wishlist_count')) {
+            
+
+        	$wishlist_count = woodmart_get_wishlist_count();
+
+            return $wishlist_count;
+        }
+
+        
+        
+    }
+
+}
+
+if (!function_exists('wcmamtx_render_wpc_wishlist_count_bubble_html')) {
+
+	function wcmamtx_render_wpc_wishlist_count_bubble_html($count_bubble,$hide_empty,$sidebar = null) {
+
+		$empty_goahead = 'yes';
+
+		if ($hide_empty == "yes") {
+			$get_count = wcmamtx_get_total_wpc_wishlist_count();
+
+			if ($get_count == 0) {
+				$empty_goahead = 'no';
+			} else {
+				$empty_goahead = 'yes';
+			}
+
+		}
+
+		if (($count_bubble == "yes") &&  ($empty_goahead == 'yes')) {
+			?>
+			<span class="<?php if (isset($sidebar)) { echo 'wcmamtx-banner-counter-sidebar'; } else {  echo 'wcmamtx-banner-counter';} ?> wcmamtx_wishlist">
+				<?php echo wcmamtx_get_total_wpc_wishlist_count(); ?>
+
+			</span>
+			<?php
+		}
+
+
+	}
+
+}
+
+if (!function_exists('wcmamtx_get_total_wpc_wishlist_count')) {
+
+    function wcmamtx_get_total_wpc_wishlist_count() {
+
+        $user_id = get_current_user_id();
+
+        
+        $wishlist_count = 0;
+
+        if ( class_exists( 'WPCleverWoosw' ) ) {
+        
+          $wishlist_count = esc_html( WPCleverWoosw::get_count() );
+        
+        }
+
+
+        return $wishlist_count;
+        
+
+        
+        
     }
 
 }

@@ -20,6 +20,30 @@
 
     if ( is_plugin_active( 'points-and-rewards-for-woocommerce/points-rewards-for-woocommerce.php' ) ) {
         $count_of_selectable['points'] = esc_html__('Total Points (WP Swings)','customize-my-account-for-woocommerce');
+    }
+
+    if ( is_plugin_active( 'yith-woocommerce-wishlist/init.php' ) || is_plugin_active( 'yith-woocommerce-wishlist-premium/init.php' )) {
+        $count_of_selectable['yith_wishlist'] = esc_html__('Yith Wishlist Count','customize-my-account-for-woocommerce');
+    }
+
+    if ( is_plugin_active( 'woo-smart-wishlist/wpc-smart-wishlist.php' ) || is_plugin_active( 'woo-smart-wishlist-premium/wpc-smart-wishlist.php' )) {
+        $count_of_selectable['wpc_wishlist'] = esc_html__('WPC Smart Wishlist Count','customize-my-account-for-woocommerce');
+    }
+
+
+     if ( is_plugin_active( 'woodmart-core/woodmart-core.php' )) {
+
+        $woodmart_wishlist_on = (array) get_option("xts-woodmart-options");
+
+        $woodmart_wishlist_on = $woodmart_wishlist_on['wishlist'];
+
+        $woodmart_wishlist_on = isset($woodmart_wishlist_on) && ($woodmart_wishlist_on == 1) ? "yes" : "no";
+
+        if ($woodmart_wishlist_on == "yes") {
+            $count_of_selectable['woodmart_wishlist'] = esc_html__('WoodMart Wishlist Count','customize-my-account-for-woocommerce');
+        }
+
+        
     } 
 
 

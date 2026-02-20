@@ -369,6 +369,8 @@ class wcmamtx_add_settings_page_class {
         	foreach ($advancedsettings as $key2=>$value2) {
 
         		$key2 = isset($value2['endpoint_key']) ? $value2['endpoint_key'] : $key2;
+
+
             
                 $new_row_values[$key2]['endpoint_key']        = $key2;
                 $new_row_values[$key2]['endpoint_name']       = $value2['endpoint_name'];
@@ -382,6 +384,14 @@ class wcmamtx_add_settings_page_class {
                 $new_row_values[$key2]['icon']                = isset($value2['icon']) ? $value2['icon'] : "";
                 $new_row_values[$key2]['show']                = isset($value2['show']) ? $value2['show'] : "yes";
                 $new_row_values[$key2]['upload_icon']         = isset($value2['upload_icon']) ? $value2['upload_icon'] : "";
+
+                $default_color = wcmamtx_get_default_tab_color($key2);
+
+                $default_color_font = '#334155';
+
+
+                $new_row_values[$key2]['dash_back_color']                = isset($value2['dash_back_color']) ? $value2['dash_back_color'] : $default_color;
+                $new_row_values[$key2]['dash_font_color']         = isset($value2['dash_font_color']) ? $value2['dash_font_color'] : $default_color_font;
 
                 $new_row_values[$key2]['third_party']        = isset($value2['third_party']) ? $value2['third_party'] : null;
                 
@@ -1023,13 +1033,11 @@ class wcmamtx_add_settings_page_class {
                 $allowed_endpoints = get_option("wcmamtx_allowed_endpoint_trial");
                 
 
-                if (isset($allowed_endpoints) && ($allowed_endpoints > 0))  {
-                    $endpoint_button_id = "#wcmamtx_example_modal";
-                    $endpoint_button_class = "";
-                } else {
-                    $endpoint_button_id = "#wcmamtx_example_modal2";
-                    $endpoint_button_class = "wcmamtx_disabled2";
-                }
+                
+                $endpoint_button_id = "#wcmamtx_example_modal";
+                $endpoint_button_class = "";
+               
+                
                 
                 ?>
 
