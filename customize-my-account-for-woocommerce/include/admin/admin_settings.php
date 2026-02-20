@@ -1032,10 +1032,19 @@ class wcmamtx_add_settings_page_class {
 
                 $allowed_endpoints = get_option("wcmamtx_allowed_endpoint_trial");
                 
+                if ($allowed_endpoints > 0) {
 
+                    $endpoint_button_id = "#wcmamtx_example_modal";
+                    $endpoint_button_class = "";
+
+                } else {
+
+                    $endpoint_button_id = "#wcmamtx_example_modal2";
+                    $endpoint_button_class = "wcmamtx_disabled2";
+
+                }
                 
-                $endpoint_button_id = "#wcmamtx_example_modal";
-                $endpoint_button_class = "";
+                
                
                 
                 

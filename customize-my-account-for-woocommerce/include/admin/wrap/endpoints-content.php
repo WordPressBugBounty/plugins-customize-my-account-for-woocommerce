@@ -146,7 +146,7 @@ $default_color_font = '#334155';
 </tr>
 <tr>
     <td>
-        <label class=" wcmamtx_accordion_label"><?php echo esc_html__('Hide in My Account Menu widget','customize-my-account-for-woocommerce'); ?></label>
+        <label class=" wcmamtx_accordion_label"><?php echo esc_html__('Hide in Dashboard Links','customize-my-account-for-woocommerce'); ?></label>
     </td>
     <td>
         <?php wcmamtx_show_disabled_toggle_image(); ?>
@@ -154,7 +154,7 @@ $default_color_font = '#334155';
     </td>
 </tr>
 
-
+<?php if ($key != "dashboard") { ?>
 
 <tr>
         <td>
@@ -170,6 +170,7 @@ $default_color_font = '#334155';
         </td>
         
 </tr>
+<?php } ?>
 
 <tr>
     <td>
@@ -335,7 +336,7 @@ $default_color_font = '#334155';
 
 <tr>
     <td>
-        <label class=" wcmamtx_accordion_label"><?php echo esc_html__('Hide in My Account Navigation','customize-my-account-for-woocommerce'); ?></label>
+        <label class=" wcmamtx_accordion_label"><?php echo esc_html__('Hide in Sidebar Navigation','customize-my-account-for-woocommerce'); ?></label>
     </td>
     <td>
         <?php wcmamtx_show_disabled_toggle_image(); ?>
