@@ -144,39 +144,6 @@ $default_color_font = '#334155';
     </td>
 
 </tr>
-<?php if (isset($third_party)) { ?>
-    <tr>
-        <td>
-            <label class=" wcmamtx_accordion_label">
-                <?php echo esc_html__('Content Before','customize-my-account-for-woocommerce'); ?>
-                <?php echo $key; ?>   
-                <?php echo esc_html__('Content','customize-my-account-for-woocommerce'); ?>
-            </label>
-        </td>
-        <td>
-            <?php wcmamtx_show_disabled_toggle_image(); ?>
-
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <label class=" wcmamtx_accordion_label">
-                <?php echo esc_html__('Content After','customize-my-account-for-woocommerce'); ?>
-                <?php echo $key; ?>   
-                <?php echo esc_html__('Content','customize-my-account-for-woocommerce'); ?>
-            </label>
-        </td>
-        <td>
-            <?php wcmamtx_show_disabled_toggle_image(); ?>
-
-        </td>
-    </tr>
-<?php } ?>
-
-
-
-
-
 <tr>
     <td>
         <label class=" wcmamtx_accordion_label"><?php echo esc_html__('Hide in My Account Menu widget','customize-my-account-for-woocommerce'); ?></label>

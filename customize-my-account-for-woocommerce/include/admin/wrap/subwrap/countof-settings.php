@@ -75,6 +75,55 @@
                 
             break;
 
+            case "wishlist":
+                $wishlist_mode = "none";
+
+                $wishlist_mode = wcmamtx_detect_wishlist_mode();
+
+                echo $wishlist_mode;
+
+                if ($wishlist_mode == "none") {
+                    $count_bubble = isset($value['count_bubble']) && ($value['count_bubble'] == "01") ? "yes" : "no";
+                } else {
+
+                    if (is_array($value) ) {
+
+                        if (!isset($value['count_bubble'])) {
+                            $value['count_bubble'] = "01";
+                        } else {
+                            $value['count_bubble'] = $value['count_bubble'];
+                        }
+
+                    }
+
+                    $count_bubble = isset($value['count_bubble']) && ($value['count_bubble'] == "01") ? "yes" : "no";
+
+                }
+
+                
+          
+                $hide_empty = isset($value['hide_empty']) && ($value['hide_empty'] == "01") ? "yes" : "no";
+
+                $section_style = isset($value['count_bubble']) && ($value['count_bubble'] == "01") ? "display:block;" : "display:none;";
+
+
+
+                $count_of = isset($value['count_of']) ? $value['count_of'] : $wishlist_mode;
+
+
+                
+
+
+                $section_style_cpt = isset($count_of) && ($count_of == "cpt_count") ? "display:block;" : "display:none;";
+
+                $section_style_usermeta = isset($count_of) && ($count_of == "usermeta_count") ? "display:block;" : "display:none;";
+
+
+                $hide_sidebar = isset($value['hide_sidebar']) && ($value['hide_sidebar'] == "01") ? "yes" : "no";
+
+
+            break;
+
 
             case "points":
                 if (is_array($value) ) {
