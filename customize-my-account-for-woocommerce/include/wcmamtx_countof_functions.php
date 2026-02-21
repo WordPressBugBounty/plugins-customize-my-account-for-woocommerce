@@ -244,6 +244,19 @@ if (!function_exists('wcmamtx_countof_conditional_switch')) {
 
 			break;
 
+			case "woo-wallet-balance":
+			if ( is_plugin_active( 'woo-wallet/woo-wallet.php' ) ) {
+				wcmamtx_render_woo_wallet_count_bubble_html($count_bubble,$hide_empty,$sidebar);
+			}       
+			break;
+
+			case "points":
+			    if ( is_plugin_active( 'points-and-rewards-for-woocommerce/points-rewards-for-woocommerce.php' ) ) {
+
+				    wcmamtx_render_wpswings_points_count_bubble_html($count_bubble,$hide_empty,$sidebar);
+			    }       
+			break;
+
 
 			case "none":
 			break;
