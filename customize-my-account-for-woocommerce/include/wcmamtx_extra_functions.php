@@ -101,7 +101,9 @@ if (!function_exists('wcmamtx_is_module_enabled')) {
         $module_settings = (array) get_option( 'wcmamtx_module_settings' );
 
         $el_widgets1 = array(
-          'sample'=>esc_html__('sample','customize-my-account-for-woocommerce')
+          'sample'=>esc_html__('sample','customize-my-account-for-woocommerce'),
+          'user-avatar'=>esc_html__('User Avatar (Included)','customize-my-account-for-woocommerce'),
+          'elementor-templates'=>esc_html__('Elementor Templates (Included)','customize-my-account-for-woocommerce'),
         );
 
 
@@ -145,6 +147,8 @@ if (!function_exists('wcmamtx_is_module_enabled_init')) {
 
 
         $module_settings = (array) get_option( 'wcmamtx_module_settings' );
+
+        
 
         $el_widgets1 = array(
           'user-avatar',
@@ -357,6 +361,8 @@ if (!function_exists('wcmamtx_show_disabled_input')) {
 if (!function_exists('wcmamtx_load_pro_feature_preview')) {
 
 	function wcmamtx_load_pro_feature_preview() { ?>
+        <br/>
+        <strong style="color:green;"><?php echo esc_html__( 'Lifetime license starts from $49 USD' ,'customize-my-account-for-woocommerce'); ?></strong>
         <br/>
 		<strong><?php echo esc_html__( 'Pro Version Features' ,'customize-my-account-for-woocommerce'); ?></strong>
 		<br/>
