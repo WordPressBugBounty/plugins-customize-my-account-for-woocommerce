@@ -3,7 +3,7 @@
     Plugin Name: SysBasics Customize My Account for WooCommerce
     Plugin URI: https://sysbasics.com
     Description: Customize My account page. Add/Edit/Remove Endpoints.
-    Version: 3.8.4
+    Version: 3.8.5
     Author: SysBasics
     Author URI: https://sysbasics.com
     Domain Path: /languages
@@ -139,7 +139,7 @@ $elementor_module_enable = wcmamtx_is_module_enabled_init("elementor-templates")
 
 
 if (wcmamtx_elementor_mode !== null) {
-    if  ((wcmamtx_elementor_mode == "on") && ($elementor_module_enable == "yes")) {
+    if  ((wcmamtx_elementor_mode == "on") ) {
      include dirname( __FILE__ ) . '/elementor-addon/elementor-addon.php';
  }
 }
