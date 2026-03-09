@@ -1,6 +1,6 @@
 .form-table th {
-  width:auto;
-  padding: 0 0 0 0;
+    width: auto;
+    display: none !important;
 }
 
 .noticerow {

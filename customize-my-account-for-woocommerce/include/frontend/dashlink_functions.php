@@ -101,7 +101,7 @@ $wcmamtx_tabs   = apply_filters('wcmamtx_override_dashlinks',$wcmamtx_tabs);
 
 
 
-    $icon_source       = "default";
+    
     if (isset($value['endpoint_name']) && ($value['endpoint_name'] != '')) {
         $name = $value['endpoint_name'];
     } else {
@@ -111,6 +111,8 @@ $wcmamtx_tabs   = apply_filters('wcmamtx_override_dashlinks',$wcmamtx_tabs);
     
 
     $wcmamtx_type = isset($value['wcmamtx_type']) ? $value['wcmamtx_type'] : "default";
+
+    $icon_source = isset($value['icon_source']) ? $value['icon_source'] : "default";
 
     $hide_in_link_toggle = isset($value['hide_dashboard_links']) && ($value['hide_dashboard_links'] == "01") ? "enabled" : "disabled";
 
