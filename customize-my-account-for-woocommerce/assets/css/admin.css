@@ -168,7 +168,7 @@ div.wcmamtx_submit_section_div {
 
 input#wcmamtx_reset_tabs_button {
   float: right;
-  margin-right: 40px;
+  margin-right: 20px;
 }
 
 
@@ -643,4 +643,18 @@ a.wcmamtx-custom-countof-link p.bubble{
 }
 input.wcmamtx_accordion_input.count_bubble2.wcmamtx_accordion_checkbox.checkmark2 {
     display: none;
+}
+input#wcmamtx_bulk_actions_button {
+    float: right;
+    margin-right: 20px;
+}
+
+button.btn.btn-secondary.bulk.apply {
+    float: right;
+    background: #468446;
+}
+select.wcmamtx_bulk_action_select{
+    /* float: right; */
+    width: 100%;
+    min-width: 100%;
 }

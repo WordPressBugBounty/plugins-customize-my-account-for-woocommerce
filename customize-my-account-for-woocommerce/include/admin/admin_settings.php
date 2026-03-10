@@ -559,7 +559,9 @@ class wcmamtx_add_settings_page_class {
                 'chose_template'        => esc_html__( 'Choose Template' ,'customize-my-account-for-woocommerce'),
                 'uploadimage'           => esc_html__( 'Choose an image' ,'customize-my-account-for-woocommerce'),
                 'useimage'              => esc_html__( 'Use Image' ,'customize-my-account-for-woocommerce'),
-                'placeholder'           => wcmamtx_placeholder_img_src()
+                'placeholder'           => wcmamtx_placeholder_img_src(),
+                'chosebulkaction'       => esc_html__( 'No Action Selected' ,'customize-my-account-for-woocommerce'),
+                'firstsucess'       => esc_html__( 'Bulk Action Applied to all sucessfully.Make sure to save changes.' ,'customize-my-account-for-woocommerce'),
                 
             );
 
@@ -880,6 +882,8 @@ class wcmamtx_add_settings_page_class {
 
                         <?php if (isset($current_tab) && ($current_tab == "wcmamtx_advanced_settings") && ($current_tab != "wcmamtx_wizard_settings")) { ?>
 
+                            <input type="button" href="#" data-toggle="modal" data-target="#wcmamtx_bulk_modal" name="submit" id="wcmamtx_bulk_actions_button" class="btn-sm btn btn-dark wcmamtx_bulk_actions_button" value="<?php echo esc_html__( 'Bulk Actions' ,'customize-my-account-for-woocommerce'); ?>">
+
                             <input type="button" href="#" name="submit" id="wcmamtx_reset_tabs_button" class="btn-sm btn btn-danger wcmamtx_reset_tabs_button" value="<?php echo esc_html__( 'Restore Default' ,'customize-my-account-for-woocommerce'); ?>">
                            
 
@@ -933,6 +937,31 @@ class wcmamtx_add_settings_page_class {
                 </div>
                 
             </form>
+
+            <div class="modal fade" id="wcmamtx_bulk_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+
+                        <div class="modal-body">
+                            
+                            <select class="wcmamtx_bulk_action_select">
+                                <option disabled selected value><?php echo esc_html__( 'Choose Action' ,'customize-my-account-for-woocommerce'); ?></option>
+                                <option value="01"><?php echo esc_html__( 'Restore Default Background Color to all Dashboard Links' ,'customize-my-account-for-woocommerce'); ?></option>
+                                <option value="02"><?php echo esc_html__( 'Restore Default Font Color to all Dashboard Links' ,'customize-my-account-for-woocommerce'); ?></option>
+                            </select>
+
+                            
+                        </div>
+                        <div class="modal-footer">
+
+                            <button type="button" class="btn btn-secondary bulk apply wcmamtx_bulk_action_select_apply"><?php echo esc_html__( 'Apply' ,'customize-my-account-for-woocommerce'); ?></button>
+
+                            <button type="button" class="btn btn-secondary bulk" data-dismiss="modal"><?php echo esc_html__( 'Close' ,'customize-my-account-for-woocommerce'); ?></button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div class="modal fade" id="wcmamtx_example_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">

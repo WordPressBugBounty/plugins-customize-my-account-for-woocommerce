@@ -133,6 +133,41 @@ $var( function() {
       }.bind(this), 100);
     });
 
+    $var(".wcmamtx_bulk_action_select_apply").on('click',function() {
+
+        var action_chosen = $var(".wcmamtx_bulk_action_select").val();
+
+        if (action_chosen == null) {
+            alert(wcmamtxadmin.chosebulkaction);
+        } else {
+            switch(action_chosen) {
+
+                case "01":
+
+                    $var('.wcmamtx_color_input').wpColorPicker('color', '#e9e9ef');
+                    alert(wcmamtxadmin.firstsucess);
+                        
+                    $var("#wcmamtx_bulk_modal").modal('hide');
+
+                break;
+
+                case "02":
+
+                    $var('.wcmamtx_color_input_font').wpColorPicker('color', '#334155');
+                    alert(wcmamtxadmin.firstsucess);
+                        
+                    $var("#wcmamtx_bulk_modal").modal('hide');
+
+                break;
+
+            }
+
+
+        }
+
+        return false;
+    });
+
     
     $var(".wcmamtx_accordion_remove").on('click',function() {
         var parentkey = $var(this).attr("parentkey");
