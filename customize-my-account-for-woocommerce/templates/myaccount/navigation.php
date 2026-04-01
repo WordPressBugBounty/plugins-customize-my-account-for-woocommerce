@@ -162,6 +162,8 @@ if ($menu_shape == 'vertical') {
  
 } else {
 
+
+
     include ("menu_default.php");
 
 

@@ -2,6 +2,8 @@
 if (!function_exists('wcmamtx_get_account_menu_li_icon_html')) {
 
 	function wcmamtx_get_account_menu_li_icon_html($icon_source,$value,$key) {
+
+		
         
         switch ($icon_source) {
 

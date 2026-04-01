@@ -172,126 +172,113 @@ $default_color_font = '#334155';
 </tr>
 <?php } ?>
 
-<tr>
-    <td>
-        <label class="wcmamtx_accordion_label"><?php  echo esc_html__('Icon Settings','customize-my-account-for-woocommerce'); ?></label>
-    </td>
-    <td>
-       <?php 
-       if (isset($value['icon_source']) && ($value['icon_source'] != '')) {
-          $icon_source = $value['icon_source'];
-      } else {
-          $icon_source = 'default';
-      }
-      ?>
 
-      <div class="wcmamtx_icon_settings_div">
-          <div class="form-check wcmamtx_icon_checkbox">
-             <input class="form-check-input wcmamtx_icon_source_radio" type="radio" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][icon_source]"  value="default" <?php if ($icon_source == "default") { echo 'checked'; } ?>>
-             <label class="form-check-label wcmamtx_icon_checkbox_label" >
-                <?php  echo esc_html__('Default Icon','customize-my-account-for-woocommerce'); ?>
-            </label>
-        </div>
-        <div class="form-check wcmamtx_icon_checkbox">
-         <input class="form-check-input wcmamtx_icon_source_radio" type="radio" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][icon_source]"  value="default" <?php if ($icon_source == "noicon") { echo 'checked'; } ?> disabled>
-         <label class="form-check-label wcmamtx_icon_checkbox_label">
-            <?php  echo esc_html__('No Icon','customize-my-account-for-woocommerce'); ?>
-            <a href="#" data-toggle="modal" data-target="#wcmamtx_upgrade_modal">
-                <span class="wcmamtx_pro_upgrade_text"><?php  echo esc_html__('Upgrade to pro','customize-my-account-for-woocommerce'); ?></span>
-
-            </a>
-        </label>
-    </div>
-    <div class="form-check wcmamtx_icon_checkbox">
-     <input class="form-check-input wcmamtx_icon_source_radio" type="radio" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][icon_source]"  value="default" <?php if ($icon_source == "custom") { echo 'checked'; } ?> disabled>
-     <label class="form-check-label wcmamtx_icon_checkbox_label">
-        <?php  echo esc_html__('Font Awesome Icon','customize-my-account-for-woocommerce'); ?>
-        <a href="#" data-toggle="modal" data-target="#wcmamtx_upgrade_modal">
-            <span class="wcmamtx_pro_upgrade_text"><?php  echo esc_html__('Upgrade to pro','customize-my-account-for-woocommerce'); ?></span>
-
-        </a>
-    </label>
-</div>
-
-<div class="form-check wcmamtx_icon_checkbox">
- <input class="form-check-input wcmamtx_icon_source_radio" type="radio" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][icon_source]"  value="default" <?php if ($icon_source == "dashicon") { echo 'checked'; } ?> disabled>
- <label class="form-check-label wcmamtx_icon_checkbox_label">
-    <?php  echo esc_html__('Dashicon','customize-my-account-for-woocommerce'); ?>
-    <a href="#" data-toggle="modal" data-target="#wcmamtx_upgrade_modal">
-        <span class="wcmamtx_pro_upgrade_text"><?php  echo esc_html__('Upgrade to pro','customize-my-account-for-woocommerce'); ?></span>
-
-    </a>
-</label>
-</div>
-
-<div class="form-check wcmamtx_icon_checkbox">
-    <input class="form-check-input wcmamtx_icon_source_radio" type="radio" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][icon_source]"  value="default" <?php if ($icon_source == "upload") { echo 'checked'; } ?> disabled>
-    <label class="form-check-label wcmamtx_icon_checkbox_label">
-        <?php  echo esc_html__('Upload Icon','customize-my-account-for-woocommerce'); ?>
-        <a href="#" data-toggle="modal" data-target="#wcmamtx_upgrade_modal">
-            <span class="wcmamtx_pro_upgrade_text"><?php  echo esc_html__('Upgrade to pro','customize-my-account-for-woocommerce'); ?></span>
-
-        </a>
-    </label>
-</div>
-</div>
-</td>
-
-</tr>
-
-<tr class="fa_icon_tr" style= "<?php if ($icon_source == "custom") { echo 'display:table-row;'; } else { echo 'display:none;'; } ?>">
-    <td>
-        <label class="wcmamtx_accordion_label"><?php  echo esc_html__('Icon','customize-my-account-for-woocommerce'); ?></label>
-    </td>
-    <td>
-
-        <input type="text" class="wcmamtx_iconpicker icon-class-input" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][icon]" value="<?php if (isset($value['icon'])) { echo $value['icon']; } ?>">
-        <button type="button" class="btn btn-primary picker-button"><?php  echo esc_html__('Chose Font Awesome Icon','customize-my-account-for-woocommerce'); ?></button>
-    </td>
-
-</tr>
-
-<tr class="show_dashicon_tr" style= "<?php if ($icon_source == "dashicon") { echo 'display:table-row;'; } else { echo 'display:none;'; } ?>">
-    <td>
-        <label class="wcmamtx_accordion_label"><?php  echo esc_html__('Icon','customize-my-account-for-woocommerce'); ?></label>
-    </td>
-    <td>
-
-        <input class="regular-text " id="dashicons_picker_example_<?php echo $key; ?>" type="text" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][dashicon]" value="<?php if (isset($value['dashicon'])) { echo $value['dashicon']; } ?>" />
-        <input class="button dashicons-picker" type="button" value="<?php  echo esc_html__('Chose Dashicon','customize-my-account-for-woocommerce'); ?>" data-target="#dashicons_picker_example_<?php echo $key; ?>" />
-
-    </td>
-
-</tr>
 
 <?php include('subwrap/countof-settings.php'); ?>
 
-<tr class="show_upload_tr" style= "<?php if ($icon_source == "upload") { echo 'display:table-row;'; } else { echo 'display:none;'; } ?>">
-    <td>
-        <label class="wcmamtx_accordion_label"><?php  echo esc_html__('Upload Icon','customize-my-account-for-woocommerce'); ?></label>
-    </td>
-    <td>
-        <?php
+ <tr>
+                    <td>
+                        <label class="wcmamtx_accordion_label"><?php  echo esc_html__('Icon Settings','customize-my-account-for-woocommerce'); ?></label>
+                    </td>
+                    <td>
+                        <?php 
+                             if (isset($value['icon_source']) && ($value['icon_source'] != '')) {
+                                $icon_source = $value['icon_source'];
+                             } else {
+                                $icon_source = 'default';
+                             }
+                        ?>
 
-        $swatchimage = isset($value['upload_icon']) ? $value['upload_icon'] : "";
+                        <div class="wcmamtx_icon_settings_div">
+                            <div class="form-check wcmamtx_icon_checkbox">
+                                <input class="form-check-input wcmamtx_icon_source_radio" type="radio" name="<?php  echo esc_attr($this->wcmamtx_notices_settings_page); ?>[<?php echo $key; ?>][icon_source]"  value="default" <?php if ($icon_source == "default") { echo 'checked'; } ?>>
+                                <label class="form-check-label wcmamtx_icon_checkbox_label" >
+                                    <?php  echo esc_html__('Default Icon','customize-my-account-for-woocommerce'); ?>
+                                </label>
+                            </div>
+                            <div class="form-check wcmamtx_icon_checkbox">
+                                <input class="form-check-input wcmamtx_icon_source_radio" type="radio" name="<?php  echo esc_html__($this->wcmamtx_notices_settings_page); ?>[<?php echo $key; ?>][icon_source]"  value="noicon" <?php if ($icon_source == "noicon") { echo 'checked'; } ?>>
+                                <label class="form-check-label wcmamtx_icon_checkbox_label">
+                                    <?php  echo esc_html__('No Icon','customize-my-account-for-woocommerce'); ?>
+                                </label>
+                            </div>
+                            <div class="form-check wcmamtx_icon_checkbox">
+                                <input class="form-check-input wcmamtx_icon_source_radio" type="radio" name="<?php  echo esc_html__($this->wcmamtx_notices_settings_page); ?>[<?php echo $key; ?>][icon_source]"  value="custom" <?php if ($icon_source == "custom") { echo 'checked'; } ?>>
+                                <label class="form-check-label wcmamtx_icon_checkbox_label">
+                                    <?php  echo esc_html__('Font Awesome Icon','customize-my-account-for-woocommerce'); ?>
+                                </label>
+                            </div>
 
-        if (isset($swatchimage)) {
-            $swatchurl     = wp_get_attachment_thumb_url( $swatchimage );
-        } 
-        ?>
-        <div class="facility_thumbnail" id="facility_thumbnail_<?php echo $key; ?>" style="float:left;">
-            <img src="<?php if (isset($swatchurl) && ($swatchurl != '')) { echo $swatchurl; } else { echo wcmamtx_placeholder_img_src(); }  ?>" width="60px" height="60px" />
-            <div  class="image-upload-div" idval="<?php echo $key; ?>" >
-                <input type="hidden" class="facility_thumbnail_id_<?php echo $key; ?>" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][upload_icon]" value="<?php if (isset($swatchimage)) { echo $swatchimage; } ?>"/>
-                <button type="submit" class="upload_image_button_<?php echo $key; ?> button"><?php echo esc_html__( 'Upload/Add image', 'customize-my-account-for-woocommerce' ); ?></button>
-                <button type="submit" class="remove_image_button_<?php echo $key; ?> button"><?php echo esc_html__( 'Remove image', 'customize-my-account-for-woocommerce' ); ?></button>
-            </div>
-        </div>
+                            <div class="form-check wcmamtx_icon_checkbox">
+                                <input class="form-check-input wcmamtx_icon_source_radio" type="radio" name="<?php  echo esc_html__($this->wcmamtx_notices_settings_page); ?>[<?php echo $key; ?>][icon_source]"  value="dashicon" <?php if ($icon_source == "dashicon") { echo 'checked'; } ?>>
+                                <label class="form-check-label wcmamtx_icon_checkbox_label">
+                                    <?php  echo esc_html__('Dashicon','customize-my-account-for-woocommerce'); ?>
+                                </label>
+                            </div>
+
+                            <div class="form-check wcmamtx_icon_checkbox">
+                                <input class="form-check-input wcmamtx_icon_source_radio" type="radio" name="<?php  echo esc_html__($this->wcmamtx_notices_settings_page); ?>[<?php echo $key; ?>][icon_source]"  value="upload" <?php if ($icon_source == "upload") { echo 'checked'; } ?>>
+                                <label class="form-check-label wcmamtx_icon_checkbox_label">
+                                    <?php  echo esc_html__('Upload Icon','customize-my-account-for-woocommerce'); ?>
+                                </label>
+                            </div>
+                        </div>
+                    </td>
+            
+                </tr>
+
+                <tr class="fa_icon_tr" style= "<?php if ($icon_source == "custom") { echo 'display:table-row;'; } else { echo 'display:none;'; } ?>">
+                    <td>
+                        <label class="wcmamtx_accordion_label"><?php  echo esc_html__('Icon','customize-my-account-for-woocommerce'); ?></label>
+                    </td>
+                    <td>
+
+                        <input type="text" class="wcmamtx_iconpicker icon-class-input" name="<?php  echo esc_html__($this->wcmamtx_notices_settings_page); ?>[<?php echo $key; ?>][icon]" value="<?php if (isset($value['icon'])) { echo $value['icon']; } ?>">
+                        <button type="button" class="btn btn-primary picker-button"><?php  echo esc_html__('Chose Font Awesome Icon','customize-my-account-for-woocommerce'); ?></button>
+                        <p><a target="_blank" class="" href="https://fontawesome.com/v4/icons/"><?php  echo esc_html__('Full list of Supported Icons','customize-my-account-for-woocommerce'); ?>                        </a></p>
+                    </td>
+            
+                </tr>
+
+                <tr class="show_dashicon_tr" style= "<?php if ($icon_source == "dashicon") { echo 'display:table-row;'; } else { echo 'display:none;'; } ?>">
+                    <td>
+                        <label class="wcmamtx_accordion_label"><?php  echo esc_html__('Icon','customize-my-account-for-woocommerce'); ?></label>
+                    </td>
+                    <td>
+
+                        <input class="regular-text " id="dashicons_picker_example_<?php echo $key; ?>" type="text" name="<?php  echo esc_html__($this->wcmamtx_notices_settings_page); ?>[<?php echo $key; ?>][dashicon]" value="<?php if (isset($value['dashicon'])) { echo $value['dashicon']; } ?>" />
+                        <input class="button dashicons-picker" type="button" value="<?php  echo esc_html__('Chose Dashicon','customize-my-account-for-woocommerce'); ?>" data-target="#dashicons_picker_example_<?php echo $key; ?>" />
+
+                    </td>
+            
+                </tr>
+
+                <tr class="show_upload_tr" style= "<?php if ($icon_source == "upload") { echo 'display:table-row;'; } else { echo 'display:none;'; } ?>">
+                    <td>
+                        <label class="wcmamtx_accordion_label"><?php  echo esc_html__('Upload Icon','customize-my-account-for-woocommerce'); ?></label>
+                    </td>
+                    <td>
+                        <?php
+
+                        $swatchimage = isset($value['upload_icon']) ? $value['upload_icon'] : "";
+
+                         if (isset($swatchimage)) {
+                            $swatchurl     = wp_get_attachment_thumb_url( $swatchimage );
+                         } 
+                        ?>
+                        <div class="facility_thumbnail" id="facility_thumbnail_<?php echo $key; ?>" style="float:left;">
+                            <img src="<?php if (isset($swatchurl) && ($swatchurl != '')) { echo $swatchurl; } else { echo wcmamtx_placeholder_img_src(); }  ?>" width="60px" height="60px" />
+                            <div  class="image-upload-div" idval="<?php echo $key; ?>" >
+                                <input type="hidden" class="facility_thumbnail_id_<?php echo $key; ?>" name="<?php  echo esc_html__($this->wcmamtx_notices_settings_page); ?>[<?php echo $key; ?>][upload_icon]" value="<?php if (isset($swatchimage)) { echo $swatchimage; } ?>"/>
+                                <button type="submit" class="upload_image_button_<?php echo $key; ?> button"><?php echo esc_html__( 'Upload/Add image', 'wcva' ); ?></button>
+                                <button type="submit" class="remove_image_button_<?php echo $key; ?> button"><?php echo esc_html__( 'Remove image', 'wcva' ); ?></button>
+                            </div>
+                        </div>
 
 
-    </td>
+                    </td>
 
-</tr>
+                </tr>
 
 <?php if  ((wcmamtx_wpmlsticky_mode == "on") && ($wcmamtx_type != 'group')) { ?>
 
