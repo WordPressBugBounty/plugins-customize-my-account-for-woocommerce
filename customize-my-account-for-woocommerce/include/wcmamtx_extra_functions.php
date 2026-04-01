@@ -362,8 +362,8 @@ if (!function_exists('wcmamtx_load_pro_feature_preview')) {
 
 	function wcmamtx_load_pro_feature_preview() { ?>
         <br/>
-        <strong style="color:green;"><?php echo esc_html__( 'Lifetime license starts from $39 USD' ,'customize-my-account-for-woocommerce'); ?></strong>
-        <br/>
+        <strong style="color:green;"><?php echo esc_html__( 'Lifetime license starts from $39 USD, One time purchase no yearly renewal.' ,'customize-my-account-for-woocommerce'); ?></strong>
+        <br/><br/><br/>
 		<strong><?php echo esc_html__( 'Pro Version Features' ,'customize-my-account-for-woocommerce'); ?></strong>
 		<br/>
 		
@@ -965,7 +965,7 @@ if (!function_exists('wcmamtx_show_limit_info')) {
 
 				<a type="button" target="_blank" href="https://sysbasics.com/go/customize/"  class="btn btn-success wcmamtx_frontend_link" >
 					<span class="dashicons dashicons-lock"></span>
-					<?php echo esc_html__( 'Pro Version Page' ,'customize-my-account-for-woocommerce'); ?>
+					<?php echo esc_html__( 'Upgrade to pro' ,'customize-my-account-for-woocommerce'); ?>
 				</a>
 
 				<br><br>
