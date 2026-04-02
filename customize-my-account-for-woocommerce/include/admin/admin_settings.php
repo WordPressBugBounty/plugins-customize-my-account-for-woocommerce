@@ -825,19 +825,12 @@ class wcmamtx_add_settings_page_class {
                 <?php 
                 do_settings_sections( $tab ); 
 
-                $allowed_endpoints = get_option("wcmamtx_allowed_endpoint_trial");
                 
-                if ($allowed_endpoints > 0) {
 
                     $endpoint_button_id = "#wcmamtx_example_modal";
                     $endpoint_button_class = "";
 
-                } else {
-
-                    $endpoint_button_id = "#wcmamtx_example_modal2";
-                    $endpoint_button_class = "wcmamtx_disabled2";
-
-                }
+                
                 
                 
                
@@ -851,17 +844,17 @@ class wcmamtx_add_settings_page_class {
                         <div class="wcmamtx_add_section_div">
                             <button type="button" href="#" data-toggle="modal" data-target="<?php echo $endpoint_button_id; ?>" data-etype="endpoint" id="wcmamtx_add_endpoint" class="btn btn-sm btn-primary wcmamtx_add_group <?php echo $endpoint_button_class; ?>">
                                 <span class="dashicons dashicons-insert"></span>
-                                <?php echo esc_html__( 'Add Endpoint' ,'customize-my-account-for-woocommerce'); ?>
+                                <?php echo esc_html__( 'Endpoint' ,'customize-my-account-for-woocommerce'); ?>
                             </button>
 
                             <button type="button" href="#" data-toggle="modal" data-target="#wcmamtx_example_modal3" data-etype="link" id="wcmamtx_add_link" class="btn btn-sm btn-primary wcmamtx_add_group">
                                 <span class="dashicons dashicons-insert"></span>
-                                <?php echo esc_html__( 'Add Link' ,'customize-my-account-for-woocommerce'); ?>
+                                <?php echo esc_html__( 'Link' ,'customize-my-account-for-woocommerce'); ?>
                             </button>
 
                             <button type="button" href="#" data-toggle="modal" data-target="#wcmamtx_example_modal2" data-etype="group" id="wcmamtx_add_group" class="btn btn-sm btn-primary wcmamtx_add_group wcmamtx_disabled2">
                                 <span class="dashicons dashicons-insert"></span>
-                                <?php echo esc_html__( 'Add Group' ,'customize-my-account-for-woocommerce'); ?>
+                                <?php echo esc_html__( 'Group' ,'customize-my-account-for-woocommerce'); ?>
                             </button>
                             
                         </div>
