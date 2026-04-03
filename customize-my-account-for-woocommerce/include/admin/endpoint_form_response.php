@@ -39,7 +39,7 @@
         }
 
 
-        $new_row_values    = array();
+        
 
         $advancedsettings  = (array) get_option('wcmamtx_advanced_settings');
 
@@ -69,78 +69,7 @@
         } else {
         	
 
-        	foreach ($advancedsettings as $key2=>$value2) {
-
-        		$key2 = isset($value2['endpoint_key']) ? $value2['endpoint_key'] : $key2;
-
-
-            
-                $new_row_values[$key2]['endpoint_key']        = $key2;
-                $new_row_values[$key2]['endpoint_name']       = $value2['endpoint_name'];
-                $new_row_values[$key2]['wcmamtx_type']        = $value2['wcmamtx_type'];
-                $new_row_values[$key2]['parent']              = $value2['parent'];
-                
-                $new_row_values[$key2]['class']               = isset($value2['class']) ? $value2['class'] : "";
-                $new_row_values[$key2]['visibleto']           = isset($value2['visibleto']) ? $value2['visibleto'] : "all";
-                $new_row_values[$key2]['roles']               = isset($value2['roles']) ? $value2['roles'] : array();
-                $new_row_values[$key2]['icon_source']         = isset($value2['icon_source']) ? $value2['icon_source'] : "default";
-                $new_row_values[$key2]['icon']                = isset($value2['icon']) ? $value2['icon'] : "";
-                $new_row_values[$key2]['show']                = isset($value2['show']) ? $value2['show'] : "yes";
-                $new_row_values[$key2]['upload_icon']         = isset($value2['upload_icon']) ? $value2['upload_icon'] : "";
-
-
-
-
-                $default_color = wcmamtx_get_default_tab_color($key2);
-
-                $default_color_font = '#334155';
-
-
-                $new_row_values[$key2]['dash_back_color']                = isset($value2['dash_back_color']) ? $value2['dash_back_color'] : $default_color;
-                $new_row_values[$key2]['dash_font_color']         = isset($value2['dash_font_color']) ? $value2['dash_font_color'] : $default_color_font;
-
-
-                $new_row_values[$key2]['count_of'] = isset($value2['count_of']) ? $value2['count_of'] : "none";
-                
-                $new_row_values[$key2]['count_bubble'] = isset($value2['count_bubble']) ? $value2['count_bubble'] : null;
-
-                $new_row_values[$key2]['hide_empty'] = isset($value2['hide_empty']) ? $value2['hide_empty'] : null;
-
-                $new_row_values[$key2]['hide_sidebar'] = isset($value2['hide_sidebar']) ? $value2['hide_sidebar'] : null;
-                
-
-                $new_row_values[$key2]['third_party']        = isset($value2['third_party']) ? $value2['third_party'] : null;
-                
-
-                if (isset($value2['wcmamtx_type']) && ($value2['wcmamtx_type'] == "link")) {
-                	$new_row_values[$key2]['link_inputtarget']              = $value2['link_inputtarget'];
-                	$new_row_values[$key2]['link_targetblank']              = $value2['link_targetblank'];
-                }
-
-
-                if (isset($value2['wcmamtx_type']) && ($value2['wcmamtx_type'] == "endpoint")) {
-                    $new_row_values[$key2]['content']              = isset($value2['content']) ? $value2['content'] : "";
-                }
-
-
-
-                if (isset($value2['wcmamtx_type']) && ($value2['wcmamtx_type'] == "group")) {
-
-                	$new_row_values[$key2]['group_open_default']   = isset($value2['group_open_default']) ? $value2['group_open_default'] : "no";
-
-                }
-
-
-                 if ($key2 == "dashboard") {
-                    $new_row_values[$key2]['hide_dashboard_hello']            = isset($value2['hide_dashboard_hello']) ? $value2['hide_dashboard_hello'] : 00;
-                    $new_row_values[$key2]['hide_intro_hello']                = isset($value2['hide_intro_hello']) ? $value2['hide_intro_hello'] : 00;
-                    $new_row_values[$key2]['content_dash']                    = isset($value2['content_dash']) ? $value2['content_dash'] : "";
-                }
-                
-                
-            
-
-            }
+        	$new_row_values = wcmamtx_get_new_row_values($advancedsettings);
 
         }
 

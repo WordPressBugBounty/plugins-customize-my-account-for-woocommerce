@@ -266,6 +266,14 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
 
     public function wcmamtx_add_menu_items( $items, $args ) {
 
+        $flush_cache = get_option('wcmamtx_flush_rewrite_cache_required',"no");
+
+        if ($flush_cache == "yes") {
+            add_action( 'wp_loaded', array($this,'wcmamtx_flush_rewrite_rules') );
+
+            update_option('wcmamtx_flush_rewrite_cache_required',"no");
+        }
+
         $frontend_url = get_permalink(get_option('woocommerce_myaccount_page_id'));
 
         $wcmamtx_plugin_options = (array) get_option('wcmamtx_plugin_options');
@@ -782,6 +790,8 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
 
                     if ($flush_cache == "yes") {
                         add_action( 'wp_loaded', array($this,'wcmamtx_flush_rewrite_rules') );
+
+                        update_option('wcmamtx_flush_rewrite_cache_required',"no");
                     }
 
                     

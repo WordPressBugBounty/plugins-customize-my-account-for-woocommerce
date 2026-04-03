@@ -40,8 +40,71 @@ class wcmamtx_add_settings_page_class {
          add_action( 'wp_ajax_wcmamtx_dismiss_dashboard_text_notice2', array( $this, 'wcmamtx_dismiss_dashboard_text_notice_function2' ) );
 
          add_action( 'wp_ajax_nopriv_wcmamtx_dismiss_dashboard_text_notice2', array( $this, 'wcmamtx_dismiss_dashboard_text_notice_function2' ) );
+
+        
+
+         add_action( 'wp_ajax_wcmamtx_export_endpoints', array( $this, 'wcmamtx_export_endpoints_function' ) );
+
+         add_action( 'wp_ajax_wcmamtx_import_menu', array( $this, 'wcmamtx_import_menu_function' ) );
         
 	}
+
+    public function wcmamtx_sanitize_items($items) {
+
+       //$items = json_decode($items, TRUE);
+
+       $new_row_values    = wcmamtx_get_new_row_values($items[0]);
+
+       
+       return $new_row_values;
+    }
+
+
+    public function wcmamtx_import_menu_function() {
+        check_ajax_referer( 'wcmamtx_nonce', 'nonce' );
+        if ( ! current_user_can( 'manage_woocommerce' ) ) {
+            wp_send_json_error( 'Unauthorized' );
+        }
+
+       
+        $json = isset( $_POST['json'] ) ? json_decode( wp_unslash( $_POST['json'] ), true ) : null;
+        
+        if ( ! $json || ! isset( $json['items'] ) || ! is_array( $json['items'] ) ) {
+            wp_send_json_error( 'Invalid JSON' );
+        }
+
+
+        $new_row_values    =  $this->wcmamtx_sanitize_items($json['items']);
+
+        $advancedsettings  = (array) get_option('wcmamtx_advanced_settings');
+       
+
+        
+        if (($new_row_values != $advancedsettings) && !empty($new_row_values)) {
+
+            delete_option('wcmamtx_advanced_settings');
+            update_option($this->wcmamtx_notices_settings_page,$new_row_values);
+            update_option('wcmamtx_flush_rewrite_cache_required',"yes");
+            
+        }
+
+        wp_send_json_success( [ 'sucess' => "yes",'reload' => true,'flush_rewrite'=>'yes' ] );
+    }
+
+
+    public function wcmamtx_export_endpoints_function() {
+         check_ajax_referer( 'wcmamtx_nonce', 'nonce' );
+        if ( ! current_user_can( 'manage_woocommerce' ) ) {
+            wp_send_json_error( 'Unauthorized' );
+        }
+
+        wp_send_json_success( [
+            'plugin'   => 'customize-my-account-for-woocommerce',
+            'exported' => current_time( 'mysql' ),
+            'items'    => wcmamtx_get_default_endpoint_data(),
+            
+        ] );
+    }
 
 
     
@@ -437,6 +500,8 @@ class wcmamtx_add_settings_page_class {
 			}
 	        delete_option( $this->wcmamtx_notices_settings_page );
 
+            update_option('wcmamtx_flush_rewrite_cache_required',"yes");
+
             delete_option('wcmamtx_endpoint_allowed_to_add');
             delete_option('wcmamtx_groups_allowed_to_add');
             
@@ -561,7 +626,10 @@ class wcmamtx_add_settings_page_class {
                 'useimage'              => esc_html__( 'Use Image' ,'customize-my-account-for-woocommerce'),
                 'placeholder'           => wcmamtx_placeholder_img_src(),
                 'chosebulkaction'       => esc_html__( 'No Action Selected' ,'customize-my-account-for-woocommerce'),
-                'firstsucess'       => esc_html__( 'Bulk Action Applied to all sucessfully.Make sure to save changes.' ,'customize-my-account-for-woocommerce'),
+                'firstsucess'           => esc_html__( 'Bulk Action Applied to all sucessfully.Make sure to save changes.' ,'customize-my-account-for-woocommerce'),
+                'importSuccess'        => esc_html__( 'Import sucessfully completed, Click ok to refresh the page.' ,'customize-my-account-for-woocommerce'),
+                'importError'           => esc_html__( 'Import failed' ,'customize-my-account-for-woocommerce'),
+                
                 
             );
 
@@ -897,6 +965,10 @@ class wcmamtx_add_settings_page_class {
                         ?>
 
                         <?php if (isset($current_tab)  && ($current_tab != "wcmamtx_wizard_settings")) {  ?>
+
+                             <button type="button" class="button expimpbuttons wcmamtx-btn-export"><span class="dashicons dashicons-upload"></span> <?php esc_html_e( 'Export', 'customize-my-account-for-woocommerce' ); ?></button>
+                             <button type="button" class="button expimpbuttons wcmamtx-btn-import"><span class="dashicons dashicons-download"></span> <?php esc_html_e( 'Import', 'customize-my-account-for-woocommerce' ); ?></button>
+                             <input type="file" id="wcmamtx-import-file" accept=".json" style="display:none;">
 
                             <a type="button" target="_blank" href="<?php echo $frontend_url; ?>" name="submit" id="wcmamtx_frontend_link" class="btn btn-sm btn-primary wcmamtx_frontend_link" >
                                <span class="dashicons dashicons-welcome-view-site"></span>

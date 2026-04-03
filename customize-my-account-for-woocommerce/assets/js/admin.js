@@ -168,6 +168,74 @@ $var( function() {
         return false;
     });
 
+
+    $var(".wcmamtx-btn-export").on('click',function() {
+
+        $var.post(wcmamtxadmin.ajax_url, { action: 'wcmamtx_export_endpoints', nonce: wcmamtxadmin.nonce }, function (res) {
+            if (!res.success) return;
+            var blob = new Blob([JSON.stringify(res.data, null, 2)], { type: 'application/json' });
+            var a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'wcmamtx-myaccount-menu-' + new Date().toISOString().slice(0, 10) + '.json';
+            a.click();
+        });
+
+    });
+
+
+    $var(document).on('click', '.wcmamtx-btn-import', function () {
+        $var('#wcmamtx-import-file').click(); }
+
+    );
+
+   
+    
+    $var('#wcmamtx-import-file').on('change', function(e) {
+        e.preventDefault();
+        var file = e.target.files[0];
+        if (!file) return;
+        var reader = new FileReader();
+        reader.onload = function (ev) {
+            try {
+                var data = JSON.parse(ev.target.result);
+                if (!data.items || !Array.isArray(data.items)) {
+                    alert(wcmamtxadmin.importError);
+                    return;
+                } 
+
+                $var.post(wcmamtxadmin.ajax_url, {
+                    action: 'wcmamtx_import_menu', nonce: wcmamtxadmin.nonce, json: ev.target.result
+                }, function (res) {
+
+                    console.log(res);
+                    if (res.success) {
+                       
+                        
+
+                        var result22 = confirm(wcmamtxadmin.importSuccess);
+
+                        if ((result22 == true)) {
+
+                            
+
+                                window.location.reload();
+
+                            
+                        }
+                    } else {
+                        alert(wcmamtxadmin.importError);
+                    }
+                });
+            } catch (err) {
+                alert(wcmamtxadmin.importError);
+            }
+        };
+        reader.readAsText(file);
+        e.target.value = '';
+
+        return false;
+    });
+
     
     $var(".wcmamtx_accordion_remove").on('click',function() {
         var parentkey = $var(this).attr("parentkey");

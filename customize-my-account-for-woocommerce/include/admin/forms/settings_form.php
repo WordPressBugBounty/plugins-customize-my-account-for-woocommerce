@@ -5,6 +5,8 @@ $tabs              = wc_get_account_menu_items();
 
 $new_entries       = get_option('wcmamtx_tabs_to_add_third_party');
 
+
+
 if ((isset($new_entries)) && (!empty($new_entries))) {
 
     

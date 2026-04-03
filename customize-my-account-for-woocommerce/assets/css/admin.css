@@ -658,3 +658,13 @@ select.wcmamtx_bulk_action_select{
     width: 100%;
     min-width: 100%;
 }
+
+button.button.expimpbuttons {
+    float: right;
+    margin-right: 20px;
+}
+
+button.button.expimpbuttons .dashicons {
+    margin-top: 05px;
+    font-size: 20px;
+}
