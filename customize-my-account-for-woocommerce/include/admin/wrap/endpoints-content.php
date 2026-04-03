@@ -144,15 +144,19 @@ $default_color_font = '#334155';
     </td>
 
 </tr>
-<tr>
-    <td>
-        <label class=" wcmamtx_accordion_label"><?php echo esc_html__('Hide in Dashboard Links','customize-my-account-for-woocommerce'); ?></label>
-    </td>
-    <td>
-        <?php wcmamtx_show_disabled_toggle_image(); ?>
+<?php if ($key != "dashboard") { ?>
 
-    </td>
-</tr>
+    <tr>
+        <td>
+            <label class=" wcmamtx_accordion_label"><?php echo esc_html__('Hide in dashboard links','customize-my-account-for-woocommerce-pro'); ?></label>
+        </td>
+        <td>
+            <input type="checkbox" data-toggle="toggle" data-on="<?php  echo esc_html__('Yes','customize-my-account-for-woocommerce-pro'); ?>" data-off="<?php  echo esc_html__('No','customize-my-account-for-woocommerce-pro'); ?>" data-size="sm" class="wcmamtx_accordion_input wcmamtx_accordion_checkbox checkmark" ype="checkbox" name="wcmamtx_advanced_settings[<?php echo $key; ?>][hide_dashboard_links]" value="01" <?php if (isset($value['hide_dashboard_links']) && ($value['hide_dashboard_links'] == "01")) { echo 'checked'; } ?>>
+            
+        </td>
+    </tr>
+
+<?php } ?>
 
 <?php if ($key != "dashboard") { ?>
 
