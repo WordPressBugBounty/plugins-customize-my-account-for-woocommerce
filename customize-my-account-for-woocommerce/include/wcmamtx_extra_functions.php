@@ -475,7 +475,7 @@ if (!function_exists('wcmamtx_load_pro_feature_preview')) {
 
 	function wcmamtx_load_pro_feature_preview() { ?>
         <br/>
-        <strong style="color:green;"><?php echo esc_html__( 'Lifetime license starts from $39 USD, One time purchase no yearly renewal.' ,'customize-my-account-for-woocommerce'); ?></strong>
+        <strong style="color:green;"><?php echo esc_html__( 'Lifetime license starts from $19 USD, One time purchase no yearly renewal.' ,'customize-my-account-for-woocommerce'); ?></strong>
         <br/><br/><br/>
 		<strong><?php echo esc_html__( 'Pro Version Features' ,'customize-my-account-for-woocommerce'); ?></strong>
 		<br/>
@@ -487,7 +487,7 @@ if (!function_exists('wcmamtx_load_pro_feature_preview')) {
 
       		<tr><td><i class="fa fa-check"></i></td><td><?php echo esc_html__( 'Unlimited Groups' ,'customize-my-account-for-woocommerce'); ?></td></tr>
 
-      		<tr><td><i class="fa fa-check"></i></td><td><?php echo esc_html__( 'Custom Content Before and After third party endpoints' ,'customize-my-account-for-woocommerce'); ?></td></tr>
+      		<tr><td><i class="fa fa-check"></i></td><td><?php echo esc_html__( 'Custom Endpoint Key' ,'customize-my-account-for-woocommerce'); ?></td></tr>
 
       		<tr><td><i class="fa fa-check"></i></td><td><?php echo esc_html__( 'Change Default Dashboard Page' ,'customize-my-account-for-woocommerce'); ?></td></tr>
 

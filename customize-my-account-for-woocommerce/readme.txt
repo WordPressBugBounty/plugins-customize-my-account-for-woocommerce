@@ -1,12 +1,13 @@
 === SysBasics Customize My Account for WooCommerce ===
 Contributors: phppoet,sysbasics
+Donate link: https://www.paypal.com/ncp/payment/Q6ZEJ66THRLVE
 Tags: woocommerce, my account, customize, endpoints, user avatar
 Requires at least: 4.0
 Tested up to: 6.9.4
 WC Tested up to: 10.6.2
 WC Requires at least: 4.0
 Requires PHP: 5.2
-Stable tag: 3.9.4
+Stable tag: 3.9.6
 Requires Plugins: woocommerce
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html

@@ -706,7 +706,35 @@ class wcmamtx_add_settings_page_class {
 
         
 
+      
 
+            $this->wcmamtx_plugin_settings_tab[$this->wcmamtx_order_settings_page]   = esc_html__( 'Order Columns & Actions' ,'customize-my-account-for-woocommerce');
+
+            register_setting( $this->wcmamtx_order_settings_page, $this->wcmamtx_order_settings_page );
+
+            add_settings_section( 'wcmamtx_order_section', '', '', $this->wcmamtx_order_settings_page );
+
+            add_settings_field( 'order_option', '', array( $this, 'wcmamtx_order_coumns_form' ), $this->wcmamtx_order_settings_page, 'wcmamtx_order_section' );
+
+        
+
+        
+       
+
+            
+
+        
+        
+        
+            $this->wcmamtx_plugin_settings_tab[$this->wcmamtx_download_columns_page] = esc_html__( 'Download Columns' ,'customize-my-account-for-woocommerce');
+
+
+            register_setting( $this->wcmamtx_download_columns_page, $this->wcmamtx_download_columns_page );
+
+            add_settings_section( 'wcmamtx_download_section', '', '', $this->wcmamtx_download_columns_page );
+
+            add_settings_field( 'download_option', '', array( $this, 'wcmamtx_download_coumns_form' ), $this->wcmamtx_download_columns_page, 'wcmamtx_download_section' );
+        
 
         
 
@@ -731,6 +759,18 @@ class wcmamtx_add_settings_page_class {
 		
 
 	}
+
+    public function wcmamtx_order_coumns_form() { 
+         
+         include ('forms/orders_form.php');
+        
+    }
+
+    public function wcmamtx_download_coumns_form() { 
+         
+         include ('forms/orders_form.php');
+        
+    }
 
     public function wcmamtx_pro_settings_page() {
         include ('forms/pro_settings.php');
@@ -808,6 +848,9 @@ class wcmamtx_add_settings_page_class {
         include ('forms/settings_form.php');
 
     }
+
+
+
 
 
 	/*
@@ -895,8 +938,8 @@ class wcmamtx_add_settings_page_class {
 
                 
 
-                    $endpoint_button_id = "#wcmamtx_example_modal";
-                    $endpoint_button_class = "";
+                    $endpoint_button_id = "#wcmamtx_example_modal2";
+                    $endpoint_button_class = "wcmamtx_disabled2";
 
                 
                 

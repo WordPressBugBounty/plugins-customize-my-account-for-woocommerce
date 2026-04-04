@@ -113,7 +113,7 @@ $default_color_font = '#334155';
 
     <tr>
         <td>
-           <label class="wcmamtx_accordion_label"><?php  echo esc_html__('Key','customize-my-account-for-woocommerce'); ?></label>
+           <label class="wcmamtx_accordion_label"><?php  echo esc_html__('Custom Endpoint Key','customize-my-account-for-woocommerce'); ?></label>
        </td>
        <td>
         <?php wcmamtx_show_disabled_input(); ?>

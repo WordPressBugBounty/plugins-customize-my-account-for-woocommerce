@@ -80,7 +80,7 @@
 
                 $wishlist_mode = wcmamtx_detect_wishlist_mode();
 
-                echo $wishlist_mode;
+                
 
                 if ($wishlist_mode == "none") {
                     $count_bubble = isset($value['count_bubble']) && ($value['count_bubble'] == "01") ? "yes" : "no";
@@ -228,7 +228,7 @@
                          ?>>
                     </div>
                     <div class="wcmamtx_count_div_section" style="<?php echo $section_style; ?>">
-                        <label class=" wcmamtx_accordion_label"><?php echo esc_html__('Hide Empty','customize-my-account-for-woocommerce'); ?></label>
+                        <label class=" wcmamtx_accordion_label"><?php echo esc_html__('Hide empty','customize-my-account-for-woocommerce'); ?></label>
 
                         <input type="checkbox" data-toggle="toggle" data-on="<?php  echo esc_html__('Yes','customize-my-account-for-woocommerce'); ?>" data-off="<?php  echo esc_html__('No','customize-my-account-for-woocommerce'); ?>" data-size="sm" class="wcmamtx_accordion_input wcmamtx_accordion_checkbox checkmark" type="checkbox" name="wcmamtx_advanced_settings[<?php echo $key; ?>][hide_empty]" value="01" <?php if (isset($hide_empty) && ($hide_empty == "yes")) { echo 'checked'; } ?>>
 
