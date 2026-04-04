@@ -990,7 +990,7 @@ class wcmamtx_add_settings_page_class {
                        
                     <?php } ?>
 
-                    <div class="wcmamtx_submit_section_div">
+                    <div class="wcmamtx_submit_section_div <?php echo $current_tab; ?>">
 
                         <?php if (isset($current_tab)  && ($current_tab != "wcmamtx_wizard_settings")) {  
 
@@ -998,7 +998,7 @@ class wcmamtx_add_settings_page_class {
 
                             ?>
 
-                            <input type="submit" name="submit" id="submit" class="btn <?php echo $load_wcmamtx_optional_class; ?> btn-sm btn-success wcmamtx_submit_button" value="<?php echo esc_html__( 'Save Changes' ,'customize-my-account-for-woocommerce'); ?>">
+                            <input type="submit" name="submit" id="submit" class="btn <?php echo $load_wcmamtx_optional_class; ?> btn-sm btn-success wcmamtx_submit_button <?php echo $current_tab; ?>" value="<?php echo esc_html__( 'Save Changes' ,'customize-my-account-for-woocommerce'); ?>">
 
                         <?php }  ?>
 
@@ -1042,22 +1042,7 @@ class wcmamtx_add_settings_page_class {
 
                         <?php do_action( 'wcmamtx_add_author_links' ); ?>
                     </div>
-                    <div class="wcmamtx_notice_div review bottom">
-
-                        <div class="wcmamtx_notice_div_uppertext">
-                            <?php echo esc_html__( 'If you have any issues with plugin,' ,'customize-my-account-for-woocommerce'); ?>
-                            <a type="button" target="_blank" href="https://www.sysbasics.com/contact-us/" class="">
-
-                                <?php echo esc_html__( 'Give us a chance' ,'customize-my-account-for-woocommerce'); ?>                  
-                            </a>
-
-                                <?php echo esc_html__( 'To fix the issue or if you like the plugin , do not forget to ' ,'customize-my-account-for-woocommerce'); ?> 
-                                <a type="button" target="_blank" href="https://wordpress.org/support/plugin/customize-my-account-for-woocommerce/reviews/#new-post" class="">
-
-                                <?php echo esc_html__( 'Rate the plugin.' ,'customize-my-account-for-woocommerce'); ?>                  
-                            </a>
-                        </div>
-                    </div>
+                    
 
                     
                 </div>

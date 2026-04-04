@@ -672,3 +672,23 @@ button.button.expimpbuttons .dashicons {
 a.nav-tab.wcmamtx_module_settings,a.nav-tab.wcmamtx_download_columns,a.nav-tab.wcmamtx_account_fields  {
     opacity: 0.4;
 }
+
+.wcmamtx_submit_section_div.wcmamtx_module_settings {
+    display: none;
+}
+
+.wcmamtx_submit_section_div.wcmamtx_avatar_settings button.button.expimpbuttons {
+    display: none;
+}
+
+.wcmamtx_submit_section_div.wcmamtx_plugin_options button.button.expimpbuttons {
+    display: none;
+}
+
+.wcmamtx_submit_section_div.wcmamtx_download_columns button.button.expimpbuttons {
+    display: none;
+}
+
+.wcmamtx_submit_section_div.wcmamtx_account_fields button.button.expimpbuttons {
+    display: none;
+}
