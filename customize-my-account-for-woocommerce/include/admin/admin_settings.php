@@ -13,6 +13,8 @@ class wcmamtx_add_settings_page_class {
     private $wcmamtx_avatar_settings_page  = 'wcmamtx_avatar_settings';
     private $wcmamtx_wizard_page           = 'wcmamtx_wizard_settings';
     private $wcmamtx_pro_settings          = 'wcmamtx_pro_settings';
+    private $wcmamtx_download_columns_page = 'wcmamtx_download_columns';
+    private $wcmamtx_account_fields_page   = 'wcmamtx_account_fields';
 	private $wcmamtx_plugin_settings_tab   = array();
 	
 
@@ -735,7 +737,16 @@ class wcmamtx_add_settings_page_class {
 
             add_settings_field( 'download_option', '', array( $this, 'wcmamtx_download_coumns_form' ), $this->wcmamtx_download_columns_page, 'wcmamtx_download_section' );
         
+        
 
+        $this->wcmamtx_plugin_settings_tab[$this->wcmamtx_account_fields_page] = esc_html__( 'My Account Fields' ,'customize-my-account-for-woocommerce');
+
+
+            register_setting( $this->wcmamtx_account_fields_page, $this->wcmamtx_account_fields_page );
+
+            add_settings_section( 'wcmamtx_account_fields_section', '', '', $this->wcmamtx_account_fields_page );
+
+            add_settings_field( 'account_fields_option', '', array( $this, 'wcmamtx_account_fields_form' ), $this->wcmamtx_account_fields_page, 'wcmamtx_account_fields_section' );
         
 
 
@@ -759,6 +770,13 @@ class wcmamtx_add_settings_page_class {
 		
 
 	}
+
+
+    public function wcmamtx_account_fields_form() { 
+         
+         include ('forms/orders_form.php');
+        
+    }
 
     public function wcmamtx_order_coumns_form() { 
          

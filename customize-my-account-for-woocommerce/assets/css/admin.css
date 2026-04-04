@@ -668,3 +668,7 @@ button.button.expimpbuttons .dashicons {
     margin-top: 05px;
     font-size: 20px;
 }
+
+a.nav-tab.wcmamtx_module_settings,a.nav-tab.wcmamtx_download_columns,a.nav-tab.wcmamtx_account_fields  {
+    opacity: 0.4;
+}
