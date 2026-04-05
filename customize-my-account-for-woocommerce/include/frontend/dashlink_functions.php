@@ -7,6 +7,10 @@ if ( (isset($plugin_options['disable_dashboard_links'])) && ($plugin_options['di
 
 $wcmamtx_tabs          =  (array) get_option('wcmamtx_advanced_settings');
 
+$wcmamtx_layout = (array) get_option( 'wcmamtx_layout' );
+
+$default_column = isset($wcmamtx_layout['columns']) ? $wcmamtx_layout['columns'] : "03";
+
 
 
 $items                 =  wc_get_account_menu_items();
@@ -70,7 +74,7 @@ $wcmamtx_tabs   = apply_filters('wcmamtx_override_dashlinks',$wcmamtx_tabs);
 
 
 ?>
-<div class="wcmtx-my-account-links wcmtx-grid">
+<div class="wcmtx-my-account-links wcmtx-grid column_<?php echo $default_column; ?>">
     <?php foreach ( $wcmamtx_tabs as $key => $value ) : 
 
 

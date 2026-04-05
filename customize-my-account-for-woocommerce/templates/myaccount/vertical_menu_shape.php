@@ -64,9 +64,13 @@
         <?php
     }
 
+    $wcmamtx_layout = (array) get_option( 'wcmamtx_layout' );
+
+    $default_style = isset($wcmamtx_layout['style']) ? $wcmamtx_layout['style'] : "01";
+
     ?>
    
-	<ul class="wcmamtx_vertical">
+	<ul class="wcmamtx_vertical style_<?php echo $default_style; ?>">
 		<?php foreach ( $wcmamtx_tabs as $key => $value ) { 
 
 

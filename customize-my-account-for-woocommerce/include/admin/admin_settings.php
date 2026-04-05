@@ -9,12 +9,11 @@ class wcmamtx_add_settings_page_class {
 	private $wcmamtx_plugin_options_key    = 'wcmamtx_plugin_options';
 	private $wcmamtx_notices_settings_page = 'wcmamtx_advanced_settings';
 	private $wcmamtx_order_settings_page   = 'wcmamtx_module_settings';
-	private $wcmamtx_order_actions_page    = 'wcmamtx_order_actions';
     private $wcmamtx_avatar_settings_page  = 'wcmamtx_avatar_settings';
-    private $wcmamtx_wizard_page           = 'wcmamtx_wizard_settings';
     private $wcmamtx_pro_settings          = 'wcmamtx_pro_settings';
     private $wcmamtx_download_columns_page = 'wcmamtx_download_columns';
     private $wcmamtx_account_fields_page   = 'wcmamtx_account_fields';
+    //private $wcmamtx_layout_page           = 'wcmamtx_layout';
 	private $wcmamtx_plugin_settings_tab   = array();
 	
 
@@ -646,98 +645,85 @@ class wcmamtx_add_settings_page_class {
 	
 	public function wcmamtx_register_settings_settings() {
 
-        $user_avatar_enable = wcmamtx_is_module_enabled("user-avatar");
 
-        $elementor_module_enable = wcmamtx_is_module_enabled("elementor-templates");
-
-                
-        
-
+        //add endpoints tab
 
 		$this->wcmamtx_plugin_settings_tab[$this->wcmamtx_notices_settings_page] = esc_html__( 'Endpoints' ,'customize-my-account-for-woocommerce');
 
-		$this->wcmamtx_plugin_settings_tab[$this->wcmamtx_order_settings_page] = esc_html__( 'Modules' ,'customize-my-account-for-woocommerce');
+        register_setting( $this->wcmamtx_notices_settings_page, $this->wcmamtx_notices_settings_page );
 
-        if (isset($user_avatar_enable) && ($user_avatar_enable == "yes")) { 
+        add_settings_section( 'wcmamtx_advance_section', '', '', $this->wcmamtx_notices_settings_page );
 
-            $this->wcmamtx_plugin_settings_tab[$this->wcmamtx_avatar_settings_page] = esc_html__( 'User Avatar' ,'customize-my-account-for-woocommerce');
-
-            register_setting( $this->wcmamtx_avatar_settings_page, $this->wcmamtx_avatar_settings_page );
-
-            add_settings_section( 'wcmamtx_avatar_section', '', '', $this->wcmamtx_avatar_settings_page );
-
-            add_settings_field( 'avatar_option', '', array( $this, 'wcmamtx_avatar_page' ), $this->wcmamtx_avatar_settings_page, 'wcmamtx_avatar_section' );
-
-        }
+        add_settings_field( 'advanced_option', '', array( $this, 'linked_product_swatches_settings' ), $this->wcmamtx_notices_settings_page, 'wcmamtx_advance_section' );
 
 
-        if (isset($elementor_module_enable) && ($elementor_module_enable == "yes")) { 
+        /*
 
-           $this->wcmamtx_plugin_settings_tab[$this->wcmamtx_plugin_options_key]    = esc_html__( 'Elementor Templates' ,'customize-my-account-for-woocommerce');
+        $this->wcmamtx_plugin_settings_tab[$this->wcmamtx_layout_page] = esc_html__( 'Layout' ,'customize-my-account-for-woocommerce');
+
+        register_setting( $this->wcmamtx_layout_page, $this->wcmamtx_layout_page );
+
+        add_settings_section( 'wcmamtx_layout_section', '', '', $this->wcmamtx_layout_page );
+
+        add_settings_field( 'layout_option', '', array( $this, 'layout_settings_form_function' ), $this->wcmamtx_layout_page, 'wcmamtx_layout_section' );
+        */
 
 
-           register_setting( $this->wcmamtx_plugin_options_key, $this->wcmamtx_plugin_options_key );
+        //order actions & columns tab
 
-           add_settings_section( 'wcmamtx_general_section', '', '', $this->wcmamtx_plugin_options_key );
 
-           add_settings_field( 'general_option', '', array( $this, 'wcmamtx_options_page' ), $this->wcmamtx_plugin_options_key, 'wcmamtx_general_section' );
+        $this->wcmamtx_plugin_settings_tab[$this->wcmamtx_order_settings_page]   = esc_html__( 'Order Columns & Actions' ,'customize-my-account-for-woocommerce');
 
-       }
+        register_setting( $this->wcmamtx_order_settings_page, $this->wcmamtx_order_settings_page );
+
+        add_settings_section( 'wcmamtx_order_section', '', '', $this->wcmamtx_order_settings_page );
+
+        add_settings_field( 'order_option', '', array( $this, 'wcmamtx_order_coumns_form' ), $this->wcmamtx_order_settings_page, 'wcmamtx_order_section' );
+
 
         
+        //User avatar tab
 
-        $this->wcmamtx_plugin_settings_tab[$this->wcmamtx_wizard_page] = esc_html__( 'Setup Wizard' ,'customize-my-account-for-woocommerce');
-       
+        $this->wcmamtx_plugin_settings_tab[$this->wcmamtx_avatar_settings_page] = esc_html__( 'User Avatar' ,'customize-my-account-for-woocommerce');
 
-		
+        register_setting( $this->wcmamtx_avatar_settings_page, $this->wcmamtx_avatar_settings_page );
 
-		register_setting( $this->wcmamtx_notices_settings_page, $this->wcmamtx_notices_settings_page );
+        add_settings_section( 'wcmamtx_avatar_section', '', '', $this->wcmamtx_avatar_settings_page );
 
-		add_settings_section( 'wcmamtx_advance_section', '', '', $this->wcmamtx_notices_settings_page );
-
-		add_settings_field( 'advanced_option', '', array( $this, 'linked_product_swatches_settings' ), $this->wcmamtx_notices_settings_page, 'wcmamtx_advance_section' );
-
-
-		register_setting( $this->wcmamtx_order_settings_page, $this->wcmamtx_order_settings_page );
-
-		add_settings_section( 'wcmamtx_order_section', '', '', $this->wcmamtx_order_settings_page );
-
-		add_settings_field( 'order_option', '', array( $this, 'linked_product_swatches_order' ), $this->wcmamtx_order_settings_page, 'wcmamtx_order_section' );
+        add_settings_field( 'avatar_option', '', array( $this, 'wcmamtx_avatar_page' ), $this->wcmamtx_avatar_settings_page, 'wcmamtx_avatar_section' );
 
         
+ 
+        //elementor templates
+        
+        $this->wcmamtx_plugin_settings_tab[$this->wcmamtx_plugin_options_key]    = esc_html__( 'Elementor Templates' ,'customize-my-account-for-woocommerce');
+
+
+        register_setting( $this->wcmamtx_plugin_options_key, $this->wcmamtx_plugin_options_key );
+
+        add_settings_section( 'wcmamtx_general_section', '', '', $this->wcmamtx_plugin_options_key );
+
+        add_settings_field( 'general_option', '', array( $this, 'wcmamtx_options_page' ), $this->wcmamtx_plugin_options_key, 'wcmamtx_general_section' );
+
+
+
+        //download columns tab
 
         
-
-      
-
-            $this->wcmamtx_plugin_settings_tab[$this->wcmamtx_order_settings_page]   = esc_html__( 'Order Columns & Actions' ,'customize-my-account-for-woocommerce');
-
-            register_setting( $this->wcmamtx_order_settings_page, $this->wcmamtx_order_settings_page );
-
-            add_settings_section( 'wcmamtx_order_section', '', '', $this->wcmamtx_order_settings_page );
-
-            add_settings_field( 'order_option', '', array( $this, 'wcmamtx_order_coumns_form' ), $this->wcmamtx_order_settings_page, 'wcmamtx_order_section' );
-
-        
-
-        
-       
-
-            
-
-        
-        
-        
-            $this->wcmamtx_plugin_settings_tab[$this->wcmamtx_download_columns_page] = esc_html__( 'Download Columns' ,'customize-my-account-for-woocommerce');
+        $this->wcmamtx_plugin_settings_tab[$this->wcmamtx_download_columns_page] = esc_html__( 'Download Columns' ,'customize-my-account-for-woocommerce');
 
 
-            register_setting( $this->wcmamtx_download_columns_page, $this->wcmamtx_download_columns_page );
+        register_setting( $this->wcmamtx_download_columns_page, $this->wcmamtx_download_columns_page );
 
-            add_settings_section( 'wcmamtx_download_section', '', '', $this->wcmamtx_download_columns_page );
+        add_settings_section( 'wcmamtx_download_section', '', '', $this->wcmamtx_download_columns_page );
 
-            add_settings_field( 'download_option', '', array( $this, 'wcmamtx_download_coumns_form' ), $this->wcmamtx_download_columns_page, 'wcmamtx_download_section' );
-        
-        
+        add_settings_field( 'download_option', '', array( $this, 'wcmamtx_download_coumns_form' ), $this->wcmamtx_download_columns_page, 'wcmamtx_download_section' );
+
+
+        //My Account fields tab
+
+
+
 
         $this->wcmamtx_plugin_settings_tab[$this->wcmamtx_account_fields_page] = esc_html__( 'My Account Fields' ,'customize-my-account-for-woocommerce');
 
@@ -747,15 +733,11 @@ class wcmamtx_add_settings_page_class {
             add_settings_section( 'wcmamtx_account_fields_section', '', '', $this->wcmamtx_account_fields_page );
 
             add_settings_field( 'account_fields_option', '', array( $this, 'wcmamtx_account_fields_form' ), $this->wcmamtx_account_fields_page, 'wcmamtx_account_fields_section' );
+
+
+        //settings tab
         
 
-
-        
-		register_setting( $this->wcmamtx_wizard_page, $this->wcmamtx_wizard_page );
-
-        add_settings_section( 'wcmamtx_wizard_section', '', '', $this->wcmamtx_wizard_page );
-
-        add_settings_field( 'wizard_option', '', array( $this, 'wcmamtx_wizard_page' ), $this->wcmamtx_wizard_page, 'wcmamtx_wizard_section' );
 
 
         $this->wcmamtx_plugin_settings_tab[$this->wcmamtx_pro_settings] = esc_html__( 'Settings' ,'customize-my-account-for-woocommerce');
@@ -767,9 +749,14 @@ class wcmamtx_add_settings_page_class {
 
         add_settings_field( 'pro_settings_option', '', array( $this, 'wcmamtx_pro_settings_page' ), $this->wcmamtx_pro_settings, 'wcmamtx_pro_settings_section' );
 
+    
 		
 
 	}
+
+    public function layout_settings_form_function() {
+        include ('forms/layout_form.php');
+    }
 
 
     public function wcmamtx_account_fields_form() { 
@@ -1289,37 +1276,52 @@ class wcmamtx_add_settings_page_class {
 
         $current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : sanitize_text_field($this->wcmamtx_notices_settings_page);
 
-        $disable_wizard = isset( $_GET['wcmamtx_disable_wizard'] ) ? $_GET['wcmamtx_disable_wizard'] : 'no';
+        
+        
+        
 
-        if (isset($disable_wizard)  && ($disable_wizard == "yes")) {
-            update_option('wcmamtx_disable_wizard','yes');
-        }
+        echo '<h2 class="nav-tab-wrapper">';
 
-        if (isset($current_tab)  && ($current_tab != "wcmamtx_wizard_settings")) {
+        foreach ( $this->wcmamtx_plugin_settings_tab as $tab_key => $tab_caption ) {
 
-            echo '<h2 class="nav-tab-wrapper">';
+            $href = '?page=' . $this->wcmamtx_notices_settings_page . '&tab=' . $tab_key . '';
+            $extra_att = '';
 
-            foreach ( $this->wcmamtx_plugin_settings_tab as $tab_key => $tab_caption ) {
+            switch($tab_key) {
 
-               $active = $current_tab == $tab_key ? 'nav-tab-active' : '';
+                case "wcmamtx_module_settings":
 
-               echo '<a class="nav-tab ' . $active . ' '.$tab_key.' " href="?page=' . $this->wcmamtx_notices_settings_page . '&tab=' . $tab_key . '">' . esc_html($tab_caption) . '</a>'; 
+                   $href = '#';
+                   $extra_att = 'data-toggle="modal" data-target="#wcmamtx_example_modal2"';
+
+                break;
+
+                case "wcmamtx_download_columns":
+
+                   $href = '#';
+                   $extra_att = 'data-toggle="modal" data-target="#wcmamtx_example_modal2"';
+
+                break;
+
+                case "wcmamtx_account_fields":
+
+                   $href = '#';
+                   $extra_att = 'data-toggle="modal" data-target="#wcmamtx_example_modal2"';
+
+                break;
+
 
             }
 
-            echo '</h2>';
+            $active = $current_tab == $tab_key ? 'nav-tab-active' : '';
 
-        } else if (isset($current_tab)  && ($current_tab == "wcmamtx_wizard_settings")) {
-
-            echo '<h2 class="nav-tab-wrapper">';
-
-            $active = $current_tab == 'wcmamtx_wizard_settings' ? 'nav-tab-active' : '';
-
-            echo '<a class="nav-tab ' . esc_html($active) . '" href="?page=' . $this->wcmamtx_notices_settings_page. '&tab=wcmamtx_wizard_settings">' . esc_html__('Quick Setup Wizard','customize-my-account-for-woocommerce') . '</a>'; 
-
-            echo '</h2>';
+            echo '<a '. $extra_att.' class="nav-tab ' . $active . ' '.$tab_key.' " href="'.$href.'">' . esc_html($tab_caption) . '</a>'; 
 
         }
+
+        echo '</h2>';
+
+
 
 
 	}
