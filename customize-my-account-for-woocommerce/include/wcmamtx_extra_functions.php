@@ -463,19 +463,13 @@ if (!function_exists('wcmamtx_show_disabled_input')) {
 
 
 
-/**
- * Get account menu item classes.
- *
- * @since 1.0.0
- * @param string $endpoint Endpoint.
- * @return string
- */
 
 if (!function_exists('wcmamtx_load_pro_feature_preview')) {
 
 	function wcmamtx_load_pro_feature_preview() { ?>
-		<br/><br/>
-        
+        <br/>
+        <strong style="color:green;"><?php echo esc_html__( 'Lifetime license starts from $49 USD' ,'customize-my-account-for-woocommerce'); ?></strong>
+        <br/><br/><br/>
 		<strong><?php echo esc_html__( 'Pro Version Features' ,'customize-my-account-for-woocommerce'); ?></strong>
 		<br/>
 		
@@ -486,7 +480,7 @@ if (!function_exists('wcmamtx_load_pro_feature_preview')) {
 
       		<tr><td><i class="fa fa-check"></i></td><td><?php echo esc_html__( 'Unlimited Groups' ,'customize-my-account-for-woocommerce'); ?></td></tr>
 
-      		<tr><td><i class="fa fa-check"></i></td><td><?php echo esc_html__( 'My Account fields' ,'customize-my-account-for-woocommerce'); ?></td></tr>
+      		<tr><td><i class="fa fa-check"></i></td><td><?php echo esc_html__( 'Custom Endpoint Key' ,'customize-my-account-for-woocommerce'); ?></td></tr>
 
       		<tr><td><i class="fa fa-check"></i></td><td><?php echo esc_html__( 'Change Default Dashboard Page' ,'customize-my-account-for-woocommerce'); ?></td></tr>
 
@@ -499,8 +493,6 @@ if (!function_exists('wcmamtx_load_pro_feature_preview')) {
             <tr><td><i class="fa fa-check"></i></td><td><?php echo esc_html__( 'Ajax Navigation between Endpoints' ,'customize-my-account-for-woocommerce'); ?></td></tr>
 
             <tr><td><i class="fa fa-check"></i></td><td><?php echo esc_html__( 'My Account Menu Navigation Widget' ,'customize-my-account-for-woocommerce'); ?></td></tr>
-
-            <tr><td><i class="fa fa-check"></i></td><td><?php echo esc_html__( 'And Many More Features' ,'customize-my-account-for-woocommerce'); ?></td></tr>
 
       	</table>
       
