@@ -210,9 +210,7 @@ body .theme-hello-elementor.woocommerce-account .woocommerce-MyAccount-navigatio
     border:0px !important;
 }
 
-.theme-hello-elementor.woocommerce-account li.woocommerce-MyAccount-navigation-link.is-active a {
-    background-color: #f3f0f0 !important;
-}
+
 
 .theme-hello-elementor li.woocommerce-MyAccount-navigation-link {
     padding: 10px;
