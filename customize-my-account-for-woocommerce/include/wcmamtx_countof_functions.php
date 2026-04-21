@@ -279,13 +279,15 @@ if (!function_exists('wcmamtx_get_total_orderid_count')) {
         // Get CANCELLED orders for customer
         $args = array(
             'customer_id' => $user_id,
-            'post_status' => 'cancelled',
+            'post_status' => array('cancelled','failed','checkout-draft'),
             'post_type' => 'shop_order',
             'return' => 'ids',
         );
 
         $numorders_cancelled = 0;
         $numorders_cancelled = count( wc_get_orders( $args ) ); // count the array of orders
+
+       
 
         // NON-CANCELLED equals TOTAL minus CANCELLED
         $num_not_cancelled = $numorders - $numorders_cancelled;
