@@ -941,13 +941,22 @@ class wcmamtx_add_settings_page_class {
                 <?php 
                 do_settings_sections( $tab ); 
 
+
+                $allowed_endpoints = get_option("wcmamtx_allowed_endpoint_trial");
+
+
+                if (isset($allowed_endpoints) && ($allowed_endpoints > 0))  {
+
                 
 
                     $endpoint_button_id = "#wcmamtx_example_modal3";
                     $endpoint_button_class = "";
 
                 
-                
+                } else {
+                     $endpoint_button_id = "#wcmamtx_example_modal2";
+                    $endpoint_button_class = "wcmamtx_disabled2";
+                }
                 
                
                 
