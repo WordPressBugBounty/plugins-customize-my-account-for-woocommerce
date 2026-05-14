@@ -53,15 +53,7 @@
 
         switch($key) {
             case "woo-wallet":
-                if (is_array($value) ) {
-
-                    if (!isset($value['count_bubble'])) {
-                         $value['count_bubble'] = "01";
-                    } else {
-                        $value['count_bubble'] = $value['count_bubble'];
-                    }
-                   
-                }
+                
 
                 $count_of = isset($value['count_of']) ? $value['count_of'] : "woo-wallet-balance";
                 
@@ -86,15 +78,7 @@
                     $count_bubble = isset($value['count_bubble']) && ($value['count_bubble'] == "01") ? "yes" : "no";
                 } else {
 
-                    if (is_array($value) ) {
-
-                        if (!isset($value['count_bubble'])) {
-                            $value['count_bubble'] = "01";
-                        } else {
-                            $value['count_bubble'] = $value['count_bubble'];
-                        }
-
-                    }
+                    
 
                     $count_bubble = isset($value['count_bubble']) && ($value['count_bubble'] == "01") ? "yes" : "no";
 
@@ -126,15 +110,7 @@
 
 
             case "points":
-                if (is_array($value) ) {
-
-                    if (!isset($value['count_bubble'])) {
-                         $value['count_bubble'] = "01";
-                    } else {
-                        $value['count_bubble'] = $value['count_bubble'];
-                    }
-                   
-                }
+                
 
                
                 
@@ -150,15 +126,7 @@
 
 
             case "orders":
-                if (is_array($value) ) {
-
-                    if (!isset($value['count_bubble'])) {
-                         $value['count_bubble'] = "01";
-                    } else {
-                        $value['count_bubble'] = $value['count_bubble'];
-                    }
-                   
-                }
+                
 
 
                 
@@ -173,15 +141,7 @@
             break;
 
             case "downloads":
-                if (is_array($value) ) {
-
-                    if (!isset($value['count_bubble'])) {
-                         $value['count_bubble'] = "01";
-                    } else {
-                        $value['count_bubble'] = $value['count_bubble'];
-                    }
-                   
-                }
+                
                 $count_bubble = isset($value['count_bubble']) && ($value['count_bubble'] == "01") ? "yes" : "no";
 
                 $hide_empty = isset($value['hide_empty']) && ($value['hide_empty'] == "01") ? "yes" : "no";

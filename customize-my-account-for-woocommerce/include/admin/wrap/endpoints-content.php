@@ -41,16 +41,7 @@ $third_party = isset($value['third_party']) ? $value['third_party'] : $third_par
 
 $default_color = wcmamtx_get_default_tab_color($key);
 
-$default_colors = array(
-                'dashboard'=>'#93c1a1',
-                'orders'   =>'#b4b771',
-                'downloads'=>'#e3c5df',
-                'edit-address'=>'#9ffcec',
-                'edit-account'   =>'#e8b9b0',
-                'customer-logout'=>'#dd7575'
-            );
 
-$default_color = isset($default_colors[$key]) ? $default_colors[$key] : $default_color;
 
 $default_color_font = '#334155';
 

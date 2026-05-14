@@ -15,15 +15,7 @@ if (!function_exists('wcmamtx_counter_bubble')) {
 
          switch($key) {
          	case "points":
-                if (is_array($value) ) {
-
-                    if (!isset($value['count_bubble'])) {
-                         $value['count_bubble'] = "01";
-                    } else {
-                        $value['count_bubble'] = $value['count_bubble'];
-                    }
-                   
-                }
+                
 
                
                 
@@ -53,15 +45,7 @@ if (!function_exists('wcmamtx_counter_bubble')) {
                     $count_bubble = isset($value['count_bubble']) && ($value['count_bubble'] == "01") ? "yes" : "no";
                 } else {
 
-                    if (is_array($value) ) {
-
-                        if (!isset($value['count_bubble'])) {
-                            $value['count_bubble'] = "01";
-                        } else {
-                            $value['count_bubble'] = $value['count_bubble'];
-                        }
-
-                    }
+                    
 
                     $count_bubble = isset($value['count_bubble']) && ($value['count_bubble'] == "01") ? "yes" : "no";
 
@@ -81,15 +65,7 @@ if (!function_exists('wcmamtx_counter_bubble')) {
             break;
 
          	case "woo-wallet":
-                if (is_array($value) ) {
-
-                    if (!isset($value['count_bubble'])) {
-                         $value['count_bubble'] = "01";
-                    } else {
-                        $value['count_bubble'] = $value['count_bubble'];
-                    }
-                   
-                }
+                
 
                 $count_of = isset($value['count_of']) ? $value['count_of'] : "woo-wallet-balance";
                 
@@ -107,15 +83,7 @@ if (!function_exists('wcmamtx_counter_bubble')) {
 
             case "orders":
 
-                if (is_array($value) ) {
-
-                    if (!isset($value['count_bubble'])) {
-                         $value['count_bubble'] = "01";
-                    } else {
-                        $value['count_bubble'] = $value['count_bubble'];
-                    }
-                   
-                }
+                
 
                 $count_bubble = isset($value['count_bubble']) && ($value['count_bubble'] == "01") ? "yes" : "no";
 
@@ -127,15 +95,7 @@ if (!function_exists('wcmamtx_counter_bubble')) {
 
             case "downloads":
 
-                if (is_array($value) ) {
-
-                    if (!isset($value['count_bubble'])) {
-                         $value['count_bubble'] = "01";
-                    } else {
-                        $value['count_bubble'] = $value['count_bubble'];
-                    }
-                   
-                }
+                
                 
                 $count_bubble = isset($value['count_bubble']) && ($value['count_bubble'] == "01") ? "yes" : "no";
 
