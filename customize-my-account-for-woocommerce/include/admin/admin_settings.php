@@ -657,6 +657,21 @@ class wcmamtx_add_settings_page_class {
         add_settings_field( 'advanced_option', '', array( $this, 'linked_product_swatches_settings' ), $this->wcmamtx_notices_settings_page, 'wcmamtx_advance_section' );
 
 
+        //My Account fields tab
+
+
+
+
+        $this->wcmamtx_plugin_settings_tab[$this->wcmamtx_account_fields_page] = esc_html__( 'My Account Fields' ,'customize-my-account-for-woocommerce');
+
+
+            register_setting( $this->wcmamtx_account_fields_page, $this->wcmamtx_account_fields_page );
+
+            add_settings_section( 'wcmamtx_account_fields_section', '', '', $this->wcmamtx_account_fields_page );
+
+            add_settings_field( 'account_fields_option', '', array( $this, 'wcmamtx_account_fields_form' ), $this->wcmamtx_account_fields_page, 'wcmamtx_account_fields_section' );
+
+
         /*
 
         $this->wcmamtx_plugin_settings_tab[$this->wcmamtx_layout_page] = esc_html__( 'Layout' ,'customize-my-account-for-woocommerce');
@@ -720,19 +735,7 @@ class wcmamtx_add_settings_page_class {
         add_settings_field( 'download_option', '', array( $this, 'wcmamtx_download_coumns_form' ), $this->wcmamtx_download_columns_page, 'wcmamtx_download_section' );
 
 
-        //My Account fields tab
-
-
-
-
-        $this->wcmamtx_plugin_settings_tab[$this->wcmamtx_account_fields_page] = esc_html__( 'My Account Fields' ,'customize-my-account-for-woocommerce');
-
-
-            register_setting( $this->wcmamtx_account_fields_page, $this->wcmamtx_account_fields_page );
-
-            add_settings_section( 'wcmamtx_account_fields_section', '', '', $this->wcmamtx_account_fields_page );
-
-            add_settings_field( 'account_fields_option', '', array( $this, 'wcmamtx_account_fields_form' ), $this->wcmamtx_account_fields_page, 'wcmamtx_account_fields_section' );
+        
 
 
         //settings tab
@@ -994,7 +997,7 @@ class wcmamtx_add_settings_page_class {
 
                             ?>
 
-                            <input type="submit" name="submit" id="submit" class="btn <?php echo $load_wcmamtx_optional_class; ?> btn-sm btn-success wcmamtx_submit_button <?php echo $current_tab; ?>" value="<?php echo esc_html__( 'Save Changes' ,'customize-my-account-for-woocommerce'); ?>">
+                            <input type="submit" name="submit" id="submit" class="btn <?php echo $load_wcmamtx_optional_class; ?> btn-sm btn-success wcmamtx_submit_button <?php echo sanitize_text_field($current_tab); ?>" value="<?php echo esc_html__( 'Save Changes' ,'customize-my-account-for-woocommerce'); ?>">
 
                         <?php }  ?>
 
@@ -1314,10 +1317,12 @@ class wcmamtx_add_settings_page_class {
 
                 case "wcmamtx_account_fields":
 
-                   $href = '#';
-                   $extra_att = 'data-toggle="modal" data-target="#wcmamtx_example_modal2"';
+                   $href = 'https://www.sysbasics.com/product/woocommerce-my-account-fields/';
+                   $extra_att = '';
 
                 break;
+
+
 
 
             }
