@@ -133,6 +133,9 @@ $var( function() {
       }.bind(this), 100);
     });
 
+
+
+
     $var(".wcmamtx_bulk_action_select_apply").on('click',function() {
 
         var action_chosen = $var(".wcmamtx_bulk_action_select").val();

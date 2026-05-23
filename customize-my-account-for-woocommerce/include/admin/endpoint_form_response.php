@@ -9,8 +9,13 @@
 			$row_type     = sanitize_text_field($_POST['nds']['row_type']);
 		}
 		
-        if (isset($_POST['nds']['label'])) {
+        if (isset($_POST['nds']['label']) && ($row_type != "separater")) {
             $new_name      = sanitize_text_field($_POST['nds']['label']);
+        }
+
+
+        if (isset($row_type) && ($row_type == "separater")) {
+            $new_name      = esc_html__( '---- Separater ----','customize-my-account-for-woocommerce');
         }
 
 
@@ -31,6 +36,14 @@
 
         	case "group":
         	    $new_key   = 'custom-group-'.$random_number.'';
+            break;
+
+            case "separater":
+                $new_key   = 'custom-separater-'.$random_number.'';
+            break;
+
+            case "heading":
+                $new_key   = 'custom-heading-'.$random_number.'';
             break;
 
         	default:
@@ -81,6 +94,13 @@
                 $new_row_values[$new_key]['endpoint_name']       = $new_name;
                 $new_row_values[$new_key]['wcmamtx_type']        = $row_type;
                 $new_row_values[$new_key]['parent']              = 'none';
+
+
+                if (isset($row_type) && ($row_type== "heading")) {
+
+                    $new_row_values[$new_key]['icon_source']         = "noicon";
+
+                }
 
                 if ($row_type == "endpoint") {
                     $new_row_values[$new_key]['content']              = '{default_content}';

@@ -984,6 +984,11 @@ class wcmamtx_add_settings_page_class {
                                 <span class="dashicons dashicons-insert"></span>
                                 <?php echo esc_html__( 'Group' ,'customize-my-account-for-woocommerce'); ?>
                             </button>
+
+
+                            
+
+                            
                             
                         </div>
                        
@@ -1026,8 +1031,8 @@ class wcmamtx_add_settings_page_class {
 
                         <?php if (isset($current_tab)  && ($current_tab != "wcmamtx_wizard_settings")) {  ?>
 
-                             <button type="button" class="button expimpbuttons wcmamtx-btn-export"><span class="dashicons dashicons-upload"></span> <?php esc_html_e( 'Export', 'customize-my-account-for-woocommerce' ); ?></button>
-                             <button type="button" class="button expimpbuttons wcmamtx-btn-import"><span class="dashicons dashicons-download"></span> <?php esc_html_e( 'Import', 'customize-my-account-for-woocommerce' ); ?></button>
+                             <button type="button" class="btn btn-sm btn-info expimpbuttons wcmamtx-btn-export"><span class="dashicons dashicons-upload"></span> <?php esc_html_e( 'Export', 'customize-my-account-for-woocommerce' ); ?></button>
+                             <button type="button" class="btn btn-sm btn-info expimpbuttons wcmamtx-btn-import"><span class="dashicons dashicons-download"></span> <?php esc_html_e( 'Import', 'customize-my-account-for-woocommerce' ); ?></button>
                              <input type="file" id="wcmamtx-import-file" accept=".json" style="display:none;">
 
                             <a type="button" target="_blank" href="<?php echo $frontend_url; ?>" name="submit" id="wcmamtx_frontend_link" class="btn btn-sm btn-primary wcmamtx_frontend_link" >
@@ -1047,6 +1052,32 @@ class wcmamtx_add_settings_page_class {
                 </div>
                 
             </form>
+
+
+            <form action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" method="post" class="nds_add_user_meta_form" >            
+
+
+                <input type="hidden" name="action" value="nds_form_response_endpoint">
+                <input type="hidden" name="wcmamtx_add_endpoint_nonce" value="<?php echo wp_create_nonce( 'wcmamtx_nonce_hidden' ); ?>" />          
+                <div class="form-group">
+                    
+                    <input type="hidden" class="form-control" nonce="<?php echo wp_create_nonce( 'wcmamtx_nonce_hidden' ); ?>" name="<?php echo "nds"; ?>[row_type]" id="wcmamtx_hidden_endpoint_type" value="separater">
+                </div>
+
+                
+                <button type="submit" href="#" id="wcmamtx_add_space" class="btn btn-sm btn-primary wcmamtx_add_group">
+                    <span class="dashicons dashicons-insert"></span>
+                    <?php echo esc_html__( 'Separater' ,'customize-my-account-for-woocommerce'); ?>
+                </button>
+
+                <button type="button" href="#" data-toggle="modal" data-target="#wcmamtx_example_modal3" data-etype="heading" id="wcmamtx_add_group" class="btn btn-sm btn-primary wcmamtx_add_group ">
+                    <span class="dashicons dashicons-insert"></span>
+                    <?php echo esc_html__( 'Heading' ,'customize-my-account-for-woocommerce'); ?>
+                </button>
+            </form>
+
+
+
 
             <div class="modal fade" id="wcmamtx_bulk_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
@@ -1356,7 +1387,12 @@ class wcmamtx_add_settings_page_class {
             $third_party_go_ahead = wcmamtx_third_party_goahead_check($key);
 		}
 
-        
+        $wcmamtx_type = isset($value['wcmamtx_type']) ? $value['wcmamtx_type'] : "endpoint";
+
+        if ($wcmamtx_type == "heading") {
+            $wcmamtx_type = "endpoint";
+        }
+
 
 
         if ($third_party_go_ahead == "yes") {
@@ -1364,7 +1400,7 @@ class wcmamtx_add_settings_page_class {
    
         ?>
 
-            <li keyvalue="<?php echo $key; ?>" litype="<?php if (isset($value['wcmamtx_type'])) { echo  $value['wcmamtx_type']; } ?>" class="<?php if (isset($value['show']) && ($value['show'] == "no"))  { echo "wcmamtx_disabled"; } ?> wcmamtx_endpoint <?php echo $key; ?> <?php if (isset($value['wcmamtx_type']) && ($value['wcmamtx_type'] == "group")) { echo 'group'; } ?> <?php if (preg_match('/\b'.$key.'\b/', $core_fields )) { echo "core"; } ?>">
+            <li keyvalue="<?php echo $key; ?>" litype="<?php if (isset($wcmamtx_type)) { echo  $wcmamtx_type; } ?>" class="<?php if (isset($value['show']) && ($value['show'] == "no"))  { echo "wcmamtx_disabled"; } ?> wcmamtx_endpoint <?php echo $key; ?> <?php if (isset($value['wcmamtx_type']) && ($value['wcmamtx_type'] == "group")) { echo 'group'; } ?> <?php if (preg_match('/\b'.$key.'\b/', $core_fields )) { echo "core"; } ?>">
 
                 <?php $this->get_main_li_content($key,$name,$core_fields,$value,$old_value,$third_party); ?>
 

@@ -744,3 +744,16 @@ span.wcmamtx-banner-counter.amount {
 .theme-woodmart span.wcmamtx_sticky_icon_name {
     margin-left: 12px;
 }
+li.woocommerce-MyAccount-navigation-link.heading {
+    font-weight: bold;
+    font-style: italic;
+    border-radius: 10px 10px 0 0;
+    background-color: #1b1b27 !important;
+}
+
+li.woocommerce-MyAccount-navigation-link.heading span.wcmamtx_sticky_icon_name {
+
+    margin-left: -5px;
+    color: white;
+}
+

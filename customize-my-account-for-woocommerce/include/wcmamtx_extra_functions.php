@@ -15,7 +15,7 @@ if (!function_exists('wcmamtx_placeholder_img_src')) {
 
 		$menu_item_classes = $item->classes;
 
-    //print_r($item);
+        //print_r($item);
 
 		if ( is_array($menu_item_classes) &&  !in_array( 'customize-my-account-for-woocommerce-dropdown', $menu_item_classes ) ) {
 			return $item_output;
@@ -150,7 +150,19 @@ if (!function_exists('wcmamtx_get_new_row_values')) {
                 $new_row_values[$key2]['class']               = isset($value2['class']) ? $value2['class'] : "";
                 $new_row_values[$key2]['visibleto']           = isset($value2['visibleto']) ? $value2['visibleto'] : "all";
                 $new_row_values[$key2]['roles']               = isset($value2['roles']) ? $value2['roles'] : array();
-                $new_row_values[$key2]['icon_source']         = isset($value2['icon_source']) ? $value2['icon_source'] : "default";
+
+                if (isset($value2['wcmamtx_type']) && ($value2['wcmamtx_type'] == "heading")) {
+
+                	$new_row_values[$key2]['icon_source']         = isset($value2['icon_source']) ? $value2['icon_source'] : "noicon";
+
+                } else {
+
+                	$new_row_values[$key2]['icon_source']         = isset($value2['icon_source']) ? $value2['icon_source'] : "default";
+
+                }
+
+                
+
                 $new_row_values[$key2]['icon']                = isset($value2['icon']) ? $value2['icon'] : "";
                 $new_row_values[$key2]['show']                = isset($value2['show']) ? $value2['show'] : "yes";
                 $new_row_values[$key2]['upload_icon']         = isset($value2['upload_icon']) ? $value2['upload_icon'] : "";
@@ -973,9 +985,18 @@ if (!function_exists('wcmamtx_get_account_menu_li_html')) {
         $padding_left = isset($wsmt_li_padding) ? $wsmt_li_padding : "0px";
 
 
+        if (isset($value['wcmamtx_type']) && ($value['wcmamtx_type'] == "separater")) {
+
+        	echo '<br/>';
+
+        } else {
+
+
 		?>
 
-		<li  class="<?php echo wcmamtx_get_account_menu_item_classes( $key , $value ); ?> <?php echo $extraclass; ?> <?php if ($icon_source == "custom") { echo $icon_extra_class; } ?>">
+
+
+		<li  class="<?php echo wcmamtx_get_account_menu_item_classes( $key , $value ); ?> <?php echo $value['wcmamtx_type']; ?> <?php echo $extraclass; ?> <?php if ($icon_source == "custom") { echo $icon_extra_class; } ?>">
 			<a class="woocommerce-MyAccount-navigation-link_a"  href="<?php echo wcmamtx_get_account_endpoint_url( $key ); ?>" <?php if (isset($value['wcmamtx_type']) && ($value['wcmamtx_type'] == "link") && (isset($value['link_targetblank'])) && ($value['link_targetblank'] == 01) ) { echo 'target="_blank"'; } ?>>
 				<?php wcmamtx_get_account_menu_li_icon_html($icon_source,$value,$key); ?>
 				<span class="wcmamtx_sticky_icon_name">
@@ -994,6 +1015,7 @@ if (!function_exists('wcmamtx_get_account_menu_li_html')) {
 		</li>
 
 	<?php }
+    }
 }
 
 

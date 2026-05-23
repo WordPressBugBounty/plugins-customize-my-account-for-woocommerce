@@ -45,6 +45,8 @@ $default_color = wcmamtx_get_default_tab_color($key);
 
 $default_color_font = '#334155';
 
+
+
 /**
  *  dashboard background color data ends
  */
@@ -192,11 +194,11 @@ $default_color_font = '#334155';
             </label>
         </div>
         <div class="form-check wcmamtx_icon_checkbox">
-         <input class="form-check-input wcmamtx_icon_source_radio" type="radio" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][icon_source]"  value="default" <?php if ($icon_source == "noicon") { echo 'checked'; } ?> disabled>
+         <input class="form-check-input wcmamtx_icon_source_radio" type="radio" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][icon_source]"  value="noicon" <?php if ($icon_source == "noicon") { echo 'checked'; } ?>>
          <label class="form-check-label wcmamtx_icon_checkbox_label">
             <?php  echo esc_html__('No Icon','customize-my-account-for-woocommerce'); ?>
             <a href="#" data-toggle="modal" data-target="#wcmamtx_upgrade_modal">
-                <span class="wcmamtx_pro_upgrade_text"><?php  echo esc_html__('Upgrade to pro','customize-my-account-for-woocommerce'); ?></span>
+                
 
             </a>
         </label>

@@ -107,6 +107,12 @@ $wcmamtx_tabs   = apply_filters('wcmamtx_override_dashlinks',$wcmamtx_tabs);
     }
 
 
+     if (isset($value['wcmamtx_type']) && (($value['wcmamtx_type'] == "separater") || ($value['wcmamtx_type'] == "heading"))) {
+
+         $should_show = 'no';
+     }
+
+
 
 
     

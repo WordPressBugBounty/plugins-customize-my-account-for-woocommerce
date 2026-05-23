@@ -701,3 +701,20 @@ a.nav-tab.wcmamtx_module_settings,a.nav-tab.wcmamtx_download_columns,a.nav-tab.w
     display: none;
 }
 
+button.btn.btn-sm.btn-info.expimpbuttons {
+    float: right;
+    margin-right: 10px;
+}
+
+button#wcmamtx_add_space {
+    margin-left: 10px;
+}
+
+form.nds_add_user_meta_form {
+    wmax-width: 20% !important;
+    float: left;
+    margin-left: -260px;
+    /* padding-right: 10px !important; */
+    padding: 10p;
+}
+
