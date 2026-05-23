@@ -718,3 +718,6 @@ form.nds_add_user_meta_form {
     padding: 10p;
 }
 
+.wcmamtx_avatar_settings button.btn.btn-sm.btn-info.expimpbuttons,.wcmamtx_plugin_options button.btn.btn-sm.btn-info.expimpbuttons,.wcmamtx_pro_settings button.btn.btn-sm.btn-info.expimpbuttons  {
+    display: none;
+}
