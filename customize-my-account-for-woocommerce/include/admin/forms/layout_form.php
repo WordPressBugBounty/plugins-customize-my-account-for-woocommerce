@@ -7,6 +7,9 @@ $default_column = isset($wcmamtx_layout['columns']) ? $wcmamtx_layout['columns']
 
 $default_style = isset($wcmamtx_layout['style']) ? $wcmamtx_layout['style'] : "01";
 
+
+$dash_style = isset($wcmamtx_layout['dash_style']) ? $wcmamtx_layout['dash_style'] : "01";
+
 ?> 
 
 <table class="widefat wcmamtx_options_table">
@@ -32,8 +35,26 @@ $default_style = isset($wcmamtx_layout['style']) ? $wcmamtx_layout['style'] : "0
 		<td>
 			<select class="" name="<?php  echo esc_html__($this->wcmamtx_layout_page); ?>[style]">
 				
-					<option value="01" <?php if (isset($default_style) && ($default_style == 01)) { echo 'selected'; } ?>>
+					<option value="01" <?php if (isset($dash_style) && ($dash_style == 01)) { echo 'selected'; } ?>>
 						<?php echo esc_html__('Default (Theme inherited)','customize-my-account-for-woocommerce'); ?>	
+					</option> 
+					<option value="02" <?php if (isset($dash_style) && ($dash_style == 02)) { echo 'selected'; } ?>>
+						<?php echo esc_html__('Style 01','customize-my-account-for-woocommerce'); ?>
+							
+					</option> 
+				
+			</select>
+		</td>
+	</tr>
+
+	<tr>
+		<td><label><?php echo esc_html__('Dashboard links style','customize-my-account-for-woocommerce'); ?></label> <br />
+		</td>
+		<td>
+			<select class="" name="<?php  echo esc_html__($this->wcmamtx_layout_page); ?>[dash_style]">
+				
+					<option value="01" <?php if (isset($default_style) && ($default_style == 01)) { echo 'selected'; } ?>>
+						<?php echo esc_html__('Default','customize-my-account-for-woocommerce'); ?>	
 					</option> 
 					<option value="02" <?php if (isset($default_style) && ($default_style == 02)) { echo 'selected'; } ?>>
 						<?php echo esc_html__('Style 01','customize-my-account-for-woocommerce'); ?>

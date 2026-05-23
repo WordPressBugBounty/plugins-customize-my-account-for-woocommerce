@@ -11,7 +11,7 @@ $wcmamtx_layout = (array) get_option( 'wcmamtx_layout' );
 
 $default_column = isset($wcmamtx_layout['columns']) ? $wcmamtx_layout['columns'] : "03";
 
-
+$dash_style = isset($wcmamtx_layout['dash_style']) ? $wcmamtx_layout['dash_style'] : "01";
 
 $items                 =  wc_get_account_menu_items();
 
@@ -78,7 +78,7 @@ $wcmamtx_tabs   = apply_filters('wcmamtx_override_dashlinks',$wcmamtx_tabs);
 
 
 ?>
-<div class="wcmtx-my-account-links wcmtx-grid column_<?php echo $default_column; ?>">
+<div class="wcmtx-my-account-links wcmtx-grid dash-<?php echo $dash_style; ?>">
     <?php foreach ( $wcmamtx_tabs as $key => $value ) : 
 
 

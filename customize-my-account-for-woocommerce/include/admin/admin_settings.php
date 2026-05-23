@@ -13,7 +13,7 @@ class wcmamtx_add_settings_page_class {
     private $wcmamtx_pro_settings          = 'wcmamtx_pro_settings';
     private $wcmamtx_download_columns_page = 'wcmamtx_download_columns';
     private $wcmamtx_account_fields_page   = 'wcmamtx_account_fields';
-    //private $wcmamtx_layout_page           = 'wcmamtx_layout';
+    private $wcmamtx_layout_page           = 'wcmamtx_layout';
 	private $wcmamtx_plugin_settings_tab   = array();
 	
 
@@ -657,9 +657,17 @@ class wcmamtx_add_settings_page_class {
         add_settings_field( 'advanced_option', '', array( $this, 'linked_product_swatches_settings' ), $this->wcmamtx_notices_settings_page, 'wcmamtx_advance_section' );
 
 
-        //My Account fields tab
+        /*
 
+        $this->wcmamtx_plugin_settings_tab[$this->wcmamtx_layout_page] = esc_html__( 'Layout' ,'customize-my-account-for-woocommerce');
 
+        register_setting( $this->wcmamtx_layout_page, $this->wcmamtx_layout_page );
+
+        add_settings_section( 'wcmamtx_layout_section', '', '', $this->wcmamtx_layout_page );
+
+        add_settings_field( 'layout_option', '', array( $this, 'layout_settings_form_function' ), $this->wcmamtx_layout_page, 'wcmamtx_layout_section' );
+
+        */
 
 
         $this->wcmamtx_plugin_settings_tab[$this->wcmamtx_account_fields_page] = esc_html__( 'My Account Fields' ,'customize-my-account-for-woocommerce');
@@ -672,16 +680,10 @@ class wcmamtx_add_settings_page_class {
             add_settings_field( 'account_fields_option', '', array( $this, 'wcmamtx_account_fields_form' ), $this->wcmamtx_account_fields_page, 'wcmamtx_account_fields_section' );
 
 
-        /*
+        
 
-        $this->wcmamtx_plugin_settings_tab[$this->wcmamtx_layout_page] = esc_html__( 'Layout' ,'customize-my-account-for-woocommerce');
-
-        register_setting( $this->wcmamtx_layout_page, $this->wcmamtx_layout_page );
-
-        add_settings_section( 'wcmamtx_layout_section', '', '', $this->wcmamtx_layout_page );
-
-        add_settings_field( 'layout_option', '', array( $this, 'layout_settings_form_function' ), $this->wcmamtx_layout_page, 'wcmamtx_layout_section' );
-        */
+        
+        
 
 
         //order actions & columns tab

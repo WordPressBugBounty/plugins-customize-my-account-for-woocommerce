@@ -757,3 +757,87 @@ li.woocommerce-MyAccount-navigation-link.heading span.wcmamtx_sticky_icon_name {
     color: white;
 }
 
+.wcmtx-grid.dash-02 .wcmamtx_dashboard_link:hover>a i.fa{
+    div.wcmamtx_dashboard_link:hover>a i.fa 
+    color: #020202 !important;
+    font-size: 44px;
+
+}
+
+.u-column1.col-1.woocommerce-Address , .u-column2.col-2.woocommerce-Address {
+    padding-top: 30px;
+    width: 100% !important;
+    padding: 10px;
+}
+
+/* Style the Edit Address form container */
+.woocommerce-edit-address form {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Make input fields look cleaner */
+.woocommerce-edit-address form .form-row input.input-text {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+}
+
+/* Style the 'Save Address' button */
+.woocommerce-edit-address form p input[name="save_address"] {
+    background-color: #0073aa;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 12px 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.woocommerce-edit-address form p input[name="save_address"]:hover {
+    background-color: #005177;
+}
+.woocommerce .woocommerce-Addresses .woocommerce-Address-title, .woocommerce .woocommerce-Addresses .woocommerce-column__title, .woocommerce .woocommerce-MyAccount-content .woocommerce-Address-title, .woocommerce .woocommerce-MyAccount-content .woocommerce-column__title, .woocommerce .woocommerce-customer-details .woocommerce-Address-title, .woocommerce .woocommerce-customer-details .woocommerce-column__title, .woocommerce-account .woocommerce-Addresses .woocommerce-Address-title, .woocommerce-account .woocommerce-Addresses .woocommerce-column__title, .woocommerce-account .woocommerce-MyAccount-content .woocommerce-Address-title, .woocommerce-account .woocommerce-MyAccount-content .woocommerce-column__title, .woocommerce-account .woocommerce-customer-details .woocommerce-Address-title, .woocommerce-account .woocommerce-customer-details .woocommerce-column__title {
+    border-radius: 10px 10px 0 0 !important;
+
+}
+
+.woocommerce .addresses .title .edit, .woocommerce-account .addresses .title .edit {
+    float: right;
+    padding: 0 !important;
+    font-style: italic;
+    font-size: 16px;
+}
+
+/* Style the Edit Account Form Fields */
+.woocommerce-edit-account .woocommerce-form-row {
+    margin-bottom: 15px;
+}
+
+/* Style input fields */
+.woocommerce-edit-account input.input-text {
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 4px;
+    width: 100%;
+}
+
+/* Style the Save button */
+.woocommerce-edit-account button.woocommerce-Button {
+    background-color: #000000;
+    color: #ffffff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.woocommerce-edit-account button.woocommerce-Button:hover {
+    background-color: #333333;
+}
+.wcmamtx_dashboard_link {
+    /* position: relative; */
+    border-radius: 10px;
+}
