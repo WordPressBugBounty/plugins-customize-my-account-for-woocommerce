@@ -20,6 +20,14 @@ $avatar_settings = (array) get_option( 'wcmamtx_avatar_settings' );
 	</tr>
 
 	<tr>
+		<td><label><?php echo esc_html__('Round avatar instead of square','customize-my-account-for-woocommerce'); ?></label> <br />
+		</td>
+		<td>
+			<input type="checkbox" data-toggle="toggle"  data-on="<?php echo 'Yes'; ?>" data-off="<?php echo 'No'; ?>" class="wcmamtx_show_avatar_checkbox" name="<?php  echo $this->wcmamtx_avatar_settings_page; ?>[round_avatar]" value="yes" <?php if (isset($avatar_settings['round_avatar']) && ($avatar_settings['round_avatar'] == "yes")) { echo 'checked'; } ?>>
+			
+	</tr>
+
+	<tr>
 		<td><label><?php echo esc_html__('Do not Allow user to upload avatar','customize-my-account-for-woocommerce'); ?></label> <br />
 		</td>
 		<td>

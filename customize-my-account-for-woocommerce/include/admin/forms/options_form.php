@@ -395,7 +395,7 @@ $core_fields       = 'dashboard,edit-address,edit-account,customer-logout,downlo
 			<td>
 			</td>
 			<td>
-				<p><?php echo esc_html__( 'We highly recommend you to use elementor page builder along with our plugin' ,'customize-my-account-for-woocommerce'); ?> &emsp;&emsp;<a target="_blank" type="button" href="https://wordpress.org/plugins/elementor/"  class="btn btn-success wcmamtx_pro_link" >
+				<p><?php echo esc_html__( 'To use this feature elementor free or pro version must be activated' ,'customize-my-account-for-woocommerce'); ?> &emsp;&emsp;<a target="_blank" type="button" href="https://wordpress.org/plugins/elementor/"  class="btn btn-success wcmamtx_pro_link" >
 					<span class="dashicons dashicons-admin-customizer"></span>
 					<?php echo esc_html__( 'Install Elementor Free Plugin' ,'customize-my-account-for-woocommerce'); ?>
 				</a> </p>

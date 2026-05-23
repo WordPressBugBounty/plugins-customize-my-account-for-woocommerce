@@ -213,12 +213,16 @@ class wcmamtx_upload_avatar_tab {
 			$this->edit_user_profile_update( $user_id );
 		}
 
+		$avatar_settings = (array) get_option( 'wcmamtx_avatar_settings' );
+
+		$round_avatar = isset($avatar_settings['round_avatar']) && ($avatar_settings['round_avatar'] == "yes") ? "round" : "square";
+
 		?>
 
-		<div class="wcmamtx_upload_div">
+		<div class="wcmamtx_upload_div <?php echo $round_avatar; ?>">
 			<?php
 
-			$avatar_settings = (array) get_option( 'wcmamtx_avatar_settings' );
+			
 
 			$avatar_size = isset($avatar_settings['avatar_size']) ? $avatar_settings['avatar_size'] : "250";
 
@@ -250,7 +254,7 @@ class wcmamtx_upload_avatar_tab {
 			$default_upload_icon = isset($swatchurl) && ($swatchimage != "") ? $swatchurl : $default_upload_icon;
 
 			if (isset($allow_avatar_change) && ($allow_avatar_change == 'yes')) { ?>
-				<a href="#" class="wcmamtx_upload_avatar"><img class="camera wcmamtx_avatar" src="<?php echo $default_upload_icon; ?> "></a>
+				<a href="#" class="wcmamtx_upload_avatar"><img class="camera wcmamtx_avatar <?php echo $round_avatar; ?>" src="<?php echo $default_upload_icon; ?> "></a>
 			<?php } ?>
 		</div>	
 

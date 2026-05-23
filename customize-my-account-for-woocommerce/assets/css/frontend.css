@@ -408,12 +408,14 @@ span.wcmamtx_modal_close:focus {
     position: relative;
     top: 0;
     left: 0;
+    min-height: 267px;
+    min-width: 267px;
   
 }
 .wcmamtx_upload_div .camera {
     position: absolute;
     bottom: 25px;
-    left: 30px;
+    right: 98px;
     
 }
 
@@ -845,4 +847,14 @@ li.woocommerce-MyAccount-navigation-link.heading span.wcmamtx_sticky_icon_name {
 img.camera.wcmamtx_avatar {
     max-height: 30px;
     max-width: 30px;
+}
+
+.wcmamtx_upload_div.round .camera{
+    position: absolute;
+    bottom: 12%;
+    right: 40%;
+}
+
+.wcmamtx_upload_div.round img.avatar {
+    border-radius: 50% !important;
 }
