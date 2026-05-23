@@ -402,7 +402,7 @@ span.wcmamtx_modal_close:focus {
   left: 0;
 }
 .wcmamtx_upload_div .avatar {
-      border-radius: 10%;
+    border-radius: 10%;
     border: 4px dotted #f3eded;
     outline: 2px solid #352e2e;
     position: relative;
@@ -414,7 +414,7 @@ span.wcmamtx_modal_close:focus {
     position: absolute;
     bottom: 25px;
     left: 30px;
-    background-color: white;
+    
 }
 
 .wcmamtx_dashboard_link {
@@ -840,4 +840,9 @@ li.woocommerce-MyAccount-navigation-link.heading span.wcmamtx_sticky_icon_name {
 .wcmamtx_dashboard_link {
     /* position: relative; */
     border-radius: 10px;
+}
+
+img.camera.wcmamtx_avatar {
+    max-height: 30px;
+    max-width: 30px;
 }

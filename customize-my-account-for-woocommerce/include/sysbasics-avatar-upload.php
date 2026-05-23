@@ -237,9 +237,20 @@ class wcmamtx_upload_avatar_tab {
 			} else {
 				$allow_avatar_change = 'yes';
 			}
-            
-            if (isset($allow_avatar_change) && ($allow_avatar_change == 'yes')) { ?>
-				<a href="#" class="wcmamtx_upload_avatar"><img class="camera" src="<?php echo wcmamtx_PLUGIN_URL; ?>assets/images/camera.svg" height="20" width="20"></a>
+
+			$default_upload_icon = ''.wcmamtx_PLUGIN_URL.'assets/images/camera.svg';
+
+
+			$swatchimage = isset($avatar_settings['upload_icon']) ? $avatar_settings['upload_icon'] : "";
+
+			if (isset($swatchimage) && ($swatchimage != "")) {
+				$swatchurl     = wp_get_attachment_thumb_url( $swatchimage );
+			} 
+
+			$default_upload_icon = isset($swatchurl) && ($swatchimage != "") ? $swatchurl : $default_upload_icon;
+
+			if (isset($allow_avatar_change) && ($allow_avatar_change == 'yes')) { ?>
+				<a href="#" class="wcmamtx_upload_avatar"><img class="camera wcmamtx_avatar" src="<?php echo $default_upload_icon; ?> "></a>
 			<?php } ?>
 		</div>	
 
