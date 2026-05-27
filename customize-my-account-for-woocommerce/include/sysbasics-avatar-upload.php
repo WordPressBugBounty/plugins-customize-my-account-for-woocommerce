@@ -218,6 +218,7 @@ class wcmamtx_upload_avatar_tab {
 		$round_avatar = isset($avatar_settings['round_avatar']) && ($avatar_settings['round_avatar'] == "yes") ? "round" : "square";
 
 		?>
+		<center>
 
 		<div class="wcmamtx_upload_div <?php echo $round_avatar; ?>">
 			<?php
@@ -257,6 +258,7 @@ class wcmamtx_upload_avatar_tab {
 				<a href="#" class="wcmamtx_upload_avatar"><img class="camera wcmamtx_avatar <?php echo $round_avatar; ?>" src="<?php echo $default_upload_icon; ?> "></a>
 			<?php } ?>
 		</div>	
+	</center>
 
 		<?php
 
@@ -278,11 +280,37 @@ class wcmamtx_upload_avatar_tab {
 			<!-- wcmamtx_modal content -->
 			<div class="wcmamtx_modal-content">
 				<span class="wcmamtx_modal_close">&times;</span>
-				<form id="basic-user-avatar-form" method="post" enctype="multipart/form-data">
+				<form class="wcmamtx_modal_user_avatar_form" method="post" enctype="multipart/form-data">
 					<?php
 					echo get_avatar( $profileuser->ID,$avatar_size);
 
+					$allow_avatar_change = 'yes';
+
+					$avatar_settings = (array) get_option( 'wcmamtx_avatar_settings' );
+
+					if (isset($avatar_settings['allow_avatar_change']) && ($avatar_settings['allow_avatar_change'] == "yes")) {
+
+						$allow_avatar_change = 'no';
+					} else {
+						$allow_avatar_change = 'yes';
+					}
+
+					$default_upload_icon = ''.wcmamtx_PLUGIN_URL.'assets/images/camera.svg';
+
+
+					$swatchimage = isset($avatar_settings['upload_icon']) ? $avatar_settings['upload_icon'] : "";
+
+					if (isset($swatchimage) && ($swatchimage != "")) {
+						$swatchurl     = wp_get_attachment_thumb_url( $swatchimage );
+					} 
+
+					$default_upload_icon = isset($swatchurl) && ($swatchimage != "") ? $swatchurl : $default_upload_icon;
+
 					?>
+
+					<img alt="" title="<?php echo esc_html__( 'Click to upload', 'customize-my-account-for-woocommerce' ); ?>" src="<?php echo $default_upload_icon; ?>" srcset="<?php echo $default_upload_icon; ?>" class="avatar avatar-178 photo uploadicon wcmamtx_modal_trigger_upload">
+
+					
 
 					<?php
 
@@ -292,14 +320,20 @@ class wcmamtx_upload_avatar_tab {
 						wp_nonce_field( 'sysbasics_user_avatar_nonce', '_sysbasics_user_avatar_nonce', false );
 
 				// File upload input
-						echo '<p><input type="file" name="basic-user-avatar" id="basic-local-avatar" /></p>';
+						echo '<p><input type="file" name="basic-user-avatar" class="wcmamtx_file_input_upload" id="basic-local-avatar" /></p>';
 
 						if ( empty( $profileuser->sysbasics_user_avatar ) ) {
 
 						} else {
-							echo '<p><input type="checkbox" name="basic-user-avatar-erase" id="basic-user-avatar-erase" value="1" /> <label for="basic-user-avatar-erase">' . apply_filters( 'bu_avatars_delete_avatar_text', esc_html__( 'Restore Default', 'customize-my-account-for-woocommerce' ), $profileuser ) . '</label></p>';					
+							?>
 
-						}
+							<a href="#" class="wcmamtx_restore_default_link"><i class="fa fa-refresh"></i><?php echo esc_html__( 'Restore Default', 'customize-my-account-for-woocommerce' ); ?>
+						</a>
+
+						<?php
+						echo '<p class="wcmamtx_erase_avatar_checkbox"><input type="checkbox" name="basic-user-avatar-erase" id="basic-user-avatar-erase" value="1" /> <label for="basic-user-avatar-erase">' . apply_filters( 'bu_avatars_delete_avatar_text', esc_html__( 'Restore Default', 'customize-my-account-for-woocommerce' ), $profileuser ) . '</label></p>';					
+
+					}
 
 						echo '<input type="submit" name="manage_avatar_submit" class="wcmamtx_update_avatar_btn" value="' . apply_filters( 'bu_avatars_update_button_text', esc_attr__( 'Update Avatar', 'customize-my-account-for-woocommerce' ) ) . '" />';
 

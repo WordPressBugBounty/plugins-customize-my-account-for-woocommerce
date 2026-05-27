@@ -7,12 +7,12 @@ Tested up to: 7.0.0
 WC Tested up to: 10.7.0
 WC Requires at least: 4.0
 Requires PHP: 5.2
-Stable tag: 4.0.6
+Stable tag: 4.0.9
 Requires Plugins: woocommerce
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Optimize your WooCommerce My account page also add new endpoints and manage existing endpoints with ease. 
+Optimize your WooCommerce My account page also add new endpoints and manage existing endpoints with ease along with mobile friendly user avatar
 
 == Description ==
 

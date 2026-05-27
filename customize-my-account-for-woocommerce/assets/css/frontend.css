@@ -63,7 +63,7 @@ i.wcmamtx_custom_left {
     text-align: center;
     color: var(--color-gray-700) !important;
     border-radius: var(--wcmtx-brd-radius);
-    box-shadow: 0 0 4px rgba(0,0,0,0.18);
+    
 }
 
 p.wcmtx_icon_src {
@@ -341,7 +341,8 @@ a.woocommerce-MyAccount-navigation-link_a i.fa {
   margin: 15% auto; /* 15% from the top and centered */
   padding: 20px;
   border: 1px solid #888;
-  width: 50%; /* Could be more or less, depending on screen size */
+  width: auto;
+  max-width: 400px;
 }
 
 /* The Close Button */
@@ -370,7 +371,7 @@ span.wcmamtx_modal_close:focus {
 .wcmamtx_modal-content img {
   
     float: left;
-    width: 10%;
+    width: 30%;
     margin-right: 20px;
 }
 
@@ -730,10 +731,7 @@ span.wcmamtx-banner-counter-sidebar .amount{
     display: none !important;
 }
 
-div.wcmamtx_dashboard_link:hover>a i.fa {
-    color: #020202 !important;
-    font-size:48px;
-}
+
 
 .wcmamtx_dashboard_link.dashboard-link{
     display: none;
@@ -759,12 +757,7 @@ li.woocommerce-MyAccount-navigation-link.heading span.wcmamtx_sticky_icon_name {
     color: white;
 }
 
-.wcmtx-grid.dash-02 .wcmamtx_dashboard_link:hover>a i.fa{
-    div.wcmamtx_dashboard_link:hover>a i.fa 
-    color: #020202 !important;
-    font-size: 44px;
 
-}
 
 .u-column1.col-1.woocommerce-Address , .u-column2.col-2.woocommerce-Address {
     padding-top: 30px;
@@ -851,10 +844,98 @@ img.camera.wcmamtx_avatar {
 
 .wcmamtx_upload_div.round .camera{
     position: absolute;
-    bottom: 12%;
-    right: 40%;
+    bottom: 6%;
+    right: 24%;
 }
 
 .wcmamtx_upload_div.round img.avatar {
     border-radius: 50% !important;
 }
+
+.wcmamtx_modal-content img {
+    border-radius: 10px;
+    /* border: 2px black solid; */
+    /* outline: 4px white solid; */
+    padding: 2px;
+    /* border: 4px dotted #f3eded; */
+    outline: 2px solid #352e2e;
+    min-height: 130px;
+}
+
+img.avatar.photo.uploadicon {
+    /* max-width: 50px; */
+    padding: 20px;
+    color: #6d6d6d;
+    cursor: pointer;
+}
+a.wcmamtx_restore_default_link {
+    float: left;
+    width: 100%;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    margin-left: 5px;
+    font-size: 12px;
+    color: #6a7d87;
+}
+
+input#basic-local-avatar,input.wcmamtx_update_avatar_btn,p.wcmamtx_erase_avatar_checkbox {
+    display: none;
+}
+
+.wcmamtx_modal-content{
+    min-height: 230px;
+}
+
+form.wcmamtx_modal_user_avatar_form {
+    margin-top: 15%;
+    /* margin-left: 15%; */
+}
+a.wcmamtx_restore_default_link {
+    text-decoration: none;
+}
+
+.theme-astra .entry-content ul, .entry-content ol {   
+    padding-left: 20% !important;
+    margin-top:10px;
+}
+
+/* Use a media query to add a breakpoint at 800px: */
+@media screen and (max-width: 800px) {
+  .theme-astra .entry-content ul, .entry-content ol {   
+    padding-left: 20% !important;
+    margin-top:10px;
+}
+
+.woocommerce-MyAccount-content {
+    padding: 14%;
+}
+
+.wcmtx-my-account-links {
+    --wcmtx-col-lg: 3 !important;
+    --wcmtx-col-md: 2 !important;
+    --wcmtx-col-sm: 1 !important;
+    --wcmtx-gap-lg: 20px !important;
+    margin-top: 30px !important;
+}
+
+.wcmamtx_dashboard_link a {
+    font-size: 10px;
+}
+
+.wcmtx-grid {
+    --wcmtx-col: var(--wcmtx-col-lg, 12) !important;
+    --wcmtx-gap: var(--wcmtx-gap-lg, 30px) !important;
+    display: inline-grid !important;
+    grid-template-columns: repeat(var(--wcmtx-col), 4fr) !important;
+    gap: var(--wcmtx-gap)!important;
+    /* float: left; */
+    padding:1%;
+}
+
+.wcmamtx_dashboard_link i.fa{
+    font-size: 33px;
+}
+
+
+}
+

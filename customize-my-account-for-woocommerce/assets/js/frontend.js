@@ -113,11 +113,31 @@ var $vas = jQuery.noConflict();
     
 
     $vas('.wcmamtx_modal_close').on('click', function() {
-       $vas('#mywcmamtx_modal').hide();
+     $vas('#mywcmamtx_modal').hide();
+   });
+
+    $vas('.wcmamtx_modal_trigger_upload').on('click', function() {
+      $vas('.wcmamtx_file_input_upload').trigger('click');
     });
 
+    $vas('.wcmamtx_file_input_upload').on('change', function() {
+       $vas('.wcmamtx_update_avatar_btn').trigger('click'); // Submits the form naturally
+    });
+
+
+    $vas('.wcmamtx_restore_default_link').on('click', function(event) {
+      event.preventDefault();
+      $vas('#basic-user-avatar-erase').prop('checked', true);
+      $vas('.wcmamtx_update_avatar_btn').trigger('click');
+      return false;
+    });
+
+
+
+
+
     
-});
+  });
 
  
 })( jQuery );
