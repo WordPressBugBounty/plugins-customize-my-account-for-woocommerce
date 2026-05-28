@@ -721,3 +721,20 @@ form.nds_add_user_meta_form {
 .wcmamtx_avatar_settings button.btn.btn-sm.btn-info.expimpbuttons,.wcmamtx_plugin_options button.btn.btn-sm.btn-info.expimpbuttons,.wcmamtx_pro_settings button.btn.btn-sm.btn-info.expimpbuttons  {
     display: none;
 }
+
+tr.wcmamtx_show_avatar_tr .toggle.btn,table.wcmamtx_options_table .toggle.btn {
+    min-width: 79px;
+    min-height: 34px;
+}
+
+table.wcmamtx_options_table span.toggle-handle.btn.btn-light {
+    background-color: #92a78b69;
+}
+
+tr.wcmamtx_show_avatar_content_tr td {
+    max-width: 200px;
+}
+
+table.widefat.wcmamtx_options_table tr.wcmamtx_show_avatar_content_tr td input {
+    min-width: 10px;
+}

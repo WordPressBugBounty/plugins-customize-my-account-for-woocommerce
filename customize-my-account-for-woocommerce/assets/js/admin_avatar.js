@@ -58,6 +58,38 @@ var $var = jQuery.noConflict();
                     return false;
                 });
 
+                
+
      
 
 })( jQuery );
+
+$var( function() {
+
+    $var(".wcmamtx_show_avatar_checkbox").on('change',function() {
+
+        if ($var(this).prop("checked")) {
+         $var(".wcmamtx_show_avatar_tr").show();
+     } else {
+        $var(".wcmamtx_show_avatar_tr").hide();
+    }
+
+
+
+
+    });
+
+    $var(".wcmamtx_content_avatar_checkbox").on('change',function() {
+
+        if ($var(this).prop("checked")) {
+         $var(".wcmamtx_show_avatar_content_tr").show();
+     } else {
+        $var(".wcmamtx_show_avatar_content_tr").hide();
+    }
+
+
+
+
+    });
+
+});

@@ -753,7 +753,7 @@ li.woocommerce-MyAccount-navigation-link.heading {
 
 li.woocommerce-MyAccount-navigation-link.heading span.wcmamtx_sticky_icon_name {
 
-    margin-left: -5px;
+    
     color: white;
 }
 
@@ -856,7 +856,7 @@ img.camera.wcmamtx_avatar {
     border-radius: 10px;
     /* border: 2px black solid; */
     /* outline: 4px white solid; */
-    padding: 2px;
+    padding: 20px;
     /* border: 4px dotted #f3eded; */
     outline: 2px solid #352e2e;
     min-height: 130px;
@@ -879,8 +879,9 @@ a.wcmamtx_restore_default_link {
 }
 
 input#basic-local-avatar,input.wcmamtx_update_avatar_btn,p.wcmamtx_erase_avatar_checkbox {
-    display: none;
+    display: none !important;
 }
+
 
 .wcmamtx_modal-content{
     min-height: 230px;

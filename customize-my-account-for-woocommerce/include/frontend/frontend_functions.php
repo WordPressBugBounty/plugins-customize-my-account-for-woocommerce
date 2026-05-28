@@ -46,162 +46,7 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
     }
 
 
-    /**
-     * Process the smart tags.
-     *
-     * @since 1.0.0
-     */
-    public function wcmamtx_parse_smart_tag( $content, $endpoint ) {
-        preg_match_all( '/\{(.*?)\}/', $content, $other_tags );
 
-        if ( ! empty( $other_tags[1] ) ) {
-
-            foreach ( $other_tags[1] as $key => $tag ) {
-                $other_tag = explode( ' ', $tag )[0];
-                switch ( $other_tag ) {
-
-                    case 'endpoint_label':
-                        
-                        $content     = str_replace( '{' . $other_tag . '}', $endpoint, $content );
-                        break;
-
-                    case 'default_content':
-                        $default_content = esc_html__( 'Hey {display_name}, Hope you are doing well.To modify this content, Click on Customize my account link above and visit {endpoint_label} tab.' ,'customize-my-account-for-woocommerce');
-
-                        $default_content = $this->wcmamtx_parse_smart_tag($default_content,$endpoint);
-                        $content     = str_replace( '{' . $other_tag . '}', $default_content, $content );
-                        break;
-
-
-                    case 'admin_email':
-                        $admin_email = sanitize_email( get_option( 'admin_email' ) );
-                        $content     = str_replace( '{' . $other_tag . '}', $admin_email, $content );
-                        break;
-
-                    case 'site_name':
-                        $site_name = get_option( 'blogname' );
-                        $content   = str_replace( '{' . $other_tag . '}', $site_name, $content );
-                        break;
-
-                    case 'site_url':
-                        $site_url = get_option( 'siteurl' );
-                        $content  = str_replace( '{' . $other_tag . '}', $site_url, $content );
-                        break;
-
-                    
-
-                    case 'user_ip_address':
-                        $user_ip_add = tgwc_get_ip_address();
-                        $content     = str_replace( '{' . $other_tag . '}', $user_ip_add, $content );
-                        break;
-
-                    case 'user_id':
-                        $user_id = is_user_logged_in() ? get_current_user_id() : '';
-                        $content = str_replace( '{' . $other_tag . '}', $user_id, $content );
-                        break;
-
-                    case 'user_email':
-                        if ( is_user_logged_in() ) {
-                            $user  = wp_get_current_user();
-                            $email = sanitize_email( $user->user_email );
-                        } else {
-                            $email = '';
-                        }
-                        $content = str_replace( '{' . $other_tag . '}', $email, $content );
-                        break;
-
-                    case 'username':
-                        if ( is_user_logged_in() ) {
-                            $user = wp_get_current_user();
-                            $name = sanitize_text_field( $user->user_login );
-                        } else {
-                            $name = '';
-                        }
-                        $content = str_replace( '{' . $other_tag . '}', $name, $content );
-                        break;
-
-                    case 'display_name':
-                        if ( is_user_logged_in() ) {
-                            $user = wp_get_current_user();
-                            $name = sanitize_text_field( $user->display_name );
-                        } else {
-                            $name = '';
-                        }
-                        $content = str_replace( '{' . $other_tag . '}', $name, $content );
-                        break;
-
-                    case 'first_name':
-                        if ( is_user_logged_in() ) {
-                            $user = wp_get_current_user();
-                            $name = sanitize_text_field( $user->user_firstname );
-                        } else {
-                            $name = '';
-                        }
-                        $content = str_replace( '{' . $other_tag . '}', $name, $content );
-                        break;
-
-                    case 'last_name':
-                        if ( is_user_logged_in() ) {
-                            $user = wp_get_current_user();
-                            $name = sanitize_text_field( $user->user_lastname );
-                        } else {
-                            $name = '';
-                        }
-                        $content = str_replace( '{' . $other_tag . '}', $name, $content );
-                        break;
-
-                    case 'current_date':
-                        $current_date = date_i18n( get_option( 'date_format' ) );
-                        $content      = str_replace( '{' . $other_tag . '}', sanitize_text_field( $current_date ), $content );
-                        break;
-                    case 'current_time':
-                        $current_time = date_i18n( get_option( 'time_format' ) );
-                        $content      = str_replace( '{' . $other_tag . '}', sanitize_text_field( $current_time ), $content );
-                        break;
-                    case 'billing_address':
-                    case 'shipping_address':
-                        if ( is_user_logged_in() ) {
-                            $meta_prefix = ( 'billing_address' === $other_tag ) ? 'billing_' : 'shipping_';
-                            $user_id     = get_current_user_id();
-                            $address     = array(
-                                'first_name' => get_user_meta( $user_id, $meta_prefix . 'first_name', true ),
-                                'last_name'  => get_user_meta( $user_id, $meta_prefix . 'last_name', true ),
-                                'company'    => get_user_meta( $user_id, $meta_prefix . 'company', true ),
-                                'address_1'  => get_user_meta( $user_id, $meta_prefix . 'address_1', true ),
-                                'address_2'  => get_user_meta( $user_id, $meta_prefix . 'address_2', true ),
-                                'city'       => get_user_meta( $user_id, $meta_prefix . 'city', true ),
-                                'state'      => get_user_meta( $user_id, $meta_prefix . 'state', true ),
-                                'postcode'   => get_user_meta( $user_id, $meta_prefix . 'postcode', true ),
-                                'country'    => get_user_meta( $user_id, $meta_prefix . 'country', true ),
-                            );
-
-                            $address = array_filter( $address );
-                            if ( ! empty( $address ) ) {
-                                $formatted_address = $this->get_formatted_address( $address );
-                                $content           = str_replace( '{' . $other_tag . '}', $formatted_address, $content );
-                            } else {
-                                $content = str_replace( '{' . $other_tag . '}', esc_html__( 'You have not set up this type of address yet.', 'customize-my-account-for-woocommerce' ), $content );
-                            }
-                        }
-                        break;
-                    case 'billing_company':
-                    case 'shipping_company':
-                        if ( is_user_logged_in() ) {
-                            $meta_prefix  = ( 'billing_address' === $other_tag ) ? 'billing_' : 'shipping_';
-                            $company_name = get_user_meta( $user_id, $meta_prefix . 'company', true );
-
-                            if ( empty( $company_name ) ) {
-                                $company_name = '';
-                            }
-
-                            $content = str_replace( '{' . $other_tag . '}', $company_name, $content );
-                        }
-                        break;
-                }
-            }
-        }
-        return apply_filters('wcmamtx_modify_existing_content_variables',$content,$endpoint);
-    }
 
 
 
@@ -1098,7 +943,7 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
             if (preg_match('/\b'.$key.'\b/', $core_content_fields )) {
 
                 $content           = isset($value['content']) ? $value['content'] : "";
-                $content           = $this->wcmamtx_parse_smart_tag($content,$endpoint_name);
+                $content           = wcmamtx_parse_smart_tag_function($content,$endpoint_name);
                 $content_settings  = isset($value['content_settings']) ? $value['content_settings'] : "after";
 
                 switch($key) {
@@ -1160,7 +1005,7 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
             } elseif ((!preg_match('/\b'.$key.'\b/', $core_fields )) && (isset($value['wcmamtx_type']) && ($value['wcmamtx_type'] == "endpoint") )) {
 
                 $content            = isset($value['content']) ? $value['content'] : "";
-                $content           = $this->wcmamtx_parse_smart_tag($content,$endpoint_name);
+                $content           = wcmamtx_parse_smart_tag_function($content,$endpoint_name);
                 
 
                 $plugin_options = (array) get_option( 'wcmamtx_plugin_options' );
