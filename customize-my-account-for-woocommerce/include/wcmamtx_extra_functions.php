@@ -104,6 +104,54 @@ if (!function_exists('wcmamtx_get_user_ip')) {
 }
 
 
+if (!function_exists('wcmamtx_get_avatar_default')) {
+
+
+    function wcmamtx_get_avatar_default($profileuser,$avatar_size) {
+
+
+        if ( ! is_user_logged_in() ) {
+            return;
+        }
+
+        $avatar_settings = (array) get_option( 'wcmamtx_avatar_settings' );
+
+        $default_source = isset($avatar_settings['disable_gravtar']) && ($avatar_settings['disable_gravtar'] == "yes") ? "local" : "gravtar";
+
+        if ($default_source == "gravtar") {
+            $default_avatar = get_avatar($profileuser->ID ,$avatar_size);
+        } else if ($default_source == "local")  {
+            $args['alt'] = ''.wcmamtx_PLUGIN_URL.'assets/images/default_avatar.jpg';
+            $url = ''.wcmamtx_PLUGIN_URL.'assets/images/default_avatar.jpg';
+            $alt = $args['alt'];
+            $default_avatar = sprintf(
+                "<img src='%s' srcset='%s'  height='%d' width='%d' class='avatar avatar-$avatar_size photo' />",
+                esc_url( $url ),
+                esc_url( $url ) . ' 2x',
+                (int) $avatar_size,
+                (int) $avatar_size,
+            );
+
+        }
+
+        if ( ! empty( $profileuser->sysbasics_user_avatar ) ) {
+           $default_avatar = get_avatar( $profileuser->ID ,$avatar_size);
+        }
+
+        
+
+        
+
+        return $default_avatar;
+
+    }
+
+}
+
+
+
+
+
 if (!function_exists('wcmamtx_parse_smart_tag_function')) {
 
 

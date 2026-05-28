@@ -198,6 +198,8 @@ class wcmamtx_upload_avatar_tab {
 		}
 	}
 
+	
+
 
 	function wcmamtx_shortcode() {
 
@@ -228,7 +230,7 @@ class wcmamtx_upload_avatar_tab {
 			$avatar_size = isset($avatar_settings['avatar_size']) ? $avatar_settings['avatar_size'] : "250";
 
 
-			echo get_avatar( $profileuser->ID ,$avatar_size);
+			echo wcmamtx_get_avatar_default($profileuser,$avatar_size);
 
 
 
@@ -258,7 +260,7 @@ class wcmamtx_upload_avatar_tab {
 				<a href="#" class="wcmamtx_upload_avatar"><img class="camera wcmamtx_avatar <?php echo $round_avatar; ?>" src="<?php echo $default_upload_icon; ?> "></a>
 			<?php } ?>
 		</div>	
-	</center>
+	    </center>
 
 		<?php
 
@@ -282,7 +284,7 @@ class wcmamtx_upload_avatar_tab {
 				<span class="wcmamtx_modal_close">&times;</span>
 				<form class="wcmamtx_modal_user_avatar_form" method="post" enctype="multipart/form-data">
 					<?php
-					echo get_avatar( $profileuser->ID,$avatar_size);
+					echo wcmamtx_get_avatar_default($profileuser,$avatar_size);
 
 					$allow_avatar_change = 'yes';
 
@@ -314,6 +316,8 @@ class wcmamtx_upload_avatar_tab {
 
 					<?php
 
+					$default_source = isset($avatar_settings['disable_gravtar']) && ($avatar_settings['disable_gravtar'] == "yes") ? "local" : "gravtar";
+
 					$options = get_option( 'wcmamtx_upload_avatar_tab_caps' );
 					if ( empty( $options['wcmamtx_upload_avatar_tab_caps'] ) || current_user_can( 'upload_files' ) ) {
 				// Nonce security ftw
@@ -324,11 +328,18 @@ class wcmamtx_upload_avatar_tab {
 
 						if ( empty( $profileuser->sysbasics_user_avatar ) ) {
 
+							if ($default_source == "gravtar") { ?>
+
+								<a href="https://gravatar.com/profile" target="_blank" class="wcmamtx_manage_gravtar_link"><i class="fa fa-refresh"></i><?php echo esc_html__( 'Manage Gravtar', 'customize-my-account-for-woocommerce' ); ?>
+							    </a>
+
+						<?php }
+
 						} else {
 							?>
 
 							<a href="#" class="wcmamtx_restore_default_link"><i class="fa fa-refresh"></i><?php echo esc_html__( 'Restore Default', 'customize-my-account-for-woocommerce' ); ?>
-						</a>
+						    </a>
 
 						<?php
 						echo '<p class="wcmamtx_erase_avatar_checkbox"><input type="checkbox" name="basic-user-avatar-erase" id="basic-user-avatar-erase" value="1" /> <label for="basic-user-avatar-erase">' . apply_filters( 'bu_avatars_delete_avatar_text', esc_html__( 'Restore Default', 'customize-my-account-for-woocommerce' ), $profileuser ) . '</label></p>';					

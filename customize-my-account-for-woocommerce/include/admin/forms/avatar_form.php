@@ -33,6 +33,15 @@ if (array_key_exists(0, $avatar_settings)) {
 	</tr>
 
 	<tr class="wcmamtx_show_avatar_tr" style="<?php if (isset($avatar_settings['disable_avatar']) && ($avatar_settings['disable_avatar'] == "yes")) { echo 'display:table-row;'; } else { echo 'display:none;'; } ?>">
+		<td><label><?php echo esc_html__('Do not use Gravtar as default avatar','customize-my-account-for-woocommerce'); ?></label> <br />
+		</td>
+		<td>
+			<input type="checkbox" data-toggle="toggle"  data-on="<?php echo 'Yes'; ?>" data-off="<?php echo 'No'; ?>"  name="<?php  echo $this->wcmamtx_avatar_settings_page; ?>[disable_gravtar]" value="yes" <?php if (isset($avatar_settings['disable_gravtar']) && ($avatar_settings['disable_gravtar'] == "yes")) { echo 'checked'; } ?>>
+		</td>
+			
+	</tr>
+
+	<tr class="wcmamtx_show_avatar_tr" style="<?php if (isset($avatar_settings['disable_avatar']) && ($avatar_settings['disable_avatar'] == "yes")) { echo 'display:table-row;'; } else { echo 'display:none;'; } ?>">
 		<td><label><?php echo esc_html__('Do not Allow user to upload avatar','customize-my-account-for-woocommerce'); ?></label> <br />
 		</td>
 		<td>

@@ -868,7 +868,7 @@ img.avatar.photo.uploadicon {
     color: #6d6d6d;
     cursor: pointer;
 }
-a.wcmamtx_restore_default_link {
+a.wcmamtx_restore_default_link,a.wcmamtx_manage_gravtar_link {
     float: left;
     width: 100%;
     margin-bottom: 5px;
@@ -935,6 +935,11 @@ a.wcmamtx_restore_default_link {
 
 .wcmamtx_dashboard_link i.fa{
     font-size: 33px;
+}
+
+.theme-hello-elementor ul.wcmamtx_vertical {
+    /* padding: 100px; */
+    margin-left: 30px;
 }
 
 
