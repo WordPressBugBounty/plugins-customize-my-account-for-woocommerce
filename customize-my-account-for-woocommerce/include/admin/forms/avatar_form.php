@@ -54,9 +54,42 @@ if (array_key_exists(0, $avatar_settings)) {
 		<td><label><?php echo esc_html__('Default avatar size','customize-my-account-for-woocommerce'); ?></label> <br />
 		</td>
 		<td>
-			
-
 			<input type="range" min="96" max="350" value="<?php if (isset($avatar_settings['avatar_size']) ) { echo $avatar_settings['avatar_size']; } else { echo '250'; } ?>" name="<?php  echo $this->wcmamtx_avatar_settings_page; ?>[avatar_size]">
+            &emsp;
+			<?php echo esc_html__('Min height','customize-my-account-for-woocommerce'); ?>
+			<input size="3" type="number" min="96" max="350" value="<?php if (isset($avatar_settings['min_height']) ) { echo $avatar_settings['min_height']; } else { echo '267'; } ?>" name="<?php  echo $this->wcmamtx_avatar_settings_page; ?>[min_height]">px
+
+			&emsp;
+			<?php echo esc_html__('Min width','customize-my-account-for-woocommerce'); ?>
+			<input size="3"  type="number" min="96" max="350" value="<?php if (isset($avatar_settings['min_width']) ) { echo $avatar_settings['min_width']; } else { echo '267'; } ?>" name="<?php  echo $this->wcmamtx_avatar_settings_page; ?>[min_width]">px
+		</td>
+			
+	</tr>
+
+	<tr class="wcmamtx_show_avatar_tr" style="<?php if (isset($avatar_settings['disable_avatar']) && ($avatar_settings['disable_avatar'] == "yes")) { echo 'display:table-row;'; } else { echo 'display:none;'; } ?>">
+		<td><label><?php echo esc_html__('Override default avatar texts','customize-my-account-for-woocommerce'); ?></label> <br />
+		</td>
+		<td>
+			<input type="checkbox" class="wcmamtx_override_texts_checkbox" data-toggle="toggle"  data-on="<?php echo esc_html__('Yes','customize-my-account-for-woocommerce'); ?>" data-off="<?php echo esc_html__('No','customize-my-account-for-woocommerce'); ?>"  name="<?php  echo $this->wcmamtx_avatar_settings_page; ?>[override_texts]" value="yes" <?php if (isset($avatar_settings['override_texts']) && ($avatar_settings['override_texts'] == "yes")) { echo 'checked'; } ?>>
+		</td>
+			
+	</tr>
+
+	<tr class="wcmamtx_override_texts_tr" style="<?php if (isset($avatar_settings['override_texts']) && ($avatar_settings['override_texts'] == "yes")) { echo 'display:table-row;'; } else { echo 'display:none;'; } ?>">
+		<td><label><?php echo esc_html__('Default texts','customize-my-account-for-woocommerce'); ?></label> <br />
+		</td>
+		<td><?php
+
+		     $default_text1 = esc_html__('Restore Default','customize-my-account-for-woocommerce');
+		     $default_text2 = esc_html__('Manage Gravtar','customize-my-account-for-woocommerce');
+		     $default_text3 = esc_html__('Click to upload','customize-my-account-for-woocommerce');
+
+		    ?>
+			<input type="text" class=""  name="<?php  echo $this->wcmamtx_avatar_settings_page; ?>[text1]" value="<?php if (isset($avatar_settings['text1']) && ($avatar_settings['text1'] != "")) { echo $avatar_settings['text1']; } else { echo $default_text1; } ?>">
+
+			<input type="text" class=""  name="<?php  echo $this->wcmamtx_avatar_settings_page; ?>[text2]" value="<?php if (isset($avatar_settings['text2']) && ($avatar_settings['text2'] != "")) { echo $avatar_settings['text2']; } else { echo $default_text2; } ?>">
+
+			<input type="text" class=""  name="<?php  echo $this->wcmamtx_avatar_settings_page; ?>[text3]" value="<?php if (isset($avatar_settings['text3']) && ($avatar_settings['text3'] != "")) { echo $avatar_settings['text3']; } else { echo $default_text3; } ?>">
 		</td>
 			
 	</tr>

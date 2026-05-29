@@ -468,9 +468,7 @@ table.widefat.wcmamtx_options_table select {
     min-width: 200px;
 }
 
-table.widefat.wcmamtx_options_table input{
-    min-width: 200px;
-}
+
 
 select.wcmamtxvisibleto {
     width: 200px;

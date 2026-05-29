@@ -82,13 +82,20 @@ $var( function() {
     $var(".wcmamtx_content_avatar_checkbox").on('change',function() {
 
         if ($var(this).prop("checked")) {
-         $var(".wcmamtx_show_avatar_content_tr").show();
-     } else {
-        $var(".wcmamtx_show_avatar_content_tr").hide();
-    }
+            $var(".wcmamtx_show_avatar_content_tr").show();
+        } else {
+            $var(".wcmamtx_show_avatar_content_tr").hide();
+        }
 
+    });
 
+    $var(".wcmamtx_override_texts_checkbox").on('change',function() {
 
+        if ($var(this).prop("checked")) {
+            $var(".wcmamtx_override_texts_tr").show();
+        } else {
+            $var(".wcmamtx_override_texts_tr").hide();
+        }
 
     });
 

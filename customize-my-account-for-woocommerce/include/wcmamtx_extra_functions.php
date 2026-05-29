@@ -118,24 +118,36 @@ if (!function_exists('wcmamtx_get_avatar_default')) {
 
         $default_source = isset($avatar_settings['disable_gravtar']) && ($avatar_settings['disable_gravtar'] == "yes") ? "local" : "gravtar";
 
+
+        $min_height = (isset($avatar_settings['min_height']) ) ? $avatar_settings['min_height'] : '267';
+        $min_width = (isset($avatar_settings['min_width']) ) ? $avatar_settings['min_width'] : '267';
+
+        $args['extra_attr'] = 'style="min-height: '.$min_height.'px; min-width: '.$min_width.'px;"';
+
+        $default_value = '';
+        $alt = '';
+
         if ($default_source == "gravtar") {
-            $default_avatar = get_avatar($profileuser->ID ,$avatar_size);
+          
+
+            $default_avatar = get_avatar($profileuser->ID ,$avatar_size,$default_value, $alt, $args);
         } else if ($default_source == "local")  {
             $args['alt'] = ''.wcmamtx_PLUGIN_URL.'assets/images/default_avatar.jpg';
             $url = ''.wcmamtx_PLUGIN_URL.'assets/images/default_avatar.jpg';
             $alt = $args['alt'];
             $default_avatar = sprintf(
-                "<img src='%s' srcset='%s'  height='%d' width='%d' class='avatar avatar-$avatar_size photo' />",
+                "<img src='%s' srcset='%s'  height='%d' width='%d' %d class='avatar avatar-$avatar_size photo' />",
                 esc_url( $url ),
                 esc_url( $url ) . ' 2x',
                 (int) $avatar_size,
                 (int) $avatar_size,
+                $args['extra_attr']
             );
 
         }
 
         if ( ! empty( $profileuser->sysbasics_user_avatar ) ) {
-           $default_avatar = get_avatar( $profileuser->ID ,$avatar_size);
+           $default_avatar = get_avatar( $profileuser->ID ,$avatar_size,$default_value, $alt, $args);
         }
 
         

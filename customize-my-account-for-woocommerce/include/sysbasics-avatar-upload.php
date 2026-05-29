@@ -308,9 +308,15 @@ class wcmamtx_upload_avatar_tab {
 
 					$default_upload_icon = isset($swatchurl) && ($swatchimage != "") ? $swatchurl : $default_upload_icon;
 
+					$clickupload_text = esc_html__( 'Click to upload', 'customize-my-account-for-woocommerce' );
+
+					if (isset($avatar_settings['override_texts']) && ($avatar_settings['override_texts'] == "yes") && (isset($avatar_settings['text3'])) && ($avatar_settings['text3'] != "")) { 
+						$clickupload_text = $avatar_settings['text3'];
+					}
+
 					?>
 
-					<img alt="" title="<?php echo esc_html__( 'Click to upload', 'customize-my-account-for-woocommerce' ); ?>" src="<?php echo $default_upload_icon; ?>" srcset="<?php echo $default_upload_icon; ?>" class="avatar avatar-178 photo uploadicon wcmamtx_modal_trigger_upload">
+					<img alt="" title="<?php echo $clickupload_text ?>" src="<?php echo $default_upload_icon; ?>" srcset="<?php echo $default_upload_icon; ?>" class="avatar avatar-178 photo uploadicon wcmamtx_modal_trigger_upload">
 
 					
 
@@ -328,17 +334,31 @@ class wcmamtx_upload_avatar_tab {
 
 						if ( empty( $profileuser->sysbasics_user_avatar ) ) {
 
-							if ($default_source == "gravtar") { ?>
+							if ($default_source == "gravtar") { 
 
-								<a href="https://gravatar.com/profile" target="_blank" class="wcmamtx_manage_gravtar_link"><i class="fa fa-refresh"></i><?php echo esc_html__( 'Manage Gravtar', 'customize-my-account-for-woocommerce' ); ?>
+								$gravtar_text = esc_html__( 'Manage Gravtar', 'customize-my-account-for-woocommerce' );
+
+								if (isset($avatar_settings['override_texts']) && ($avatar_settings['override_texts'] == "yes") && (isset($avatar_settings['text2'])) && ($avatar_settings['text2'] != "")) { 
+									$gravtar_text = $avatar_settings['text2'];
+								}
+
+
+								?>
+
+								<a href="https://gravatar.com/profile" target="_blank" class="wcmamtx_manage_gravtar_link"><i class="fa fa-refresh"></i><?php echo $gravtar_text; ?>
 							    </a>
 
 						<?php }
 
 						} else {
+							$restore_text = esc_html__( 'Restore Default', 'customize-my-account-for-woocommerce' );
+
+							if (isset($avatar_settings['override_texts']) && ($avatar_settings['override_texts'] == "yes") && (isset($avatar_settings['text1'])) && ($avatar_settings['text1'] != "")) { 
+								$restore_text = $avatar_settings['text1'];
+							}
 							?>
 
-							<a href="#" class="wcmamtx_restore_default_link"><i class="fa fa-refresh"></i><?php echo esc_html__( 'Restore Default', 'customize-my-account-for-woocommerce' ); ?>
+							<a href="#" class="wcmamtx_restore_default_link"><i class="fa fa-refresh"></i><?php echo $restore_text; ?>
 						    </a>
 
 						<?php

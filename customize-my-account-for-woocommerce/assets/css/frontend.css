@@ -409,8 +409,6 @@ span.wcmamtx_modal_close:focus {
     position: relative;
     top: 0;
     left: 0;
-    min-height: 267px;
-    min-width: 267px;
   
 }
 .wcmamtx_upload_div .camera {
