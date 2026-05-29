@@ -943,3 +943,13 @@ a.wcmamtx_restore_default_link {
 
 }
 
+div#mywcmamtx_modal {
+    width: 100% !important;
+    max-width: 100%;
+}
+
+.type-page .wcmamtx_upload_div.round .camera,.type-post .wcmamtx_upload_div.round .camera{
+    position: absolute;
+    bottom: auto;
+    right: auto;
+}

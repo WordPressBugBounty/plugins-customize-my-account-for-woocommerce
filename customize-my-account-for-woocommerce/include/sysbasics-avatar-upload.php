@@ -29,7 +29,7 @@ class wcmamtx_upload_avatar_tab {
 		add_action( 'personal_options_update',	 array( $this, 'edit_user_profile_update' )        );
 		add_action( 'edit_user_profile_update',	 array( $this, 'edit_user_profile_update' )        );
 		
-		add_shortcode( 'sysBasics-user-avatar',	 array( $this, 'wcmamtx_shortcode'));
+		add_shortcode( 'sysbasics_user_avatar',	 array( $this, 'wcmamtx_shortcode'));
 
 		
 	}

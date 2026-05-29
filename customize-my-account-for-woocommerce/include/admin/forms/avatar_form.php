@@ -11,7 +11,15 @@ if (array_key_exists(0, $avatar_settings)) {
 
 <table class="widefat wcmamtx_options_table">
 
-
+    <tr>
+		<td><label><?php echo esc_html__('Shortcode','customize-my-account-for-woocommerce'); ?></label> <br />
+		</td>
+		<td>
+			<code>[sysbasics_user_avatar]</code>
+			<p><?php echo esc_html__('Use this shortcode to insert this user avatar outside my account page and woocommerce','customize-my-account-for-woocommerce'); ?></p>
+		</td>
+			
+	</tr>
 
 
 	<tr>

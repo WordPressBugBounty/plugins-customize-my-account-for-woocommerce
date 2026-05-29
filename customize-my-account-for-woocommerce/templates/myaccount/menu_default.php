@@ -103,7 +103,7 @@
 
 
     if (($show_avatar == 'yes') && (isset($user_avatar_enable) && ($user_avatar_enable == "yes")) ) {
-        echo do_shortcode('[sysBasics-user-avatar]');
+        echo do_shortcode('[sysbasics_user_avatar]');
     }
 
     $intro_text_hello = "yes";

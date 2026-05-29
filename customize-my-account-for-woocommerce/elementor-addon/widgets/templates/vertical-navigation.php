@@ -755,7 +755,7 @@ ul.wcmamtx_vertical_menu li.is-active {
 
       $user_avatar_enable = wcmamtx_is_module_enabled_init("user-avatar");
     if (($show_avatar == 'yes') && (isset($user_avatar_enable) && ($user_avatar_enable == "yes")) ) {
-        echo do_shortcode('[sysBasics-user-avatar]');
+        echo do_shortcode('[sysbasics_user_avatar]');
     }
 
     $intro_text_hello = "yes";
@@ -999,7 +999,7 @@ ul.wcmamtx_vertical_menu li.is-active {
       $user_avatar_enable = wcmamtx_is_module_enabled_init("user-avatar");
 
     if (($show_avatar == 'yes') && (isset($user_avatar_enable) && ($user_avatar_enable == "yes")) ) {
-        echo do_shortcode('[sysBasics-user-avatar]');
+        echo do_shortcode('[sysbasics_user_avatar]');
     }
 
     $intro_text_hello = "yes";
