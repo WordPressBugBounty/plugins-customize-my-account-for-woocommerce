@@ -284,7 +284,8 @@ class wcmamtx_upload_avatar_tab {
 				<span class="wcmamtx_modal_close">&times;</span>
 				<form class="wcmamtx_modal_user_avatar_form" method="post" enctype="multipart/form-data">
 					<?php
-					echo wcmamtx_get_avatar_default($profileuser,$avatar_size);
+					$modal_popup = true;
+					echo wcmamtx_get_avatar_default($profileuser,$avatar_size,$modal_popup);
 
 					$allow_avatar_change = 'yes';
 
@@ -326,10 +327,10 @@ class wcmamtx_upload_avatar_tab {
 
 					$options = get_option( 'wcmamtx_upload_avatar_tab_caps' );
 					if ( empty( $options['wcmamtx_upload_avatar_tab_caps'] ) || current_user_can( 'upload_files' ) ) {
-				// Nonce security ftw
+				    // Nonce security ftw
 						wp_nonce_field( 'sysbasics_user_avatar_nonce', '_sysbasics_user_avatar_nonce', false );
 
-				// File upload input
+				    // File upload input
 						echo '<p><input type="file" name="basic-user-avatar" class="wcmamtx_file_input_upload" id="basic-local-avatar" /></p>';
 
 						if ( empty( $profileuser->sysbasics_user_avatar ) ) {

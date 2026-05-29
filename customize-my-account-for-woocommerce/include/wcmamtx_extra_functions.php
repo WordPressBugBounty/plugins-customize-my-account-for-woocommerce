@@ -107,7 +107,7 @@ if (!function_exists('wcmamtx_get_user_ip')) {
 if (!function_exists('wcmamtx_get_avatar_default')) {
 
 
-    function wcmamtx_get_avatar_default($profileuser,$avatar_size) {
+    function wcmamtx_get_avatar_default($profileuser,$avatar_size,$modal_popup = null) {
 
 
         if ( ! is_user_logged_in() ) {
@@ -118,11 +118,18 @@ if (!function_exists('wcmamtx_get_avatar_default')) {
 
         $default_source = isset($avatar_settings['disable_gravtar']) && ($avatar_settings['disable_gravtar'] == "yes") ? "local" : "gravtar";
 
+        $args['extra_attr'] = '';
 
-        $min_height = (isset($avatar_settings['min_height']) ) ? $avatar_settings['min_height'] : '267';
-        $min_width = (isset($avatar_settings['min_width']) ) ? $avatar_settings['min_width'] : '267';
 
-        $args['extra_attr'] = 'style="min-height: '.$min_height.'px; min-width: '.$min_width.'px;"';
+        
+
+        if ($modal_popup == null) {
+            $min_height = (isset($avatar_settings['min_height']) ) ? $avatar_settings['min_height'] : '267';
+            $min_width = (isset($avatar_settings['min_width']) ) ? $avatar_settings['min_width'] : '267';
+            $args['extra_attr'] = 'style="min-height: '.$min_height.'px; min-width: '.$min_width.'px;"';
+        }
+
+        
 
         $default_value = '';
         $alt = '';
