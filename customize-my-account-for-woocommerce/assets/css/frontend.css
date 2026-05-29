@@ -854,7 +854,7 @@ img.camera.wcmamtx_avatar {
     border-radius: 10px;
     /* border: 2px black solid; */
     /* outline: 4px white solid; */
-    padding: 20px;
+    padding: 2px;
     /* border: 4px dotted #f3eded; */
     outline: 2px solid #352e2e;
     min-height: 130px;
@@ -952,4 +952,18 @@ div#mywcmamtx_modal {
     position: absolute;
     bottom: auto;
     right: auto;
+}
+
+.theme-zakra span.wcmamtx_sticky_icon_name {
+    margin-left: 10px;
+}
+
+@media (min-width: 690px) {
+    .theme-blocksy .ct-acount-nav {
+        width: 30%;
+    }
+}
+
+.theme-customify .woocommerce-MyAccount-navigation {
+    width: 27% !important;
 }

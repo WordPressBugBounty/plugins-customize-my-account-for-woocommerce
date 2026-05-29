@@ -6,6 +6,11 @@ $avatar_settings = (array) get_option( 'wcmamtx_avatar_settings' );
 if (array_key_exists(0, $avatar_settings)) {
     $avatar_settings['round_avatar'] = "yes";
     $avatar_settings['intro_text_hello'] = "yes";
+    $avatar_settings['disable_avatar'] = "yes";
+    $avatar_settings['custom_avatar_content'] = "yes";
+    $avatar_settings['avatar_size'] = "200";
+    $avatar_settings['min_height'] = "150";
+    $avatar_settings['min_width'] = "150";
 }
 ?> 
 
@@ -62,14 +67,14 @@ if (array_key_exists(0, $avatar_settings)) {
 		<td><label><?php echo esc_html__('Default avatar size','customize-my-account-for-woocommerce'); ?></label> <br />
 		</td>
 		<td>
-			<input type="range" min="96" max="350" value="<?php if (isset($avatar_settings['avatar_size']) ) { echo $avatar_settings['avatar_size']; } else { echo '250'; } ?>" name="<?php  echo $this->wcmamtx_avatar_settings_page; ?>[avatar_size]">
+			<input type="range" min="96" max="350" value="<?php if (isset($avatar_settings['avatar_size']) ) { echo $avatar_settings['avatar_size']; } else { echo '200'; } ?>" name="<?php  echo $this->wcmamtx_avatar_settings_page; ?>[avatar_size]">
             &emsp;
 			<?php echo esc_html__('Min height','customize-my-account-for-woocommerce'); ?>
-			<input size="3" type="number" min="96" max="350" value="<?php if (isset($avatar_settings['min_height']) ) { echo $avatar_settings['min_height']; } else { echo '267'; } ?>" name="<?php  echo $this->wcmamtx_avatar_settings_page; ?>[min_height]">px
+			<input size="3" type="number" min="96" max="350" value="<?php if (isset($avatar_settings['min_height']) ) { echo $avatar_settings['min_height']; } else { echo '150'; } ?>" name="<?php  echo $this->wcmamtx_avatar_settings_page; ?>[min_height]">px
 
 			&emsp;
 			<?php echo esc_html__('Min width','customize-my-account-for-woocommerce'); ?>
-			<input size="3"  type="number" min="96" max="350" value="<?php if (isset($avatar_settings['min_width']) ) { echo $avatar_settings['min_width']; } else { echo '267'; } ?>" name="<?php  echo $this->wcmamtx_avatar_settings_page; ?>[min_width]">px
+			<input size="3"  type="number" min="96" max="350" value="<?php if (isset($avatar_settings['min_width']) ) { echo $avatar_settings['min_width']; } else { echo '150'; } ?>" name="<?php  echo $this->wcmamtx_avatar_settings_page; ?>[min_width]">px
 		</td>
 			
 	</tr>

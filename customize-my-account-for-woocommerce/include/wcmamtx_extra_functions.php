@@ -124,8 +124,8 @@ if (!function_exists('wcmamtx_get_avatar_default')) {
         
 
         if ($modal_popup == null) {
-            $min_height = (isset($avatar_settings['min_height']) ) ? $avatar_settings['min_height'] : '267';
-            $min_width = (isset($avatar_settings['min_width']) ) ? $avatar_settings['min_width'] : '267';
+            $min_height = (isset($avatar_settings['min_height']) ) ? $avatar_settings['min_height'] : '150';
+            $min_width = (isset($avatar_settings['min_width']) ) ? $avatar_settings['min_width'] : '150';
             $args['extra_attr'] = 'style="min-height: '.$min_height.'px; min-width: '.$min_width.'px;"';
         }
 

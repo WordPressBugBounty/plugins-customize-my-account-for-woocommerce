@@ -217,6 +217,17 @@ class wcmamtx_upload_avatar_tab {
 
 		$avatar_settings = (array) get_option( 'wcmamtx_avatar_settings' );
 
+		if (array_key_exists(0, $avatar_settings)) {
+
+			$avatar_settings['round_avatar'] = "yes";
+
+			$avatar_settings['avatar_size'] = "200";
+			$avatar_settings['min_height'] = "150";
+			$avatar_settings['min_width'] = "150";
+			
+
+		}
+
 		$round_avatar = isset($avatar_settings['round_avatar']) && ($avatar_settings['round_avatar'] == "yes") ? "round" : "square";
 
 		?>
@@ -227,7 +238,7 @@ class wcmamtx_upload_avatar_tab {
 
 			
 
-			$avatar_size = isset($avatar_settings['avatar_size']) ? $avatar_settings['avatar_size'] : "250";
+			$avatar_size = isset($avatar_settings['avatar_size']) ? $avatar_settings['avatar_size'] : "200";
 
 
 			echo wcmamtx_get_avatar_default($profileuser,$avatar_size);

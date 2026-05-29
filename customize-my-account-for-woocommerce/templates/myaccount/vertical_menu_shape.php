@@ -6,6 +6,16 @@
 
     $avatar_settings = (array) get_option( 'wcmamtx_avatar_settings' );
 
+
+    if (array_key_exists(0, $avatar_settings)) {
+
+
+        $avatar_settings['intro_text_hello'] = "yes";
+        $avatar_settings['disable_avatar'] = "yes";
+        $avatar_settings['custom_avatar_content'] = "yes";
+
+    }
+
     if (isset($avatar_settings['disable_avatar']) && ($avatar_settings['disable_avatar'] == "yes")) {
 
         $show_avatar = 'yes';
