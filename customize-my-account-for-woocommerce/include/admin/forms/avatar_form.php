@@ -20,7 +20,7 @@ if (array_key_exists(0, $avatar_settings)) {
 		<td><label><?php echo esc_html__('Shortcode','customize-my-account-for-woocommerce'); ?></label> <br />
 		</td>
 		<td>
-			<code>[sysbasics_user_avatar]</code>
+			<code>[sysbasics_user_avatar size="200" min_height="150" min_width="150"]</code>
 			<p><?php echo esc_html__('Use this shortcode to insert this user avatar outside my account page and woocommerce','customize-my-account-for-woocommerce'); ?></p>
 		</td>
 			

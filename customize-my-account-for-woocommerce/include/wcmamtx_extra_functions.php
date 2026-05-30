@@ -107,7 +107,7 @@ if (!function_exists('wcmamtx_get_user_ip')) {
 if (!function_exists('wcmamtx_get_avatar_default')) {
 
 
-    function wcmamtx_get_avatar_default($profileuser,$avatar_size,$modal_popup = null) {
+    function wcmamtx_get_avatar_default($profileuser,$avatar_size,$atts,$modal_popup = null) {
 
 
         if ( ! is_user_logged_in() ) {
@@ -126,6 +126,10 @@ if (!function_exists('wcmamtx_get_avatar_default')) {
         if ($modal_popup == null) {
             $min_height = (isset($avatar_settings['min_height']) ) ? $avatar_settings['min_height'] : '150';
             $min_width = (isset($avatar_settings['min_width']) ) ? $avatar_settings['min_width'] : '150';
+
+            $min_height = (isset($atts['min_height']) ) ? $atts['min_height'] : $min_height;
+            $min_width = (isset($atts['min_width']) ) ? $atts['min_width'] : $min_width;
+
             $args['extra_attr'] = 'style="min-height: '.$min_height.'px; min-width: '.$min_width.'px;"';
         }
 

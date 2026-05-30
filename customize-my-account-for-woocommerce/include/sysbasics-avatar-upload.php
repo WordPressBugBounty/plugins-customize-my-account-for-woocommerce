@@ -201,7 +201,15 @@ class wcmamtx_upload_avatar_tab {
 	
 
 
-	function wcmamtx_shortcode() {
+	function wcmamtx_shortcode($atts) {
+
+		$attributes = shortcode_atts( array(
+		  'size' => 200,
+		  'min_height' => 150,
+		  'min_width' => 150
+	    ), $atts );
+
+		ob_start();
 
 
 		if ( ! is_user_logged_in() ) {
@@ -222,8 +230,7 @@ class wcmamtx_upload_avatar_tab {
 			$avatar_settings['round_avatar'] = "yes";
 
 			$avatar_settings['avatar_size'] = "200";
-			$avatar_settings['min_height'] = "150";
-			$avatar_settings['min_width'] = "150";
+			
 			
 
 		}
@@ -240,8 +247,10 @@ class wcmamtx_upload_avatar_tab {
 
 			$avatar_size = isset($avatar_settings['avatar_size']) ? $avatar_settings['avatar_size'] : "200";
 
+			$avatar_size = isset($atts['size']) ? $atts['size'] : $avatar_size;
 
-			echo wcmamtx_get_avatar_default($profileuser,$avatar_size);
+
+			echo wcmamtx_get_avatar_default($profileuser,$avatar_size,$atts);
 
 
 
@@ -275,15 +284,15 @@ class wcmamtx_upload_avatar_tab {
 
 		<?php
 
-		ob_start();
+		
 
-		$this->upload_wcmamtx_modal_avatar($profileuser,$avatar_size);
+		$this->upload_wcmamtx_modal_avatar($profileuser,$avatar_size,$atts);
 		
 		return ob_get_clean();
 	}
 
 
-	public function upload_wcmamtx_modal_avatar($profileuser,$avatar_size) {
+	public function upload_wcmamtx_modal_avatar($profileuser,$avatar_size,$atts) {
 		?>
 		<!-- Trigger/Open The wcmamtx_modal -->
 
@@ -296,7 +305,7 @@ class wcmamtx_upload_avatar_tab {
 				<form class="wcmamtx_modal_user_avatar_form" method="post" enctype="multipart/form-data">
 					<?php
 					$modal_popup = true;
-					echo wcmamtx_get_avatar_default($profileuser,$avatar_size,$modal_popup);
+					echo wcmamtx_get_avatar_default($profileuser,$avatar_size,$atts,$modal_popup);
 
 					$allow_avatar_change = 'yes';
 
