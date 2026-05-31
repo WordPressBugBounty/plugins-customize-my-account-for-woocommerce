@@ -882,7 +882,7 @@ input#basic-local-avatar,input.wcmamtx_update_avatar_btn,p.wcmamtx_erase_avatar_
 
 
 .wcmamtx_modal-content{
-    min-height: 230px;
+    min-height: 270px;
 }
 
 form.wcmamtx_modal_user_avatar_form {
@@ -966,4 +966,65 @@ div#mywcmamtx_modal {
 
 .theme-customify .woocommerce-MyAccount-navigation {
     width: 27% !important;
+}
+input#wcmamtx_wp-user-file{
+    display: none;
+}
+
+div#wcmamtx_upload_response {
+    width: 100%;
+    float: left;
+    background-color: #b4e9b4;
+    padding: 5px;
+    margin-top: 5px;
+    font-size: 12px;
+    display: none;
+}
+
+form#custom-file-uploader {
+    padding: 10px;
+    margin-top: 30px;
+}
+
+form#custom-file-uploader button {
+    padding: 10px;
+    font-size: 10px;
+    margin-top: 40px;
+}
+
+div#mywcmamtx_modal_webcam div#results img {
+    height: 70px !important;
+    min-height: 70px;
+    margin-top: 10px;
+}
+
+span.wcmamtx_modal_close_webcam {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+div#mywcmamtx_modal_webcam div#my_camera {
+    margin-left: 10%;
+    margin-top: 10px;
+}
+
+.woocommerce-message.wcmamtx_no_camera_message:before {
+    display:none;
+} 
+
+
+.wcmamtx_modal.webcam.blocked {
+    min-height:40px;
+    height:auto;
+}
+
+div.my_camera.blocked {
+    display: none !important;
+}
+
+.wcmamtx_modal-content.webcam.blocked {
+    max-width: 600px;
+    width:auto;
 }

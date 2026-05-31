@@ -133,6 +133,11 @@ if (!function_exists('wcmamtx_get_avatar_default')) {
             $args['extra_attr'] = 'style="min-height: '.$min_height.'px; min-width: '.$min_width.'px;"';
         }
 
+        if ($modal_popup == true) {
+            $args['class'] = "modal_popup";
+            $modal_popup_class =  "modal_popup";
+        }
+
         
 
         $default_value = '';
@@ -147,7 +152,7 @@ if (!function_exists('wcmamtx_get_avatar_default')) {
             $url = ''.wcmamtx_PLUGIN_URL.'assets/images/default_avatar.jpg';
             $alt = $args['alt'];
             $default_avatar = sprintf(
-                "<img src='%s' srcset='%s'  height='%d' width='%d' %d class='avatar avatar-$avatar_size photo' />",
+                "<img src='%s' srcset='%s'  height='%d' width='%d' %d class='avatar $modal_popup_class avatar-$avatar_size photo' />",
                 esc_url( $url ),
                 esc_url( $url ) . ' 2x',
                 (int) $avatar_size,

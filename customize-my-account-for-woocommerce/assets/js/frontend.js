@@ -105,31 +105,188 @@ var $vas = jQuery.noConflict();
 
 
 
-    $vas('.wcmamtx_upload_avatar').on('click', function(event) {
+         $vas('.wcmamtx_upload_avatar').on('click', function(event) {
        event.preventDefault();
        $vas('#mywcmamtx_modal').show();
+       $vas('#mywcmamtx_modal_webcam').hide();
        return false;
-    });
+      });
+
+      $vas('.wcmamtx_modal_trigger_webcam').on('click', function(event) {
+       event.preventDefault();
+       $vas('#mywcmamtx_modal_webcam').show();
+       $vas('#mywcmamtx_modal').hide();
+
+       if( jQuery('#web_cam').length ){
+
+        Webcam.set({
+            width: 300,
+            height: 300,
+            image_format: 'jpeg',
+            jpeg_quality: 90
+        });
+
+        Webcam.attach( '.my_camera' );
+
+
+        jQuery('.takeimage').click(function(){
+            Webcam.snap( function(data_uri) {
+                $vas(".image-tag").val(data_uri);
+                document.getElementById('results').innerHTML = '<img src="'+data_uri+'"/>';
+                document.getElementById('web_cam_submit').style.display = 'block';
+            } );
+
+        });
+
+        Webcam.on('error', function(err) {
+            $vas("#mywcmamtx_modal_webcam").addClass("blocked");
+            $vas("#mywcmamtx_modal_webcam").find(".my_camera").addClass("blocked");
+            $vas("#mywcmamtx_modal_webcam").find("div.wcmamtx_modal-content.webcam").addClass("blocked");
+            console.error("Webcam.js Error:", err);
+            $vas(".wcmamtx_modal-content.webcam").find(".takeimage").hide();
+            $vas(".wcmamtx_modal-content.webcam").find(".wcmamtx_no_camera_message").show();
+         
+            
+        });
+
+       }
+        return false;
+       });
+
+       
     
 
-    $vas('.wcmamtx_modal_close').on('click', function() {
-     $vas('#mywcmamtx_modal').hide();
-   });
+      $vas('.wcmamtx_modal_close').on('click', function() {
+          $vas('#mywcmamtx_modal').hide();
+      });
 
-    $vas('.wcmamtx_modal_trigger_upload').on('click', function() {
-      $vas('.wcmamtx_file_input_upload').trigger('click');
+      $vas('.wcmamtx_modal_close_webcam').on('click', function() {
+          $vas('#mywcmamtx_modal_webcam').hide();
+      });
+        
+   
+
+
+   $vas('.wcmamtx_modal_trigger_upload').on('click', function() {
+      $vas('#wcmamtx_wp-user-file').trigger('click');
     });
 
-    $vas('.wcmamtx_file_input_upload').on('change', function() {
-       $vas('.wcmamtx_update_avatar_btn').trigger('click'); // Submits the form naturally
-    });
+   $vas('.wcmamtx_restore_default_link').on('click', function(event) {
+        event.preventDefault();
+
+        $vas('#wcmamtx_upload_response').text(wcmamtxfrontend.restoring_text);
+        $vas('#wcmamtx_upload_response').show();
 
 
-    $vas('.wcmamtx_restore_default_link').on('click', function(event) {
-      event.preventDefault();
-      $vas('#basic-user-avatar-erase').prop('checked', true);
-      $vas('.wcmamtx_update_avatar_btn').trigger('click');
+      // Setup data object to send over to WordPress backend
+        var requestData = {
+            action: 'wcmamtx_restore_avatar_function', // The hook trigger name
+            nonce: wcmamtxfrontend.nonce     // Custom data payload
+        };
+
+        var default_pic = wcmamtxfrontend.default_pic;
+
+        // Fire the AJAX request
+        $vas.post(wcmamtxfrontend.ajax_url, requestData, function(response) {
+            console.log(response);
+            if (response.success) {
+                
+                
+
+                
+            } else {
+
+                    $vas('#wcmamtx_upload_response').text(response.data);
+
+               
+               
+                    $vas('#wcmamtx_upload_response').show();
+                    $vas("#custom-file-uploader").find("img.avatar.photo.modal_popup").attr("src",default_pic);
+                    $vas("#custom-file-uploader").find("img.avatar.photo.modal_popup").attr("srcset",default_pic);
+                   
+                    
+                    $vas(".wcmamtx_upload_div").find("img.avatar.photo").attr("src",default_pic);
+                    $vas(".wcmamtx_upload_div").find("img.avatar.photo").attr("srcset",default_pic);
+                    
+                    $vas('#wcmamtx_upload_response').hide(200);
+
+                    if (wcmamtxfrontend.mode == "gravtar") {
+                      $vas(".wcmamtx_manage_gravtar_link").show();
+                    }
+
+                    
+                    $vas(".wcmamtx_restore_default_link").hide();
+
+                    $vas('#mywcmamtx_modal').hide();
+            }
+        }, 'json'); // Explicitly parse the response as JSON format
+      
       return false;
+      });
+
+
+    $vas('#wcmamtx_wp-user-file').on('change', function() {
+       var fileInput = $vas('#wcmamtx_wp-user-file')[0].files[0];
+        if (!fileInput) {
+            alert(wcmamtxfrontend.file_text);
+            return;
+        }
+
+        // 1. Pack data into FormData object
+        var formData = new FormData();
+        formData.append('action', 'handle_ajax_file_upload'); // Required by WP
+        formData.append('security', $vas('#security_nonce').val());
+        formData.append('file_data', fileInput);
+
+        // 2. Dispatch AJAX request
+        $vas.ajax({
+            url: wcmamtxfrontend.ajax_url, // Ensure global ajaxurl is defined or localized
+            type: 'POST',
+            data: formData,
+            processData: false, // Prevents jQuery from converting data into a query string
+            contentType: false, // Tells browser to use multipart/form-data boundary
+            beforeSend: function() {
+                $vas('#wcmamtx_upload_response').text(wcmamtxfrontend.uploading_text);
+                $vas('#wcmamtx_upload_response').show();
+            },
+            success: function(response) {
+                if (response.success) {
+                    var sucess_data = response.data;
+                    console.log(sucess_data.url);
+                    $vas("#custom-file-uploader").find("img.avatar.photo.modal_popup").attr("src",sucess_data.url);
+                    $vas("#custom-file-uploader").find("img.avatar.photo.modal_popup").attr("srcset",sucess_data.url);
+                    $vas('#wcmamtx_upload_response').html('<span style="color:green;">' + sucess_data.message + '</span>');
+                    
+                    $vas(".wcmamtx_upload_div").find("img.avatar.photo").attr("src",sucess_data.url);
+                    $vas(".wcmamtx_upload_div").find("img.avatar.photo").attr("srcset",sucess_data.url);
+                    $vas(".wcmamtx_manage_gravtar_link").hide();
+                    $vas(".wcmamtx_restore_default_link").show();
+                    $vas('#wcmamtx_upload_response').show();
+
+
+                    $vas('#wcmamtx_upload_response').hide(200);
+
+                    $vas('#mywcmamtx_modal').hide();
+
+
+                } else {
+                    $vas('#wcmamtx_upload_response').html('<span style="color:red;">' + response.data + '</span>');
+                    $vas('#wcmamtx_upload_response').show();
+                    $vas('#wcmamtx_upload_response').hide(10000);
+                }
+
+                
+
+                
+            },
+            error: function() {
+                $vas('#wcmamtx_upload_response').text(wcmamtxfrontend.error_text);
+
+                $vas('#wcmamtx_upload_response').show();
+
+                $vas('#wcmamtx_upload_response').hide(10000);
+            }
+        });
     });
 
 

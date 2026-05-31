@@ -740,6 +740,61 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
 
         $wcmamtx_pro_settings  = (array) get_option('wcmamtx_pro_settings');  
 
+        $wcmamtx_plugin_options = (array) get_option('wcmamtx_plugin_options');
+
+        $ajax_loader =  ''.wcmamtx_PLUGIN_URL.'assets/images/ajax-loader.gif';
+
+
+        $avatar_settings = (array) get_option( 'wcmamtx_avatar_settings' );
+
+        $default_source = isset($avatar_settings['disable_gravtar']) && ($avatar_settings['disable_gravtar'] == "yes") ? "local" : "gravtar";
+
+        $default_pic = ''.wcmamtx_PLUGIN_URL.'assets/images/default_avatar.jpg';
+        $user_id     = get_current_user_id();
+
+        $user_gravatar_url = '';
+
+        $user_info = get_userdata($user_id);
+        if ($user_info) {
+            $user_email        = $user_info->user_email;
+            $user_gravatar_url = 'http://www.gravatar.com/avatar/' . md5($user_email) . '?s=200';
+        }
+
+
+
+        switch($default_source) {
+            case "gravtar":
+               $default_pic = $user_gravatar_url;
+            break;
+
+            case "local":
+               $default_pic = ''.wcmamtx_PLUGIN_URL.'assets/images/default_avatar.jpg';
+            break;
+
+            default:
+              $default_pic = ''.wcmamtx_PLUGIN_URL.'assets/images/default_avatar.jpg';
+            break;
+        }
+
+
+
+
+        $wcmamtx_locals = array(
+            'ajax_navigation'   => isset($wcmamtx_plugin_options['ajax_navigation']) ? $wcmamtx_plugin_options['ajax_navigation'] : "no",
+            'ajax_loader' => $ajax_loader,
+            'contentSelector'      => apply_filters( 'wcmamtx_ajax_content_selector', '#content, div.woocommerce' ),
+            'ajax_url'              => admin_url( 'admin-ajax.php' ),
+            'nonce'                 => wp_create_nonce( 'wcmamtx_ajax_security_nonce' ),
+            'default_pic'           => $default_pic,
+            'mode'                  => $default_source,
+            'uploading_text'        => esc_html__('Uploading... Please wait',"customize-my-account-for-woocommerce"),
+            'restoring_text'        => esc_html__('Restoring... Please wait',"customize-my-account-for-woocommerce"),
+            'error_text'        => esc_html__('An error occurred during transmission',"customize-my-account-for-woocommerce"),
+            'file_text'        => esc_html__('Please select a file first',"customize-my-account-for-woocommerce")
+
+        );
+
+
         global $post;
 
 
@@ -750,6 +805,9 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
             
             
             wp_enqueue_style( 'wcmamtx-frontend', ''.wcmamtx_PLUGIN_URL.'assets/css/frontend.css' );
+
+            wp_register_script( 'wcmamtx_webcame', ''.wcmamtx_PLUGIN_URL.'assets/js/webcam.min.js', array(), true );
+            wp_enqueue_script('wcmamtx_webcame');
             
         } 
 

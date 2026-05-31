@@ -107,14 +107,7 @@ if (array_key_exists(0, $avatar_settings)) {
 			
 	</tr>
 
-	<tr class="wcmamtx_show_avatar_tr" style="<?php if (isset($avatar_settings['disable_avatar']) && ($avatar_settings['disable_avatar'] == "yes")) { echo 'display:table-row;'; } else { echo 'display:none;'; } ?>">
-		<td><label><?php echo esc_html__('Hide username, login text after avatar','customize-my-account-for-woocommerce'); ?></label> <br />
-		</td>
-		<td>
-			<input type="checkbox" data-toggle="toggle"  data-on="<?php echo esc_html__('Yes','customize-my-account-for-woocommerce'); ?>" data-off="<?php echo esc_html__('No','customize-my-account-for-woocommerce'); ?>"  name="<?php  echo $this->wcmamtx_avatar_settings_page; ?>[intro_text_hello]" value="yes" <?php if (isset($avatar_settings['intro_text_hello']) && ($avatar_settings['intro_text_hello'] == "yes")) { echo 'checked'; } ?>>
-		</td>
-			
-	</tr>
+
 
 	<tr class="wcmamtx_show_avatar_tr" style="<?php if (isset($avatar_settings['disable_avatar']) && ($avatar_settings['disable_avatar'] == "yes")) { echo 'display:table-row;'; } else { echo 'display:none;'; } ?>">
                     <td>
