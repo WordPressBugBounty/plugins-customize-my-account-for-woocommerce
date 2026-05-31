@@ -745,7 +745,7 @@ if (!function_exists('wcmamtx_load_pro_feature_preview')) {
 
 	function wcmamtx_load_pro_feature_preview() { ?>
         <br/>
-        <strong style="color:green;"><?php echo esc_html__( 'Lifetime license starts from $29 USD for single domain' ,'customize-my-account-for-woocommerce'); ?></strong>
+        <strong style="color:green;"><?php echo esc_html__( 'Lifetime license starts from $49 USD for single domain' ,'customize-my-account-for-woocommerce'); ?></strong>
         <br/><br/><br/>
 		<strong><?php echo esc_html__( 'Pro Version Features' ,'customize-my-account-for-woocommerce'); ?></strong>
 		<br/>

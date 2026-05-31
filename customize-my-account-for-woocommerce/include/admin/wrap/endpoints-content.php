@@ -194,19 +194,23 @@ $default_color_font = '#334155';
             </label>
         </div>
         <div class="form-check wcmamtx_icon_checkbox">
-         <input class="form-check-input wcmamtx_icon_source_radio" type="radio" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][icon_source]"  value="noicon" <?php if ($icon_source == "noicon") { echo 'checked'; } ?>>
+         <input class="form-check-input wcmamtx_icon_source_radio" type="radio" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][icon_source]"  value="noicon" <?php if ($icon_source == "noicon") { echo 'checked'; } ?> disabled>
          <label class="form-check-label wcmamtx_icon_checkbox_label">
             <?php  echo esc_html__('No Icon','customize-my-account-for-woocommerce'); ?>
             <a href="#" data-toggle="modal" data-target="#wcmamtx_upgrade_modal">
-                
-
-            </a>
+        <span class="wcmamtx_pro_upgrade_text"><?php  echo esc_html__('Upgrade to pro','customize-my-account-for-woocommerce'); ?></span>
+     
+    </a>
         </label>
     </div>
     <div class="form-check wcmamtx_icon_checkbox">
-     <input class="form-check-input wcmamtx_icon_source_radio" type="radio" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][icon_source]"  value="custom" <?php if ($icon_source == "custom") { echo 'checked'; } ?> >
+     <input class="form-check-input wcmamtx_icon_source_radio" type="radio" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][icon_source]"  value="custom" <?php if ($icon_source == "custom") { echo 'checked'; } ?> disabled>
      <label class="form-check-label wcmamtx_icon_checkbox_label">
         <?php  echo esc_html__('Font Awesome Icon','customize-my-account-for-woocommerce'); ?>
+        <a href="#" data-toggle="modal" data-target="#wcmamtx_upgrade_modal">
+        <span class="wcmamtx_pro_upgrade_text"><?php  echo esc_html__('Upgrade to pro','customize-my-account-for-woocommerce'); ?></span>
+
+    </a>
         
     </label>
 </div>
