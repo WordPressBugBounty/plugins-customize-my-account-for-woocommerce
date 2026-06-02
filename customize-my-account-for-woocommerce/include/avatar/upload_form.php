@@ -25,18 +25,28 @@
 
 					$default_upload_icon = isset($swatchurl) && ($swatchimage != "") ? $swatchurl : $default_upload_icon;
 
-					$clickupload_text = esc_html__( 'Click to upload', 'customize-my-account-for-woocommerce' );
+					$clickupload_text = esc_html__( 'Upload Photo', 'customize-my-account-for-woocommerce' );
+
+					$usecamera_text = esc_html__( 'Use Camera', 'customize-my-account-for-woocommerce' );
 
 					if (isset($avatar_settings['override_texts']) && ($avatar_settings['override_texts'] == "yes") && (isset($avatar_settings['text3'])) && ($avatar_settings['text3'] != "")) { 
 						$clickupload_text = $avatar_settings['text3'];
 					}
 
+					if (isset($avatar_settings['override_texts']) && ($avatar_settings['override_texts'] == "yes") && (isset($avatar_settings['text4'])) && ($avatar_settings['text4'] != "")) { 
+						$usecamera_text = $avatar_settings['text4'];
+					}
+
 					?>
 
 					
-                    <button type="button" class="button wcmamtx_modal_trigger_upload hide-if-no-js">Upload Photo</button>
+                    <button type="button" class="button wcmamtx_modal_trigger_upload hide-if-no-js">
+                    <?php echo $clickupload_text; ?>
+                    </button>
 
-                    <button type="button" class="button wcmamtx_modal_trigger_webcam hide-if-no-js">Use Camera</button>
+                    <button type="button" class="button wcmamtx_modal_trigger_webcam hide-if-no-js">
+                     <?php echo $usecamera_text; ?>
+                    </button>
 					
 
 					<?php

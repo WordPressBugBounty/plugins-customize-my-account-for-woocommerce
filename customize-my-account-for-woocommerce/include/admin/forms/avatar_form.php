@@ -95,7 +95,8 @@ if (array_key_exists(0, $avatar_settings)) {
 
 		     $default_text1 = esc_html__('Restore Default','customize-my-account-for-woocommerce');
 		     $default_text2 = esc_html__('Manage Gravtar','customize-my-account-for-woocommerce');
-		     $default_text3 = esc_html__('Click to upload','customize-my-account-for-woocommerce');
+		     $default_text3 = esc_html__('Upload Photo','customize-my-account-for-woocommerce');
+		     $default_text4 = esc_html__('Use Camera','customize-my-account-for-woocommerce');
 
 		    ?>
 			<input type="text" class=""  name="<?php  echo $this->wcmamtx_avatar_settings_page; ?>[text1]" value="<?php if (isset($avatar_settings['text1']) && ($avatar_settings['text1'] != "")) { echo $avatar_settings['text1']; } else { echo $default_text1; } ?>">
@@ -103,6 +104,9 @@ if (array_key_exists(0, $avatar_settings)) {
 			<input type="text" class=""  name="<?php  echo $this->wcmamtx_avatar_settings_page; ?>[text2]" value="<?php if (isset($avatar_settings['text2']) && ($avatar_settings['text2'] != "")) { echo $avatar_settings['text2']; } else { echo $default_text2; } ?>">
 
 			<input type="text" class=""  name="<?php  echo $this->wcmamtx_avatar_settings_page; ?>[text3]" value="<?php if (isset($avatar_settings['text3']) && ($avatar_settings['text3'] != "")) { echo $avatar_settings['text3']; } else { echo $default_text3; } ?>">
+		
+
+			<input type="text" class=""  name="<?php  echo $this->wcmamtx_avatar_settings_page; ?>[text4]" value="<?php if (isset($avatar_settings['text4']) && ($avatar_settings['text4'] != "")) { echo $avatar_settings['text4']; } else { echo $default_text4; } ?>">
 		</td>
 			
 	</tr>

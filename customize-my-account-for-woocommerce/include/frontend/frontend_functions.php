@@ -754,26 +754,31 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
 
         $user_gravatar_url = '';
 
+
+        $args = array();
+
         $user_info = get_userdata($user_id);
         if ($user_info) {
             $user_email        = $user_info->user_email;
-            $user_gravatar_url = 'https://www.gravatar.com/avatar/' . md5($user_email) . '?s=200';
-        }
+            $user_gravatar_url = get_avatar_url( $user_email, array_merge( $args, array( 'size' => "200" ,'force_default' => true) ) );
+        
 
 
 
-        switch($default_source) {
-            case "gravtar":
-               $default_pic = $user_gravatar_url;
-            break;
+            switch($default_source) {
+                case "gravtar":
+                $default_pic = $user_gravatar_url;
+                break;
 
-            case "local":
-               $default_pic = ''.wcmamtx_PLUGIN_URL.'assets/images/default_avatar.jpg';
-            break;
+                case "local":
+                $default_pic = ''.wcmamtx_PLUGIN_URL.'assets/images/default_avatar.jpg';
+                break;
 
-            default:
-              $default_pic = ''.wcmamtx_PLUGIN_URL.'assets/images/default_avatar.jpg';
-            break;
+                default:
+                $default_pic = ''.wcmamtx_PLUGIN_URL.'assets/images/default_avatar.jpg';
+                break;
+            }
+
         }
 
 
