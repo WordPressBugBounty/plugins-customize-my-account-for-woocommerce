@@ -745,14 +745,18 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
         $ajax_loader =  ''.wcmamtx_PLUGIN_URL.'assets/images/ajax-loader.gif';
 
 
-        $avatar_settings = (array) get_option( 'wcmamtx_avatar_settings' );
+                $avatar_settings = (array) get_option( 'wcmamtx_avatar_settings' );
 
-        $default_source = isset($avatar_settings['disable_gravtar']) && ($avatar_settings['disable_gravtar'] == "yes") ? "local" : "gravtar";
+        $default_source  = isset($avatar_settings['disable_gravtar']) && ($avatar_settings['disable_gravtar'] == "yes") ? "local" : "gravtar";
 
-        $default_pic = ''.wcmamtx_PLUGIN_URL.'assets/images/default_avatar.jpg';
-        $user_id     = get_current_user_id();
+        $default_pic    = ''.wcmamtx_PLUGIN_URL.'assets/images/default_avatar.jpg';
+        $user_id        = get_current_user_id();
 
         $user_gravatar_url = '';
+
+        $local_avatars = get_user_meta( $user_id, 'sysbasics_user_avatar', true );
+
+        //delete_user_meta($user_id,'wcmamtx_last_gravtar');
 
 
         $args = array();
@@ -760,14 +764,40 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
         $user_info = get_userdata($user_id);
         if ($user_info) {
             $user_email        = $user_info->user_email;
-            $user_gravatar_url = get_avatar_url( $user_email, array_merge( $args, array( 'size' => "200" ,'force_default' => true) ) );
+            $user_gravatar_url = get_avatar_url( $user_email, array_merge( $args, array( 'size' => "200") ) );
         
-
+            
 
 
             switch($default_source) {
                 case "gravtar":
                 $default_pic = $user_gravatar_url;
+
+                
+
+                $last_gravtar_url = get_user_meta($user_id,"wcmamtx_last_gravtar",true);
+
+                if ( (empty($last_gravtar_url)) && (str_contains($user_gravatar_url, "gravatar"))) {
+
+                    
+
+                    update_user_meta($user_id,"wcmamtx_last_gravtar",$user_gravatar_url);
+
+                } else if (($last_gravtar_url != $user_gravatar_url) && ($user_gravatar_url != $default_pic) && (str_contains($user_gravatar_url, "gravatar"))) {
+
+
+
+                    update_user_meta($user_id,"wcmamtx_last_gravtar",$user_gravatar_url);
+                }
+
+                $fresh_gravtar_url = get_user_meta($user_id,"wcmamtx_last_gravtar",true);
+
+
+                if ($fresh_gravtar_url != "") {
+                    $default_pic = $fresh_gravtar_url;
+                }
+
+
                 break;
 
                 case "local":

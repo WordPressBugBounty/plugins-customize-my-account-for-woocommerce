@@ -201,6 +201,17 @@ var $vas = jQuery.noConflict();
                
                
                     $vas('#wcmamtx_upload_response').show();
+
+
+    
+
+                    if (wcmamtxfrontend.mode == "gravtar") {
+                         var baseUrl = default_pic.split("?")[0]; 
+                         default_pic =  baseUrl + "?s=200&time=" + new Date().getTime();
+
+                    }
+    
+
                     $vas("#custom-file-uploader").find("img.avatar.photo.modal_popup").attr("src",default_pic);
                     $vas("#custom-file-uploader").find("img.avatar.photo.modal_popup").attr("srcset",default_pic);
                    
