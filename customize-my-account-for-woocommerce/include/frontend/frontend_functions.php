@@ -757,7 +757,7 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
         $user_info = get_userdata($user_id);
         if ($user_info) {
             $user_email        = $user_info->user_email;
-            $user_gravatar_url = 'http://www.gravatar.com/avatar/' . md5($user_email) . '?s=200';
+            $user_gravatar_url = 'https://www.gravatar.com/avatar/' . md5($user_email) . '?s=200';
         }
 
 

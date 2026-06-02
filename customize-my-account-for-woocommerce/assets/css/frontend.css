@@ -384,7 +384,6 @@ span.wcmamtx_modal_close:focus {
     width: 35px;
     height: 35px;
     border-radius: 50%;
-    background: url(../images/photo.svg) #29ac8f no-repeat;
     background-position: 8px 9px;
     background-size: 18px;
 }

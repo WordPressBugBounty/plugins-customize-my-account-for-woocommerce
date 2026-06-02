@@ -142,7 +142,7 @@ var $vas = jQuery.noConflict();
             $vas("#mywcmamtx_modal_webcam").addClass("blocked");
             $vas("#mywcmamtx_modal_webcam").find(".my_camera").addClass("blocked");
             $vas("#mywcmamtx_modal_webcam").find("div.wcmamtx_modal-content.webcam").addClass("blocked");
-            console.error("Webcam.js Error:", err);
+            //console.error("Webcam.js Error:", err);
             $vas(".wcmamtx_modal-content.webcam").find(".takeimage").hide();
             $vas(".wcmamtx_modal-content.webcam").find(".wcmamtx_no_camera_message").show();
          
@@ -188,7 +188,7 @@ var $vas = jQuery.noConflict();
 
         // Fire the AJAX request
         $vas.post(wcmamtxfrontend.ajax_url, requestData, function(response) {
-            console.log(response);
+           
             if (response.success) {
                 
                 
@@ -252,7 +252,7 @@ var $vas = jQuery.noConflict();
             success: function(response) {
                 if (response.success) {
                     var sucess_data = response.data;
-                    console.log(sucess_data.url);
+                    
                     $vas("#custom-file-uploader").find("img.avatar.photo.modal_popup").attr("src",sucess_data.url);
                     $vas("#custom-file-uploader").find("img.avatar.photo.modal_popup").attr("srcset",sucess_data.url);
                     $vas('#wcmamtx_upload_response').html('<span style="color:green;">' + sucess_data.message + '</span>');
@@ -325,14 +325,3 @@ document.querySelectorAll(".dropdown-toggle").forEach((dropdownToggle) => {
     toggleDropdown(dropdown, menu, !isOpen); // Toggle current dropdown visibility
   });
 });
-
-// Attach click event to wcmamtx_sidebar toggle buttons
-document.querySelectorAll(".wcmamtx_sidebar-toggler, .wcmamtx_sidebar-menu-button").forEach((button) => {
-  button.addEventListener("click", () => {
-    closeAllDropdowns(); // Close all open dropdowns
-    document.querySelector(".wcmamtx_sidebar").classList.toggle("collapsed"); // Toggle collapsed class on wcmamtx_sidebar
-  });
-});
-
-// Collapse wcmamtx_sidebar by default on small screens
-if (window.innerWidth <= 1024) document.querySelector(".wcmamtx_sidebar").classList.add("collapsed");
