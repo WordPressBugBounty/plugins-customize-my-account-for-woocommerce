@@ -218,6 +218,18 @@ var $vas = jQuery.noConflict();
                     
                     $vas(".wcmamtx_upload_div").find("img.avatar.photo").attr("src",default_pic);
                     $vas(".wcmamtx_upload_div").find("img.avatar.photo").attr("srcset",default_pic);
+
+
+                    
+
+
+                    $vas("li#wp-admin-bar-my-account").find("img.avatar.photo").attr("src",default_pic);
+                    $vas("li#wp-admin-bar-user-info").find("img.avatar.photo").attr("src",default_pic);
+
+                    $vas("li#wp-admin-bar-my-account").find("img.avatar.photo").attr("srcset",default_pic);
+                    $vas("li#wp-admin-bar-user-info").find("img.avatar.photo").attr("srcset",default_pic);
+
+                    
                     
                     $vas('#wcmamtx_upload_response').hide(200);
 
@@ -266,10 +278,22 @@ var $vas = jQuery.noConflict();
                     
                     $vas("#custom-file-uploader").find("img.avatar.photo.modal_popup").attr("src",sucess_data.url);
                     $vas("#custom-file-uploader").find("img.avatar.photo.modal_popup").attr("srcset",sucess_data.url);
+                    
                     $vas('#wcmamtx_upload_response').html('<span style="color:green;">' + sucess_data.message + '</span>');
                     
                     $vas(".wcmamtx_upload_div").find("img.avatar.photo").attr("src",sucess_data.url);
                     $vas(".wcmamtx_upload_div").find("img.avatar.photo").attr("srcset",sucess_data.url);
+
+
+                    $vas("li#wp-admin-bar-my-account").find("img.avatar.photo").attr("src",sucess_data.url);
+                    $vas("li#wp-admin-bar-user-info").find("img.avatar.photo").attr("src",sucess_data.url);
+
+                    $vas("li#wp-admin-bar-my-account").find("img.avatar.photo").attr("srcset",sucess_data.url);
+                    $vas("li#wp-admin-bar-user-info").find("img.avatar.photo").attr("srcset",sucess_data.url);
+
+                    
+                    
+
                     $vas(".wcmamtx_manage_gravtar_link").hide();
                     $vas(".wcmamtx_restore_default_link").show();
                     $vas('#wcmamtx_upload_response').show();

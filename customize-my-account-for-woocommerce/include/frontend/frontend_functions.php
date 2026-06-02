@@ -745,7 +745,7 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
         $ajax_loader =  ''.wcmamtx_PLUGIN_URL.'assets/images/ajax-loader.gif';
 
 
-                $avatar_settings = (array) get_option( 'wcmamtx_avatar_settings' );
+        $avatar_settings = (array) get_option( 'wcmamtx_avatar_settings' );
 
         $default_source  = isset($avatar_settings['disable_gravtar']) && ($avatar_settings['disable_gravtar'] == "yes") ? "local" : "gravtar";
 
