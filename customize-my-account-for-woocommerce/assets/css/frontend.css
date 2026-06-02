@@ -1061,7 +1061,7 @@ div.oceanwp-user-profile.clr {
 }
 
 .type-page .wcmamtx_upload_div.round .camera, .type-post .wcmamtx_upload_div.round .camera {
-    right: 20% !important;
+    right: 10% !important;
 }
 
 .theme-storefront p.wcmamtx_default_text_below_avatar {
@@ -1114,4 +1114,75 @@ div.oceanwp-user-profile.clr {
 
 .theme-elessi-theme  .wcmamtx_upload_div.round .camera {
     right: 15% !important;
+}
+
+.theme-motta .motta-myaccount {
+    display: none !important;
+}
+
+.theme-motta .type-page .wcmamtx_upload_div.round .camera, .type-post .wcmamtx_upload_div.round .camera {
+    right: 2% !important;
+}
+
+.theme-motta a.woocommerce-MyAccount-navigation-link_a:before {
+   display: none !important;
+}
+
+.theme-motta span.wcmamtx_sticky_icon_name {
+    margin-left: -30px;
+}
+
+.theme-oceanwp .wcmamtx_upload_div.round .camera {
+    right: 5%;
+}
+
+.theme-twentytwenty p.wcmamtx_default_text_below_avatar {
+    font-size: 12px;
+    margin-top: 20px;
+}
+
+.theme-royal-elementor-kit p.wcmamtx_default_text_below_avatar {
+    font-size: 12px;
+    margin-top: 20px;
+}
+
+.theme-royal-elementor-kit .type-page .wcmamtx_upload_div.round .camera, .type-post .wcmamtx_upload_div.round .camera {
+    right: 5% !important; 
+}
+
+.theme-martfury .account-info {
+    display: none !important;
+}
+
+.theme-martfury  form#custom-file-uploader button {
+    padding: 06px !important;
+    font-size: 10px !important;
+    margin-top: 40px !important;
+}
+
+.theme-xstore nav.woocommerce-MyAccount-navigation.wsmt_extra_navclass {
+    max-width: 25%;
+    float: left;
+}
+
+.theme-xstore .woocommerce-MyAccount-content {
+    max-width: 70%;
+    margin-left: 25px;
+}
+
+@media screen and (max-width: 800px) { 
+
+    .theme-xstore nav.woocommerce-MyAccount-navigation.wsmt_extra_navclass {
+        max-width: 100% !important;
+        float: left !important;
+        min-width: 100% !important;
+    }
+
+    .theme-xstore .woocommerce-MyAccount-content {
+        max-width: 100% !important;
+        margin-left: 0px !important;
+        float: left !important;
+        min-width: 100% !important;
+    }
+
 }
