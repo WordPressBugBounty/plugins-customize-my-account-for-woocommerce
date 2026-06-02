@@ -1048,3 +1048,70 @@ li.woocommerce-MyAccount-navigation-link.heading span.wcmamtx_sticky_icon_name {
 div.oceanwp-user-profile.clr {
     display: none !important;
 }
+
+.kadence-account-avatar {
+    display: none !important;
+}
+
+.theme-kadence p.wcmamtx_default_text_below_avatar {
+    font-size: 14px;
+    margin-top: 25px;
+    float: left;
+    width: 100%;
+}
+
+.type-page .wcmamtx_upload_div.round .camera, .type-post .wcmamtx_upload_div.round .camera {
+    right: 20% !important;
+}
+
+.theme-storefront p.wcmamtx_default_text_below_avatar {
+    margin-top: 20px;
+}
+
+.theme-shoptimizer p.wcmamtx_default_text_below_avatar {
+    font-size: 12px;
+    margin-top: 25px;
+}
+
+.theme-shoptimizer li.woocommerce-MyAccount-navigation-link a:before {
+    display: none !important;
+}
+
+.theme-botiga .type-page .wcmamtx_upload_div.round .camera, .type-post .wcmamtx_upload_div.round .camera {
+    right: 0% !important;
+}
+
+.theme-botiga p.wcmamtx_default_text_below_avatar{
+    font-size: 12px;
+    margin-top: 20px;
+}
+
+.theme-Avada .type-page .wcmamtx_upload_div.round .camera, .type-post .wcmamtx_upload_div.round .camera {
+    right: 0% !important;
+}
+
+.theme-Avada p.wcmamtx_default_text_below_avatar {
+    margin-top: 20px;
+    font-size: 12px;
+}
+
+.theme-elessi-theme nav.woocommerce-MyAccount-navigation.nasa-MyAccount-navigation {
+    display: none;
+}
+
+.theme-elessi-theme .account-nav.account-user.hide-for-small {
+    display: none;
+}
+
+.theme-elessi-theme  li.woocommerce-MyAccount-navigation-link {
+    padding: 10px;
+    font-size: 14px;
+}
+
+.theme-elessi-theme li.woocommerce-MyAccount-navigation-link:not(.is-active) span.wcmamtx_sticky_icon_name {
+    margin-left: 10px;
+}
+
+.theme-elessi-theme  .wcmamtx_upload_div.round .camera {
+    right: 15% !important;
+}
