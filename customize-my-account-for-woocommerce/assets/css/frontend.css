@@ -905,7 +905,7 @@ a.wcmamtx_restore_default_link {
 }
 
 .woocommerce-MyAccount-content {
-    padding: 14%;
+    /*padding: 14%;*/
 }
 
 .wcmtx-my-account-links {
@@ -1029,5 +1029,22 @@ div.my_camera.blocked {
 }
 
 li.woocommerce-MyAccount-navigation-link.heading i.fa {
+    display: none !important;
+}
+li.woocommerce-MyAccount-navigation-link.heading span.wcmamtx_sticky_icon_name {
+    /* color: white; */
+    margin-left: 5px;
+}
+
+.theme-neve p.wcmamtx_default_text_below_avatar a {
+    display: inline !important;
+    /* font-size: 12px; */
+}
+
+.theme-neve p.wcmamtx_default_text_below_avatar {
+    font-size:12px;
+}
+
+div.oceanwp-user-profile.clr {
     display: none !important;
 }

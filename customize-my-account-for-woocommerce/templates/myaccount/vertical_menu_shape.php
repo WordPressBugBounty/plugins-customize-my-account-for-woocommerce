@@ -46,7 +46,7 @@
 
     if (isset($avatar_settings['custom_avatar_content']) && ($avatar_settings['custom_avatar_content'] == "yes") && ($show_avatar == "yes")) {
 
-        $editor_content_avatar = isset($avatar_settings['content_avatar']) ? $avatar_settings['content_avatar'] : '<p style="text-align: center;">Hello <strong>{username}</strong> (not <strong>{username}</strong>? <a href="{user_logout_link}">Log out</a>)</p>';
+        $editor_content_avatar = isset($avatar_settings['content_avatar']) ? $avatar_settings['content_avatar'] : '<p class="wcmamtx_default_text_below_avatar" style="text-align: center;">Hello <strong>{username}</strong> (not <strong>{username}</strong>? <a href="{user_logout_link}">Log out</a>)</p>';
 
         
 

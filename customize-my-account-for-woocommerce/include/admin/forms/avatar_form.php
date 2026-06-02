@@ -158,7 +158,7 @@ if (array_key_exists(0, $avatar_settings)) {
 		</td>
 		<td>
 			<?php 
-			$editor_content = isset($avatar_settings['content_avatar']) ? $avatar_settings['content_avatar'] : '<p style="text-align: center;">Hello <strong>{username}</strong> (not <strong>{username}</strong>? <a href="{user_logout_link}">Log out</a>)</p>';
+			$editor_content = isset($avatar_settings['content_avatar']) ? $avatar_settings['content_avatar'] : '<p class="wcmamtx_default_text_below_avatar" style="text-align: center;">Hello <strong>{username}</strong> (not <strong>{username}</strong>? <a href="{user_logout_link}">Log out</a>)</p>';
 
 
 

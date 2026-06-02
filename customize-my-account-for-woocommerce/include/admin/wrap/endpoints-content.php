@@ -359,32 +359,7 @@ $default_color_font = '#334155';
 
 <?php if ($key == "dashboard") { ?>
 
-    <tr>
-        <td>
-            <label class=" wcmamtx_accordion_label"><?php echo esc_html__('Hide hello, Username text','customize-my-account-for-woocommerce'); ?></label>
-        </td>
-        <td>
-            <input type="checkbox" data-toggle="toggle" data-on="<?php  echo esc_html__('Yes','customize-my-account-for-woocommerce'); ?>" data-off="<?php  echo esc_html__('No','customize-my-account-for-woocommerce'); ?>" data-size="sm" class="wcmamtx_accordion_input wcmamtx_accordion_checkbox checkmark" ype="checkbox" name="wcmamtx_advanced_settings[<?php echo $key; ?>][hide_dashboard_hello]" value="01" <?php if (isset($value['hide_dashboard_hello']) && ($value['hide_dashboard_hello'] == "01")) { echo 'checked'; } ?>>
 
-            <p>
-                <?php echo esc_html__('Set yes if you wish to hide "Hello username (not username? Log out)" text.','customize-my-account-for-woocommerce'); ?>
-            </p>
-
-        </td>
-    </tr>
-
-    <tr>
-        <td>
-            <label class=" wcmamtx_accordion_label"><?php echo esc_html__('Hide introductory text','customize-my-account-for-woocommerce'); ?></label>
-        </td>
-        <td>
-            <input type="checkbox" data-toggle="toggle" data-on="<?php  echo esc_html__('Yes','customize-my-account-for-woocommerce'); ?>" data-off="<?php  echo esc_html__('No','customize-my-account-for-woocommerce'); ?>" data-size="sm" class="wcmamtx_accordion_input wcmamtx_accordion_checkbox checkmark" ype="checkbox" name="wcmamtx_advanced_settings[<?php echo $key; ?>][hide_intro_hello]" value="01" <?php if (isset($value['hide_intro_hello']) && ($value['hide_intro_hello'] == "01")) { echo 'checked'; } ?>>
-            <p>
-            <?php echo esc_html__('Set yes if you wish to hide "From your account dashboard ..." text , you can add custom content there using below given editor.','customize-my-account-for-woocommerce'); ?>
-        </p>
-
-        </td>
-    </tr>
 
     
 
