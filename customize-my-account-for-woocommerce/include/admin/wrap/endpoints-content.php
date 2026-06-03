@@ -6,28 +6,28 @@ $exclude_content_core_fields       = 'dashboard,orders,customer-logout';
 
 if (isset($value['wcmamtx_type'])) {
 
-   $wcmamtx_type = $value['wcmamtx_type'];
+ $wcmamtx_type = $value['wcmamtx_type'];
 
 } else {
-   $wcmamtx_type = 'endpoint';
+ $wcmamtx_type = 'endpoint';
 
 }
 
 
 if (isset($value['parent']) && ($value['parent'] != "")) {
 
-   $wcmamtx_parent = $value['parent'];
+ $wcmamtx_parent = $value['parent'];
 
 } else {
 
-   $wcmamtx_parent = 'none';
+ $wcmamtx_parent = 'none';
 
 }
 
 
 
 if ( ! isset( $wp_roles ) ) { 
-   $wp_roles = new WP_Roles();  
+ $wp_roles = new WP_Roles();  
 
 }
 
@@ -66,14 +66,14 @@ $default_color_font = '#334155';
 <?php } else { 
 
   if (isset($third_party)) {
-   $key = strtolower($key);
-   $key = str_replace(' ', '_', $key);
-}
+     $key = strtolower($key);
+     $key = str_replace(' ', '_', $key);
+ }
 
-?>
+ ?>
 
 
-    <span type="removeicon" third_party="<?php if (isset($third_party)) { echo $third_party; } else { echo 'no';} ?>" parentkey="<?php echo $key; ?>" class="dashicons dashicons-trash wcmamtx_accordion_remove"></span>
+ <span type="removeicon" third_party="<?php if (isset($third_party)) { echo $third_party; } else { echo 'no';} ?>" parentkey="<?php echo $key; ?>" class="dashicons dashicons-trash wcmamtx_accordion_remove"></span>
 
 
 
@@ -98,24 +98,24 @@ $default_color_font = '#334155';
 
 <div class="<?php echo $wcmamtx_type; ?>_accordion_content">
 
-   <table class="wcmamtx_table widefat">
+ <table class="wcmamtx_table widefat">
 
-      
 
-   <?php if ((!preg_match('/\b'.$key.'\b/', $core_fields ) && ($wcmamtx_type == 'endpoint')) && (!isset($third_party))) { ?>   
 
-    <tr>
-        <td>
-           <label class="wcmamtx_accordion_label"><?php  echo esc_html__('Custom Endpoint Key','customize-my-account-for-woocommerce'); ?></label>
-       </td>
-       <td>
-        <?php wcmamtx_show_disabled_input(); ?>
-    </td>
+     <?php if ((!preg_match('/\b'.$key.'\b/', $core_fields ) && ($wcmamtx_type == 'endpoint')) && (!isset($third_party))) { ?>   
 
-</tr>
+        <tr>
+            <td>
+             <label class="wcmamtx_accordion_label"><?php  echo esc_html__('Custom Endpoint Key','customize-my-account-for-woocommerce'); ?></label>
+         </td>
+         <td>
+            <?php wcmamtx_show_disabled_input(); ?>
+        </td>
+
+    </tr>
 <?php } else { ?>
 
-   <input type="hidden" class="wcmamtx_accordion_input" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][endpoint_key]" value="<?php if (isset($value['endpoint_key'])) { echo $value['endpoint_key']; } else { echo $key; } ?>">
+ <input type="hidden" class="wcmamtx_accordion_input" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][endpoint_key]" value="<?php if (isset($value['endpoint_key'])) { echo $value['endpoint_key']; } else { echo $key; } ?>">
 
 
 <?php  } ?>
@@ -153,7 +153,7 @@ $default_color_font = '#334155';
 
 <?php if ($key != "dashboard") { ?>
 
-<tr>
+    <tr>
         <td>
             <label class="wcmamtx_accordion_label"><?php  echo esc_html__('Dashboard links styling','customize-my-account-for-woocommerce'); ?></label>
             <p class="wcmamtx_accordion_label_small"><?php  echo esc_html__('Background Color and Font Color','customize-my-account-for-woocommerce'); ?></p>
@@ -166,137 +166,81 @@ $default_color_font = '#334155';
             </a>
         </td>
         
-</tr>
+    </tr>
 <?php } ?>
 
 
 
 <?php include('subwrap/countof-settings.php'); ?>
 
-<tr>
+<?php 
+
+if (preg_match('/\b'.$key.'\b/', $core_fields ))  { 
+
+    include('subwrap/icon_settings_revised.php'); 
+
+} else {
+    include('subwrap/icon_settings.php'); 
+}
+
+?>
+
+<tr class="fa_icon_tr" style= "<?php if ($icon_source == "custom") { echo 'display:table-row;'; } else { echo 'display:none;'; } ?>">
     <td>
-        <label class="wcmamtx_accordion_label"><?php  echo esc_html__('Icon Settings','customize-my-account-for-woocommerce'); ?></label>
+        <label class="wcmamtx_accordion_label"><?php  echo esc_html__('Icon','customize-my-account-for-woocommerce'); ?></label>
     </td>
     <td>
-       <?php 
-       if (isset($value['icon_source']) && ($value['icon_source'] != '')) {
-          $icon_source = $value['icon_source'];
-      } else {
-          $icon_source = 'default';
-      }
-      ?>
 
-      <div class="wcmamtx_icon_settings_div">
-          <div class="form-check wcmamtx_icon_checkbox">
-             <input class="form-check-input wcmamtx_icon_source_radio" type="radio" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][icon_source]"  value="default" <?php if ($icon_source == "default") { echo 'checked'; } ?>>
-             <label class="form-check-label wcmamtx_icon_checkbox_label" >
-                <?php  echo esc_html__('Default Icon','customize-my-account-for-woocommerce'); ?>
-            </label>
-        </div>
-        <div class="form-check wcmamtx_icon_checkbox">
-         <input class="form-check-input wcmamtx_icon_source_radio" type="radio" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][icon_source]"  value="noicon" <?php if ($icon_source == "noicon") { echo 'checked'; } ?> disabled>
-         <label class="form-check-label wcmamtx_icon_checkbox_label">
-            <?php  echo esc_html__('No Icon','customize-my-account-for-woocommerce'); ?>
-            <a href="#" data-toggle="modal" data-target="#wcmamtx_upgrade_modal">
-        <span class="wcmamtx_pro_upgrade_text"><?php  echo esc_html__('Upgrade to pro','customize-my-account-for-woocommerce'); ?></span>
-     
-    </a>
-        </label>
-    </div>
-    <div class="form-check wcmamtx_icon_checkbox">
-     <input class="form-check-input wcmamtx_icon_source_radio" type="radio" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][icon_source]"  value="custom" <?php if ($icon_source == "custom") { echo 'checked'; } ?> disabled>
-     <label class="form-check-label wcmamtx_icon_checkbox_label">
-        <?php  echo esc_html__('Font Awesome Icon','customize-my-account-for-woocommerce'); ?>
-        <a href="#" data-toggle="modal" data-target="#wcmamtx_upgrade_modal">
-        <span class="wcmamtx_pro_upgrade_text"><?php  echo esc_html__('Upgrade to pro','customize-my-account-for-woocommerce'); ?></span>
-
-    </a>
-        
-    </label>
-</div>
-
-<div class="form-check wcmamtx_icon_checkbox">
- <input class="form-check-input wcmamtx_icon_source_radio" type="radio" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][icon_source]"  value="default" <?php if ($icon_source == "dashicon") { echo 'checked'; } ?> disabled>
- <label class="form-check-label wcmamtx_icon_checkbox_label">
-    <?php  echo esc_html__('Dashicon','customize-my-account-for-woocommerce'); ?>
-    <a href="#" data-toggle="modal" data-target="#wcmamtx_upgrade_modal">
-        <span class="wcmamtx_pro_upgrade_text"><?php  echo esc_html__('Upgrade to pro','customize-my-account-for-woocommerce'); ?></span>
-
-    </a>
-</label>
-</div>
-
-<div class="form-check wcmamtx_icon_checkbox">
-    <input class="form-check-input wcmamtx_icon_source_radio" type="radio" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][icon_source]"  value="default" <?php if ($icon_source == "upload") { echo 'checked'; } ?> disabled>
-    <label class="form-check-label wcmamtx_icon_checkbox_label">
-        <?php  echo esc_html__('Upload Icon','customize-my-account-for-woocommerce'); ?>
-        <a href="#" data-toggle="modal" data-target="#wcmamtx_upgrade_modal">
-            <span class="wcmamtx_pro_upgrade_text"><?php  echo esc_html__('Upgrade to pro','customize-my-account-for-woocommerce'); ?></span>
-
-        </a>
-    </label>
-</div>
-</div>
-</td>
+        <input type="text" class="wcmamtx_iconpicker icon-class-input" name="<?php  echo esc_html__($this->wcmamtx_notices_settings_page); ?>[<?php echo $key; ?>][icon]" value="<?php if (isset($value['icon'])) { echo $value['icon']; } ?>">
+        <button type="button" class="btn btn-primary picker-button"><?php  echo esc_html__('Chose Font Awesome Icon','customize-my-account-for-woocommerce'); ?></button>
+        <p><a target="_blank" class="" href="https://fontawesome.com/v4/icons/"><?php  echo esc_html__('Full list of Supported Icons','customize-my-account-for-woocommerce'); ?>                        </a></p>
+    </td>
 
 </tr>
 
-                <tr class="fa_icon_tr" style= "<?php if ($icon_source == "custom") { echo 'display:table-row;'; } else { echo 'display:none;'; } ?>">
-                    <td>
-                        <label class="wcmamtx_accordion_label"><?php  echo esc_html__('Icon','customize-my-account-for-woocommerce'); ?></label>
-                    </td>
-                    <td>
+<tr class="show_dashicon_tr" style= "<?php if ($icon_source == "dashicon") { echo 'display:table-row;'; } else { echo 'display:none;'; } ?>">
+    <td>
+        <label class="wcmamtx_accordion_label"><?php  echo esc_html__('Icon','customize-my-account-for-woocommerce'); ?></label>
+    </td>
+    <td>
 
-                        <input type="text" class="wcmamtx_iconpicker icon-class-input" name="<?php  echo esc_html__($this->wcmamtx_notices_settings_page); ?>[<?php echo $key; ?>][icon]" value="<?php if (isset($value['icon'])) { echo $value['icon']; } ?>">
-                        <button type="button" class="btn btn-primary picker-button"><?php  echo esc_html__('Chose Font Awesome Icon','customize-my-account-for-woocommerce'); ?></button>
-                        <p><a target="_blank" class="" href="https://fontawesome.com/v4/icons/"><?php  echo esc_html__('Full list of Supported Icons','customize-my-account-for-woocommerce'); ?>                        </a></p>
-                    </td>
-            
-                </tr>
+        <input class="regular-text " id="dashicons_picker_example_<?php echo $key; ?>" type="text" name="<?php  echo esc_html__($this->wcmamtx_notices_settings_page); ?>[<?php echo $key; ?>][dashicon]" value="<?php if (isset($value['dashicon'])) { echo $value['dashicon']; } ?>" />
+        <input class="button dashicons-picker" type="button" value="<?php  echo esc_html__('Chose Dashicon','customize-my-account-for-woocommerce'); ?>" data-target="#dashicons_picker_example_<?php echo $key; ?>" />
 
-                <tr class="show_dashicon_tr" style= "<?php if ($icon_source == "dashicon") { echo 'display:table-row;'; } else { echo 'display:none;'; } ?>">
-                    <td>
-                        <label class="wcmamtx_accordion_label"><?php  echo esc_html__('Icon','customize-my-account-for-woocommerce'); ?></label>
-                    </td>
-                    <td>
+    </td>
 
-                        <input class="regular-text " id="dashicons_picker_example_<?php echo $key; ?>" type="text" name="<?php  echo esc_html__($this->wcmamtx_notices_settings_page); ?>[<?php echo $key; ?>][dashicon]" value="<?php if (isset($value['dashicon'])) { echo $value['dashicon']; } ?>" />
-                        <input class="button dashicons-picker" type="button" value="<?php  echo esc_html__('Chose Dashicon','customize-my-account-for-woocommerce'); ?>" data-target="#dashicons_picker_example_<?php echo $key; ?>" />
+</tr>
 
-                    </td>
-            
-                </tr>
+<tr class="show_upload_tr" style= "<?php if ($icon_source == "upload") { echo 'display:table-row;'; } else { echo 'display:none;'; } ?>">
+    <td>
+        <label class="wcmamtx_accordion_label"><?php  echo esc_html__('Upload Icon','customize-my-account-for-woocommerce'); ?></label>
+    </td>
+    <td>
+        <?php
 
-                <tr class="show_upload_tr" style= "<?php if ($icon_source == "upload") { echo 'display:table-row;'; } else { echo 'display:none;'; } ?>">
-                    <td>
-                        <label class="wcmamtx_accordion_label"><?php  echo esc_html__('Upload Icon','customize-my-account-for-woocommerce'); ?></label>
-                    </td>
-                    <td>
-                        <?php
+        $swatchimage = isset($value['upload_icon']) ? $value['upload_icon'] : "";
 
-                        $swatchimage = isset($value['upload_icon']) ? $value['upload_icon'] : "";
-
-                         if (isset($swatchimage)) {
-                            $swatchurl     = wp_get_attachment_thumb_url( $swatchimage );
-                         } 
-                        ?>
-                        <div class="facility_thumbnail" id="facility_thumbnail_<?php echo $key; ?>" style="float:left;">
-                            <img src="<?php if (isset($swatchurl) && ($swatchurl != '')) { echo $swatchurl; } else { echo wcmamtx_placeholder_img_src(); }  ?>" width="60px" height="60px" />
-                            <div  class="image-upload-div" idval="<?php echo $key; ?>" >
-                                <input type="hidden" class="facility_thumbnail_id_<?php echo $key; ?>" name="<?php  echo esc_html__($this->wcmamtx_notices_settings_page); ?>[<?php echo $key; ?>][upload_icon]" value="<?php if (isset($swatchimage)) { echo $swatchimage; } ?>"/>
-                                <button type="submit" class="upload_image_button_<?php echo $key; ?> button"><?php echo esc_html__( 'Upload/Add image', 'wcva' ); ?></button>
-                                <button type="submit" class="remove_image_button_<?php echo $key; ?> button"><?php echo esc_html__( 'Remove image', 'wcva' ); ?></button>
-                            </div>
-                        </div>
+        if (isset($swatchimage)) {
+            $swatchurl     = wp_get_attachment_thumb_url( $swatchimage );
+        } 
+        ?>
+        <div class="facility_thumbnail" id="facility_thumbnail_<?php echo $key; ?>" style="float:left;">
+            <img src="<?php if (isset($swatchurl) && ($swatchurl != '')) { echo $swatchurl; } else { echo wcmamtx_placeholder_img_src(); }  ?>" width="60px" height="60px" />
+            <div  class="image-upload-div" idval="<?php echo $key; ?>" >
+                <input type="hidden" class="facility_thumbnail_id_<?php echo $key; ?>" name="<?php  echo esc_html__($this->wcmamtx_notices_settings_page); ?>[<?php echo $key; ?>][upload_icon]" value="<?php if (isset($swatchimage)) { echo $swatchimage; } ?>"/>
+                <button type="submit" class="upload_image_button_<?php echo $key; ?> button"><?php echo esc_html__( 'Upload/Add image', 'wcva' ); ?></button>
+                <button type="submit" class="remove_image_button_<?php echo $key; ?> button"><?php echo esc_html__( 'Remove image', 'wcva' ); ?></button>
+            </div>
+        </div>
 
 
-                    </td>
+    </td>
 
-                </tr>
+</tr>
 
 <?php if  ((wcmamtx_wpmlsticky_mode == "on") && ($wcmamtx_type != 'group')) { ?>
 
-   <tr>
+ <tr>
     <td>
         <label class="wcmamtx_accordion_label"><?php  echo esc_html__('WPML Sticky Links','customize-my-account-for-woocommerce'); ?></label>
     </td>
@@ -305,7 +249,7 @@ $default_color_font = '#334155';
 
         <p class="wpml_sticky_para"><?php  echo esc_html__('Exclude from WPML Sticky Url to avoid transforming into PageID','customize-my-account-for-woocommerce'); ?></p>
     </td>
-    </tr>
+</tr>
 <?php } ?>
 
 
@@ -318,16 +262,16 @@ $default_color_font = '#334155';
             <label class="wcmamtx_accordion_label"><?php  echo esc_html__('Link url','customize-my-account-for-woocommerce'); ?></label>
         </td>
         <td>
-           <input class="wcmamtx_accordion_input" type="text" name="wcmamtx_advanced_settings[<?php echo $key; ?>][link_inputtarget]" value="<?php if (isset($value['link_inputtarget']) && ($value['link_inputtarget'] != '')) { echo ($value['link_inputtarget']); } else { echo '#';} ?>" size="70">
-       </td>
+         <input class="wcmamtx_accordion_input" type="text" name="wcmamtx_advanced_settings[<?php echo $key; ?>][link_inputtarget]" value="<?php if (isset($value['link_inputtarget']) && ($value['link_inputtarget'] != '')) { echo ($value['link_inputtarget']); } else { echo '#';} ?>" size="70">
+     </td>
 
-   </tr>
+ </tr>
 
-   <tr>
+ <tr>
     <td>
-       <label class="wcmamtx_accordion_label"><?php  echo esc_html__('Open in new tab','customize-my-account-for-woocommerce'); ?></label>
-   </td>
-   <td>    
+     <label class="wcmamtx_accordion_label"><?php  echo esc_html__('Open in new tab','customize-my-account-for-woocommerce'); ?></label>
+ </td>
+ <td>    
     <input data-toggle="toggle" data-on="<?php  echo esc_html__('Yes','customize-my-account-for-woocommerce'); ?>" data-off="<?php  echo esc_html__('No','customize-my-account-for-woocommerce'); ?>" data-size="sm" class="wcmamtx_accordion_input wcmamtx_accordion_checkbox checkmark" type="checkbox" name="wcmamtx_advanced_settings[<?php echo $key; ?>][link_targetblank]" value="01" <?php if (isset($value['link_targetblank']) && ($value['link_targetblank'] == "01")) { echo 'checked'; } ?>>
 </td>
 </tr>
@@ -361,7 +305,7 @@ $default_color_font = '#334155';
 
 
 
-    
+
 
     <tr>
         <td>
@@ -384,29 +328,29 @@ $default_color_font = '#334155';
                             ) ); 
                             ?>
                             <a target="_blank" class="wcmamtx_accordion_label_small" href="https://www.sysbasics.com/knowledge-base/list-of-content-variables/" class=""><?php  echo esc_html__('Supported Variables','customize-my-account-for-woocommerce'); ?>
-                        </a> <a target="_blank" class="wcmamtx_accordion_label_small float_right" href="https://www.sysbasics.com/knowledge-base/create-your-own-custom-content-variable/" class=""><?php  echo esc_html__('Create your own custom variable','customize-my-account-for-woocommerce'); ?>
+                            </a> <a target="_blank" class="wcmamtx_accordion_label_small float_right" href="https://www.sysbasics.com/knowledge-base/create-your-own-custom-content-variable/" class=""><?php  echo esc_html__('Create your own custom variable','customize-my-account-for-woocommerce'); ?>
                         </a>
-                        </td>
-                    </tr>
+                    </td>
+                </tr>
 
-                <?php } ?>
+            <?php } ?>
 
 
-                <tr>
+           <tr>
                     <td>
-                        <label class="wcmamtxvisibleto wcmamtx_accordion_label"><?php echo esc_html__('Visible to','customize-my-account-for-woocommerce'); ?></label>
+                        <label class="wcmamtxvisibleto wcmamtx_accordion_label"><?php echo esc_html__('Visible to','customize-my-account-for-woocommerce-pro'); ?></label>
                     </td>
                     <td>
                         <select mkey="<?php echo $key; ?>" class="wcmamtxvisibleto" name="wcmamtx_advanced_settings[<?php echo $key; ?>][visibleto]">
-                            <option value="all" <?php if ((isset($value['visibleto'])) && ($value['visibleto'] == "all")) { echo "selected"; } ?>><?php echo esc_html__('All roles','customize-my-account-for-woocommerce'); ?></option>
+                            <option value="all" <?php if ((isset($value['visibleto'])) && ($value['visibleto'] == "all")) { echo "selected"; } ?>><?php echo esc_html__('All roles','customize-my-account-for-woocommerce-pro'); ?></option>
                             
-                            <option value="specific_exclude" <?php if ((isset($value['visibleto'])) && ($value['visibleto'] == "specific_exclude")) { echo "selected"; } ?>><?php echo esc_html__('All roles except specified','customize-my-account-for-woocommerce'); ?></option>
-                            <option value="specific" <?php if ((isset($value['visibleto'])) && ($value['visibleto'] == "specific")) { echo "selected"; } ?>><?php echo esc_html__('Only specified roles','customize-my-account-for-woocommerce'); ?></option>
+                            <option value="specific_exclude" <?php if ((isset($value['visibleto'])) && ($value['visibleto'] == "specific_exclude")) { echo "selected"; } ?>><?php echo esc_html__('All roles except specified','customize-my-account-for-woocommerce-pro'); ?></option>
+                            <option value="specific" <?php if ((isset($value['visibleto'])) && ($value['visibleto'] == "specific")) { echo "selected"; } ?>><?php echo esc_html__('Only specified roles','customize-my-account-for-woocommerce-pro'); ?></option>
 
-                            <option value="specific_exclude_user" <?php if ((isset($value['visibleto'])) && ($value['visibleto'] == "specific_exclude_user")) { echo "selected"; } ?>><?php echo esc_html__('All users except specified','customize-my-account-for-woocommerce'); ?></option>
-                            <option value="specific_user" <?php if ((isset($value['visibleto'])) && ($value['visibleto'] == "specific_user")) { echo "selected"; } ?>><?php echo esc_html__('Only specified users','customize-my-account-for-woocommerce'); ?></option>
+                            <option value="specific_exclude_user" <?php if ((isset($value['visibleto'])) && ($value['visibleto'] == "specific_exclude_user")) { echo "selected"; } ?>><?php echo esc_html__('All users except specified','customize-my-account-for-woocommerce-pro'); ?></option>
+                            <option value="specific_user" <?php if ((isset($value['visibleto'])) && ($value['visibleto'] == "specific_user")) { echo "selected"; } ?>><?php echo esc_html__('Only specified users','customize-my-account-for-woocommerce-pro'); ?></option>
                         </select>
-
+               
                     </td>
                 </tr>
 
@@ -419,18 +363,17 @@ $default_color_font = '#334155';
                 } 
 
                 ?>
-
+              
                 <tr style="<?php if ((isset($value['visibleto'])) && (($value['visibleto'] == "specific") || ($value['visibleto'] == "specific_exclude"))) { echo "display:table-row;"; } else { echo "display:none;"; } ?>" class="wcmamtxroles_<?php echo $key; ?>">
                     <td>
-
+                        <label class="wcmamtx_roles wcmamtx_accordion_label"><?php echo esc_html__('Select roles','customize-my-account-for-woocommerce-pro'); ?></label>
                     </td>
                     <td>
-                        <label class="form-check-label wcmamtx_icon_checkbox_label">
-                            <?php echo esc_html__('Pro only feature','customize-my-account-for-woocommerce'); ?>        <a href="#" data-toggle="modal" data-target="#wcmamtx_upgrade_modal">
-                                <span class="wcmamtx_pro_upgrade_text"><?php echo esc_html__('Upgrade to pro','customize-my-account-for-woocommerce'); ?></span>
-
-                            </a>
-                        </label>
+                        <select data-placeholder="<?php echo esc_html__('Choose Roles','customize-my-account-for-woocommerce-pro'); ?>" name="wcmamtx_advanced_settings[<?php echo $key; ?>][roles][]" class="wcmamtx_roleselect" multiple>
+                            <?php foreach ($roles as $rkey => $role) { ?>
+                                <option value="<?php echo $rkey; ?>" <?php if (preg_match('/\b'.$rkey.'\b/', $chosenrolls )) { echo 'selected';}?>><?php echo $role['name']; ?></option>
+                            <?php } ?>
+                        </select>
                     </td>
                 </tr>
 
@@ -445,159 +388,161 @@ $default_color_font = '#334155';
                 
 
                 ?>
-
+              
                 <tr style="<?php if ((isset($value['visibleto'])) && (($value['visibleto'] == "specific_exclude_user") || ($value['visibleto'] == "specific_user"))) { echo "display:table-row;"; } else { echo "display:none;"; } ?>" class="wcmamtxusers_<?php echo $key; ?>">
                     <td>
-
+                        <label class="wcmamtx_roles wcmamtx_accordion_label"><?php echo esc_html__('Select users','customize-my-account-for-woocommerce-pro'); ?></label>
                     </td>
                     <td>
-                        <label class="form-check-label wcmamtx_icon_checkbox_label">
-                            <?php echo esc_html__('Pro only feature','customize-my-account-for-woocommerce'); ?>        <a href="#" data-toggle="modal" data-target="#wcmamtx_upgrade_modal">
-                                <span class="wcmamtx_pro_upgrade_text"><?php echo esc_html__('Upgrade to pro','customize-my-account-for-woocommerce'); ?></span>
+                        <select data-placeholder="<?php echo esc_html__('Choose Users','customize-my-account-for-woocommerce-pro'); ?>" name="wcmamtx_advanced_settings[<?php echo $key; ?>][users][]" class="wcmamtx_userselect" multiple>
+                            <?php foreach ($chosenusers as $ukey => $uvalue) { 
+                                $user = get_user_by( 'id', $uvalue );
 
-                            </a>
-                        </label>
+                                ?>
+                                <option value="<?php echo $uvalue; ?>" selected><?php echo $user->user_login; ?></option>
+                            <?php } ?>
+                        </select>
                     </td>
                 </tr>
 
 
-                <?php if (($wcmamtx_type == 'endpoint') && (!preg_match('/\b'.$key.'\b/', $exclude_content_core_fields )) && (!isset($third_party))) { ?>
+            <?php if (($wcmamtx_type == 'endpoint') && (!preg_match('/\b'.$key.'\b/', $exclude_content_core_fields )) && (!isset($third_party))) { ?>
 
-                 <tr>
-                    <td>
-                        <label class="wcmamtx_accordion_label wcmamtx_custom_content_label"><?php  echo esc_html__('Custom Content','customize-my-account-for-woocommerce'); ?></label>
-                    </td>
-                    <td>    
+               <tr>
+                <td>
+                    <label class="wcmamtx_accordion_label wcmamtx_custom_content_label"><?php  echo esc_html__('Custom Content','customize-my-account-for-woocommerce'); ?></label>
+                </td>
+                <td>    
 
-                        <?php 
-                        $editor_content = isset($value['content']) ? $value['content'] : "";
+                    <?php 
+                    $editor_content = isset($value['content']) ? $value['content'] : "";
 
 
 
-                        $editor_id      = 'wcmamtx_content_'.$key.'';
-                        $editor_name    = ''.$this->wcmamtx_notices_settings_page.'['.$key.'][content]';
+                    $editor_id      = 'wcmamtx_content_'.$key.'';
+                    $editor_name    = ''.$this->wcmamtx_notices_settings_page.'['.$key.'][content]';
 
-                        wp_editor( $editor_content, $editor_id, $settings = array(
-                           'textarea_name' => $editor_name,
+                    wp_editor( $editor_content, $editor_id, $settings = array(
+                     'textarea_name' => $editor_name,
                             	'editor_height' => 180, // In pixels, takes precedence and has no default value
                                 'textarea_rows' => 16
                             ) ); 
                             ?>
 
-                        <a target="_blank" class="wcmamtx_accordion_label_small" href="https://www.sysbasics.com/knowledge-base/list-of-content-variables/" class=""><?php  echo esc_html__('Supported Variables','customize-my-account-for-woocommerce'); ?>
-                        </a> <a target="_blank" class="wcmamtx_accordion_label_small float_right" href="https://www.sysbasics.com/knowledge-base/create-your-own-custom-content-variable/" class=""><?php  echo esc_html__('Create your own custom variable','customize-my-account-for-woocommerce'); ?>
+                            <a target="_blank" class="wcmamtx_accordion_label_small" href="https://www.sysbasics.com/knowledge-base/list-of-content-variables/" class=""><?php  echo esc_html__('Supported Variables','customize-my-account-for-woocommerce'); ?>
+                            </a> <a target="_blank" class="wcmamtx_accordion_label_small float_right" href="https://www.sysbasics.com/knowledge-base/create-your-own-custom-content-variable/" class=""><?php  echo esc_html__('Create your own custom variable','customize-my-account-for-woocommerce'); ?>
                         </a>
-                        </td>
-                    </tr>
-
-                <?php } ?>
-
-
-                <?php if (($wcmamtx_type == 'endpoint') && (preg_match('/\b'.$key.'\b/', $extra_content_core_fields ))) { ?>
-
-                	<tr>
-                		<td>
-                			<label class="wcmamtx_accordion_label"><?php  echo esc_html__('Content Settings','customize-my-account-for-woocommerce'); ?></label>
-                		</td>
-                		<td>
-                			<?php 
-                			if (isset($value['content_settings']) && ($value['content_settings'] != '')) {
-                				$content_settings = $value['content_settings'];
-                			} else {
-                				$content_settings = 'after';
-                			}
-                			?>
-
-                			<div class="wcmamtx_content_settings_div">
-                				<div class="form-check wcmamtx_content_checkbox">
-                					<input class="form-check-input wcmamtx_content_source_radio" type="radio" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][content_settings]"  value="after" <?php if ($content_settings == "after") { echo 'checked'; } ?>>
-                					<label class="form-check-label wcmamtx_icon_checkbox_label" >
-                						<?php  echo esc_html__('After Existing Content','customize-my-account-for-woocommerce'); ?>
-                					</label>
-                				</div>
-                				<div class="form-check wcmamtx_content_checkbox">
-                					<input class="form-check-input wcmamtx_content_source_radio" type="radio" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][content_settings]"  value="before" <?php if ($content_settings == "before") { echo 'checked'; } ?>>
-                					<label class="form-check-label wcmamtx_icon_checkbox_label">
-                						<?php  echo esc_html__('Before Existing Content','customize-my-account-for-woocommerce'); ?>
-                					</label>
-                				</div>
-                			</div>
-                		</td>
-
-                	</tr>
-
-                <?php } ?>
-
-
-                <?php if ($wcmamtx_type == 'group') { ?>
-
-                	<tr>
-                		<td>
-                			<label class="wcmamtx_accordion_label"><?php  echo esc_html__('Open by default','customize-my-account-for-woocommerce'); ?></label>
-                		</td>
-                		<td>    
-                			<input class="wcmamtx_accordion_input wcmamtx_accordion_checkbox form-check-input" type="checkbox" name="wcmamtx_advanced_settings[<?php echo $key; ?>][group_open_default]" <?php if (isset($value['group_open_default']) && ($value['group_open_default'] == "01")) { echo 'checked'; } ?> value="01">
-                		</td>
-                	</tr>
-
-                <?php } ?>
-
-                <tr>
-                    <td>
-                        <label class="wcmamtx_accordion_label"><?php  echo esc_html__('Classes','customize-my-account-for-woocommerce'); ?></label>
-                    </td>
-                    <td>    
-                        <input type="text" class="wcmamtx_accordion_input wcmamtx_class_input" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][class]" value="<?php if (isset($value['class'])) { echo $value['class']; } ?>">
                     </td>
                 </tr>
 
+            <?php } ?>
 
 
+            <?php if (($wcmamtx_type == 'endpoint') && (preg_match('/\b'.$key.'\b/', $extra_content_core_fields ))) { ?>
 
-                <?php if ($key == "edit-account") { ?>
-
-                    <tr>
-                        <td>
-                            <label class="wcmamtx_accordion_label"><?php  echo esc_html__('Edit Account fields','customize-my-account-for-woocommerce'); ?></label>
-                        </td>
-                        <td>    
-
-                            <a class="btn btn-success" style="color:white;" target="_blank" href="https://www.sysbasics.com/product/woocommerce-my-account-fields/">
-                                <?php  echo esc_html__('Manage Edit Account Fields','customize-my-account-for-woocommerce'); ?>
-                            </a>
-                        </td>
-                    </tr>
-
-                <?php } ?>
-
-                <?php if ($wcmamtx_type != 'group') { ?>
-
-                <?php } ?>
-
-                <?php if (isset($third_party)) { ?>
-
-                   <tr>
-                    <td>
-
-                    </td>
-                    <td>
-
-                     <input type="hidden" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][third_party]" value="yes">
-                     
+               <tr>
+                  <td>
+                     <label class="wcmamtx_accordion_label"><?php  echo esc_html__('Content Settings','customize-my-account-for-woocommerce'); ?></label>
                  </td>
+                 <td>
+                     <?php 
+                     if (isset($value['content_settings']) && ($value['content_settings'] != '')) {
+                        $content_settings = $value['content_settings'];
+                    } else {
+                        $content_settings = 'after';
+                    }
+                    ?>
 
-                </tr>
+                    <div class="wcmamtx_content_settings_div">
+                        <div class="form-check wcmamtx_content_checkbox">
+                           <input class="form-check-input wcmamtx_content_source_radio" type="radio" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][content_settings]"  value="after" <?php if ($content_settings == "after") { echo 'checked'; } ?>>
+                           <label class="form-check-label wcmamtx_icon_checkbox_label" >
+                              <?php  echo esc_html__('After Existing Content','customize-my-account-for-woocommerce'); ?>
+                          </label>
+                      </div>
+                      <div class="form-check wcmamtx_content_checkbox">
+                       <input class="form-check-input wcmamtx_content_source_radio" type="radio" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][content_settings]"  value="before" <?php if ($content_settings == "before") { echo 'checked'; } ?>>
+                       <label class="form-check-label wcmamtx_icon_checkbox_label">
+                          <?php  echo esc_html__('Before Existing Content','customize-my-account-for-woocommerce'); ?>
+                      </label>
+                  </div>
+              </div>
+          </td>
 
-                <?php } ?>    
-        </table>
+      </tr>
 
-        </div>
-
-        <?php if (($wcmamtx_type == 'group') && ($value['parent'] == "none")) {
-
-           $this->get_group_content($name,$key,$value);
-
-       } ?>
+  <?php } ?>
 
 
-       <?php 
+  <?php if ($wcmamtx_type == 'group') { ?>
+
+   <tr>
+      <td>
+         <label class="wcmamtx_accordion_label"><?php  echo esc_html__('Open by default','customize-my-account-for-woocommerce'); ?></label>
+     </td>
+     <td>    
+         <input class="wcmamtx_accordion_input wcmamtx_accordion_checkbox form-check-input" type="checkbox" name="wcmamtx_advanced_settings[<?php echo $key; ?>][group_open_default]" <?php if (isset($value['group_open_default']) && ($value['group_open_default'] == "01")) { echo 'checked'; } ?> value="01">
+     </td>
+ </tr>
+
+<?php } ?>
+
+<tr>
+    <td>
+        <label class="wcmamtx_accordion_label"><?php  echo esc_html__('Extra Classes','customize-my-account-for-woocommerce'); ?></label>
+    </td>
+    <td>    
+        <input type="text" class="wcmamtx_accordion_input wcmamtx_class_input" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][class]" value="<?php if (isset($value['class'])) { echo $value['class']; } ?>">
+    </td>
+</tr>
+
+
+
+
+<?php if ($key == "edit-account") { ?>
+
+    <tr>
+        <td>
+            <label class="wcmamtx_accordion_label"><?php  echo esc_html__('Edit Account fields','customize-my-account-for-woocommerce'); ?></label>
+        </td>
+        <td>    
+
+            <a class="btn btn-success" style="color:white;" target="_blank" href="https://www.sysbasics.com/product/woocommerce-my-account-fields/">
+                <?php  echo esc_html__('Manage Edit Account Fields','customize-my-account-for-woocommerce'); ?>
+            </a>
+        </td>
+    </tr>
+
+<?php } ?>
+
+<?php if ($wcmamtx_type != 'group') { ?>
+
+<?php } ?>
+
+<?php if (isset($third_party)) { ?>
+
+ <tr>
+    <td>
+
+    </td>
+    <td>
+
+       <input type="hidden" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][third_party]" value="yes">
+
+   </td>
+
+</tr>
+
+<?php } ?>    
+</table>
+
+</div>
+
+<?php if (($wcmamtx_type == 'group') && ($value['parent'] == "none")) {
+
+ $this->get_group_content($name,$key,$value);
+
+} ?>
+
+
+<?php 
