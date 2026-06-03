@@ -12,7 +12,7 @@ if (!function_exists('wcmamtx_get_account_menu_li_icon_html')) {
         	$icon       = isset($value['icon']) ? $value['icon'] : "";
 
         	if ($icon != '') { ?>
-        		<i class="<?php echo $icon; ?>"></i>
+        		<i class="<?php echo $icon; ?> wcmamtx_fa_icon"></i>
         	<?php }
         	break;
 
@@ -128,9 +128,9 @@ if (!function_exists('wcmamtx_get_account_menu_li_icon_html')) {
 			}
 
 			if ($icon != '') { ?>
-				<i class="<?php echo $icon; ?>"></i>
+				<i class="<?php echo $icon; ?> wcmamtx_fa_icon"></i>
 			<?php } else { ?>
-				<i class="fa fa-file-alt"></i>
+				<i class="fa fa-file-alt wcmamtx_fa_icon"></i>
 			<?php }
         	break;
 

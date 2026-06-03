@@ -156,10 +156,15 @@ class wcmamtx_upload_avatar_tab {
 	}
 
 	public function custom_limit_image_upload_size( $file ) {
+
+
     // Only check if it is an image
 		if ( strpos( $file['type'], 'image' ) !== false ) {
 
-            $image_size_limit = 1024; // Define your maximum size in Kilobytes (KB)
+			$avatar_settings = (array) get_option( 'wcmamtx_avatar_settings' );
+			$max_size = isset($avatar_settings['max_size']) ? $avatar_settings['max_size'] : "1024";
+
+            $image_size_limit = $max_size; // Define your maximum size in Kilobytes (KB)
             $current_size = $file['size'] / 1024; // Convert bytes to KB
 
             if ( $current_size > $image_size_limit ) {
@@ -211,14 +216,34 @@ class wcmamtx_upload_avatar_tab {
 			require_once(ABSPATH . 'wp-admin/includes/file.php');
 		}
 
+		$default_options_format = array ( 0 => 'jpg', 1 => 'jpeg', 2 => 'jpe', 3 => 'gif', 4 => 'png', 5 => 'webp' );
+
+		$avatar_settings        = (array) get_option( 'wcmamtx_avatar_settings' );
+			
+
+		$chosen_formats = isset($avatar_settings['allowed_formats']) ? $avatar_settings['allowed_formats'] : $default_options_format;
+
 
         // Allowed file extensions/types
 		$mimes = array(
-			'jpg|jpeg|jpe' => 'image/jpeg',
+			'jpg'          => 'image/jpeg',
+			'jpeg'         => 'image/jpeg',
+			'jpe'          => 'image/jpeg',
 			'gif'          => 'image/gif',
 			'png'          => 'image/png',
 			'webp'         => 'image/webp',
 		);
+
+
+		foreach ($mimes as $mkey=>$mvalue) {
+
+			if (!in_array($mkey, $chosen_formats)) {
+
+				unset($mimes[$mkey]);
+
+			}
+
+		}
 
 		if (isset($uploaded_file)) {
 

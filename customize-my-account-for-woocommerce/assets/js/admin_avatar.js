@@ -74,7 +74,7 @@ $var( function() {
         $var(".wcmamtx_show_avatar_tr").hide();
     }
 
-
+    
 
 
     });
@@ -97,6 +97,10 @@ $var( function() {
             $var(".wcmamtx_override_texts_tr").hide();
         }
 
+    });
+
+    $var(".wcmamtx_allowed_formats_multiselect").select2({
+        width: '50%'
     });
 
 });

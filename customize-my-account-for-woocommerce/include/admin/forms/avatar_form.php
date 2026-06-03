@@ -55,6 +55,52 @@ if (array_key_exists(0, $avatar_settings)) {
 	</tr>
 
 	<tr class="wcmamtx_show_avatar_tr" style="<?php if (isset($avatar_settings['disable_avatar']) && ($avatar_settings['disable_avatar'] == "yes")) { echo 'display:table-row;'; } else { echo 'display:none;'; } ?>">
+		<td><label><?php echo esc_html__('Max image size','customize-my-account-for-woocommerce'); ?></label> <br />
+		</td>
+		<td>
+			<input size="3" type="number" value="<?php if (isset($avatar_settings['max_size']) ) { echo $avatar_settings['max_size']; } else { echo '1024'; } ?>" name="<?php  echo $this->wcmamtx_avatar_settings_page; ?>[max_size]">KB
+		</td>
+			
+	</tr>
+
+	<tr class="wcmamtx_show_avatar_tr" style="<?php if (isset($avatar_settings['disable_avatar']) && ($avatar_settings['disable_avatar'] == "yes")) { echo 'display:table-row;'; } else { echo 'display:none;'; } ?>">
+		<td><label><?php echo esc_html__('Allowed Formats','customize-my-account-for-woocommerce'); ?></label> <br />
+		</td>
+		<td>
+			<?php
+
+			$default_options_format = array ( 0 => 'jpg', 1 => 'jpeg', 2 => 'jpe', 3 => 'gif', 4 => 'png', 5 => 'webp' );
+			
+			$all_format_options = array(
+				'jpg'  => 'JPG',
+				'jpeg' => 'JPEG',
+				'jpe'  => 'JPE',
+				'gif'  => 'GIF',
+				'png'  => 'PNG',
+				'webp' => 'WEBP',
+			);
+
+			$chosen_formats = isset($avatar_settings['allowed_formats']) ? $avatar_settings['allowed_formats'] : $default_options_format;
+
+		
+
+
+			?>
+			<select class="wcmamtx_allowed_formats_multiselect" name="<?php  echo esc_html__($this->wcmamtx_avatar_settings_page); ?>[allowed_formats][]" multiple>
+				
+
+				<?php foreach ($all_format_options as $akey=>$avalue) { ?>
+					<option value="<?php echo $akey; ?>" <?php if (in_array($akey, $chosen_formats)) { echo 'selected'; } ?>>
+						<?php echo $avalue; ?>
+					</option>
+				<?php } ?>
+
+			</select>
+		</td>
+			
+	</tr>
+
+	<tr class="wcmamtx_show_avatar_tr" style="<?php if (isset($avatar_settings['disable_avatar']) && ($avatar_settings['disable_avatar'] == "yes")) { echo 'display:table-row;'; } else { echo 'display:none;'; } ?>">
 		<td><label><?php echo esc_html__('Do not Allow user to upload avatar','customize-my-account-for-woocommerce'); ?></label> <br />
 		</td>
 		<td>
