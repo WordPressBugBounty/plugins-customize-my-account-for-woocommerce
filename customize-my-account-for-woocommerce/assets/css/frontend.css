@@ -1229,9 +1229,9 @@ div.oceanwp-user-profile.clr {
 }
 
 .wcmtx_def1-card .dashicons, .wcmtx_def1-card i.fa.wcmamtx_fa_icon{
-    font-size:38px;
-    width:38px;
-    height:38px;
+    font-size:30px;
+    width:30px;
+    height:30px;
     margin-bottom:15px;
     float: left;
     color: #3b82f6;
@@ -1242,10 +1242,10 @@ div.oceanwp-user-profile.clr {
     font-size: 16px;
     font-weight: 600;
     color: #222;
-    margin-top: 10px;
+    margin-top: 6px;
     float: left;
-    margin-left: 10px;
-    font-size: 14px;
+    margin-left: 14px;
+    font-size: 16px;
 }
 
 .wcmtx_def1-dashboard .dashboard i.fa.fa-tachometer-alt.wcmamtx_fa_icon{color:#3b82f6;}
@@ -1254,3 +1254,19 @@ div.oceanwp-user-profile.clr {
 .wcmtx_def1-dashboard .edit-address i.fa.fa-home.wcmamtx_fa_icon{color:#ef4444;}
 .wcmtx_def1-dashboard .edit-account i.fa.fa-user.wcmamtx_fa_icon{color:#8b5cf6;}
 .wcmtx_def1-dashboard .customer-logout i.fa.fa-sign-out-alt.wcmamtx_fa_icon{color:#06b6d4;}
+
+span.wcmatx_tab_desc_below_dashlink {
+    float: left;
+    width: 100%;
+    /* margin-left: -20px; */
+    text-align: left;
+    font-size: 13px;
+    padding: 2px;
+}
+
+.wcmtx_def1-dashboard .wcmamtx-banner-counter {
+
+    top: 35px !important;
+    right: 90px !important;
+
+}

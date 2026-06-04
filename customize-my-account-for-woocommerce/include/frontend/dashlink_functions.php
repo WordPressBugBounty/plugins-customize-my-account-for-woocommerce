@@ -26,12 +26,12 @@ foreach ($items as $itkey=>$itvalue) {
 $core_fields    = 'dashboard,orders,downloads,edit-address,edit-account,customer-logout';
 
 $core_fields_array =  array(
-    'dashboard'       => esc_html__('Dashboard','woocommerce'),
-    'orders'          => esc_html__('Orders','woocommerce'),
-    'downloads'       => esc_html__('Downloads','woocommerce'),
-    'edit-address'    => esc_html__('Addresses','woocommerce'),
-    'edit-account'    => esc_html__('Account Details','woocommerce'),
-    'customer-logout' => esc_html__('Log out','woocommerce')
+    'dashboard'       => esc_html__('Dashboard','customize-my-account-for-woocommerce'),
+    'orders'          => esc_html__('Orders','customize-my-account-for-woocommerce'),
+    'downloads'       => esc_html__('Downloads','customize-my-account-for-woocommerce'),
+    'edit-address'    => esc_html__('Addresses','customize-my-account-for-woocommerce'),
+    'edit-account'    => esc_html__('Account Details','customize-my-account-for-woocommerce'),
+    'customer-logout' => esc_html__('Log out','customize-my-account-for-woocommerce')
 );
 
 
@@ -76,6 +76,15 @@ if (!isset($wcmamtx_tabs) || (sizeof($wcmamtx_tabs) == 1)) {
 
 $wcmamtx_tabs   = apply_filters('wcmamtx_override_dashlinks',$wcmamtx_tabs);
 
+$wcmamtx_layout = (array) get_option( 'wcmamtx_layout' );
 
-include("dashlinks/default.php");
+
+$dash_style = isset($wcmamtx_layout['dash_style']) ? $wcmamtx_layout['dash_style'] : "01";
+
+if ($dash_style == 01) {
+    include("dashlinks/default1.php");
+} else {
+    include("dashlinks/default.php");
+}
+
 ?>

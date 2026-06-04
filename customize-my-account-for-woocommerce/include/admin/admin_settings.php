@@ -587,6 +587,27 @@ class wcmamtx_add_settings_page_class {
                 wp_enqueue_script( 'wcmamtxstepsbdwizard', ''.wcmamtx_PLUGIN_URL.'assets/js/bd-wizard.js',array('wcmtx_steps_jquery'), '1.0.0', true );
                
 
+            } 
+
+            if (isset($current_tab) && ($current_tab == "wcmamtx_layout")) {
+
+                wp_enqueue_style( 'wcmamtx_layout', ''.wcmamtx_PLUGIN_URL.'assets/css/layout.css');
+
+                
+
+                wp_enqueue_script( 'wcmamtx_layout', ''.wcmamtx_PLUGIN_URL.'assets/js/layout.js',array('jquery'), '1.0.0', true );
+
+                $wcmamtx_js_array_layout = array(
+                
+                'image01'           => ''.wcmamtx_PLUGIN_URL.'assets/images/layout1.png',
+                'image02'           => ''.wcmamtx_PLUGIN_URL.'assets/images/layout2.png',
+            
+                
+                
+                );
+
+               wp_localize_script( 'wcmamtx_layout', 'wcmamtx_layout', $wcmamtx_js_array_layout );
+
             }
 
 
@@ -676,7 +697,7 @@ class wcmamtx_add_settings_page_class {
         add_settings_field( 'advanced_option', '', array( $this, 'linked_product_swatches_settings' ), $this->wcmamtx_notices_settings_page, 'wcmamtx_advance_section' );
 
 
-        /*
+        
 
         $this->wcmamtx_plugin_settings_tab[$this->wcmamtx_layout_page] = esc_html__( 'Layout' ,'customize-my-account-for-woocommerce');
 
@@ -686,7 +707,7 @@ class wcmamtx_add_settings_page_class {
 
         add_settings_field( 'layout_option', '', array( $this, 'layout_settings_form_function' ), $this->wcmamtx_layout_page, 'wcmamtx_layout_section' );
 
-        */
+        
 
 
         $this->wcmamtx_plugin_settings_tab[$this->wcmamtx_account_fields_page] = esc_html__( 'My Account Fields' ,'customize-my-account-for-woocommerce');
@@ -1034,7 +1055,7 @@ class wcmamtx_add_settings_page_class {
 
                         <?php if (isset($current_tab) && ($current_tab == "wcmamtx_advanced_settings") && ($current_tab != "wcmamtx_wizard_settings")) { ?>
 
-                            <input type="button" href="#" data-toggle="modal" data-target="#wcmamtx_bulk_modal" name="submit" id="wcmamtx_bulk_actions_button" class="btn-sm btn btn-dark wcmamtx_bulk_actions_button" value="<?php echo esc_html__( 'Bulk Actions' ,'customize-my-account-for-woocommerce'); ?>">
+                           
 
                             <input type="button" href="#" name="submit" id="wcmamtx_reset_tabs_button" class="btn-sm btn btn-danger wcmamtx_reset_tabs_button" value="<?php echo esc_html__( 'Restore Default' ,'customize-my-account-for-woocommerce'); ?>">
                            

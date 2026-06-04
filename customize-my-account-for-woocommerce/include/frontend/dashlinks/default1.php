@@ -1,6 +1,17 @@
 <div class="wcmtx_def1-dashboard">
+    <?php unset($wcmamtx_tabs['customer-logout']); ?>
+    <?php unset($wcmamtx_tabs['dashboard']); ?>
 
-    <?php foreach ( $wcmamtx_tabs as $key => $value ) {
+    <?php 
+
+    $default_desc_text_link = array(
+        'orders'          => esc_html__('View and track your orders','customize-my-account-for-woocommerce'),
+        'downloads'       => esc_html__('Get your Downloads','customize-my-account-for-woocommerce'),
+        'edit-address'    => esc_html__('Manage your addresses','customize-my-account-for-woocommerce'),
+        'edit-account'    => esc_html__('Update your account info','customize-my-account-for-woocommerce'),
+    );
+
+    foreach ( $wcmamtx_tabs as $key => $value ) {
 
         $should_show = 'yes';
 
@@ -98,13 +109,24 @@
 
              $ajax_class = isset($wcmamtx_plugin_options['ajax_navigation']) && ($wcmamtx_plugin_options['ajax_navigation'] == "yes") ? "wcmamtx_ajax_enabled" : "";
 
+             $default_desc_text = isset($default_desc_text_link[$key]) ? $default_desc_text_link[$key] : "";
+
+             $default_desc_text = isset($value['default_desc_text']) ? $value['default_desc_text'] : $default_desc_text;
+
              ?>
 
-             <a href="<?php echo wcmamtx_get_account_endpoint_url( $key ); ?>" class="wcmtx_def1-card <?php echo esc_attr( $key ); ?>">
-                <?php wcmamtx_get_account_menu_li_icon_html($icon_source,$value,$key); ?>
+             <a href="<?php echo wcmamtx_get_account_endpoint_url( $key ); ?>" class="wcmtx_def1-card <?php echo esc_attr( $key ); ?>"  style="color:<?php echo $default_color_font; ?>;">
+                <?php 
+
+                wcmamtx_get_account_menu_li_icon_html($icon_source,$value,$key); 
+
+                ?>
                  
-                <?php wcmamtx_counter_bubble($key,$value); ?>
-                <h3><?php echo esc_html( $name ); ?></h3>
+                
+                <h3><?php echo esc_html( $name ); ?> <?php wcmamtx_counter_bubble($key,$value); ?></h3>
+                <?php if (isset($default_desc_text) && ($default_desc_text != "")) { ?>
+                    <span class="wcmatx_tab_desc_below_dashlink"><?php echo esc_html( $default_desc_text ); ?></span>
+                <?php } ?>
             </a>
 
         <?php } ?>

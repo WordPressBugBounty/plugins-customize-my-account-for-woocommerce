@@ -1,7 +1,7 @@
 <?php
 if (!function_exists('wcmamtx_get_account_menu_li_icon_html')) {
 
-	function wcmamtx_get_account_menu_li_icon_html($icon_source,$value,$key) {
+	function wcmamtx_get_account_menu_li_icon_html($icon_source,$value,$key,$style=null) {
 
 		
         
@@ -12,7 +12,7 @@ if (!function_exists('wcmamtx_get_account_menu_li_icon_html')) {
         	$icon       = isset($value['icon']) ? $value['icon'] : "";
 
         	if ($icon != '') { ?>
-        		<i class="<?php echo $icon; ?> wcmamtx_fa_icon"></i>
+        		<i <?php echo $style; ?> class="<?php echo $icon; ?> wcmamtx_fa_icon"></i>
         	<?php }
         	break;
 
@@ -21,10 +21,10 @@ if (!function_exists('wcmamtx_get_account_menu_li_icon_html')) {
         	$icon       = isset($value['dashicon']) ? $value['dashicon'] : "";
 
 			if ($icon != '') { ?>
-				<span class="dashicons <?php echo $icon; ?>"></span>
+				<span <?php echo $style; ?> class="dashicons <?php echo $icon; ?>"></span>
 			<?php } else { ?>
 
-				<i class="fa fa-file-alt"></i>
+				<i <?php echo $style; ?> class="fa fa-file-alt"></i>
 
 			<?php }
         	break;
@@ -42,11 +42,11 @@ if (!function_exists('wcmamtx_get_account_menu_li_icon_html')) {
         		$swatchurl     = wp_get_attachment_thumb_url( $swatchimage );
 
         		?>
-        		<img class="wcmamtx_upload_image_icon" src="<?php echo $swatchurl; ?>">
+        		<img <?php echo $style; ?> class="wcmamtx_upload_image_icon" src="<?php echo $swatchurl; ?>">
         		<?php
         	} else {
         		?>
-        		<img class="wcmamtx_upload_image_icon" src="<?php echo wcmamtx_placeholder_img_src(); ?>">
+        		<img <?php echo $style; ?> class="wcmamtx_upload_image_icon" src="<?php echo wcmamtx_placeholder_img_src(); ?>">
         		<?php
         	}
 
@@ -128,9 +128,9 @@ if (!function_exists('wcmamtx_get_account_menu_li_icon_html')) {
 			}
 
 			if ($icon != '') { ?>
-				<i class="<?php echo $icon; ?> wcmamtx_fa_icon"></i>
+				<i <?php echo $style; ?> class="<?php echo $icon; ?> wcmamtx_fa_icon"></i>
 			<?php } else { ?>
-				<i class="fa fa-file-alt wcmamtx_fa_icon"></i>
+				<i <?php echo $style; ?> class="fa fa-file-alt wcmamtx_fa_icon"></i>
 			<?php }
         	break;
 

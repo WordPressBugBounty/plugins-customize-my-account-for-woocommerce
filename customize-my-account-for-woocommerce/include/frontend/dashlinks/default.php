@@ -1,4 +1,6 @@
 <div class="wcmtx-my-account-links wcmtx-grid dash-<?php echo $dash_style; ?>">
+    <?php unset($wcmamtx_tabs['customer-logout']); ?>
+    <?php unset($wcmamtx_tabs['dashboard']); ?>
     <?php foreach ( $wcmamtx_tabs as $key => $value ) : 
 
 

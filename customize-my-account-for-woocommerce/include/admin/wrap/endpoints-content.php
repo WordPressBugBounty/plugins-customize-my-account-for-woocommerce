@@ -137,6 +137,37 @@ $default_color_font = '#334155';
     </td>
 
 </tr>
+
+<?php if (($key != "dashboard") && ($key != "customer-logout")) { 
+
+    $default_desc_text_link = array(
+        'orders'          => esc_html__('View and track your orders','customize-my-account-for-woocommerce'),
+        'downloads'       => esc_html__('Get your Downloads','customize-my-account-for-woocommerce'),
+        'edit-address'    => esc_html__('Manage your addresses','customize-my-account-for-woocommerce'),
+        'edit-account'    => esc_html__('Update your account info','customize-my-account-for-woocommerce'),
+    );
+
+    $default_desc_text = isset($default_desc_text_link[$key]) ? $default_desc_text_link[$key] : "";
+
+    $default_desc_text = isset($value['default_desc_text']) ? $value['default_desc_text'] : $default_desc_text;
+
+
+    ?>
+
+
+<tr>
+    <td>
+        <label class="wcmamtx_accordion_label"><?php  echo esc_html__('Dashlink description','customize-my-account-for-woocommerce'); ?></label>
+    </td>
+    <td>
+
+        <input type="text" class="wcmamtx_accordion_input" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][default_desc_text]" value="<?php if (isset($value['default_desc_text'])) { echo $value['default_desc_text']; } else {  if (isset($default_desc_text) && ($default_desc_text != "")) { echo $default_desc_text; } } ?>">
+    </td>
+
+</tr>
+
+<?php } ?>
+
 <?php if ($key != "dashboard") { ?>
 
     <tr>
@@ -151,25 +182,35 @@ $default_color_font = '#334155';
 
 <?php } ?>
 
-<?php if ($key != "dashboard") { ?>
+<?php 
 
-    <tr>
-        <td>
-            <label class="wcmamtx_accordion_label"><?php  echo esc_html__('Dashboard links styling','customize-my-account-for-woocommerce'); ?></label>
-            <p class="wcmamtx_accordion_label_small"><?php  echo esc_html__('Background Color and Font Color','customize-my-account-for-woocommerce'); ?></p>
-        </td>
-        <td>
+$wcmamtx_layout = (array) get_option( 'wcmamtx_layout' );
 
-            <input type="text" class="wcmamtx_accordion_input wcmamtx_color_input" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][dash_back_color]" value="<?php if (isset($value['dash_back_color'])) { echo $value['dash_back_color']; } else { echo $default_color; } ?>">
-            <input type="text" class="wcmamtx_accordion_input wcmamtx_color_input_font" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][dash_font_color]" value="<?php if (isset($value['dash_font_color'])) { echo $value['dash_font_color']; } else { echo $default_color_font; } ?>">
-            <a href="#" pkey="<?php echo $key; ?>" class="wcmamtx_restore_dash_color"><p class="wcmamtx_accordion_label_small"><?php  echo esc_html__('restore default','customize-my-account-for-woocommerce'); ?></p>
-            </a>
-        </td>
-        
-    </tr>
+$dash_style = isset($wcmamtx_layout['dash_style']) ? $wcmamtx_layout['dash_style'] : "01";
+
+if ($dash_style == 02) {
+
+    if ($key != "dashboard") { 
+
+        ?>
+
+        <tr>
+            <td>
+                <label class="wcmamtx_accordion_label"><?php  echo esc_html__('Dashboard links styling','customize-my-account-for-woocommerce'); ?></label>
+                <p class="wcmamtx_accordion_label_small"><?php  echo esc_html__('Background Color and Font Color','customize-my-account-for-woocommerce'); ?></p>
+            </td>
+            <td>
+
+                <input type="text" class="wcmamtx_accordion_input wcmamtx_color_input" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][dash_back_color]" value="<?php if (isset($value['dash_back_color'])) { echo $value['dash_back_color']; } else { echo $default_color; } ?>">
+                <input type="text" class="wcmamtx_accordion_input wcmamtx_color_input_font" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][dash_font_color]" value="<?php if (isset($value['dash_font_color'])) { echo $value['dash_font_color']; } else { echo $default_color_font; } ?>">
+                <a href="#" pkey="<?php echo $key; ?>" class="wcmamtx_restore_dash_color"><p class="wcmamtx_accordion_label_small"><?php  echo esc_html__('restore default','customize-my-account-for-woocommerce'); ?></p>
+                </a>
+            </td>
+            
+        </tr>
+    <?php } ?>
+
 <?php } ?>
-
-
 
 <?php include('subwrap/countof-settings.php'); ?>
 
