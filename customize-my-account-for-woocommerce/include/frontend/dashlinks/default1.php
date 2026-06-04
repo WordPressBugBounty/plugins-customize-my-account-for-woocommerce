@@ -139,7 +139,7 @@
                 ?>
                  
                 
-                <h3><?php echo esc_html( $name ); ?> <?php wcmamtx_counter_bubble($key,$value); ?></h3>
+                <span class="wcmatx_tab_title_new_de"><?php echo esc_html( $name ); ?> <?php wcmamtx_counter_bubble($key,$value); ?></span>
                 <?php if (isset($default_desc_text) && ($default_desc_text != "")) { ?>
                     <span class="wcmatx_tab_desc_below_dashlink"><?php echo esc_html( $default_desc_text ); ?></span>
                 <?php } ?>

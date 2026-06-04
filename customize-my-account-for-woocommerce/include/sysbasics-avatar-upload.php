@@ -240,7 +240,7 @@ class wcmamtx_upload_avatar_tab {
 
         $message['message'] = esc_html__('Avatar restored sucessfully','customize-my-account-for-woocommerce');
        
-		wp_send_json_error($restore_message);
+		wp_send_json_error($message);
 	
 
     
@@ -345,7 +345,10 @@ class wcmamtx_upload_avatar_tab {
 	 * @return string
 	 */
 	public function unique_filename_callback( $dir, $name, $ext ) {
-		$user = get_user_by( 'id', (int) $this->user_id_being_edited );
+
+		$user_id = get_current_user_id();
+		
+		$user = get_user_by( 'id', $user_id );
 		$name = $base_name = sanitize_file_name( strtolower( $user->display_name ) . '_avatar' );
 
 		$number = 1;
