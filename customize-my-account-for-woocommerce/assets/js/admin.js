@@ -964,7 +964,7 @@ $var( function() {
         
     });
 
-    $var('.wcmamtx_color_input,.wcmamtx_color_input_font').wpColorPicker();
+    $var('.wcmamtx_color_input,.wcmamtx_color_input_font,.wcmamtx_color_input_dsh').wpColorPicker();
 
 
 

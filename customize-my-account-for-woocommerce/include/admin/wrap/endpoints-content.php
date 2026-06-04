@@ -210,6 +210,39 @@ if ($dash_style == 02) {
         </tr>
     <?php } ?>
 
+<?php } else {
+
+    if ($key != "dashboard") { 
+
+        $default_desc_icon_colors = array(
+            'orders'          => esc_html__('#f97316','customize-my-account-for-woocommerce'),
+            'downloads'       => esc_html__('#22c55e','customize-my-account-for-woocommerce'),
+            'edit-address'    => esc_html__('#ef4444','customize-my-account-for-woocommerce'),
+            'edit-account'    => esc_html__('#8b5cf6','customize-my-account-for-woocommerce'),
+        );
+
+
+        $default_desc_color = isset($default_desc_icon_colors[$key]) ? $default_desc_icon_colors[$key] : "#3b82f6";
+
+        $default_desc_color = isset($value['icon_color_ds']) ? $value['icon_color_ds'] : $default_desc_color;
+
+        ?>
+
+        <tr>
+            <td>
+                <label class="wcmamtx_accordion_label"><?php  echo esc_html__('Dashboard links styling','customize-my-account-for-woocommerce'); ?></label>
+                <p class="wcmamtx_accordion_label_small"><?php  echo esc_html__('Icon color','customize-my-account-for-woocommerce'); ?></p>
+            </td>
+            <td>
+
+                <input type="text" class="wcmamtx_accordion_input wcmamtx_color_input_dsh" name="<?php  echo $this->wcmamtx_notices_settings_page; ?>[<?php echo $key; ?>][icon_color_ds]" value="<?php if (isset($value['icon_color_ds'])) { echo $value['icon_color_ds']; } else { echo  $default_desc_color; } ?>">
+                
+                
+            </td>
+            
+        </tr>
+    <?php } ?>
+
 <?php } ?>
 
 <?php include('subwrap/countof-settings.php'); ?>

@@ -622,7 +622,7 @@ a.btn.btn-success.wcmamtx_frontend_link {
 
 .wcmamtx_count_div_section {
     margin-left: 15px;
-    max-width: 30%;
+    max-width: 50%;
     float: left;
 }
 
@@ -840,4 +840,13 @@ input[type="range"]{
     padding: 6px 10px;
     color: #646970;
     font-size: 12px;
+}
+
+.toggle.btn-sm {
+    min-width: 80px !important;
+    /* min-height: 80px; */
+}
+
+.wcmamtx_count_div_section label.wcmamtx_accordion_label {
+    font-size:10px;
 }

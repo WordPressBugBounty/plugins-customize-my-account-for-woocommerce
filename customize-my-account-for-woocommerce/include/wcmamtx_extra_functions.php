@@ -442,8 +442,33 @@ if (!function_exists('wcmamtx_get_new_row_values')) {
                 $default_color_font = '#334155';
 
 
+                $default_desc_icon_colors = array(
+                    'orders'          => esc_html__('#f97316','customize-my-account-for-woocommerce'),
+                    'downloads'       => esc_html__('#22c55e','customize-my-account-for-woocommerce'),
+                    'edit-address'    => esc_html__('#ef4444','customize-my-account-for-woocommerce'),
+                    'edit-account'    => esc_html__('#8b5cf6','customize-my-account-for-woocommerce'),
+                );
+
+
+                $default_desc_color = isset($default_desc_icon_colors[$key2]) ? $default_desc_icon_colors[$key2] : "#3b82f6";
+
+
                 $new_row_values[$key2]['dash_back_color']                = isset($value2['dash_back_color']) ? $value2['dash_back_color'] : $default_color;
-                $new_row_values[$key2]['dash_font_color']         = isset($value2['dash_font_color']) ? $value2['dash_font_color'] : $default_color_font;
+                $new_row_values[$key2]['dash_font_color']                = isset($value2['dash_font_color']) ? $value2['dash_font_color'] : $default_color_font;
+
+                $new_row_values[$key2]['icon_color_ds']                  = isset($value2['icon_color_ds']) ? $value2['icon_color_ds'] : $default_desc_color;
+
+
+                $default_desc_text_link = array(
+                    'orders'          => esc_html__('View and track your orders','customize-my-account-for-woocommerce'),
+                    'downloads'       => esc_html__('Get your Downloads','customize-my-account-for-woocommerce'),
+                    'edit-address'    => esc_html__('Manage your addresses','customize-my-account-for-woocommerce'),
+                    'edit-account'    => esc_html__('Update your account info','customize-my-account-for-woocommerce'),
+                );
+
+                $default_desc_text = isset($default_desc_text_link[$key2]) ? $default_desc_text_link[$key2] : "";
+
+                $new_row_values[$key2]['default_desc_text']  = isset($value['default_desc_text']) ? $value['default_desc_text'] : $default_desc_text;
 
 
                 $new_row_values[$key2]['count_of'] = isset($value2['count_of']) ? $value2['count_of'] : "none";

@@ -113,12 +113,28 @@
 
              $default_desc_text = isset($value['default_desc_text']) ? $value['default_desc_text'] : $default_desc_text;
 
+             $default_desc_icon_colors = array(
+                'orders'          => esc_html__('#f97316','customize-my-account-for-woocommerce'),
+                'downloads'       => esc_html__('#22c55e','customize-my-account-for-woocommerce'),
+                'edit-address'    => esc_html__('#ef4444','customize-my-account-for-woocommerce'),
+                'edit-account'    => esc_html__('#8b5cf6','customize-my-account-for-woocommerce'),
+            );
+
+
+             $default_desc_color = isset($default_desc_icon_colors[$key]) ? $default_desc_icon_colors[$key] : "#3b82f6";
+
+             $default_desc_color = isset($value['icon_color_ds']) ? $value['icon_color_ds'] : $default_desc_color;
+
+             
+
              ?>
 
              <a href="<?php echo wcmamtx_get_account_endpoint_url( $key ); ?>" class="wcmtx_def1-card <?php echo esc_attr( $key ); ?>"  style="color:<?php echo $default_color_font; ?>;">
                 <?php 
 
-                wcmamtx_get_account_menu_li_icon_html($icon_source,$value,$key); 
+                $style_dsh = 'style="color:'.$default_desc_color.' !important;"';
+
+                wcmamtx_get_account_menu_li_icon_html($icon_source,$value,$key,$style_dsh); 
 
                 ?>
                  
