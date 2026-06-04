@@ -1,4 +1,20 @@
-<nav class="woocommerce-MyAccount-navigation wsmt_extra_navclass <?php echo $menu_position_extra_class; ?>">
+<?php
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly.
+}
+
+$wcmamtx_layout = (array) get_option( 'wcmamtx_layout' );
+
+$sidebar_style = isset($wcmamtx_layout['sidebar_style']) ? $wcmamtx_layout['sidebar_style'] : "01";
+
+$extra_nav_sidebar_class = "";
+
+if ($sidebar_style == 02) {
+    $extra_nav_sidebar_class = "wcmamtx_float_sidebar_right";
+}
+
+?>
+<nav class="woocommerce-MyAccount-navigation wsmt_extra_navclass <?php echo $extra_nav_sidebar_class; ?> <?php echo $menu_position_extra_class; ?>">
 
     <?php
 

@@ -226,7 +226,7 @@ if (array_key_exists(0, $avatar_settings)) {
 
     </tr>
 
-    <tr class="wcmamtx_show_avatar_tr" style="<?php if (isset($avatar_settings['disable_avatar']) && ($avatar_settings['disable_avatar'] == "yes")) { echo 'display:table-row;'; } else { echo 'display:none;'; } ?>">
+    <tr class="" style="">
 		<td><label><?php echo esc_html__('Custom content after avatar','customize-my-account-for-woocommerce'); ?></label>
 		</td>
 		<td>

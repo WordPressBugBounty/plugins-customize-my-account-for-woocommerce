@@ -1291,3 +1291,17 @@ form#custom-file-uploader img.modal_popup.photo.avatar {
     height:100px;
     width:100px;
 }
+
+nav.woocommerce-MyAccount-navigation.wcmamtx_float_sidebar_right.wsmt_extra_navclass  {
+    width: 30%;
+    float: right;
+}
+
+@media screen and (max-width: 800px) { 
+
+    nav.woocommerce-MyAccount-navigation.wcmamtx_float_sidebar_right.wsmt_extra_navclass  {
+         width: 100%;
+        float: none;
+    }
+
+}

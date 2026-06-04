@@ -81,10 +81,8 @@ $wcmamtx_layout = (array) get_option( 'wcmamtx_layout' );
 
 $dash_style = isset($wcmamtx_layout['dash_style']) ? $wcmamtx_layout['dash_style'] : "01";
 
-if ($dash_style == 01) {
-    include("dashlinks/default1.php");
-} else {
-    include("dashlinks/default.php");
-}
+
+
+include("dashlinks/$dash_style.php");
 
 ?>

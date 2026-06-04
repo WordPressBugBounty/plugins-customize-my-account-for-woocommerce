@@ -601,7 +601,8 @@ class wcmamtx_add_settings_page_class {
                 
                 'image01'           => ''.wcmamtx_PLUGIN_URL.'assets/images/layout1.png',
                 'image02'           => ''.wcmamtx_PLUGIN_URL.'assets/images/layout2.png',
-            
+                'sidebar1'          => ''.wcmamtx_PLUGIN_URL.'assets/images/sidebar1.png',
+                'sidebar2'          => ''.wcmamtx_PLUGIN_URL.'assets/images/sidebar2.png',
                 
                 
                 );
