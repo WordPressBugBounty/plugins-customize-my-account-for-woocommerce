@@ -1388,7 +1388,14 @@ class wcmamtx_add_settings_page_class {
 
             $active = $current_tab == $tab_key ? 'nav-tab-active' : '';
 
-            echo '<a '. $extra_att.' class="nav-tab ' . $active . ' '.$tab_key.' " href="'.$href.'">' . esc_html($tab_caption) . '</a>'; 
+
+            $extra_new_html = '';
+
+            if (($tab_key == "wcmamtx_layout") || ($tab_key == "wcmamtx_avatar_settings")) {
+                $extra_new_html = '<span class="wcmamtx_new_tab_note">'.esc_html__( 'New' ,'customize-my-account-for-woocommerce-pro').'</span>';
+            }
+
+            echo '<a '. $extra_att.' class="nav-tab ' . $active . ' '.$tab_key.' " href="'.$href.'">' . esc_html($tab_caption) . ' ' . $extra_new_html . '</a>'; 
 
         }
 

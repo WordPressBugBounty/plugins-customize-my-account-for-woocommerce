@@ -839,7 +839,7 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
 
 
 
-        if (is_account_page() || ( false !== stripos( $post->post_content, '[sysbasics_user_avatar' ) )) {
+         if (is_account_page() || ((isset($post)) && ( false !== stripos( $post->post_content, '[sysbasics_user_avatar' ) ))) {
 
             wp_enqueue_script( 'wcmamtx_cropper', ''.wcmamtx_PLUGIN_URL.'assets/js/cropper.min.js',array('jquery'), false, true);
 
