@@ -1,10 +1,5 @@
 <?php
 
-
-
-
-
-
 function wcmamtx_upload_avatar_tab_uninstall() {
 	$wcmamtx_upload_avatar_tab = new wcmamtx_upload_avatar_tab;
 	$users = get_users();
@@ -44,7 +39,66 @@ class wcmamtx_upload_avatar_tab {
 		add_filter( 'wp_handle_upload_prefilter', array( $this, 'custom_limit_image_upload_size'), 10, 1 );
 
 		add_action('init',array( $this, 'wcmamtx_capture_upload_camera_image'));
+
+		add_action('wp_ajax_wcmam_save_avatar',array( $this, 'wcmam_save_avatar'));
 		
+	}
+
+	public function wcmam_save_avatar() {
+
+		if ( empty( $_FILES['avatar'] ) ) {
+			wp_send_json_error();
+		}
+
+		require_once ABSPATH . 'wp-admin/includes/file.php';
+
+		$upload = wp_handle_upload(
+			$_FILES['avatar'],
+			array(
+				'test_form' => false
+			)
+		);
+
+		if ( isset( $upload['error'] ) ) {
+			wp_send_json_error();
+		}
+
+		$attachment = array(
+			'post_mime_type' => $upload['type'],
+			'post_title'     => basename(
+				$upload['file']
+			),
+			'post_status'    => 'inherit'
+		);
+
+		$attachment_id = wp_insert_attachment(
+			$attachment,
+			$upload['file']
+		);
+
+		require_once ABSPATH .
+		'wp-admin/includes/image.php';
+
+		$metadata = wp_generate_attachment_metadata(
+			$attachment_id,
+			$upload['file']
+		);
+
+		wp_update_attachment_metadata(
+			$attachment_id,
+			$metadata
+		);
+
+		$feat_image_url = wp_get_attachment_url( $attachment_id );
+
+		$user_id = get_current_user_id();
+
+		delete_user_meta( $user_id, 'sysbasics_user_avatar' );
+
+		update_user_meta( $user_id, 'sysbasics_user_avatar', array( 'full' => $feat_image_url) );
+
+		wp_send_json_success();
+
 	}
 
 	public function wcmamtx_capture_upload_camera_image() {
@@ -444,7 +498,7 @@ class wcmamtx_upload_avatar_tab {
 
 			$avatar_settings['avatar_size'] = "200";
 			
-			
+			$avatar_settings['webcam_capture'] = "yes";
 
 		}
 
@@ -523,6 +577,8 @@ class wcmamtx_upload_avatar_tab {
 		<!-- Trigger/Open The wcmamtx_modal -->
 
 		<!-- The wcmamtx_modal -->
+
+		
 		<div id="mywcmamtx_modal_webcam" class="wcmamtx_modal webcam">
 
 			<!-- wcmamtx_modal content -->
@@ -534,7 +590,9 @@ class wcmamtx_upload_avatar_tab {
                 </div>
 			</div>
 
-		</div>        
+		</div>
+
+
 		<?php
 	}
 

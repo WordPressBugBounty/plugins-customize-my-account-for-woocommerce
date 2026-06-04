@@ -856,7 +856,7 @@ img.camera.wcmamtx_avatar {
     padding: 2px;
     /* border: 4px dotted #f3eded; */
     outline: 2px solid #352e2e;
-    min-height: 130px;
+    
 }
 
 img.avatar.photo.uploadicon {
@@ -1273,4 +1273,21 @@ span.wcmatx_tab_desc_below_dashlink {
 .wcmtx_def1-dashboard .wcmamtx-banner-counter {
     position: inherit;
 
+}
+
+.wcmamtx_crop_upload_icon {
+    font-size: 12px;
+    float: right;
+    margin-top: 5px;
+}
+
+div#cropper-wrapper {
+    margin-top: 60px;
+}
+
+form#custom-file-uploader img.modal_popup.photo.avatar {
+    max-height:100px;
+    max-width:100px;
+    height:100px;
+    width:100px;
 }

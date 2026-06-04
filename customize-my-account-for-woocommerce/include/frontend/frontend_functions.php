@@ -749,6 +749,9 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
 
         $default_source  = isset($avatar_settings['disable_gravtar']) && ($avatar_settings['disable_gravtar'] == "yes") ? "local" : "gravtar";
 
+
+        $enable_cropping  = isset($avatar_settings['enable_cropping']) && ($avatar_settings['enable_cropping'] == "yes") ? "yes" : "no";
+
         $default_pic    = ''.wcmamtx_PLUGIN_URL.'assets/images/default_avatar.jpg';
         $user_id        = get_current_user_id();
 
@@ -824,8 +827,9 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
             'mode'                  => $default_source,
             'uploading_text'        => esc_html__('Uploading... Please wait',"customize-my-account-for-woocommerce"),
             'restoring_text'        => esc_html__('Restoring... Please wait',"customize-my-account-for-woocommerce"),
-            'error_text'        => esc_html__('An error occurred during transmission',"customize-my-account-for-woocommerce"),
-            'file_text'        => esc_html__('Please select a file first',"customize-my-account-for-woocommerce")
+            'error_text'            => esc_html__('An error occurred during transmission',"customize-my-account-for-woocommerce"),
+            'file_text'             => esc_html__('Please select a file first',"customize-my-account-for-woocommerce"),
+            'allow_cropper'         => $enable_cropping
 
         );
 
@@ -833,11 +837,16 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
         global $post;
 
 
+
+
         if (is_account_page() || ( false !== stripos( $post->post_content, '[sysbasics_user_avatar' ) )) {
 
-            wp_enqueue_script( 'wcmamtxfrontend', ''.wcmamtx_PLUGIN_URL.'assets/js/frontend.js',array( 'jquery'), false, true);
+            wp_enqueue_script( 'wcmamtx_cropper', ''.wcmamtx_PLUGIN_URL.'assets/js/cropper.min.js',array('jquery'), false, true);
+
+            wp_enqueue_script( 'wcmamtxfrontend', ''.wcmamtx_PLUGIN_URL.'assets/js/frontend.js',array('jquery', 'wcmamtx_cropper'), false, true);
    
             
+            wp_enqueue_style( 'wcmamtx-cropper', ''.wcmamtx_PLUGIN_URL.'assets/css/cropper.min.css' );
             
             wp_enqueue_style( 'wcmamtx-frontend', ''.wcmamtx_PLUGIN_URL.'assets/css/frontend.css' );
 

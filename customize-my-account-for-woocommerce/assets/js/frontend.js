@@ -105,16 +105,17 @@ var $vas = jQuery.noConflict();
 
 
 
-         $vas('.wcmamtx_upload_avatar').on('click', function(event) {
-       event.preventDefault();
-       $vas('#mywcmamtx_modal').show();
-       $vas('#mywcmamtx_modal_webcam').hide();
-       return false;
-      });
+        $vas('.wcmamtx_upload_avatar').on('click', function(event) {
+            event.preventDefault();
+            $vas('#mywcmamtx_modal').show();
+            $vas('#mywcmamtx_modal_webcam').hide();
+            $vas('#cropper-wrapper').hide();
+            return false;
+        });
 
-      $vas('.wcmamtx_modal_trigger_webcam').on('click', function(event) {
-       event.preventDefault();
-       $vas('#mywcmamtx_modal_webcam').show();
+       $vas('.wcmamtx_modal_trigger_webcam').on('click', function(event) {
+            event.preventDefault();
+            $vas('#mywcmamtx_modal_webcam').show();
        $vas('#mywcmamtx_modal').hide();
 
        if( jQuery('#web_cam').length ){
@@ -158,6 +159,8 @@ var $vas = jQuery.noConflict();
 
       $vas('.wcmamtx_modal_close').on('click', function() {
           $vas('#mywcmamtx_modal').hide();
+          $vas('#custom-file-uploader').show();
+          $vas('#crop-avatar').hide();
       });
 
       $vas('.wcmamtx_modal_close_webcam').on('click', function() {
@@ -248,12 +251,57 @@ var $vas = jQuery.noConflict();
       });
 
 
-    $vas('#wcmamtx_wp-user-file').on('change', function() {
-       var fileInput = $vas('#wcmamtx_wp-user-file')[0].files[0];
+
+          let cropper;
+   
+
+
+
+
+   $vas('#wcmamtx_wp-user-file').on('change', function() {
+        var fileInput = $vas('#wcmamtx_wp-user-file')[0].files[0];
         if (!fileInput) {
             alert(wcmamtxfrontend.file_text);
             return;
         }
+
+
+        if (wcmamtxfrontend.allow_cropper == "yes") {
+
+            $vas('#custom-file-uploader').hide();
+            $vas('#crop-avatar').show();
+
+            const reader = new FileReader();
+
+            reader.onload = function(event) {
+
+                $vas('#cropper-wrapper').show();
+
+                $vas('#cropper-image').attr(
+                    'src',
+                    event.target.result
+                    );
+
+                if (cropper) {
+                    cropper.destroy();
+                }
+
+                cropper = new Cropper(
+                    document.getElementById('cropper-image'),
+                    {
+                        aspectRatio: 1,
+                        viewMode: 1,
+                        autoCropArea: 1,
+                        responsive: true
+                    }
+                    );
+            };
+
+            reader.readAsDataURL(fileInput);
+
+        } else {
+
+        
 
         // 1. Pack data into FormData object
         var formData = new FormData();
@@ -322,6 +370,50 @@ var $vas = jQuery.noConflict();
                 $vas('#wcmamtx_upload_response').hide(10000);
             }
         });
+        
+
+        }
+
+        $vas('#crop-avatar').on('click', function() {
+
+
+
+    const canvas = cropper.getCroppedCanvas({
+        width: 300,
+        height: 300
+    });
+
+    canvas.toBlob(function(blob) {
+
+        let formData = new FormData();
+
+        formData.append(
+            'action',
+            'wcmam_save_avatar'
+        );
+
+        formData.append(
+            'avatar',
+            blob,
+            'avatar.png'
+        );
+
+        $vas.ajax({
+            url: wcmamtxfrontend.ajax_url,
+            method: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+
+                location.reload();
+
+            }
+        });
+
+    });
+
+});
     });
 
 
@@ -330,6 +422,11 @@ var $vas = jQuery.noConflict();
 
     
   });
+
+
+
+
+
 
  
 })( jQuery );

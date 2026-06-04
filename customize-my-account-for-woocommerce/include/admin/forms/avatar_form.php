@@ -9,8 +9,13 @@ if (array_key_exists(0, $avatar_settings)) {
     $avatar_settings['disable_avatar'] = "yes";
     $avatar_settings['custom_avatar_content'] = "yes";
     $avatar_settings['avatar_size'] = "200";
-    $avatar_settings['min_height'] = "150";
-    $avatar_settings['min_width'] = "150";
+    $avatar_settings['min_height']  = "150";
+    $avatar_settings['min_width']   = "150";
+    $avatar_settings['webcam_capture'] = "yes";
+
+    $avatar_settings['max_height']  = "200";
+    $avatar_settings['max_width']   = "200";
+
 }
 ?> 
 
@@ -109,6 +114,26 @@ if (array_key_exists(0, $avatar_settings)) {
 			
 	</tr>
 
+
+	<tr class="wcmamtx_show_avatar_tr" style="<?php if (isset($avatar_settings['disable_avatar']) && ($avatar_settings['disable_avatar'] == "yes")) { echo 'display:table-row;'; } else { echo 'display:none;'; } ?>">
+		<td><label><?php echo esc_html__('Webcam capture','customize-my-account-for-woocommerce'); ?></label> <br />
+		</td>
+		<td>
+			<input type="checkbox" data-toggle="toggle"  data-on="<?php echo 'Yes'; ?>" data-off="<?php echo 'No'; ?>"  name="<?php  echo $this->wcmamtx_avatar_settings_page; ?>[webcam_capture]" value="yes" <?php if (isset($avatar_settings['webcam_capture']) && ($avatar_settings['webcam_capture'] == "yes")) { echo 'checked'; } ?>>
+		</td>
+			
+	</tr>
+
+
+	<tr class="wcmamtx_show_avatar_tr" style="<?php if (isset($avatar_settings['disable_avatar']) && ($avatar_settings['disable_avatar'] == "yes")) { echo 'display:table-row;'; } else { echo 'display:none;'; } ?>">
+		<td><label><?php echo esc_html__('Enable cropping','customize-my-account-for-woocommerce'); ?></label> <br />
+		</td>
+		<td>
+			<input type="checkbox" data-toggle="toggle"  data-on="<?php echo 'Yes'; ?>" data-off="<?php echo 'No'; ?>"  name="<?php  echo $this->wcmamtx_avatar_settings_page; ?>[enable_cropping]" value="yes" <?php if (isset($avatar_settings['enable_cropping']) && ($avatar_settings['enable_cropping'] == "yes")) { echo 'checked'; } ?>>
+		</td>
+			
+	</tr>
+
 	<tr class="wcmamtx_show_avatar_tr" style="<?php if (isset($avatar_settings['disable_avatar']) && ($avatar_settings['disable_avatar'] == "yes")) { echo 'display:table-row;'; } else { echo 'display:none;'; } ?>">
 		<td><label><?php echo esc_html__('Default avatar size','customize-my-account-for-woocommerce'); ?></label> <br />
 		</td>
@@ -121,6 +146,14 @@ if (array_key_exists(0, $avatar_settings)) {
 			&emsp;
 			<?php echo esc_html__('Min width','customize-my-account-for-woocommerce'); ?>
 			<input size="3"  type="number" min="96" max="350" value="<?php if (isset($avatar_settings['min_width']) ) { echo $avatar_settings['min_width']; } else { echo '150'; } ?>" name="<?php  echo $this->wcmamtx_avatar_settings_page; ?>[min_width]">px
+
+			&emsp;
+			<?php echo esc_html__('Min height','customize-my-account-for-woocommerce'); ?>
+			<input size="3" type="number" min="96" max="350" value="<?php if (isset($avatar_settings['max_height']) ) { echo $avatar_settings['max_height']; } else { echo '200'; } ?>" name="<?php  echo $this->wcmamtx_avatar_settings_page; ?>[max_height]">px
+
+			&emsp;
+			<?php echo esc_html__('Min width','customize-my-account-for-woocommerce'); ?>
+			<input size="3"  type="number" min="96" max="350" value="<?php if (isset($avatar_settings['max_width']) ) { echo $avatar_settings['max_width']; } else { echo '200'; } ?>" name="<?php  echo $this->wcmamtx_avatar_settings_page; ?>[max_width]">px
 		</td>
 			
 	</tr>

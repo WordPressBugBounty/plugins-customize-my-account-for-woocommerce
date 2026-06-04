@@ -1,6 +1,8 @@
 <form id="custom-file-uploader">
 	<?php
 					$modal_popup = true;
+
+					
 					echo wcmamtx_get_avatar_default($profileuser,$avatar_size,$atts,$modal_popup);
 
 					$allow_avatar_change = 'yes';
@@ -27,15 +29,27 @@
 
 					$clickupload_text = esc_html__( 'Upload Photo', 'customize-my-account-for-woocommerce' );
 
-					$usecamera_text = esc_html__( 'Use Camera', 'customize-my-account-for-woocommerce' );
+					
 
 					if (isset($avatar_settings['override_texts']) && ($avatar_settings['override_texts'] == "yes") && (isset($avatar_settings['text3'])) && ($avatar_settings['text3'] != "")) { 
 						$clickupload_text = $avatar_settings['text3'];
 					}
 
-					if (isset($avatar_settings['override_texts']) && ($avatar_settings['override_texts'] == "yes") && (isset($avatar_settings['text4'])) && ($avatar_settings['text4'] != "")) { 
-						$usecamera_text = $avatar_settings['text4'];
+					$webcam_capture = isset($avatar_settings['webcam_capture']) && ($avatar_settings['webcam_capture'] == "yes") ? "yes": "no";
+
+					
+
+					if ($webcam_capture == "yes") {
+
+						$usecamera_text = esc_html__( 'Use Camera', 'customize-my-account-for-woocommerce' );
+
+						if (isset($avatar_settings['override_texts']) && ($avatar_settings['override_texts'] == "yes") && (isset($avatar_settings['text4'])) && ($avatar_settings['text4'] != "")) { 
+							$usecamera_text = $avatar_settings['text4'];
+						}
+
 					}
+
+					
 
 					?>
 
@@ -44,9 +58,13 @@
                     <?php echo $clickupload_text; ?>
                     </button>
 
-                    <button type="button" class="button wcmamtx_modal_trigger_webcam hide-if-no-js">
-                     <?php echo $usecamera_text; ?>
-                    </button>
+                    <?php if ($webcam_capture == "yes") { ?>
+
+                    	<button type="button" class="button wcmamtx_modal_trigger_webcam hide-if-no-js">
+                    		<?php echo $usecamera_text; ?>
+                    	</button>
+
+                    <?php } ?>
 					
 
 					<?php
@@ -113,4 +131,13 @@
     <input type="file" id="wcmamtx_wp-user-file" name="basic-user-avatar" accept="image/*" />
     <?php echo '<input type="submit" name="manage_avatar_submit" class="wcmamtx_update_avatar_btn" value="" />'; ?>
     <div id="wcmamtx_upload_response"></div>
+
 </form>
+<div id="cropper-wrapper" style="display:none;">
+	<img id="cropper-image">
+</div>
+
+<button type="button" class="wcmamtx_crop_upload_icon" id="crop-avatar" style="display:none;">
+	<?php echo esc_html__( 'Upload Photo', 'customize-my-account-for-woocommerce' ); ?>
+</button>
+    
