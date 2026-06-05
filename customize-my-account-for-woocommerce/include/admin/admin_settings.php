@@ -941,7 +941,7 @@ class wcmamtx_add_settings_page_class {
     
     public function wcmamtx_options_page() { 
 
-       include ('forms/options_form.php');
+      
            
     }
 
@@ -1403,6 +1403,13 @@ class wcmamtx_add_settings_page_class {
                 break;
 
                 case "wcmamtx_download_columns":
+
+                   $href = '#';
+                   $extra_att = 'data-toggle="modal" data-target="#wcmamtx_example_modal2"';
+
+                break;
+
+                 case "wcmamtx_plugin_options":
 
                    $href = '#';
                    $extra_att = 'data-toggle="modal" data-target="#wcmamtx_example_modal2"';

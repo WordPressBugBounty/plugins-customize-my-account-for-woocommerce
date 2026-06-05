@@ -863,3 +863,7 @@ span.wcmamtx_new_tab_note {
     border: 1px solid #6ee7b7;
     vertical-align: middle;
 }
+
+a.nav-tab.wcmamtx_plugin_options {
+    opacity: 0.4;
+}

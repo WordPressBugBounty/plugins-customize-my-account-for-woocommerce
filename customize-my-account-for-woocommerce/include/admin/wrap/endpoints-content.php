@@ -396,9 +396,10 @@ if (preg_match('/\b'.$key.'\b/', $core_fields ))  {
             $editor_name    = ''.$this->wcmamtx_notices_settings_page.'['.$key.'][content_dash]';
 
             wp_editor( $editor_content, $editor_id, $settings = array(
-                'textarea_name' => $editor_name,
+                                'textarea_name' => $editor_name,
                                 'editor_height' => 180, // In pixels, takes precedence and has no default value
-                                'textarea_rows' => 16
+                                'textarea_rows' => 16,
+                                'wpautop'       => true,
                             ) ); 
                             ?>
                             <a target="_blank" class="wcmamtx_accordion_label_small" href="https://www.sysbasics.com/knowledge-base/list-of-content-variables/" class=""><?php  echo esc_html__('Supported Variables','customize-my-account-for-woocommerce'); ?>
@@ -499,7 +500,8 @@ if (preg_match('/\b'.$key.'\b/', $core_fields ))  {
                     wp_editor( $editor_content, $editor_id, $settings = array(
                      'textarea_name' => $editor_name,
                             	'editor_height' => 180, // In pixels, takes precedence and has no default value
-                                'textarea_rows' => 16
+                                'textarea_rows' => 16,
+                                'wpautop'       => true,
                             ) ); 
                             ?>
 

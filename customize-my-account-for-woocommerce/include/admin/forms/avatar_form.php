@@ -251,7 +251,8 @@ if (array_key_exists(0, $avatar_settings)) {
 				'textarea_name' => $editor_name,
                                 'editor_height' => 180, // In pixels, takes precedence and has no default value
                                 'textarea_rows' => 16,
-                                'editor_width' => 180
+                                'editor_width' => 180,
+                                'wpautop'       => true,
                             ) ); 
                             ?>
                             <a target="_blank" class="wcmamtx_accordion_label_small" href="https://www.sysbasics.com/knowledge-base/list-of-content-variables/" class=""><?php  echo esc_html__('Supported Variables','customize-my-account-for-woocommerce'); ?>

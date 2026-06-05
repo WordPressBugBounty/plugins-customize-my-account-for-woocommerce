@@ -3,7 +3,7 @@
     Plugin Name: SysBasics Customize My Account for WooCommerce
     Plugin URI: https://sysbasics.com
     Description: Easily customize the WooCommerce My Account page. Mobile Friendly User avatar, redesign the WooCommerce dashboard, manage menus, and apply premium styles for a better user experience.
-    Version: 4.2.15
+    Version: 4.2.16
     Author: SysBasics
     Author URI: https://sysbasics.com
     Domain Path: /languages
@@ -75,15 +75,7 @@ function wcmamtx_translate_test_load_plugin_textdomain() {
 include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
 
-if( !defined( 'wcmamtx_elementor_mode' ) ) {
 
-    if ( is_plugin_active( 'elementor/elementor.php' ) || is_plugin_active( 'elementor-pro/elementor-pro.php' )) {
-        define( 'wcmamtx_elementor_mode', 'on' );
-    } else {
-        define( 'wcmamtx_elementor_mode', 'off' );
-    }
-
-}
 
 if ( is_plugin_active( 'wpml-sticky-links/plugin.php' )) {
     define( 'wcmamtx_wpmlsticky_mode', 'on' );
@@ -101,8 +93,7 @@ if ( is_plugin_active( 'sysbasics-account-fields/sysbasics-account-fields.php' )
 
 include dirname( __FILE__ ) . '/include/wcmamtx_extra_functions.php';
 
-$user_avatar_enable = wcmamtx_is_module_enabled_init("user-avatar");
-$elementor_module_enable = wcmamtx_is_module_enabled_init("elementor-templates");
+
 
 
  
@@ -137,11 +128,7 @@ $elementor_module_enable = wcmamtx_is_module_enabled_init("elementor-templates")
 
 
 
-if (wcmamtx_elementor_mode !== null) {
-    if  ((wcmamtx_elementor_mode == "on") ) {
-     include dirname( __FILE__ ) . '/elementor-addon/elementor-addon.php';
- }
-}
+
 
 
 
