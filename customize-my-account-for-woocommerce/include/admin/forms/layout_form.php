@@ -21,7 +21,7 @@ $nav_style = isset($wcmamtx_layout['nav_style']) ? $wcmamtx_layout['nav_style'] 
 		<td>
 			<select class="wcmamtx_layout_design_select" name="<?php  echo esc_html__($this->wcmamtx_layout_page); ?>[dash_style]" style="display: none;">			
 					<option value="01" gtext="<?php echo esc_html__('Default','customize-my-account-for-woocommerce'); ?>"  <?php if (isset($dash_style) && ($dash_style == 01)) { echo 'selected'; } ?>></option> 
-					<option value="02" gtext="<?php echo esc_html__('classic','customize-my-account-for-woocommerce'); ?>"  <?php if (isset($dash_style) && ($dash_style == 02)) { echo 'selected'; } ?>></option> 
+					<option value="02" gtext="<?php echo esc_html__('Classic','customize-my-account-for-woocommerce'); ?>"  <?php if (isset($dash_style) && ($dash_style == 02)) { echo 'selected'; } ?>></option> 
 				    <option value="03" gtext="<?php echo esc_html__('Card','customize-my-account-for-woocommerce'); ?>"  <?php if (isset($dash_style) && ($dash_style == 03)) { echo 'selected'; } ?>></option> 
 					<option value="04" gtext="<?php echo esc_html__('Tile','customize-my-account-for-woocommerce'); ?>"  <?php if (isset($dash_style) && ($dash_style == 04)) { echo 'selected'; } ?>></option> 
 			</select>
@@ -42,7 +42,7 @@ $nav_style = isset($wcmamtx_layout['nav_style']) ? $wcmamtx_layout['nav_style'] 
 		</td>
 		<td>
 			<select class="wcmamtx_layout_sidebar_select" name="<?php  echo esc_html__($this->wcmamtx_layout_page); ?>[sidebar_style]" style="display: none;">			
-					<option value="01" gtext="<?php echo esc_html__('left Sidebar','customize-my-account-for-woocommerce'); ?>" <?php if (isset($sidebar_style) && ($sidebar_style == 01)) { echo 'selected'; } ?>></option> 
+					<option value="01" gtext="<?php echo esc_html__('Left Sidebar','customize-my-account-for-woocommerce'); ?>" <?php if (isset($sidebar_style) && ($sidebar_style == 01)) { echo 'selected'; } ?>></option> 
 					<option value="02" gtext="<?php echo esc_html__('Right Sidebar','customize-my-account-for-woocommerce'); ?>" <?php if (isset($sidebar_style) && ($sidebar_style == 02)) { echo 'selected'; } ?>></option> 
 			</select>
 

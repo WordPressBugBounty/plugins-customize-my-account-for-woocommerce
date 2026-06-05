@@ -92,10 +92,15 @@ jQuery(document).ready(function($){
 
             if(value2 !== '' && sidebarImages[value2]){
 
+                var texttoinsert = $(this).attr("gtext");
+
+                htlmtoinsert = '<span class="wcmamtx_label_below_layout_images">'+texttoinsert+'</span>';
+
                 swatches_sidebar += `
                     <div class="sb-swatch-sidebar ${selectedclass2}"
                          data-value="${value2}">
                         <img src="${sidebarImages[value2]}" alt="${value2}">
+                        ${htlmtoinsert}
                     </div>
                 `;
             }
@@ -144,10 +149,16 @@ jQuery(document).ready(function($){
             }
 
             if(value3 !== '' && navigationImages[value3]){
+
+                var texttoinsert = $(this).attr("gtext");
+
+                htlmtoinsert = '<span class="wcmamtx_label_below_layout_images">'+texttoinsert+'</span>';
+
                 swatches3 += `
                     <div class="sb-swatch-navigation ${selectedclass3}"
                          data-value="${value3}">
                         <img src="${navigationImages[value3]}" alt="${value3}">
+                        ${htlmtoinsert}
                     </div>
                 `;
             }

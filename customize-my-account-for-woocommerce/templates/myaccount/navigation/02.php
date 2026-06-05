@@ -15,6 +15,7 @@ if ($sidebar_style == 02) {
 
 ?>
 <nav class="wcmam-nav wcmam-style-1 <?php echo $extra_nav_sidebar_class; ?> <?php echo $menu_position_extra_class; ?>">
+
     <?php
 
     $show_avatar = 'yes';
@@ -73,16 +74,13 @@ if ($sidebar_style == 02) {
 
     $wcmamtx_layout = (array) get_option( 'wcmamtx_layout' );
 
-    
+    $default_style = isset($wcmamtx_layout['style']) ? $wcmamtx_layout['style'] : "01";
 
     ?>
-   
 
-        <?php foreach ( $wcmamtx_tabs as $key => $value ) { 
+    <?php foreach ( $wcmamtx_tabs as $key => $value ) {
 
-
-
-            if (isset($value['endpoint_name']) && ($value['endpoint_name'] != '')) {
+        if (isset($value['endpoint_name']) && ($value['endpoint_name'] != '')) {
                 $name = $value['endpoint_name'];
             } else {
                 $name = $value;
@@ -155,34 +153,65 @@ if ($sidebar_style == 02) {
                  }
             }
 
-
             if (($should_show == "yes") && ($is_visible == "yes")) {
             
-                if (isset($value['wcmamtx_type']) && ($value['wcmamtx_type'] == "group")) {
-
-                    
-                    wcmamtx_get_account_menu_group_html( $name,$key ,$value ,$icon_extra_class,$extraclass,$icon_source );
-                    
-                    
-
-            
-                } else {
+               
 
                    
 
-                    if (($parent == "none")) {
+                if (($parent == "none")) {
 
 
-                        wcmamtx_get_account_menu_li_html( $name,$key ,$value ,$icon_extra_class,$extraclass,$icon_source );
+                    $wsmt_li_fontsize = get_theme_mod('wsmt_li_fontsize');
+
+                    $font_size = isset($wsmt_li_fontsize) ? $wsmt_li_fontsize : "16px";
+
+                    $wsmt_li_padding = get_theme_mod('wsmt_li_padding');
+
+                    $padding_left = isset($wsmt_li_padding) ? $wsmt_li_padding : "0px";
+
+
+                    if (isset($value['wcmamtx_type']) && ($value['wcmamtx_type'] == "separater")) {
+
+                        echo '<br/>';
+
+                    } else {
+
+
+
+                        $wcmamtx_type = isset($value['wcmamtx_type']) && is_array($value) ? $value['wcmamtx_type'] : "endpoint";
+
+                        ?>
+
+
+
+
+                            <a class="woocommerce-MyAccount-navigation-link_a <?php echo wcmamtx_get_account_menu_item_classes( $key , $value ); ?> <?php echo  $wcmamtx_type; ?> <?php echo $extraclass; ?> <?php if ($icon_source == "custom") { echo $icon_extra_class; } ?>"  href="<?php echo wcmamtx_get_account_endpoint_url( $key ); ?>" <?php if (isset($wcmamtx_type) && ($wcmamtx_type == "link") && (isset($value['link_targetblank'])) && ($value['link_targetblank'] == 01) ) { echo 'target="_blank"'; } ?>>
+                                <?php wcmamtx_get_account_menu_li_icon_html($icon_source,$value,$key); ?>
+                                <span class="wcmamtx_sticky_icon_name">
+                                    <?php echo esc_html( $name ); ?>
+
+                                </span>
+                                <?php 
+                                $hide_sidebar = isset($value['hide_sidebar']) && ($value['hide_sidebar'] == "01") ? "yes" : "no";
+
+                                if ($hide_sidebar == "no") {
+                                    echo wcmamtx_counter_bubble($key,$value,"yes"); 
+                                }
+
+                                ?>
+                            </a>
+                        
+                        <?php
                     }
 
-                } ?>
 
-            <?php } ?>
-        
-        <?php } ?>
-    
-    <?php do_action( 'wcmamtx_after_account_navigation' ); ?>
+
+                }
+
+            }
+
+    } ?>
 
     
 </nav>

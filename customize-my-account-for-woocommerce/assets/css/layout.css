@@ -24,11 +24,14 @@
     box-shadow:0 0 0 2px rgba(34,113,177,.15);
 }
 
-.sb-swatch img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    display:block;
+.sb-swatch img {
+    width: 100%;
+    /* height: 100%; */
+    object-fit: fill;
+    /* display: block; */
+    min-height: 180px;
+    /* min-width: 200px; */
+    /* padding: 2%; */
 }
 
 .wcmamtx_layout button.btn.btn-sm.btn-info.expimpbuttons  {
@@ -62,15 +65,18 @@
 }
 
 .sb-swatch-sidebar img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    display:block;
+    width: 100%;
+    /* height: 100%; */
+    object-fit: fill;
+    /* display: block; */
+    min-height: 180px;
+    /* min-width: 200px; */
+    /* padding: 2%; */
 }
 
 .sb-swatch-sidebar {
     padding: 5px;
-    min-width: 450px;
+   
     min-height: 250px;
 }
 
@@ -83,7 +89,7 @@ p.wcmamtx_layout_template_override_navigation.alert.alert-success {
     float: left;
     /* width: 33%; */
     padding: 5px;
-    min-width: 450px;
+   
     min-height: 250px;
 }
 
@@ -116,15 +122,17 @@ p.wcmamtx_layout_template_override_navigation.alert.alert-success {
 }
 
 .sb-swatch-navigation img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    display:block;
+    float:left;
+    object-fit: fill;
+    /* display: block; */
+    min-height: 180px;
+    /* min-width: 200px; */
+    /* padding: 2%; */
 }
 
 .sb-swatch-navigation {
     padding: 5px;
-    /* min-width: 450px; */
+    max-width: 440px;
     min-height: 350px;
     padding: 1%;
 }
@@ -132,4 +140,29 @@ p.wcmamtx_layout_template_override_navigation.alert.alert-success {
 
 p.wcmamtx_layout_template_override_navigation.alert.alert-success,p.wcmamtx_layout_template_override.alert.alert-success {
     margin-top: 20px;
+}
+
+.sb-swatch {
+    height: 130%;
+    min-height: 190px;
+}
+
+span.wcmamtx_label_below_layout_images{
+    float: left;
+    font-size: 18px;
+    font-weight: bold;
+    margin-left: 20px;
+    /* text-align: center; */
+    margin-bottom: 10px;
+    width:100%;
+}
+
+.sb-swatch-sidebar {
+    height: 130%;
+    min-height: 210px;
+}
+
+.sb-swatch-navigation {
+    height: 130%;
+    min-height: 270px;
 }
