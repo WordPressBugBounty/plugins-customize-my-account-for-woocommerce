@@ -109,4 +109,58 @@ jQuery(document).ready(function($){
         $select2.val(value2).trigger('change');
     });
 
+
+    var navigationImages = {
+        "01": wcmamtx_layout.navigation1,
+        "02": wcmamtx_layout.navigation2,
+    };
+
+    $('select.wcmamtx_layout_navigation_select').each(function(){
+
+        var $select3 = $(this);
+       
+
+        var swatches3 = '<div class="sb-image-swatches-navigation">';
+
+        var selectedValue3 = $select3.val();
+
+        $select3.find('option').each(function(){
+
+            var value3 = $(this).val();
+
+            var selectedclass3 = "";
+
+            if (value3 == selectedValue3) {
+                selectedclass3 = "selected";
+            }
+
+            if(value3 !== '' && navigationImages[value3]){
+                swatches3 += `
+                    <div class="sb-swatch-navigation ${selectedclass3}"
+                         data-value="${value3}">
+                        <img src="${navigationImages[value3]}" alt="${value3}">
+                    </div>
+                `;
+            }
+        });
+
+        swatches3 += '</div>';
+
+        $select3.after(swatches3).hide();
+    });
+
+    $(document).on('click', '.sb-swatch-navigation', function(){
+
+        var value3 = $(this).data('value');
+        var $wrapper3 = $(this).closest('.sb-image-swatches-navigation');
+        var $select3 = $wrapper3.prev('select');
+
+        $wrapper3.find('.sb-swatch-navigation').removeClass('selected');
+        $(this).addClass('selected');
+
+        $('span.wcmamtx_layout_navigation_override_no').text(value3);
+
+        $select3.val(value3).trigger('change');
+    });
+
 });

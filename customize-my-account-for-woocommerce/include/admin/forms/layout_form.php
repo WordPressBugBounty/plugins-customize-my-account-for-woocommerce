@@ -8,7 +8,7 @@ $wcmamtx_layout = (array) get_option( 'wcmamtx_layout' );
 
 $dash_style = isset($wcmamtx_layout['dash_style']) ? $wcmamtx_layout['dash_style'] : "01";
 $sidebar_style = isset($wcmamtx_layout['sidebar_style']) ? $wcmamtx_layout['sidebar_style'] : "01";
-
+$nav_style = isset($wcmamtx_layout['nav_style']) ? $wcmamtx_layout['nav_style'] : "01";
 ?> 
 
 <table class="widefat wcmamtx_options_table">
@@ -38,7 +38,7 @@ $sidebar_style = isset($wcmamtx_layout['sidebar_style']) ? $wcmamtx_layout['side
 	</tr>
 
 	<tr>
-		<td><label><?php echo esc_html__('Sidebar Position','customize-my-account-for-woocommerce'); ?></label> <br />
+		<td><label><?php echo esc_html__('Sidebar position','customize-my-account-for-woocommerce'); ?></label> <br />
 		</td>
 		<td>
 			<select class="wcmamtx_layout_sidebar_select" name="<?php  echo esc_html__($this->wcmamtx_layout_page); ?>[sidebar_style]" style="display: none;">			
@@ -47,6 +47,26 @@ $sidebar_style = isset($wcmamtx_layout['sidebar_style']) ? $wcmamtx_layout['side
 			</select>
 
 			
+		</td>
+	</tr>
+
+	<tr>
+		<td><label><?php echo esc_html__('Navigation style','customize-my-account-for-woocommerce'); ?></label> <br />
+		</td>
+		<td>
+			<select class="wcmamtx_layout_navigation_select" name="<?php  echo esc_html__($this->wcmamtx_layout_page); ?>[nav_style]" style="display: none;">			
+					<option value="01" <?php if (isset($nav_style) && ($nav_style == 01)) { echo 'selected'; } ?>></option> 
+					<option value="02" <?php if (isset($nav_style) && ($nav_style == 02)) { echo 'selected'; } ?>></option> 
+			</select>
+
+			<p class="wcmamtx_layout_template_override_navigation alert alert-success">
+				<?php echo esc_html__('You can override this template easily from your child theme. Copy the file from','customize-my-account-for-woocommerce'); ?>&emsp;
+				<code><?php echo ''.wcmamtx_PLUGIN_URL.'include/frontend/navigation/<span class="wcmamtx_layout_navigation_override_no">'.$nav_style.'</span>.php'; ?></code>
+
+				<?php echo esc_html__('and paste it into your child theme','customize-my-account-for-woocommerce'); ?>&emsp;
+
+				<code><?php echo ''.get_stylesheet_directory().'/wcmamtx_template/navigation/<span class="wcmamtx_layout_navigation_override_no">'.$nav_style.'</span>.php'; ?></code>
+			</p>
 		</td>
 	</tr>
 </table>
