@@ -599,12 +599,12 @@ class wcmamtx_add_settings_page_class {
 
                 $wcmamtx_js_array_layout = array(
                 
-                'image01'           => ''.wcmamtx_PLUGIN_URL.'assets/images/layout1.png',
-                'image02'           => ''.wcmamtx_PLUGIN_URL.'assets/images/layout2.png',
-                'sidebar1'          => ''.wcmamtx_PLUGIN_URL.'assets/images/sidebar1.png',
-                'sidebar2'          => ''.wcmamtx_PLUGIN_URL.'assets/images/sidebar2.png',
-                
-                
+                    'image01'           => ''.wcmamtx_PLUGIN_URL.'assets/images/layout1.png',
+                    'image02'           => ''.wcmamtx_PLUGIN_URL.'assets/images/layout2.png',
+                    'image03'           => ''.wcmamtx_PLUGIN_URL.'assets/images/layout3.png',
+                    'image04'           => ''.wcmamtx_PLUGIN_URL.'assets/images/layout4.png',
+                    'sidebar1'          => ''.wcmamtx_PLUGIN_URL.'assets/images/sidebar1.png',
+                    'sidebar2'          => ''.wcmamtx_PLUGIN_URL.'assets/images/sidebar2.png',
                 );
 
                wp_localize_script( 'wcmamtx_layout', 'wcmamtx_layout', $wcmamtx_js_array_layout );

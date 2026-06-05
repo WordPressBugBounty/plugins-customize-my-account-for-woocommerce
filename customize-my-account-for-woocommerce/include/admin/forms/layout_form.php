@@ -22,7 +22,8 @@ $sidebar_style = isset($wcmamtx_layout['sidebar_style']) ? $wcmamtx_layout['side
 			<select class="wcmamtx_layout_design_select" name="<?php  echo esc_html__($this->wcmamtx_layout_page); ?>[dash_style]" style="display: none;">			
 					<option value="01" <?php if (isset($dash_style) && ($dash_style == 01)) { echo 'selected'; } ?>></option> 
 					<option value="02" <?php if (isset($dash_style) && ($dash_style == 02)) { echo 'selected'; } ?>></option> 
-				    
+				    <option value="03" <?php if (isset($dash_style) && ($dash_style == 03)) { echo 'selected'; } ?>></option> 
+					<option value="04" <?php if (isset($dash_style) && ($dash_style == 04)) { echo 'selected'; } ?>></option> 
 			</select>
 
 			
