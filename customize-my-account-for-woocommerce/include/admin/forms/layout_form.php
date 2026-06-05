@@ -26,7 +26,14 @@ $sidebar_style = isset($wcmamtx_layout['sidebar_style']) ? $wcmamtx_layout['side
 					<option value="04" <?php if (isset($dash_style) && ($dash_style == 04)) { echo 'selected'; } ?>></option> 
 			</select>
 
-			
+			<p class="wcmamtx_layout_template_override alert alert-success">
+				<?php echo esc_html__('You can override this template easily from your child theme. Copy the file from','customize-my-account-for-woocommerce'); ?>&emsp;
+				<code><?php echo ''.wcmamtx_PLUGIN_URL.'include/frontend/dashlinks/<span class="wcmamtx_layout_template_override_no">'.$dash_style.'</span>.php'; ?></code>
+
+				<?php echo esc_html__('and paste it into your child theme','customize-my-account-for-woocommerce'); ?>&emsp;
+
+				<code><?php echo ''.get_stylesheet_directory().'/wcmamtx_template/dashlinks/<span class="wcmamtx_layout_template_override_no">'.$dash_style.'</span>.php'; ?></code>
+			</p>
 		</td>
 	</tr>
 

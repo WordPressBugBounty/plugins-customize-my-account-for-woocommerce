@@ -42,12 +42,12 @@ $core_fields       = 'dashboard,orders,downloads,edit-address,edit-account,custo
 
 
 $core_fields_array =  array(
-    'dashboard'       => esc_html__('Dashboard','woocommerce'),
-    'orders'          => esc_html__('Orders','woocommerce'),
-    'downloads'       => esc_html__('Downloads','woocommerce'),
-    'edit-address'    => esc_html__('Addresses','woocommerce'),
-    'edit-account'    => esc_html__('Account Details','woocommerce'),
-    'customer-logout' => esc_html__('Log out','woocommerce')
+    'dashboard'       => esc_html__('Dashboard','customize-my-account-for-woocommerce'),
+    'orders'          => esc_html__('Orders','customize-my-account-for-woocommerce'),
+    'downloads'       => esc_html__('Downloads','customize-my-account-for-woocommerce'),
+    'edit-address'    => esc_html__('Addresses','customize-my-account-for-woocommerce'),
+    'edit-account'    => esc_html__('Account Details','customize-my-account-for-woocommerce'),
+    'customer-logout' => esc_html__('Log out','customize-my-account-for-woocommerce')
   );
 
 $tabs                = apply_filters( 'woocommerce_account_menu_items', $tabs, $core_fields_array );

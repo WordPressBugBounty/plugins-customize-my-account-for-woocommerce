@@ -172,10 +172,10 @@ $default_color_font = '#334155';
 
     <tr>
         <td>
-            <label class=" wcmamtx_accordion_label"><?php echo esc_html__('Hide in dashboard links','customize-my-account-for-woocommerce-pro'); ?></label>
+            <label class=" wcmamtx_accordion_label"><?php echo esc_html__('Hide in dashboard links','customize-my-account-for-woocommerce'); ?></label>
         </td>
         <td>
-            <input type="checkbox" data-toggle="toggle" data-on="<?php  echo esc_html__('Yes','customize-my-account-for-woocommerce-pro'); ?>" data-off="<?php  echo esc_html__('No','customize-my-account-for-woocommerce-pro'); ?>" data-size="sm" class="wcmamtx_accordion_input wcmamtx_accordion_checkbox checkmark" ype="checkbox" name="wcmamtx_advanced_settings[<?php echo $key; ?>][hide_dashboard_links]" value="01" <?php if (isset($value['hide_dashboard_links']) && ($value['hide_dashboard_links'] == "01")) { echo 'checked'; } ?>>
+            <input type="checkbox" data-toggle="toggle" data-on="<?php  echo esc_html__('Yes','customize-my-account-for-woocommerce'); ?>" data-off="<?php  echo esc_html__('No','customize-my-account-for-woocommerce'); ?>" data-size="sm" class="wcmamtx_accordion_input wcmamtx_accordion_checkbox checkmark" ype="checkbox" name="wcmamtx_advanced_settings[<?php echo $key; ?>][hide_dashboard_links]" value="01" <?php if (isset($value['hide_dashboard_links']) && ($value['hide_dashboard_links'] == "01")) { echo 'checked'; } ?>>
             
         </td>
     </tr>
@@ -210,7 +210,7 @@ if ($dash_style == 02) {
         </tr>
     <?php } ?>
 
-<?php } else {
+<?php } else if  ($dash_style == 01)  {
 
     if ($key != "dashboard") { 
 
@@ -412,17 +412,17 @@ if (preg_match('/\b'.$key.'\b/', $core_fields ))  {
 
            <tr>
                     <td>
-                        <label class="wcmamtxvisibleto wcmamtx_accordion_label"><?php echo esc_html__('Visible to','customize-my-account-for-woocommerce-pro'); ?></label>
+                        <label class="wcmamtxvisibleto wcmamtx_accordion_label"><?php echo esc_html__('Visible to','customize-my-account-for-woocommerce'); ?></label>
                     </td>
                     <td>
                         <select mkey="<?php echo $key; ?>" class="wcmamtxvisibleto" name="wcmamtx_advanced_settings[<?php echo $key; ?>][visibleto]">
-                            <option value="all" <?php if ((isset($value['visibleto'])) && ($value['visibleto'] == "all")) { echo "selected"; } ?>><?php echo esc_html__('All roles','customize-my-account-for-woocommerce-pro'); ?></option>
+                            <option value="all" <?php if ((isset($value['visibleto'])) && ($value['visibleto'] == "all")) { echo "selected"; } ?>><?php echo esc_html__('All roles','customize-my-account-for-woocommerce'); ?></option>
                             
-                            <option value="specific_exclude" <?php if ((isset($value['visibleto'])) && ($value['visibleto'] == "specific_exclude")) { echo "selected"; } ?>><?php echo esc_html__('All roles except specified','customize-my-account-for-woocommerce-pro'); ?></option>
-                            <option value="specific" <?php if ((isset($value['visibleto'])) && ($value['visibleto'] == "specific")) { echo "selected"; } ?>><?php echo esc_html__('Only specified roles','customize-my-account-for-woocommerce-pro'); ?></option>
+                            <option value="specific_exclude" <?php if ((isset($value['visibleto'])) && ($value['visibleto'] == "specific_exclude")) { echo "selected"; } ?>><?php echo esc_html__('All roles except specified','customize-my-account-for-woocommerce'); ?></option>
+                            <option value="specific" <?php if ((isset($value['visibleto'])) && ($value['visibleto'] == "specific")) { echo "selected"; } ?>><?php echo esc_html__('Only specified roles','customize-my-account-for-woocommerce'); ?></option>
 
-                            <option value="specific_exclude_user" <?php if ((isset($value['visibleto'])) && ($value['visibleto'] == "specific_exclude_user")) { echo "selected"; } ?>><?php echo esc_html__('All users except specified','customize-my-account-for-woocommerce-pro'); ?></option>
-                            <option value="specific_user" <?php if ((isset($value['visibleto'])) && ($value['visibleto'] == "specific_user")) { echo "selected"; } ?>><?php echo esc_html__('Only specified users','customize-my-account-for-woocommerce-pro'); ?></option>
+                            <option value="specific_exclude_user" <?php if ((isset($value['visibleto'])) && ($value['visibleto'] == "specific_exclude_user")) { echo "selected"; } ?>><?php echo esc_html__('All users except specified','customize-my-account-for-woocommerce'); ?></option>
+                            <option value="specific_user" <?php if ((isset($value['visibleto'])) && ($value['visibleto'] == "specific_user")) { echo "selected"; } ?>><?php echo esc_html__('Only specified users','customize-my-account-for-woocommerce'); ?></option>
                         </select>
                
                     </td>
@@ -440,10 +440,10 @@ if (preg_match('/\b'.$key.'\b/', $core_fields ))  {
               
                 <tr style="<?php if ((isset($value['visibleto'])) && (($value['visibleto'] == "specific") || ($value['visibleto'] == "specific_exclude"))) { echo "display:table-row;"; } else { echo "display:none;"; } ?>" class="wcmamtxroles_<?php echo $key; ?>">
                     <td>
-                        <label class="wcmamtx_roles wcmamtx_accordion_label"><?php echo esc_html__('Select roles','customize-my-account-for-woocommerce-pro'); ?></label>
+                        <label class="wcmamtx_roles wcmamtx_accordion_label"><?php echo esc_html__('Select roles','customize-my-account-for-woocommerce'); ?></label>
                     </td>
                     <td>
-                        <select data-placeholder="<?php echo esc_html__('Choose Roles','customize-my-account-for-woocommerce-pro'); ?>" name="wcmamtx_advanced_settings[<?php echo $key; ?>][roles][]" class="wcmamtx_roleselect" multiple>
+                        <select data-placeholder="<?php echo esc_html__('Choose Roles','customize-my-account-for-woocommerce'); ?>" name="wcmamtx_advanced_settings[<?php echo $key; ?>][roles][]" class="wcmamtx_roleselect" multiple>
                             <?php foreach ($roles as $rkey => $role) { ?>
                                 <option value="<?php echo $rkey; ?>" <?php if (preg_match('/\b'.$rkey.'\b/', $chosenrolls )) { echo 'selected';}?>><?php echo $role['name']; ?></option>
                             <?php } ?>
@@ -465,10 +465,10 @@ if (preg_match('/\b'.$key.'\b/', $core_fields ))  {
               
                 <tr style="<?php if ((isset($value['visibleto'])) && (($value['visibleto'] == "specific_exclude_user") || ($value['visibleto'] == "specific_user"))) { echo "display:table-row;"; } else { echo "display:none;"; } ?>" class="wcmamtxusers_<?php echo $key; ?>">
                     <td>
-                        <label class="wcmamtx_roles wcmamtx_accordion_label"><?php echo esc_html__('Select users','customize-my-account-for-woocommerce-pro'); ?></label>
+                        <label class="wcmamtx_roles wcmamtx_accordion_label"><?php echo esc_html__('Select users','customize-my-account-for-woocommerce'); ?></label>
                     </td>
                     <td>
-                        <select data-placeholder="<?php echo esc_html__('Choose Users','customize-my-account-for-woocommerce-pro'); ?>" name="wcmamtx_advanced_settings[<?php echo $key; ?>][users][]" class="wcmamtx_userselect" multiple>
+                        <select data-placeholder="<?php echo esc_html__('Choose Users','customize-my-account-for-woocommerce'); ?>" name="wcmamtx_advanced_settings[<?php echo $key; ?>][users][]" class="wcmamtx_userselect" multiple>
                             <?php foreach ($chosenusers as $ukey => $uvalue) { 
                                 $user = get_user_by( 'id', $uvalue );
 

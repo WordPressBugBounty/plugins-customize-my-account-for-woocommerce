@@ -83,6 +83,17 @@ $dash_style = isset($wcmamtx_layout['dash_style']) ? $wcmamtx_layout['dash_style
 
 
 
-include("dashlinks/$dash_style.php");
+$dash_template = "dashlinks/$dash_style.php";
+
+$dash_template = apply_filters("wcmamtx_override_dashlinks_template",$dash_template,$wcmamtx_layout,$wcmamtx_tabs);
+
+$file_to_check = "wcmamtx_template/dashlinks/$dash_style.php"; // Change to your relative file path
+
+if ( file_exists( get_stylesheet_directory() . '/' . $file_to_check ) ) {
+    // The file exists in the active child theme
+    $dash_template = ''.get_stylesheet_directory().'/wcmamtx_template/dashlinks/'.$dash_style.'.php';
+}
+
+include($dash_template);
 
 ?>

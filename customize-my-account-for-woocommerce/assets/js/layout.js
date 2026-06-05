@@ -51,6 +51,8 @@ jQuery(document).ready(function($){
         $wrapper.find('.sb-swatch').removeClass('selected');
         $(this).addClass('selected');
 
+        $('span.wcmamtx_layout_template_override_no').text(value);
+
         $select.val(value).trigger('change');
     });
 

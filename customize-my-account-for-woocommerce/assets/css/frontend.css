@@ -1438,3 +1438,10 @@ nav.woocommerce-MyAccount-navigation.wcmamtx_float_sidebar_right.wsmt_extra_navc
     display: block;
     margin: 0 auto 12px;
 }
+
+.wcmam-card-content span.wcmamtx-banner-counter {
+    top: 22px;
+    right: 170px;
+    font-weight: 600;
+    padding: 1px 10px;
+}

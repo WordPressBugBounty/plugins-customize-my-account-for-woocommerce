@@ -34,12 +34,12 @@ foreach ($items as $itkey=>$itvalue) {
 $core_fields    = 'dashboard,orders,downloads,edit-address,edit-account,customer-logout';
 
 $core_fields_array =  array(
-    'dashboard'       => esc_html__('Dashboard','woocommerce'),
-    'orders'          => esc_html__('Orders','woocommerce'),
-    'downloads'       => esc_html__('Downloads','woocommerce'),
-    'edit-address'    => esc_html__('Addresses','woocommerce'),
-    'edit-account'    => esc_html__('Account Details','woocommerce'),
-    'customer-logout' => esc_html__('Log out','woocommerce')
+    'dashboard'       => esc_html__('Dashboard','customize-my-account-for-woocommerce'),
+    'orders'          => esc_html__('Orders','customize-my-account-for-woocommerce'),
+    'downloads'       => esc_html__('Downloads','customize-my-account-for-woocommerce'),
+    'edit-address'    => esc_html__('Addresses','customize-my-account-for-woocommerce'),
+    'edit-account'    => esc_html__('Account Details','customize-my-account-for-woocommerce'),
+    'customer-logout' => esc_html__('Log out','customize-my-account-for-woocommerce')
   );
 
 
@@ -155,12 +155,30 @@ if (isset($menu_position) && ($menu_position != '')) {
 
 if ($menu_shape == 'vertical') {
 
-   
-    include ("vertical_menu_shape.php");
-   
-  
- 
-} else {
+    $wcmamtx_layout = (array) get_option( 'wcmamtx_layout' );
+
+
+    $nav_style = isset($wcmamtx_layout['nav_style']) ? $wcmamtx_layout['nav_style'] : "01";
+
+    
+
+    
+    $nav_template = "navigation/$nav_style.php";
+
+    $nav_template = apply_filters("wcmamtx_override_navigation_template",$nav_template,$wcmamtx_layout,$wcmamtx_tabs);
+
+        $file_to_check = "wcmamtx_template/navigation/$nav_style.php"; // Change to your relative file path
+
+        if ( file_exists( get_stylesheet_directory() . '/' . $file_to_check ) ) {
+         // The file exists in the active child theme
+         $nav_template = ''.get_stylesheet_directory().'/wcmamtx_template/navigation/'.$nav_style.'.php';
+     }
+
+     include($nav_template);
+     
+     
+     
+ } else {
 
 
 
