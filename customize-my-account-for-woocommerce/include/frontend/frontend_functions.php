@@ -604,7 +604,8 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
 
     public function wcmamtx_add_custom_endpoint_page() {
         $wcmamtx_tabs = get_option('wcmamtx_advanced_settings');
-        add_option('wcmamtx_allowed_endpoint_trial', 02);
+        add_option('wcmamtx_allowed_endpoint_trial', 05);
+        add_option('wcmamtx_allowed_link_trial', 05);
 
         $core_fields       = 'dashboard,orders,downloads,edit-address,edit-account,customer-logout';
 

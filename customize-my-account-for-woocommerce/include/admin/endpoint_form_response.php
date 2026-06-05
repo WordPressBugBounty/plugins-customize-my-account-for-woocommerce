@@ -153,6 +153,15 @@
                     update_option('wcmamtx_allowed_endpoint_trial',$allowed_endpoints);
                 }
             }
+
+            if ($row_type == 'link') {
+                $allowed_links = get_option("wcmamtx_allowed_link_trial");
+
+                if (isset($allowed_links) && ($allowed_links > 0))  {
+                    $allowed_links = $allowed_links - 1;
+                    update_option('wcmamtx_allowed_link_trial',$allowed_links);
+                }
+            }
         }
 
 		// add the admin notice

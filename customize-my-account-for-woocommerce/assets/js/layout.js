@@ -1,4 +1,6 @@
 jQuery(document).ready(function($){
+    
+    var htlmtoinsert="";
 
     var swatchImages = {
         "01": wcmamtx_layout.image01,
@@ -20,6 +22,8 @@ jQuery(document).ready(function($){
 
             var value = $(this).val();
 
+
+
             var selectedclass = "";
 
             if (value == selectedValue) {
@@ -28,10 +32,15 @@ jQuery(document).ready(function($){
 
             if(value !== '' && swatchImages[value]){
 
+                var texttoinsert = $(this).attr("gtext");
+
+                htlmtoinsert = '<span class="wcmamtx_label_below_layout_images">'+texttoinsert+'</span>';
+
                 swatches += `
                     <div class="sb-swatch ${selectedclass}"
                          data-value="${value}">
                         <img src="${swatchImages[value]}" alt="${value}">
+                        ${htlmtoinsert}
                     </div>
                 `;
             }

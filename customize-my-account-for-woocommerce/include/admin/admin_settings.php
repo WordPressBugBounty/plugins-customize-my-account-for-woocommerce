@@ -991,8 +991,40 @@ class wcmamtx_add_settings_page_class {
 
                
 
-                $endpoint_button_id = "#wcmamtx_example_modal3";
-                $endpoint_button_class = "";
+                $allowed_endpoints = get_option("wcmamtx_allowed_endpoint_trial");
+
+
+                if (isset($allowed_endpoints) && ($allowed_endpoints > 0))  {
+
+                
+
+                    $endpoint_button_id = "#wcmamtx_example_modal3";
+                    $endpoint_button_class = "";
+
+                
+                } else {
+                     $endpoint_button_id = "#wcmamtx_example_modal2";
+                    $endpoint_button_class = "wcmamtx_disabled2";
+                }
+
+
+                $allowed_links = get_option("wcmamtx_allowed_link_trial");
+
+
+
+
+                if (isset($allowed_links) && ($allowed_links > 0))  {
+
+                
+
+                    $link_button_id = "#wcmamtx_example_modal3";
+                    $link_button_class = "";
+
+                
+                } else {
+                     $link_button_id = "#wcmamtx_example_modal2";
+                    $link_button_class = "wcmamtx_disabled2";
+                }
 
             
                 ?>
@@ -1006,7 +1038,7 @@ class wcmamtx_add_settings_page_class {
                                 <?php echo esc_html__( 'Endpoint' ,'customize-my-account-for-woocommerce'); ?>
                             </button>
 
-                            <button type="button" href="#" data-toggle="modal" data-target="#wcmamtx_example_modal3" data-etype="link" id="wcmamtx_add_link" class="btn btn-sm btn-primary wcmamtx_add_group">
+                            <button type="button" href="#" data-toggle="modal" data-target="<?php echo $link_button_id; ?>" data-etype="link" id="wcmamtx_add_link" class="btn btn-sm btn-primary wcmamtx_add_group <?php echo $link_button_class; ?>">
                                 <span class="dashicons dashicons-insert"></span>
                                 <?php echo esc_html__( 'Link' ,'customize-my-account-for-woocommerce'); ?>
                             </button>
