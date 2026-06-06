@@ -1502,3 +1502,155 @@ nav.wcmam-nav.wcmam-style-1 .ql-align-center a {
     width: auto;
 
 }
+
+.wcmam-orders-wrapper {
+    max-width: 100%;
+}
+
+.wcmam-order-filters {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+
+
+
+
+.wcmam-order-card {
+    background: #fff;
+    border: 1px solid #ececec;
+    border-radius: 18px;
+    padding: 24px;
+    margin-bottom: 20px;
+    transition: .3s;
+}
+
+.wcmam-order-card:hover {
+    box-shadow: 0 12px 35px rgba(0,0,0,.08);
+    transform: translateY(-2px);
+}
+
+.wcmam-order-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 18px;
+}
+
+.order-date {
+    color: #888;
+    font-size: 14px;
+}
+
+.status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.status.processing {
+    background: #fff4de;
+    color: #d88900;
+}
+
+.status.completed {
+    background: #e8f7e8;
+    color: #2f8f2f;
+}
+
+.status.cancelled {
+    background: #ffeaea;
+    color: #d93a3a;
+}
+
+.wcmam-order-body {
+    display: flex;
+    align-items: center;
+}
+
+.product-thumb {
+    width: 80px;
+    height: 80px;
+    margin-right: 18px;
+}
+
+.product-thumb img {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.order-details {
+    flex: 1;
+}
+
+.order-details h4 {
+    margin: 0 0 8px;
+    color: #8e2d2d;
+    font-size: 18px;
+}
+
+.order-details p {
+    margin: 0 0 12px;
+    color: #555;
+    line-height: 1.5;
+}
+
+.order-total {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.order-arrow {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #fafafa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    color: #8e2d2d;
+    transition: .3s;
+}
+
+.wcmam-order-card:hover .order-arrow {
+    background: black;
+    color: #fff;
+}
+
+.wcmam-order-card:hover i.fa{
+  color:white;
+}
+
+button.wcmamtx_hidden_order_status {
+    display: none;
+}
+
+.product-thumb.multiple img{
+    display: inline;
+    width: 35px;
+    /* height: 40px; */
+    /* float: left; */
+    padding-left: 2px;
+}
+
+nav.wcmam-nav.wcmam-style-1 .woocommerce-MyAccount-navigation-link {
+    
+    border-bottom-width: 1px;
+}
+
+button.wcmam-order-filters-button {
+    border-radius: 15px;
+    
+}
+button.btn.btn-primary.wcmam-order-filters-button.active {
+    background-color: black;
+}

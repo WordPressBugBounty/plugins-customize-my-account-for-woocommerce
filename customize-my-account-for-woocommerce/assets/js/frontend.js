@@ -431,6 +431,45 @@ var $vas = jQuery.noConflict();
  
 })( jQuery );
 
+
+jQuery(function($){
+
+    $('.wcmam-order-filters button').on('click', function(){
+
+        var filter = $(this).data('filter');
+
+        $('.wcmam-order-filters button').removeClass('active');
+        $(this).addClass('active');
+
+        if(filter === 'all'){
+
+            $('.wcmam-order-card').fadeIn(200);
+
+        } else {
+
+            $('.wcmam-order-card').hide();
+
+            $('.wcmam-order-card[data-status="'+filter+'"]')
+            .fadeIn(200);
+
+        }
+
+    });
+
+
+    $(".wcmam-order-filters button").each(function(index, element) {
+        var filter = $(this).data('filter');
+
+        if (!$('.wcmam-order-card[data-status="'+filter+'"]').length) {
+            if (filter != "all") {
+                $(this).addClass('wcmamtx_hidden_order_status');
+            }
+            
+        }
+    });
+
+});
+
 // Toggle the visibility of a dropdown menu
 const toggleDropdown = (dropdown, menu, isOpen) => {
   dropdown.classList.toggle("open", isOpen);

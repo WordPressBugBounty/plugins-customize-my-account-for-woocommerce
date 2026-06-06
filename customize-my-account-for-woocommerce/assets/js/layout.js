@@ -183,4 +183,64 @@ jQuery(document).ready(function($){
         $select3.val(value3).trigger('change');
     });
 
+
+    var orderImages = {
+        "01": wcmamtx_layout.orders1,
+        "02": wcmamtx_layout.orders2,
+    };
+
+    $('select.wcmamtx_layout_order_select').each(function(){
+
+        var $select4 = $(this);
+       
+
+        var swatches4 = '<div class="sb-image-swatches-order">';
+
+        var selectedValue4 = $select4.val();
+
+        $select4.find('option').each(function(){
+
+            var value4 = $(this).val();
+
+            var selectedclass4 = "";
+
+            if (value4 == selectedValue4) {
+                selectedclass4 = "selected";
+            }
+
+            if(value4 !== '' && orderImages[value4]){
+
+                var texttoinsert = $(this).attr("gtext");
+
+                htlmtoinsert = '<span class="wcmamtx_label_below_layout_images">'+texttoinsert+'</span>';
+
+                swatches4 += `
+                    <div class="sb-swatch-order ${selectedclass4}"
+                         data-value="${value4}">
+                        <img src="${orderImages[value4]}" alt="${value4}">
+                        ${htlmtoinsert}
+                    </div>
+                `;
+            }
+        });
+
+        swatches4 += '</div>';
+
+        $select4.after(swatches4).hide();
+    });
+
+    $(document).on('click', '.sb-swatch-order', function(){
+
+        var value4 = $(this).data('value');
+        var $wrapper4 = $(this).closest('.sb-image-swatches-order');
+        var $select4 = $wrapper4.prev('select');
+
+        $wrapper4.find('.sb-swatch-order').removeClass('selected');
+        $(this).addClass('selected');
+
+        $('span.wcmamtx_layout_order_override_no').text(value4);
+
+        $select4.val(value4).trigger('change');
+    });
+
 });

@@ -686,7 +686,12 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
             $template = $this->wcmamtx_override_template_child_theme_or_direct_free("navigation");
         } else if ( strstr($template, 'dashboard.php') ) {
             $template = $this->wcmamtx_override_template_child_theme_or_direct_free("dashboard");
-        } 
+        } else if  ( strstr($template, 'orders.php') ) {
+            $template = $this->wcmamtx_override_template_child_theme_or_direct_free("orders");
+        }
+
+
+
 
         
 

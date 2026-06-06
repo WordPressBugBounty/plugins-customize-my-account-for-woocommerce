@@ -166,3 +166,49 @@ span.wcmamtx_label_below_layout_images{
     height: 130%;
     min-height: 270px;
 }
+
+.sb-image-swatches-order{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:10px;
+}
+
+.sb-swatch-order{
+    width:330px;
+    height:140px;
+    border:2px solid #ddd;
+    border-radius:6px;
+    cursor:pointer;
+    overflow:hidden;
+    transition:all .2s ease;
+}
+
+.sb-swatch-order:hover{
+    border-color:#2271b1;
+}
+
+.sb-swatch-order.selected{
+    border-color:#2271b1;
+    box-shadow:0 0 0 2px rgba(34,113,177,.15);
+}
+
+.sb-swatch-order img{
+    width: 100%;
+    /* height: 100%; */
+    object-fit: fill;
+    /* display: block; */
+    min-height: 180px;
+    /* min-width: 200px; */
+    /* padding: 2%; */
+}
+
+.sb-swatch-order {
+    padding: 5px;
+   
+    min-height: 250px;
+}
+.sb-swatch-order {
+    height: 130%;
+    min-height: 210px;
+}
