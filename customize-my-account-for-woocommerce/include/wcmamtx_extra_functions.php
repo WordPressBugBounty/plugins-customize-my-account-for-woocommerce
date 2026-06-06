@@ -794,7 +794,7 @@ if (!function_exists('wcmamtx_load_pro_feature_preview')) {
 
       		<tr><td><i class="fa fa-check"></i></td><td><?php echo esc_html__( 'Download Columns' ,'customize-my-account-for-woocommerce'); ?></td></tr>
             
-            <tr><td><i class="fa fa-check"></i></td><td><?php echo esc_html__( 'Custom Elementor Templates' ,'customize-my-account-for-woocommerce'); ?></td></tr>
+            <tr><td><i class="fa fa-check"></i></td><td><?php echo esc_html__( 'Custom My Account Elementor Templates' ,'customize-my-account-for-woocommerce'); ?></td></tr>
 
             <tr><td><i class="fa fa-check"></i></td><td><?php echo esc_html__( 'Ajax Navigation between Endpoints' ,'customize-my-account-for-woocommerce'); ?></td></tr>
 

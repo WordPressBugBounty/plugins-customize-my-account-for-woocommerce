@@ -1,24 +1,24 @@
-=== SysBasics Customize My Account for WooCommerce ===
+=== SysBasics Customize My Account for WooCommerce – Dashboard, Endpoints, Avatar & Menu Manager ===
 Contributors: phppoet,sysbasics
 Donate link: https://www.paypal.com/ncp/payment/Q6ZEJ66THRLVE
-Tags: customize woocommerce, my account, customize, endpoints, user avatar
+Tags: customize woocommerce, my account, astra, endpoints, user avatar
 Requires at least: 4.0
 Tested up to: 7.0.0
 WC Tested up to: 10.8.1
 WC Requires at least: 4.0
 Requires PHP: 5.2
-Stable tag: 4.2.16
+Stable tag: 4.2.21
 Requires Plugins: woocommerce
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Optimize your WooCommerce My account page also add new endpoints and manage existing endpoints with ease along with mobile friendly user avatar
+Convert WooCommerce My Account page into a modern dashboard , avatar, dashboard cards, endpoints compatible with themes like astra , hello elementor , woodmart , flatsome , Divi etc
 
 == Description ==
 
 <h3>Customize My Account for WooCommerce</h3>
 
-SysBasics Customize My Account for WooCommerce Plugin add dashboard links , user avatar, manage My Account endpoints & account/registration fields
+Transform the default WooCommerce My Account page into a modern customer dashboard with custom menus, avatars, dashboard cards, endpoints, icons, and role-based navigation.
 
 <p><a href="https://sysbasics.com/go/customize/" title="Customize My Account for WooCommerce pro" rel="nofollow">Upgrade to pro</a></p>
 
