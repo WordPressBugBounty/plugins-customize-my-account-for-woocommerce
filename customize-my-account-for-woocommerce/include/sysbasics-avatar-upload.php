@@ -473,7 +473,7 @@ class wcmamtx_upload_avatar_tab {
 	
 
 
-	function wcmamtx_shortcode($atts) {
+	public function wcmamtx_shortcode($atts=null) {
 
 		$attributes = shortcode_atts( array(
 		  'size' => 200,

@@ -39,23 +39,14 @@ if ($sidebar_style == 02) {
         $show_avatar = 'no';
     }
 
-    $user_avatar_enable = wcmamtx_is_module_enabled("user-avatar");
 
 
-    if (($show_avatar == 'yes') && (isset($user_avatar_enable) && ($user_avatar_enable == "yes")) ) {
-        echo do_shortcode('[sysbasics_user_avatar]');
+
+    if ($show_avatar == 'yes') {
+        echo (new wcmamtx_upload_avatar_tab())->wcmamtx_shortcode();
     }
 
-    $intro_text_hello = "yes";
 
-    
-
-    if (isset($avatar_settings['intro_text_hello']) && ($avatar_settings['intro_text_hello'] == "yes") && ($show_avatar == "yes")) {
-
-        $intro_text_hello = 'no';
-    } else {
-        $intro_text_hello = 'yes';
-    }
     
 
 

@@ -118,8 +118,10 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
 							    			// 3. Get the order item name
 							    			$item_name = $item->get_name();
 
+							    			$item_quantity = $item->get_quantity();
+
 							    			// Output or use the item name
-							    			$items .= ''.$item_name.',';
+							    			$items .= ''.$item_name.' x '.$item_quantity.',';
 							    		}
 							    	}
 

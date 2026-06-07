@@ -371,31 +371,7 @@ if (!function_exists('wcmamtx_is_module_enabled')) {
         $matchstick =  "yes";
 
 
-        $module_settings = (array) get_option( 'wcmamtx_module_settings' );
-
-        $el_widgets1 = array(
-          'sample'=>esc_html__('sample','customize-my-account-for-woocommerce'),
-          'user-avatar'=>esc_html__('User Avatar (Included)','customize-my-account-for-woocommerce'),
-          'elementor-templates'=>esc_html__('Elementor Templates (Included)','customize-my-account-for-woocommerce'),
-        );
-
-
-        $el_widgets2 = array(
-          'user-avatar'=>esc_html__('User Avatar (Included)','customize-my-account-for-woocommerce'),
-          'elementor-templates'=>esc_html__('Elementor Templates (Included)','customize-my-account-for-woocommerce'),
-          'Order-actions'=>esc_html__('Order Actions (Pro Module)','customize-my-account-for-woocommerce'),
-          'Order-columns'=>esc_html__('Order Columns (Pro Module)','customize-my-account-for-woocommerce'),
-          'Download-columns'=>esc_html__('Download Columns (Pro Module)','customize-my-account-for-woocommerce'),
-          'sample'=>esc_html__('sample','customize-my-account-for-woocommerce')
-        );
-
-        $el_widgets = isset($module_settings['el_widgets']) && !empty($module_settings['el_widgets']) ? $module_settings['el_widgets'] : $el_widgets1;
-
-        if (isset($el_widgets[$key])) {
-            $matchstick =  "yes";
-        } else {
-            $matchstick =  "no";
-        }
+        
 
         return $matchstick;
     }
@@ -569,33 +545,7 @@ if (!function_exists('wcmamtx_is_module_enabled_init')) {
         $matchstick =  "yes";
 
 
-        $module_settings = (array) get_option( 'wcmamtx_module_settings' );
-
         
-
-        $el_widgets1 = array(
-          'user-avatar',
-          'elementor-templates',
-          'sample'
-        );
-
-
-        $el_widgets2 = array(
-          'user-avatar',
-          'elementor-templates',
-          'Order-actions',
-          'Order-columns',
-          'Download-columns',
-          'sample'
-        );
-
-        $el_widgets = isset($module_settings['el_widgets']) && !empty($module_settings['el_widgets']) ? $module_settings['el_widgets'] : $el_widgets1;
-
-        if (isset($el_widgets[$key])) {
-            $matchstick =  "yes";
-        } else {
-            $matchstick =  "no";
-        }
 
         return $matchstick;
     }

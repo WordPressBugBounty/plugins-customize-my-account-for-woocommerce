@@ -609,6 +609,8 @@ class wcmamtx_add_settings_page_class {
                     'navigation2'          => ''.wcmamtx_PLUGIN_URL.'assets/images/navigation2.png',
                     'orders1'          => ''.wcmamtx_PLUGIN_URL.'assets/images/orders1.png',
                     'orders2'          => ''.wcmamtx_PLUGIN_URL.'assets/images/orders2.png',
+                    'download1'          => ''.wcmamtx_PLUGIN_URL.'assets/images/download1.png',
+                    'download2'          => ''.wcmamtx_PLUGIN_URL.'assets/images/download2.png',
                 );
 
                wp_localize_script( 'wcmamtx_layout', 'wcmamtx_layout', $wcmamtx_js_array_layout );

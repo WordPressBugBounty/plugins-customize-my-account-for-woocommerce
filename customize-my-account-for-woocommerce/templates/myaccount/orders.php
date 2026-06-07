@@ -19,7 +19,7 @@ $order_style = isset($wcmamtx_layout['order_style']) ? $wcmamtx_layout['order_st
 
 $order_template = "order/$order_style.php";
 
-$order_template = apply_filters("wcmamtx_override_order_template",$order_template,$wcmamtx_layout,$wcmamtx_tabs);
+$order_template = apply_filters("wcmamtx_override_order_template",$order_template,$wcmamtx_layout);
 
 $file_to_check = "wcmamtx_template/order/$order_style.php"; // Change to your relative file path
 

@@ -243,4 +243,89 @@ jQuery(document).ready(function($){
         $select4.val(value4).trigger('change');
     });
 
+
+    var downloadImages = {
+        "01": wcmamtx_layout.download1,
+        "02": wcmamtx_layout.download2,
+    };
+
+    $('select.wcmamtx_layout_download_select').each(function(){
+
+        var $select5 = $(this);
+       
+
+        var swatches5 = '<div class="sb-image-swatches-download">';
+
+        var selectedValue5 = $select5.val();
+
+        $select5.find('option').each(function(){
+
+            var value5 = $(this).val();
+
+            var selectedclass5 = "";
+
+            if (value5 == selectedValue5) {
+                selectedclass5 = "selected";
+            }
+
+            if(value5 !== '' && downloadImages[value5]){
+
+                var texttoinsert = $(this).attr("gtext");
+
+                htlmtoinsert = '<span class="wcmamtx_label_below_layout_images">'+texttoinsert+'</span>';
+
+                swatches5 += `
+                    <div class="sb-swatch-download ${selectedclass5}"
+                         data-value="${value5}">
+                        <img src="${downloadImages[value5]}" alt="${value5}">
+                        ${htlmtoinsert}
+                    </div>
+                `;
+            }
+        });
+
+        swatches5 += '</div>';
+
+        $select5.after(swatches5).hide();
+    });
+
+    $(document).on('click', '.sb-swatch-download', function(){
+
+        var value5 = $(this).data('value');
+        var $wrapper5 = $(this).closest('.sb-image-swatches-download');
+        var $select5 = $wrapper5.prev('select');
+
+        $wrapper5.find('.sb-swatch-download').removeClass('selected');
+        $(this).addClass('selected');
+
+        $('span.wcmamtx_layout_download_override_no').text(value5);
+
+        $select5.val(value5).trigger('change');
+    });
+
+    $(".wcmamtx_template_override_a").on('click', function(event){
+
+        event.preventDefault();
+
+        $(this).parents('.wcmamtx-setting-card').find(".wcmamtx_template_override").show();
+
+        return false;
+    });
+
+
+    $(".wcmamtx_layout_select_override").on('change', function(event){
+
+        event.preventDefault();
+
+        var selectedValue = $(this).val();
+
+        if (selectedValue == "01") {
+            $(this).parents(".wcmamtx-setting-card").find(".wcmamtx-card-body").show();
+        } else {
+            $(this).parents(".wcmamtx-setting-card").find(".wcmamtx-card-body").hide();
+        }
+
+        return false;
+    });
+
 });

@@ -93,8 +93,14 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
 
     public function wcmamtx_add_myaccount_links() { 
 
+        $wcmamtx_layout = (array) get_option( 'wcmamtx_layout' );
 
-        include('dashlink_functions.php');
+
+        $dashlink_layout_override = isset($wcmamtx_layout['dashlink_layout_override']) ? $wcmamtx_layout['dashlink_layout_override'] : "01";
+
+        if ($dashlink_layout_override != "02") {
+            include('dashlink_functions.php');
+        }
     }
 
 
@@ -671,7 +677,7 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
 
 
 
-
+        $wcmamtx_layout = (array) get_option( 'wcmamtx_layout' );
 
        
 
@@ -686,14 +692,26 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
             $template = $this->wcmamtx_override_template_child_theme_or_direct_free("navigation");
         } else if ( strstr($template, 'dashboard.php') ) {
             $template = $this->wcmamtx_override_template_child_theme_or_direct_free("dashboard");
-        } else if  ( strstr($template, 'orders.php') ) {
-            $template = $this->wcmamtx_override_template_child_theme_or_direct_free("orders");
+        } 
+
+
+
+
+        $order_template_override = isset($wcmamtx_layout['order_template_override']) ? $wcmamtx_layout['order_template_override'] : "01";
+
+
+        if ( strstr($template, 'orders.php') && ($order_template_override != "02") ) {
+            $template = $this->wcmamtx_override_template_child_theme_or_direct_free('orders');
         }
 
-
-
-
         
+        $download_template_override = isset($wcmamtx_layout['download_template_override']) ? $wcmamtx_layout['download_template_override'] : "01";
+        
+
+
+        if ( strstr($template, 'order-downloads.php') && ($download_template_override != "02")) {
+            $template = wcmamtx_plugin_path() . '/templates/myaccount/order/order-downloads.php';
+        }
 
 
         
