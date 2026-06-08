@@ -303,6 +303,65 @@ jQuery(document).ready(function($){
         $select5.val(value5).trigger('change');
     });
 
+        var view_orderImages = {
+        "01": wcmamtx_layout.view_order1,
+        "02": wcmamtx_layout.view_order2,
+    };
+
+    $('select.wcmamtx_layout_view_order_select').each(function(){
+
+        var $select6 = $(this);
+       
+
+        var swatches6 = '<div class="sb-image-swatches-view_order">';
+
+        var selectedValue6 = $select6.val();
+
+        $select6.find('option').each(function(){
+
+            var value6 = $(this).val();
+
+            var selectedclass6 = "";
+
+            if (value6 == selectedValue6) {
+                selectedclass6 = "selected";
+            }
+
+            if(value6 !== '' && view_orderImages[value6]){
+
+                var texttoinsert = $(this).attr("gtext");
+
+                htlmtoinsert = '<span class="wcmamtx_label_below_layout_images">'+texttoinsert+'</span>';
+
+                swatches6 += `
+                    <div class="sb-swatch-view_order ${selectedclass6}"
+                         data-value="${value6}">
+                        <img src="${view_orderImages[value6]}" alt="${value6}">
+                        ${htlmtoinsert}
+                    </div>
+                `;
+            }
+        });
+
+        swatches6 += '</div>';
+
+        $select6.after(swatches6).hide();
+    });
+
+    $(document).on('click', '.sb-swatch-view_order', function(){
+
+        var value6 = $(this).data('value');
+        var $wrapper6 = $(this).closest('.sb-image-swatches-view_order');
+        var $select6 = $wrapper6.prev('select');
+
+        $wrapper6.find('.sb-swatch-view_order').removeClass('selected');
+        $(this).addClass('selected');
+
+        $('span.wcmamtx_layout_view_order_override_no').text(value6);
+
+        $select6.val(value6).trigger('change');
+    });
+
     $(".wcmamtx_template_override_a").on('click', function(event){
 
         event.preventDefault();

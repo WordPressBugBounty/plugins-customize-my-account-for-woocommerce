@@ -5,8 +5,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 ?>
 <div class="wcmam-tile-grid">
-
-    <?php unset($wcmamtx_tabs['customer-logout']); ?>
     <?php unset($wcmamtx_tabs['dashboard']); ?>
 
     <?php 
@@ -16,6 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         'downloads'       => esc_html__('Get your Downloads','customize-my-account-for-woocommerce'),
         'edit-address'    => esc_html__('Manage your addresses','customize-my-account-for-woocommerce'),
         'edit-account'    => esc_html__('Update your account info','customize-my-account-for-woocommerce'),
+        'customer-logout'    => esc_html__('Logout from site','customize-my-account-for-woocommerce'),
     );
 
     foreach ( $wcmamtx_tabs as $key => $value ) { 

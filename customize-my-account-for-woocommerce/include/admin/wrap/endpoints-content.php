@@ -138,13 +138,14 @@ $default_color_font = '#334155';
 
 </tr>
 
-<?php if (($key != "dashboard") && ($key != "customer-logout")) { 
+<?php if (($key != "dashboard")) { 
 
     $default_desc_text_link = array(
         'orders'          => esc_html__('View and track your orders','customize-my-account-for-woocommerce'),
         'downloads'       => esc_html__('Get your Downloads','customize-my-account-for-woocommerce'),
         'edit-address'    => esc_html__('Manage your addresses','customize-my-account-for-woocommerce'),
         'edit-account'    => esc_html__('Update your account info','customize-my-account-for-woocommerce'),
+        'customer-logout'    => esc_html__('Logout from site','customize-my-account-for-woocommerce'),
     );
 
     $default_desc_text = isset($default_desc_text_link[$key]) ? $default_desc_text_link[$key] : "";

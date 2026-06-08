@@ -3,7 +3,7 @@
     Plugin Name: SysBasics Customize My Account for WooCommerce
     Plugin URI: https://sysbasics.com
     Description: Easily customize the WooCommerce My Account page. Mobile Friendly User avatar, redesign the WooCommerce dashboard, manage menus, and apply premium styles for a better user experience.
-    Version: 4.3.0
+    Version: 4.3.1
     Author: SysBasics
     Author URI: https://sysbasics.com
     Domain Path: /languages
@@ -26,20 +26,25 @@ if( !defined( 'wcmamtx_PLUGIN_URL' ) )
 
 
 
-if( !defined( 'wcmamtx_update_doc_url' ) )
+if ( !defined( 'wcmamtx_update_doc_url' ) )
     define( 'wcmamtx_update_doc_url', 'https://www.sysbasics.com/knowledge-base/category/woocommerce-customize-my-account-pro/' );
 
-if( !defined( 'wcmamtx_doc_url' ) )
+if ( !defined( 'wcmamtx_doc_url' ) )
     define( 'wcmamtx_doc_url', 'https://www.sysbasics.com/knowledge-base/category/woocommerce-customize-my-account-pro/' );
 
-if( !defined( 'pro_url' ) )
+if ( !defined( 'pro_url' ) )
     define( 'pro_url', 'https://sysbasics.com/go/customize/' );
 
 $mt_type = 'specific';
 
 
+if ( !defined( 'wcmamtx_pro_price_html' ) )
+    define( 'wcmamtx_pro_price_html', '$49 USD' );
 
+if ( !defined( 'wcmamtx_pro_price_show' ) )
+    define( 'wcmamtx_pro_price_show', 'yes' );
 
+if( !defined( 'wcmamtx_redirect_URL' ) )
 define( 'wcmamtx_redirect_URL',"admin.php?page=wcmamtx_advanced_settings&tab=wcmamtx_layout" );
 
 

@@ -139,6 +139,8 @@ if (!function_exists('wcmamtx_get_avatar_default')) {
             $args['extra_attr'] = 'style="min-height: '.$min_height.'px; min-width: '.$min_width.'px; max-height: '.$max_height.'px; max-width: '.$max_width.'px;"';
         }
 
+        $modal_popup_class =  "";
+
         if ($modal_popup == true) {
             $args['class'] = "modal_popup";
             $modal_popup_class =  "modal_popup";
@@ -725,6 +727,17 @@ if (!function_exists('wcmamtx_show_disabled_input')) {
 if (!function_exists('wcmamtx_load_pro_feature_preview')) {
 
 	function wcmamtx_load_pro_feature_preview() { ?>
+
+        <?php if  (wcmamtx_pro_price_show == "yes") { ?>
+
+
+            <strong style="color:green;">
+                <?php echo esc_html__( 'Lifetime license starts from ' ,'customize-my-account-for-woocommerce'); ?>
+                <?php echo wcmamtx_pro_price_html; ?>
+                <?php echo esc_html__( ' for single domain' ,'customize-my-account-for-woocommerce'); ?></strong>
+                <br/><br/>
+
+            <?php } ?>
       
 		<strong><?php echo esc_html__( 'Pro Version Features' ,'customize-my-account-for-woocommerce'); ?></strong>
 		<br/>
@@ -749,6 +762,10 @@ if (!function_exists('wcmamtx_load_pro_feature_preview')) {
             <tr><td><i class="fa fa-check"></i></td><td><?php echo esc_html__( 'Ajax Navigation between Endpoints' ,'customize-my-account-for-woocommerce'); ?></td></tr>
 
             <tr><td><i class="fa fa-check"></i></td><td><?php echo esc_html__( 'And many more features' ,'customize-my-account-for-woocommerce'); ?></td></tr>
+
+             <tr><td><i class="fa fa-check"></i></td><td><?php echo esc_html__( '6 Month of premium support' ,'customize-my-account-for-woocommerce'); ?></td></tr>
+
+             <tr><td><i class="fa fa-check"></i></td><td><?php echo esc_html__( 'Lifetime dashboard updates' ,'customize-my-account-for-woocommerce'); ?></td></tr>
 
       	</table>
       

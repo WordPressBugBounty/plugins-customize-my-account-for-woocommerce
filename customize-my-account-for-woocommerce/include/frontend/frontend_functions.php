@@ -714,6 +714,26 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
         }
 
 
+        $view_order_template_override = isset($wcmamtx_layout['view_order_template_override']) ? $wcmamtx_layout['view_order_template_override'] : "01";
+        
+
+
+        if ( strstr($template, 'view-order.php') && ($view_order_template_override != "02")) {
+            $template = wcmamtx_plugin_path() . '/templates/myaccount/view-order.php';
+        }
+
+        /*
+        $thankyou_template_override = isset($wcmamtx_layout['thankyou_template_override']) ? $wcmamtx_layout['thankyou_template_override'] : "01";
+        
+
+
+        if ( strstr($template, 'thankyou.php') && ($thankyou_template_override != "02")) {
+            $template = wcmamtx_plugin_path() . '/templates/myaccount/thankyou.php';
+        }
+
+        */
+
+
         
         if (isset($plugin_options['override_endpoints']) && ($plugin_options['override_endpoints'] == "yes") ) {
 

@@ -5,8 +5,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 ?>
 <div class="wcmam-dashboard-grid">
-
-    <?php unset($wcmamtx_tabs['customer-logout']); ?>
     <?php unset($wcmamtx_tabs['dashboard']); ?>
 
     <?php 

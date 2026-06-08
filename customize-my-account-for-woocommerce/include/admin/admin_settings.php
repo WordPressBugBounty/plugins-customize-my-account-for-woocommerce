@@ -611,6 +611,8 @@ class wcmamtx_add_settings_page_class {
                     'orders2'          => ''.wcmamtx_PLUGIN_URL.'assets/images/orders2.png',
                     'download1'          => ''.wcmamtx_PLUGIN_URL.'assets/images/download1.png',
                     'download2'          => ''.wcmamtx_PLUGIN_URL.'assets/images/download2.png',
+                    'view_order1'          => ''.wcmamtx_PLUGIN_URL.'assets/images/vieworder1.png',
+                    'view_order2'          => ''.wcmamtx_PLUGIN_URL.'assets/images/vieworder2.png',
                 );
 
                wp_localize_script( 'wcmamtx_layout', 'wcmamtx_layout', $wcmamtx_js_array_layout );
@@ -792,14 +794,7 @@ class wcmamtx_add_settings_page_class {
 
 
 
-        $this->wcmamtx_plugin_settings_tab[$this->wcmamtx_pro_settings] = esc_html__( 'Settings' ,'customize-my-account-for-woocommerce');
 
-
-        register_setting( $this->wcmamtx_pro_settings, $this->wcmamtx_pro_settings );
-
-        add_settings_section( 'wcmamtx_pro_settings_section', '', '', $this->wcmamtx_pro_settings );
-
-        add_settings_field( 'pro_settings_option', '', array( $this, 'wcmamtx_pro_settings_page' ), $this->wcmamtx_pro_settings, 'wcmamtx_pro_settings_section' );
 
     
 		
@@ -829,9 +824,7 @@ class wcmamtx_add_settings_page_class {
         
     }
 
-    public function wcmamtx_pro_settings_page() {
-        include ('forms/pro_settings.php');
-    }
+
 
 
     public function wcmamtx_wizard_page() {
