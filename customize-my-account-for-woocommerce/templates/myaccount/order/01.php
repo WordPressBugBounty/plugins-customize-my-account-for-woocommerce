@@ -34,7 +34,19 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
 					}
 
 					?>
-					
+				<div class="wcmam-date-range-wrap">
+  <button class="wcmam-date-range-btn" id="wcmamDateBtn">
+    Select date range <span class="wcmam-chevron">&#8964;</span>
+  </button>
+  <div class="wcmam-date-range-menu" id="wcmamDateMenu">
+    <div class="wcmam-date-option" data-days="7">Last 7 days</div>
+    <div class="wcmam-date-option" data-days="30">Last 30 days</div>
+    <div class="wcmam-date-option" data-days="90">Last 3 months</div>
+    <div class="wcmam-date-option" data-days="180">Last 6 months</div>
+    <div class="wcmam-date-range-divider"></div>
+    <div class="wcmam-date-option" data-days="0">All time</div>
+  </div>
+</div>	
 
 				</div>
 

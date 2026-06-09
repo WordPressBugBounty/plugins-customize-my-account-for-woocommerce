@@ -2,6 +2,8 @@
 
 defined( 'ABSPATH' ) || exit;
 
+$notes = $order->get_customer_order_notes();
+
 
 $wcmamtx_layout = (array) get_option( 'wcmamtx_layout' );
 

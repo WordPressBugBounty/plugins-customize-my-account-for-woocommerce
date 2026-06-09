@@ -713,7 +713,7 @@ class wcmamtx_add_settings_page_class {
 
         
 
-        $this->wcmamtx_plugin_settings_tab[$this->wcmamtx_layout_page] = esc_html__( 'Layout' ,'customize-my-account-for-woocommerce');
+        $this->wcmamtx_plugin_settings_tab[$this->wcmamtx_layout_page] = esc_html__( 'Design & Layout' ,'customize-my-account-for-woocommerce');
 
         register_setting( $this->wcmamtx_layout_page, $this->wcmamtx_layout_page );
 

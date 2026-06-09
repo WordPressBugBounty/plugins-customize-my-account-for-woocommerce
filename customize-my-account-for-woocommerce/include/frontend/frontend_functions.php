@@ -29,11 +29,11 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
       
       
 
-      add_action('the_content', array( $this, 'wcmamtx_modify_post_content' ));
+        add_action('the_content', array( $this, 'wcmamtx_modify_post_content' ));
 
 
 
-      add_filter('woodmart_override_heading_my_account_menu', array( $this, 'wp_nav_menu_items_function' ), 10, 1 );
+       add_filter('woodmart_override_heading_my_account_menu', array( $this, 'wp_nav_menu_items_function' ), 10, 1 );
 
        add_action( 'wp_nav_menu_items', array( $this, 'wcmamtx_add_menu_items' ), 10, 2 );
 
@@ -95,6 +95,12 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
 
         $wcmamtx_layout = (array) get_option( 'wcmamtx_layout' );
 
+        $profile_completion_box_override = isset($wcmamtx_layout['profile_completion_box_override']) ? $wcmamtx_layout['profile_completion_box_override'] : "02";
+
+        if ($profile_completion_box_override != "02") {
+            include('profile_completion.php');
+        }
+
 
         $dashlink_layout_override = isset($wcmamtx_layout['dashlink_layout_override']) ? $wcmamtx_layout['dashlink_layout_override'] : "01";
 
@@ -107,6 +113,8 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
         if ($dashlink_box_override != "02") {
             include('linkboxes.php');
         }
+
+        
     }
 
 
@@ -706,7 +714,7 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
         $order_template_override = isset($wcmamtx_layout['order_template_override']) ? $wcmamtx_layout['order_template_override'] : "01";
 
 
-        if ( strstr($template, 'orders.php') && ($order_template_override != "02") ) {
+        if ( strstr($template, 'orders.php') && ($order_template_override != "02") && !is_checkout() && is_account_page() ) {
             $template = $this->wcmamtx_override_template_child_theme_or_direct_free('orders');
         }
 
@@ -715,7 +723,7 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
         
 
 
-        if ( strstr($template, 'order-downloads.php') && ($download_template_override != "02")) {
+        if ( strstr($template, 'order-downloads.php') && ($download_template_override != "02") && !is_checkout() && is_account_page()) {
             $template = wcmamtx_plugin_path() . '/templates/myaccount/order/order-downloads.php';
         }
 
@@ -724,7 +732,7 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
         
 
 
-        if ( strstr($template, 'view-order.php') && ($view_order_template_override != "02")) {
+        if ( strstr($template, 'view-order.php') && ($view_order_template_override != "02") && !is_checkout() && is_account_page()) {
             $template = wcmamtx_plugin_path() . '/templates/myaccount/view-order.php';
         }
 

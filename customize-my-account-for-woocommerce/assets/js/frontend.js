@@ -461,12 +461,92 @@ jQuery(function($){
         var filter = $(this).data('filter');
 
         if (!$('.wcmam-order-card[data-status="'+filter+'"]').length) {
-            if (filter != "all") {
+            if ((filter != "all") && (!$(this).hasClass("wcmam-date-range-btn"))) {
                 $(this).addClass('wcmamtx_hidden_order_status');
             }
             
         }
+
+
     });
+
+});
+
+
+document.addEventListener('DOMContentLoaded', function () {
+
+  var btn       = document.getElementById('wcmamDateBtn');
+  var menu      = document.getElementById('wcmamDateMenu');
+  var activeDays = 0; // 0 = all time (no filter)
+
+  // Toggle dropdown open/close
+  btn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    var isOpen = menu.classList.contains('open');
+    menu.classList.toggle('open', !isOpen);
+    btn.classList.toggle('open', !isOpen);
+  });
+
+  // Close on outside click
+  document.addEventListener('click', function () {
+    menu.classList.remove('open');
+    btn.classList.remove('open');
+  });
+
+  // Handle option selection
+  document.querySelectorAll('.wcmam-date-option').forEach(function (opt) {
+    opt.addEventListener('click', function () {
+      var days = parseInt(this.getAttribute('data-days'));
+      var label = this.textContent;
+
+      // Update button label
+      btn.innerHTML = label + ' <span class="wcmam-chevron">&#8964;</span>';
+      activeDays = days;
+
+      // Mark selected
+      document.querySelectorAll('.wcmam-date-option').forEach(function (o) {
+        o.classList.remove('selected');
+      });
+      this.classList.add('selected');
+
+      // Close dropdown
+      menu.classList.remove('open');
+      btn.classList.remove('open');
+
+      // Apply date filter
+      applyDateFilter(days);
+    });
+  });
+
+  function applyDateFilter(days) {
+    var cards = document.querySelectorAll('.wcmam-order-card');
+    var now   = new Date();
+
+    cards.forEach(function (card) {
+      // Read the date from the <time> element inside this card
+      var timeEl = card.querySelector('time[datetime]');
+
+      if (!timeEl || days === 0) {
+        // Show all (all-time selected or no date found)
+        card.style.display = '';
+        return;
+      }
+
+      var orderDate = new Date(timeEl.getAttribute('datetime'));
+      var diffDays  = (now - orderDate) / (1000 * 60 * 60 * 24);
+
+      card.style.display = diffDays <= days ? '' : 'none';
+    });
+  }
+
+  // Re-apply date filter when status filter buttons are clicked
+  // so both filters work together
+  document.querySelectorAll('.wcmam-order-filters-button').forEach(function (filterBtn) {
+    filterBtn.addEventListener('click', function () {
+      // Small delay to let the status filter run first, then re-apply date
+      setTimeout(function () { applyDateFilter(activeDays); }, 10);
+    });
+  });
 
 });
 
