@@ -3,7 +3,7 @@
     Plugin Name: SysBasics Customize My Account for WooCommerce
     Plugin URI: https://sysbasics.com
     Description: Easily customize the WooCommerce My Account page. Mobile Friendly User avatar, redesign the WooCommerce dashboard, manage menus, and apply premium styles for a better user experience.
-    Version: 4.3.1
+    Version: 4.3.2
     Author: SysBasics
     Author URI: https://sysbasics.com
     Domain Path: /languages
@@ -45,7 +45,7 @@ if ( !defined( 'wcmamtx_pro_price_show' ) )
     define( 'wcmamtx_pro_price_show', 'yes' );
 
 if( !defined( 'wcmamtx_redirect_URL' ) )
-define( 'wcmamtx_redirect_URL',"admin.php?page=wcmamtx_advanced_settings&tab=wcmamtx_layout" );
+define( 'wcmamtx_redirect_URL',"admin.php?page=wcmamtx_advanced_settings" );
 
 
 
@@ -196,6 +196,33 @@ if (!function_exists('wcmamtx_admin_plugin_redirect')) {
 
     }
 
+}
+
+
+/**
+ * Get woocommerce version 
+ */
+
+if (!function_exists('wcmamtx_get_woo_version_number_free')) {
+
+    function wcmamtx_get_woo_version_number_free() {
+       
+       if ( ! function_exists( 'get_plugins' ) )
+         require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+    
+       
+       $plugin_folder = get_plugins( '/' . 'customize-my-account-for-woocommerce' );
+       $plugin_file = 'customize-my-account-for-woocommerce.php';
+    
+    
+       if ( isset( $plugin_folder[$plugin_file]['Version'] ) ) {
+          return $plugin_folder[$plugin_file]['Version'];
+
+       } else {
+    
+        return NULL;
+       }
+    }
 }
 
 

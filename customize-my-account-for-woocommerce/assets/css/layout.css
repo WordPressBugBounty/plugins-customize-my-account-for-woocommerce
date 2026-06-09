@@ -89,7 +89,7 @@ span.wcmamtx_label_below_layout_images {
 .wcmamtx_layout_template_override,
 .wcmamtx_layout_template_override_navigation,
 .wcmamtx_layout_template_override_order,
-.wcmamtx_layout_template_override_download,.wcmamtx_layout_template_override_view_order {
+.wcmamtx_layout_template_override_download,.wcmamtx_layout_template_override_view_order,.wcmamtx_layout_template_override_thankyou {
     margin-top: 20px !important;
     padding: 15px 18px;
     border-radius: 10px;
@@ -103,7 +103,7 @@ span.wcmamtx_label_below_layout_images {
 .wcmamtx_layout_template_override_navigation code,
 .wcmamtx_layout_template_override_order code,
 .wcmamtx_layout_template_override_download code,
-.wcmamtx_layout_template_override_view_order code {
+.wcmamtx_layout_template_override_view_order code,.wcmamtx_layout_template_override_thankyou code {
     display: block;
     margin-top: 8px;
     padding: 10px;
@@ -578,6 +578,69 @@ select.wcmamtx_layout_view_order_select_override {
 }
 
 .wcmamtx_layout_view_order_select_override {
+    margin-top: -50px;
+    min-width: 280px;
+}
+.wcmamtx-card-body .wcmamtx_disabled_img {
+    opacity: 0.3;
+}
+
+.sb-image-swatches-thankyou{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:10px;
+}
+
+.sb-swatch-thankyou{
+    width:330px;
+    height:140px;
+    border:2px solid #ddd;
+    border-radius:6px;
+    cursor:pointer;
+    overflow:hidden;
+    transition:all .2s ease;
+}
+
+.sb-swatch-thankyou:hover{
+    border-color:#2271b1;
+}
+
+.sb-swatch-thankyou.selected{
+    border-color:#2271b1;
+    box-shadow:0 0 0 2px rgba(34,113,177,.15);
+}
+
+.sb-swatch-thankyou img{
+    width: 100%;
+    /* height: 100%; */
+    object-fit: fill;
+    /* display: block; */
+    min-height: 140px;
+    /* min-width: 200px; */
+    /* padding: 2%; */
+    max-height: 270px;
+}
+
+.sb-swatch-thankyou {
+    padding: 5px;
+   
+    min-height: 250px;
+}
+.sb-swatch-thankyou {
+    min-height: 320px;
+}
+
+p.wcmamtx_layout_template_override_thankyou.alert.alert-success {
+    margin-top: 20px;
+}
+
+select.wcmamtx_layout_thankyou_select_override {
+   float: right;
+    
+}
+
+.wcmamtx_layout_thankyou_select_override {
     margin-top: -50px;
     min-width: 280px;
 }

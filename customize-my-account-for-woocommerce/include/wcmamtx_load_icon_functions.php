@@ -121,6 +121,10 @@ if (!function_exists('wcmamtx_get_account_menu_li_icon_html')) {
 				$icon ='fa fa-user-plus';
 				break;
 
+				case "payment-methods":
+				$icon ='fa fa-credit-card';
+				break;
+
 				default:
 				$icon ='fa fa-file-alt';
 				break;

@@ -22,6 +22,13 @@ $view_order_style = isset($wcmamtx_layout['view_order_style']) ? $wcmamtx_layout
 
 $view_order_template_override = isset($wcmamtx_layout['view_order_template_override']) ? $wcmamtx_layout['view_order_template_override'] : "01";
 
+$dashlink_box_override = isset($wcmamtx_layout['dashlink_box_override']) ? $wcmamtx_layout['dashlink_box_override'] : "01";
+
+
+$thankyou_style = isset($wcmamtx_layout['thankyou_style']) ? $wcmamtx_layout['thankyou_style'] : "01";
+
+$thankyou_template_override = isset($wcmamtx_layout['thankyou_template_override']) ? $wcmamtx_layout['thankyou_template_override'] : "01";
+
 ?>
 
 
@@ -50,10 +57,10 @@ $view_order_template_override = isset($wcmamtx_layout['view_order_template_overr
 		<div class="wcmamtx-card-body" style="<?php if (isset($download_template_override) && ($download_template_override == 01)) { echo 'display:block;'; } else { echo 'display:none;'; } ?>">
 
 			<select class="wcmamtx_layout_design_select" name="<?php  echo esc_html__($this->wcmamtx_layout_page); ?>[dash_style]" style="display: none;">			
-				<option value="01" gtext="<?php echo esc_html__('Default','customize-my-account-for-woocommerce'); ?>"  <?php if (isset($dash_style) && ($dash_style == 01)) { echo 'selected'; } ?>></option> 
-				<option value="02" gtext="<?php echo esc_html__('Classic','customize-my-account-for-woocommerce'); ?>"  <?php if (isset($dash_style) && ($dash_style == 02)) { echo 'selected'; } ?>></option> 
-				<option value="03" gtext="<?php echo esc_html__('Card','customize-my-account-for-woocommerce'); ?>"  <?php if (isset($dash_style) && ($dash_style == 03)) { echo 'selected'; } ?>></option> 
-				<option value="04" gtext="<?php echo esc_html__('Tile','customize-my-account-for-woocommerce'); ?>"  <?php if (isset($dash_style) && ($dash_style == 04)) { echo 'selected'; } ?>></option> 
+				<option value="01" vpreview="" gtext="<?php echo esc_html__('Default','customize-my-account-for-woocommerce'); ?>"  <?php if (isset($dash_style) && ($dash_style == 01)) { echo 'selected'; } ?>></option> 
+				<option value="02" vpreview="" gtext="<?php echo esc_html__('Classic','customize-my-account-for-woocommerce'); ?>"  <?php if (isset($dash_style) && ($dash_style == 02)) { echo 'selected'; } ?>></option> 
+				<option value="03" vpreview="<?php echo wcmamtx_PLUGIN_URL; ?>assets/images/layout3.png" gtext="<?php echo esc_html__('Card','customize-my-account-for-woocommerce'); ?>"  <?php if (isset($dash_style) && ($dash_style == 03)) { echo 'selected'; } ?> disabled></option> 
+				<option value="04" vpreview="<?php echo wcmamtx_PLUGIN_URL; ?>assets/images/layout4.png" gtext="<?php echo esc_html__('Tile','customize-my-account-for-woocommerce'); ?>"  <?php if (isset($dash_style) && ($dash_style == 04)) { echo 'selected'; } ?> disabled></option> 
 			</select>
 
 			
@@ -79,6 +86,37 @@ $view_order_template_override = isset($wcmamtx_layout['view_order_template_overr
 	</div>
 
 
+	<!-- Dashboard Style 
+	<div class="wcmamtx-setting-card">
+
+		<div class="wcmamtx-card-header">
+			<div>
+				<h2><?php esc_html_e('Dashboard Link Boxes','customize-my-account-for-woocommerce'); ?></h2>
+				<p><?php esc_html_e('Amazon like linkboxes on dashboard.','customize-my-account-for-woocommerce'); ?></p>
+
+				<select class="wcmamtx_layout_select_override wcmamtx_layout_order_select_override" name="<?php  echo esc_html__($this->wcmamtx_layout_page); ?>[dashlink_box_override]" style="">			
+					<option value="01" <?php if (isset($dashlink_box_override) && ($dashlink_box_override == 01)) { echo 'selected'; } ?>>
+						<?php echo esc_html__('Enable','customize-my-account-for-woocommerce'); ?>
+					</option> 
+					<option value="02" <?php if (isset($dashlink_box_override) && ($dashlink_box_override == 02)) { echo 'selected'; } ?>>
+						<?php echo esc_html__('Disable','customize-my-account-for-woocommerce'); ?>
+					</option> 
+			</select>
+			</div>
+		</div>
+
+		<div class="wcmamtx-card-body" style="<?php if (isset($dashlink_box_override) && ($dashlink_box_override == 01)) { echo 'display:block;'; } else { echo 'display:none;'; } ?>">
+
+			
+
+		</div>
+
+        
+
+
+	</div>
+
+    -->
 
     <!-- Sidebar -->
     <div class="wcmamtx-setting-card">
@@ -92,7 +130,8 @@ $view_order_template_override = isset($wcmamtx_layout['view_order_template_overr
 
             <select class="wcmamtx_layout_sidebar_select" name="<?php  echo esc_html__($this->wcmamtx_layout_page); ?>[sidebar_style]" style="display: none;">			
 					<option value="01" gtext="<?php echo esc_html__('Left Sidebar','customize-my-account-for-woocommerce'); ?>" <?php if (isset($sidebar_style) && ($sidebar_style == 01)) { echo 'selected'; } ?>></option> 
-					<option value="02" gtext="<?php echo esc_html__('Right Sidebar','customize-my-account-for-woocommerce'); ?>" <?php if (isset($sidebar_style) && ($sidebar_style == 02)) { echo 'selected'; } ?>></option> 
+					<option value="02" gtext="<?php echo esc_html__('Right Sidebar','customize-my-account-for-woocommerce'); ?>" <?php if (isset($sidebar_style) && ($sidebar_style == 02)) { echo 'selected'; } ?> disabled></option> 
+					<option value="03" gtext="<?php echo esc_html__('No navigation','customize-my-account-for-woocommerce'); ?>" <?php if (isset($sidebar_style) && ($sidebar_style == 02)) { echo 'selected'; } ?> disabled></option> 
 			</select>
 
             <!-- sidebar previews -->
@@ -114,8 +153,11 @@ $view_order_template_override = isset($wcmamtx_layout['view_order_template_overr
     	<div class="wcmamtx-card-body">
 
     		<select class="wcmamtx_layout_navigation_select" name="<?php  echo esc_html__($this->wcmamtx_layout_page); ?>[nav_style]" style="display: none;">			
-    			<option value="01" gtext="<?php echo esc_html__('Theme inherited (default)','customize-my-account-for-woocommerce'); ?>"  <?php if (isset($nav_style) && ($nav_style == 01)) { echo 'selected'; } ?>></option> 
-    			<option value="02" gtext="<?php echo esc_html__('Clean','customize-my-account-for-woocommerce'); ?>"  <?php if (isset($nav_style) && ($nav_style == 02)) { echo 'selected'; } ?>></option> 
+    			<option value="01" vpreview="" gtext="<?php echo esc_html__('Theme inherited (default)','customize-my-account-for-woocommerce'); ?>"  <?php if (isset($nav_style) && ($nav_style == 01)) { echo 'selected'; } ?>></option> 
+    			<option value="02" vpreview="" gtext="<?php echo esc_html__('Clean','customize-my-account-for-woocommerce'); ?>"  <?php if (isset($nav_style) && ($nav_style == 02)) { echo 'selected'; } ?>></option>
+    			
+    			<option value="03" vpreview="https://www.sysbasics.com/wp-content/uploads/2026/06/screen-capture-2.webm" gtext="<?php echo esc_html__('Banking App','customize-my-account-for-woocommerce'); ?>"  <?php if (isset($nav_style) && ($nav_style == 03)) { echo 'selected'; } ?> disabled></option> 
+    			
     		</select>
 
     		<a href="#" class="wcmamtx_template_override_a">
@@ -271,5 +313,51 @@ $view_order_template_override = isset($wcmamtx_layout['view_order_template_overr
         
 
     </div>
+
+
+        <!-- Thank you template -->
+    <div class="wcmamtx-setting-card">
+
+        <div class="wcmamtx-card-header">
+            <h2><?php esc_html_e('Thankyou Template','customize-my-account-for-woocommerce-pro'); ?></h2>
+            <p><?php esc_html_e('Customize WooCommerce order received page layout.','customize-my-account-for-woocommerce-pro'); ?></p>
+            <select class="wcmamtx_layout_select_override wcmamtx_layout_thankyou_select_override" name="<?php  echo esc_html__($this->wcmamtx_layout_page); ?>[thankyou_template_override]" style="">			
+					<option value="01" <?php if (isset($thankyou_template_override) && ($thankyou_template_override == 01)) { echo 'selected'; } ?>>
+						<?php echo esc_html__('Sourced from this plugin','customize-my-account-for-woocommerce-pro'); ?>
+					</option> 
+					<option value="02" <?php if (isset($thankyou_template_override) && ($thankyou_template_override == 02)) { echo 'selected'; } ?>>
+						<?php echo esc_html__('Prevent override from this plugin','customize-my-account-for-woocommerce-pro'); ?>
+					</option> 
+			</select>
+        </div>
+
+        <div class="wcmamtx-card-body" style="<?php if (isset($thankyou_template_override) && ($thankyou_template_override == 01)) { echo 'display:block;'; } else { echo 'display:none;'; } ?>">
+
+        	<select class="wcmamtx_layout_thankyou_select" name="<?php  echo esc_html__($this->wcmamtx_layout_page); ?>[thankyou_style]" style="display: none;">			
+        		<option value="01" vpreview="" gtext="<?php echo esc_html__('Default','customize-my-account-for-woocommerce-pro'); ?>" <?php if (isset($thankyou_style) && ($thankyou_style == 01)) { echo 'selected'; } ?>></option> 
+        		<option value="02" vpreview="<?php echo wcmamtx_PLUGIN_URL; ?>assets/images/thankyou2.png" gtext="<?php echo esc_html__('Optimized','customize-my-account-for-woocommerce-pro'); ?>" <?php if (isset($thankyou_style) && ($thankyou_style == 02)) { echo 'selected'; } ?> disabled></option> 
+        	</select>
+
+        	<a href="#" class="wcmamtx_template_override_a">
+        		<?php echo esc_html__('Override from child theme or main theme ?','customize-my-account-for-woocommerce-pro'); ?>
+        	</a>
+
+        	<p class="wcmamtx_template_override wcmamtx_layout_template_override_thankyou alert alert-success">
+        		<?php echo esc_html__('You can override this template easily from your child theme. Copy the file from','customize-my-account-for-woocommerce-pro'); ?>&emsp;
+        		<code><?php echo ''.wcmamtx_PLUGIN_URL.'templates/myaccount/thankyou/<span class="wcmamtx_layout_thankyou_override_no">'.$thankyou_style.'</span>.php'; ?></code>
+
+        		<?php echo esc_html__('and paste it into your child theme','customize-my-account-for-woocommerce-pro'); ?>&emsp;
+
+        		<code><?php echo ''.get_stylesheet_directory().'/wcmamtx_template/thankyou/<span class="wcmamtx_layout_thankyou_override_no">'.$thankyou_style.'</span>.php'; ?></code>
+        	</p>
+
+
+
+        </div>
+
+        
+
+    </div>
+
 
 </div>

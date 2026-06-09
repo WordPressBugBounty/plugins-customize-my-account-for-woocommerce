@@ -22,9 +22,27 @@ jQuery(document).ready(function($){
 
             var value = $(this).val();
 
+            var texttoinsert = $(this).attr("gtext");
 
+            var disabledclass = "";
+
+            if ($(this).prop('disabled')) {
+                disabledclass = "wcmamtx_disabled_img";
+                texttoinsert  += '('+wcmamtx_layout.proonly+')';
+            }
 
             var selectedclass = "";
+
+            var preview_link = '';
+
+            var vpreview = $(this).attr("vpreview");
+
+
+            if ((vpreview != "")) {
+
+                preview_link = '(<a target="_blank" href="'+vpreview+'">'+wcmamtx_layout.previewtxt+'</a>)';
+
+            }
 
             if (value == selectedValue) {
                 selectedclass = "selected";
@@ -32,12 +50,12 @@ jQuery(document).ready(function($){
 
             if(value !== '' && swatchImages[value]){
 
-                var texttoinsert = $(this).attr("gtext");
+                
 
-                htlmtoinsert = '<span class="wcmamtx_label_below_layout_images">'+texttoinsert+'</span>';
+                htlmtoinsert = '<span class="wcmamtx_label_below_layout_images">'+texttoinsert+' '+preview_link+'</span>';
 
                 swatches += `
-                    <div class="sb-swatch ${selectedclass}"
+                    <div class="sb-swatch ${selectedclass} ${disabledclass}"
                          data-value="${value}">
                         <img src="${swatchImages[value]}" alt="${value}">
                         ${htlmtoinsert}
@@ -53,22 +71,34 @@ jQuery(document).ready(function($){
 
     $(document).on('click', '.sb-swatch', function(){
 
-        var value = $(this).data('value');
-        var $wrapper = $(this).closest('.sb-image-swatches');
-        var $select = $wrapper.prev('select');
 
-        $wrapper.find('.sb-swatch').removeClass('selected');
-        $(this).addClass('selected');
+        if ($(this).hasClass("wcmamtx_disabled_img")) {
 
-        $('span.wcmamtx_layout_template_override_no').text(value);
+            $('#wcmamtx_upgrade_modal').modal("show");
 
-        $select.val(value).trigger('change');
+        } else {
+
+            var value = $(this).data('value');
+            var $wrapper = $(this).closest('.sb-image-swatches');
+            var $select = $wrapper.prev('select');
+
+            $wrapper.find('.sb-swatch').removeClass('selected');
+            $(this).addClass('selected');
+
+            $('span.wcmamtx_layout_template_override_no').text(value);
+
+            $select.val(value).trigger('change');
+
+        }
+
+        
     });
 
 
     var sidebarImages = {
         "01": wcmamtx_layout.sidebar1,
         "02": wcmamtx_layout.sidebar2,
+        "03": wcmamtx_layout.sidebar3,
     };
 
     $('select.wcmamtx_layout_sidebar_select').each(function(){
@@ -84,6 +114,15 @@ jQuery(document).ready(function($){
 
             var value2 = $(this).val();
 
+            var texttoinsert = $(this).attr("gtext");
+
+            var disabledclass2 = "";
+
+            if ($(this).prop('disabled')) {
+                disabledclass2 = "wcmamtx_disabled_img"
+                texttoinsert  += '('+wcmamtx_layout.proonly+')';
+            }
+
             var selectedclass2 = "";
 
             if (value2 == selectedValue2) {
@@ -92,12 +131,12 @@ jQuery(document).ready(function($){
 
             if(value2 !== '' && sidebarImages[value2]){
 
-                var texttoinsert = $(this).attr("gtext");
+                
 
                 htlmtoinsert = '<span class="wcmamtx_label_below_layout_images">'+texttoinsert+'</span>';
 
                 swatches_sidebar += `
-                    <div class="sb-swatch-sidebar ${selectedclass2}"
+                    <div class="sb-swatch-sidebar ${selectedclass2} ${disabledclass2}"
                          data-value="${value2}">
                         <img src="${sidebarImages[value2]}" alt="${value2}">
                         ${htlmtoinsert}
@@ -113,20 +152,32 @@ jQuery(document).ready(function($){
 
     $(document).on('click', '.sb-swatch-sidebar', function(){
 
-        var value2 = $(this).data('value');
-        var $wrapper2 = $(this).closest('.sb-image-swatches-sidebar');
-        var $select2 = $wrapper2.prev('select');
+        if ($(this).hasClass("wcmamtx_disabled_img")) {
 
-        $wrapper2.find('.sb-swatch-sidebar').removeClass('selected');
-        $(this).addClass('selected');
+            $('#wcmamtx_upgrade_modal').modal("show");
 
-        $select2.val(value2).trigger('change');
+        } else {
+
+            var value2 = $(this).data('value');
+            var $wrapper2 = $(this).closest('.sb-image-swatches-sidebar');
+            var $select2 = $wrapper2.prev('select');
+
+            $wrapper2.find('.sb-swatch-sidebar').removeClass('selected');
+            $(this).addClass('selected');
+
+            $select2.val(value2).trigger('change');
+
+        }
     });
+
+
+    // Navigation bloxk
 
 
     var navigationImages = {
         "01": wcmamtx_layout.navigation1,
         "02": wcmamtx_layout.navigation2,
+        "03": wcmamtx_layout.navigation3,
     };
 
     $('select.wcmamtx_layout_navigation_select').each(function(){
@@ -138,7 +189,11 @@ jQuery(document).ready(function($){
 
         var selectedValue3 = $select3.val();
 
+        
+
         $select3.find('option').each(function(){
+
+           
 
             var value3 = $(this).val();
 
@@ -148,20 +203,44 @@ jQuery(document).ready(function($){
                 selectedclass3 = "selected";
             }
 
+            var texttoinsert = $(this).attr("gtext");
+
+            var disabledclass3 = "";
+
+            if ($(this).prop('disabled')) {
+                disabledclass3 = "wcmamtx_disabled_img"
+                texttoinsert  += '('+wcmamtx_layout.proonly+')';
+            }
+
+            var preview_link3 = '';
+
+            var vpreview3 = $(this).attr("vpreview");
+
+
+            if ((vpreview3 != "")) {
+
+                preview_link3 = '(<a target="_blank" href="'+vpreview3+'">'+wcmamtx_layout.previewtxt+'</a>)';
+
+            }
+
             if(value3 !== '' && navigationImages[value3]){
 
-                var texttoinsert = $(this).attr("gtext");
+                
 
-                htlmtoinsert = '<span class="wcmamtx_label_below_layout_images">'+texttoinsert+'</span>';
+                htlmtoinsert = '<span class="wcmamtx_label_below_layout_images">'+texttoinsert+' '+preview_link3+'</span>';
+
+                
 
                 swatches3 += `
-                    <div class="sb-swatch-navigation ${selectedclass3}"
+                    <div class="sb-swatch-navigation ${selectedclass3} ${disabledclass3}"
                          data-value="${value3}">
                         <img src="${navigationImages[value3]}" alt="${value3}">
                         ${htlmtoinsert}
                     </div>
                 `;
             }
+
+
         });
 
         swatches3 += '</div>';
@@ -171,17 +250,31 @@ jQuery(document).ready(function($){
 
     $(document).on('click', '.sb-swatch-navigation', function(){
 
-        var value3 = $(this).data('value');
-        var $wrapper3 = $(this).closest('.sb-image-swatches-navigation');
-        var $select3 = $wrapper3.prev('select');
+        if ($(this).hasClass("wcmamtx_disabled_img")) {
 
-        $wrapper3.find('.sb-swatch-navigation').removeClass('selected');
-        $(this).addClass('selected');
+            $('#wcmamtx_upgrade_modal').modal("show");
 
-        $('span.wcmamtx_layout_navigation_override_no').text(value3);
 
-        $select3.val(value3).trigger('change');
+        } else {
+
+            var value3 = $(this).data('value');
+            var $wrapper3 = $(this).closest('.sb-image-swatches-navigation');
+            var $select3 = $wrapper3.prev('select');
+
+            $wrapper3.find('.sb-swatch-navigation').removeClass('selected');
+            $(this).addClass('selected');
+
+            $('span.wcmamtx_layout_navigation_override_no').text(value3);
+
+            $select3.val(value3).trigger('change');
+
+        }
+
+
     });
+
+
+    // Order bloxk
 
 
     var orderImages = {
@@ -360,6 +453,104 @@ jQuery(document).ready(function($){
         $('span.wcmamtx_layout_view_order_override_no').text(value6);
 
         $select6.val(value6).trigger('change');
+    });
+
+
+
+    //thankyou js handler
+
+    var thankyouImages = {
+        "01": wcmamtx_layout.thankyou1,
+        "02": wcmamtx_layout.thankyou2,
+    };
+
+    $('select.wcmamtx_layout_thankyou_select').each(function(){
+
+        var $select7 = $(this);
+       
+
+        var swatches7 = '<div class="sb-image-swatches-thankyou">';
+
+        var selectedValue7 = $select7.val();
+
+        $select7.find('option').each(function(){
+
+            var value7 = $(this).val();
+
+            var selectedclass7 = "";
+
+
+            var disabledclass7 = "";
+
+            var texttoinsert = $(this).attr("gtext");
+
+            if ($(this).prop('disabled')) {
+                disabledclass7 = "wcmamtx_disabled_img"
+                texttoinsert  += '('+wcmamtx_layout.proonly+')';
+            }
+
+
+            var preview_link7 = '';
+
+            var vpreview7 = $(this).attr("vpreview");
+
+
+            if ((vpreview7 != "")) {
+
+                preview_link7 = '(<a target="_blank" href="'+vpreview7+'">'+wcmamtx_layout.previewtxt+'</a>)';
+
+            }
+
+            if (value7 == selectedValue7) {
+                selectedclass7 = "selected";
+            }
+
+            if(value7 !== '' && thankyouImages[value7]){
+
+                
+
+                htlmtoinsert = '<span class="wcmamtx_label_below_layout_images">'+texttoinsert+' '+preview_link7+'</span>';
+
+                swatches7 += `
+                    <div class="sb-swatch-thankyou ${selectedclass7} ${disabledclass7}"
+                         data-value="${value7}">
+                        <img src="${thankyouImages[value7]}" alt="${value7}">
+                        ${htlmtoinsert}
+                    </div>
+                `;
+            }
+        });
+
+        swatches7 += '</div>';
+
+        $select7.after(swatches7).hide();
+    });
+
+    $(document).on('click', '.sb-swatch-thankyou', function(){
+
+
+        if ($(this).hasClass("wcmamtx_disabled_img")) {
+
+            $('#wcmamtx_upgrade_modal').modal("show");
+
+
+        } else {
+
+            var value7 = $(this).data('value');
+            var $wrapper7 = $(this).closest('.sb-image-swatches-thankyou');
+            var $select7 = $wrapper7.prev('select');
+
+            $wrapper7.find('.sb-swatch-thankyou').removeClass('selected');
+            $(this).addClass('selected');
+
+            $('span.wcmamtx_layout_thankyou_override_no').text(value7);
+
+            $select7.val(value7).trigger('change');
+
+
+        }
+
+
     });
 
     $(".wcmamtx_template_override_a").on('click', function(event){

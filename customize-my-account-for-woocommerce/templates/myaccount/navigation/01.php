@@ -5,11 +5,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $wcmamtx_layout = (array) get_option( 'wcmamtx_layout' );
 
-$sidebar_style = isset($wcmamtx_layout['sidebar_style']) ? $wcmamtx_layout['sidebar_style'] : "01";
+$sidebar_style = "01";
 
 $extra_nav_sidebar_class = "";
 
-if ($sidebar_style == 02) {
+if ($sidebar_style == "02") {
     $extra_nav_sidebar_class = "wcmamtx_float_sidebar_right";
 }
 

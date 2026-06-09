@@ -1,4 +1,10 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly.
+}
+
+?>
+<?php
 $plugin_options = (array) get_option( 'wcmamtx_pro_settings' );
 
 if ( (isset($plugin_options['disable_dashboard_links'])) && ($plugin_options['disable_dashboard_links'] == "yes")) {
@@ -81,6 +87,10 @@ $wcmamtx_layout = (array) get_option( 'wcmamtx_layout' );
 
 $dash_style = isset($wcmamtx_layout['dash_style']) ? $wcmamtx_layout['dash_style'] : "01";
 
+
+if (($dash_style == "03") || ($dash_style == "04")) {
+    $dash_style = "01";
+}
 
 
 $dash_template = "dashlinks/$dash_style.php";
