@@ -553,6 +553,299 @@ jQuery(document).ready(function($){
 
     });
 
+
+    //linkbox js handler
+
+    var linkboxImages = {
+        "01": wcmamtx_layout.linkbox1,
+    };
+
+    $('select.wcmamtx_layout_linkbox_select').each(function(){
+
+        var $select8 = $(this);
+       
+
+        var swatches8 = '<div class="sb-image-swatches-linkbox">';
+
+        var selectedValue8 = $select8.val();
+
+        $select8.find('option').each(function(){
+
+            var value8 = $(this).val();
+
+            var selectedclass8 = "";
+
+
+            var disabledclass8 = "";
+
+            var texttoinsert = $(this).attr("gtext");
+
+            if ($(this).prop('disabled')) {
+                disabledclass8 = "wcmamtx_disabled_img"
+                texttoinsert  += '('+wcmamtx_layout.proonly+')';
+            }
+
+
+            var preview_link8 = '';
+
+            var vpreview8 = $(this).attr("vpreview");
+
+
+            if ((vpreview8 != "")) {
+
+                preview_link8 = '(<a target="_blank" href="'+vpreview8+'">'+wcmamtx_layout.previewtxt+'</a>)';
+
+            }
+
+            if (value8 == selectedValue8) {
+                selectedclass8 = "selected";
+            }
+
+            if(value8 !== '' && linkboxImages[value8]){
+
+                
+
+                htlmtoinsert = '<span class="wcmamtx_label_below_layout_images">'+texttoinsert+' '+preview_link8+'</span>';
+
+                swatches8 += `
+                    <div class="sb-swatch-linkbox ${selectedclass8} ${disabledclass8}"
+                         data-value="${value8}">
+                        <img src="${linkboxImages[value8]}" alt="${value8}">
+                        ${htlmtoinsert}
+                    </div>
+                `;
+            }
+        });
+
+        swatches8 += '</div>';
+
+        $select8.after(swatches8).hide();
+    });
+
+    $(document).on('click', '.sb-swatch-linkbox', function(){
+
+
+        if ($(this).hasClass("wcmamtx_disabled_img")) {
+
+            $('#wcmamtx_upgrade_modal').modal("show");
+
+
+        } else {
+
+            var value8 = $(this).data('value');
+            var $wrapper8 = $(this).closest('.sb-image-swatches-linkbox');
+            var $select8 = $wrapper8.prev('select');
+
+            $wrapper8.find('.sb-swatch-linkbox').removeClass('selected');
+            $(this).addClass('selected');
+
+            $('span.wcmamtx_layout_linkbox_override_no').text(value8);
+
+            $select8.val(value8).trigger('change');
+
+
+        }
+
+
+    });
+
+
+    //profilebox js handler
+
+    var profileboxImages = {
+        "01": wcmamtx_layout.profilebox1,
+    };
+
+    $('select.wcmamtx_layout_profilebox_select').each(function(){
+
+        var $select9 = $(this);
+       
+
+        var swatches9 = '<div class="sb-image-swatches-profilebox">';
+
+        var selectedValue9 = $select9.val();
+
+        $select9.find('option').each(function(){
+
+            var value9 = $(this).val();
+
+            var selectedclass9 = "";
+
+
+            var disabledclass9 = "";
+
+            var texttoinsert = $(this).attr("gtext");
+
+            if ($(this).prop('disabled')) {
+                disabledclass9 = "wcmamtx_disabled_img"
+                texttoinsert  += '('+wcmamtx_layout.proonly+')';
+            }
+
+
+            var preview_link9 = '';
+
+            var vpreview9 = $(this).attr("vpreview");
+
+
+            if ((vpreview9 != "")) {
+
+                preview_link9 = '(<a target="_blank" href="'+vpreview9+'">'+wcmamtx_layout.previewtxt+'</a>)';
+
+            }
+
+            if (value9 == selectedValue9) {
+                selectedclass9 = "selected";
+            }
+
+            if(value9 !== '' && profileboxImages[value9]){
+
+                
+
+                htlmtoinsert = '<span class="wcmamtx_label_below_layout_images">'+texttoinsert+' '+preview_link9+'</span>';
+
+                swatches9 += `
+                    <div class="sb-swatch-profilebox ${selectedclass9} ${disabledclass9}"
+                         data-value="${value9}">
+                        <img src="${profileboxImages[value9]}" alt="${value9}">
+                        ${htlmtoinsert}
+                    </div>
+                `;
+            }
+        });
+
+        swatches9 += '</div>';
+
+        $select9.after(swatches9).hide();
+    });
+
+    $(document).on('click', '.sb-swatch-profilebox', function(){
+
+
+        if ($(this).hasClass("wcmamtx_disabled_img")) {
+
+            $('#wcmamtx_upgrade_modal').modal("show");
+
+
+        } else {
+
+            var value9 = $(this).data('value');
+            var $wrapper9 = $(this).closest('.sb-image-swatches-profilebox');
+            var $select9 = $wrapper9.prev('select');
+
+            $wrapper9.find('.sb-swatch-profilebox').removeClass('selected');
+            $(this).addClass('selected');
+
+            $('span.wcmamtx_layout_profilebox_override_no').text(value9);
+
+            $select9.val(value9).trigger('change');
+
+
+        }
+
+
+    });
+
+
+//orderpay js handler
+
+    var orderpayImages = {
+        "01": wcmamtx_layout.orderpay1,
+        "02": wcmamtx_layout.orderpay2,
+    };
+
+    $('select.wcmamtx_layout_orderpay_select').each(function(){
+
+        var $select10 = $(this);
+       
+
+        var swatches10 = '<div class="sb-image-swatches-orderpay">';
+
+        var selectedValue10 = $select10.val();
+
+        $select10.find('option').each(function(){
+
+            var value10 = $(this).val();
+
+            var selectedclass10 = "";
+
+
+            var disabledclass10 = "";
+
+            var texttoinsert = $(this).attr("gtext");
+
+            if ($(this).prop('disabled')) {
+                disabledclass10 = "wcmamtx_disabled_img"
+                texttoinsert  += '('+wcmamtx_layout.proonly+')';
+            }
+
+
+            var preview_link10 = '';
+
+            var vpreview10 = $(this).attr("vpreview");
+
+
+            if ((vpreview10 != "")) {
+
+                preview_link10 = '(<a target="_blank" href="'+vpreview10+'">'+wcmamtx_layout.previewtxt+'</a>)';
+
+            }
+
+            if (value10 == selectedValue10) {
+                selectedclass10 = "selected";
+            }
+
+            if(value10 !== '' && orderpayImages[value10]){
+
+                
+
+                htlmtoinsert = '<span class="wcmamtx_label_below_layout_images">'+texttoinsert+' '+preview_link10+'</span>';
+
+                swatches10 += `
+                    <div class="sb-swatch-orderpay ${selectedclass10} ${disabledclass10}"
+                         data-value="${value10}">
+                        <img src="${orderpayImages[value10]}" alt="${value10}">
+                        ${htlmtoinsert}
+                    </div>
+                `;
+            }
+        });
+
+        swatches10 += '</div>';
+
+        $select10.after(swatches10).hide();
+    });
+
+    $(document).on('click', '.sb-swatch-orderpay', function(){
+
+
+        if ($(this).hasClass("wcmamtx_disabled_img")) {
+
+            $('#wcmamtx_upgrade_modal').modal("show");
+
+
+        } else {
+
+            var value10 = $(this).data('value');
+            var $wrapper10 = $(this).closest('.sb-image-swatches-orderpay');
+            var $select10 = $wrapper10.prev('select');
+
+            $wrapper10.find('.sb-swatch-orderpay').removeClass('selected');
+            $(this).addClass('selected');
+
+            $('span.wcmamtx_layout_orderpay_override_no').text(value10);
+
+            $select10.val(value10).trigger('change');
+
+
+        }
+
+
+    });
+
+    //
+
+
+
     $(".wcmamtx_template_override_a").on('click', function(event){
 
         event.preventDefault();

@@ -17,7 +17,10 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
 			<div class="wcmam-orders-wrapper">
 
 				<div class="wcmam-order-filters">
-					<button class="btn btn-primary wcmam-order-filters-button active" data-filter="all" class="active"><?php echo esc_html__('All','customize-my-account-for-woocommerce-pro'); ?></button>
+					<button class="btn btn-primary wcmam-order-filters-button active" data-filter="all" class="active">
+						<?php echo esc_html__('All','customize-my-account-for-woocommerce'); ?>
+							
+						</button>
 					<?php
 
 					$statuses = wc_get_order_statuses();
@@ -34,19 +37,7 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
 					}
 
 					?>
-				<div class="wcmam-date-range-wrap">
-  <button class="wcmam-date-range-btn" id="wcmamDateBtn">
-    Select date range <span class="wcmam-chevron">&#8964;</span>
-  </button>
-  <div class="wcmam-date-range-menu" id="wcmamDateMenu">
-    <div class="wcmam-date-option" data-days="7">Last 7 days</div>
-    <div class="wcmam-date-option" data-days="30">Last 30 days</div>
-    <div class="wcmam-date-option" data-days="90">Last 3 months</div>
-    <div class="wcmam-date-option" data-days="180">Last 6 months</div>
-    <div class="wcmam-date-range-divider"></div>
-    <div class="wcmam-date-option" data-days="0">All time</div>
-  </div>
-</div>	
+
 
 				</div>
 
@@ -114,7 +105,7 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
 				    		<div class="order-details">
 				    			<h4>
 				    				<a href="<?php echo esc_url( $order->get_view_order_url() ); ?>">
-									<?php echo esc_html( _x( '#', 'hash before order number', 'customize-my-account-for-woocommerce-pro' ) . $order->get_order_number() ); ?>
+									<?php echo esc_html( _x( '#', 'hash before order number', 'customize-my-account-for-woocommerce' ) . $order->get_order_number() ); ?>
 								    </a>
 							    </h4>
 
@@ -147,13 +138,13 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
 							    <div class="order-total">
 							    	<?php
 
-							    	echo wp_kses_post( sprintf( _n( '%1$s for %2$s item', '%1$s for %2$s items', $item_count, 'customize-my-account-for-woocommerce-pro' ), $order->get_formatted_order_total(), $item_count ) );
+							    	echo wp_kses_post( sprintf( _n( '%1$s for %2$s item', '%1$s for %2$s items', $item_count, 'customize-my-account-for-woocommerce' ), $order->get_formatted_order_total(), $item_count ) );
 							    	?>
 							    </div>
 				    		</div>
 
 				    		<div class="order-arrow view">
-				    			<a title="<?php echo esc_html__( 'View Order', 'customize-my-account-for-woocommerce-pro' ); ?>" href="<?php echo esc_url( $order->get_view_order_url() ); ?>">
+				    			<a title="<?php echo esc_html__( 'View Order', 'customize-my-account-for-woocommerce' ); ?>" href="<?php echo esc_url( $order->get_view_order_url() ); ?>">
 				    				<i class="fa fa-eye"></i>
 				    			</a>
 				    		</div>
@@ -222,18 +213,18 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
 	<?php if ( 1 < $customer_orders->max_num_pages ) : ?>
 		<div class="woocommerce-pagination woocommerce-pagination--without-numbers woocommerce-Pagination">
 			<?php if ( 1 !== $current_page ) : ?>
-				<a class="woocommerce-button woocommerce-button--previous woocommerce-Button woocommerce-Button--previous button<?php echo esc_attr( $wp_button_class ); ?>" href="<?php echo esc_url( wc_get_endpoint_url( 'orders', $current_page - 1 ) ); ?>"><?php esc_html_e( 'Previous', 'customize-my-account-for-woocommerce-pro' ); ?></a>
+				<a class="woocommerce-button woocommerce-button--previous woocommerce-Button woocommerce-Button--previous button<?php echo esc_attr( $wp_button_class ); ?>" href="<?php echo esc_url( wc_get_endpoint_url( 'orders', $current_page - 1 ) ); ?>"><?php esc_html_e( 'Previous', 'customize-my-account-for-woocommerce' ); ?></a>
 			<?php endif; ?>
 
 			<?php if ( intval( $customer_orders->max_num_pages ) !== $current_page ) : ?>
-				<a class="woocommerce-button woocommerce-button--next woocommerce-Button woocommerce-Button--next button<?php echo esc_attr( $wp_button_class ); ?>" href="<?php echo esc_url( wc_get_endpoint_url( 'orders', $current_page + 1 ) ); ?>"><?php esc_html_e( 'Next', 'customize-my-account-for-woocommerce-pro' ); ?></a>
+				<a class="woocommerce-button woocommerce-button--next woocommerce-Button woocommerce-Button--next button<?php echo esc_attr( $wp_button_class ); ?>" href="<?php echo esc_url( wc_get_endpoint_url( 'orders', $current_page + 1 ) ); ?>"><?php esc_html_e( 'Next', 'customize-my-account-for-woocommerce' ); ?></a>
 			<?php endif; ?>
 		</div>
 	<?php endif; ?>
 
 <?php else : ?>
 
-	<?php wc_print_notice( esc_html__( 'No order has been made yet.', 'customize-my-account-for-woocommerce-pro' ) . ' <a class="woocommerce-Button button' . esc_attr( $wp_button_class ) . '" href="' . esc_url( apply_filters( 'woocommerce_return_to_shop_redirect', wc_get_page_permalink( 'shop' ) ) ) . '">' . esc_html__( 'Browse products', 'customize-my-account-for-woocommerce-pro' ) . '</a>', 'notice' ); // phpcs:ignore WooCommerce.Commenting.CommentHooks.MissingHookComment ?>
+	<?php wc_print_notice( esc_html__( 'No order has been made yet.', 'customize-my-account-for-woocommerce' ) . ' <a class="woocommerce-Button button' . esc_attr( $wp_button_class ) . '" href="' . esc_url( apply_filters( 'woocommerce_return_to_shop_redirect', wc_get_page_permalink( 'shop' ) ) ) . '">' . esc_html__( 'Browse products', 'customize-my-account-for-woocommerce' ) . '</a>', 'notice' ); // phpcs:ignore WooCommerce.Commenting.CommentHooks.MissingHookComment ?>
 
 <?php endif; ?>
 

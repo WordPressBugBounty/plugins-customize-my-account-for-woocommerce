@@ -35,7 +35,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                         
                         <?php if ( ! empty( $download['downloads_remaining'] ) ) : ?>
                             <span class="wc-download-remaining">
-                                <?php echo esc_html( $download['downloads_remaining'] ); ?> <?php esc_html_e( 'left', 'customize-my-account-for-woocommerce-pro'  ); ?>
+                                <?php echo esc_html( $download['downloads_remaining'] ); ?> <?php esc_html_e( 'left', 'customize-my-account-for-woocommerce'  ); ?>
                             </span>
                         <?php endif; ?>
                         
@@ -48,7 +48,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                     
                     <div class="wc-download-action">
                         <a href="<?php echo esc_url( $download['download_url'] ); ?>" class="woocommerce-button button download-button">
-                            <?php esc_html_e( 'Download Now', 'customize-my-account-for-woocommerce-pro'  ); ?>
+                            <?php esc_html_e( 'Download Now', 'customize-my-account-for-woocommerce'  ); ?>
                         </a>
                     </div>
                 </div>
@@ -56,7 +56,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         </div>
     <?php else : ?>
         <div class="woocommerce-message woocommerce-message--info woocommerce-InfoMessage">
-            <?php esc_html_e( 'No downloads available yet.', 'customize-my-account-for-woocommerce-pro'  ); ?>
+            <?php esc_html_e( 'No downloads available yet.', 'customize-my-account-for-woocommerce'  ); ?>
         </div>
     <?php endif; ?>
 </div>

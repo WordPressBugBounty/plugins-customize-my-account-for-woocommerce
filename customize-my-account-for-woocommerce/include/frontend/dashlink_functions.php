@@ -13,6 +13,8 @@ if ( (isset($plugin_options['disable_dashboard_links'])) && ($plugin_options['di
 
 $wcmamtx_tabs          =  (array) get_option('wcmamtx_advanced_settings');
 
+
+
 $wcmamtx_layout = (array) get_option( 'wcmamtx_layout' );
 
 $default_column = isset($wcmamtx_layout['columns']) ? $wcmamtx_layout['columns'] : "03";
@@ -20,6 +22,11 @@ $default_column = isset($wcmamtx_layout['columns']) ? $wcmamtx_layout['columns']
 $dash_style = isset($wcmamtx_layout['dash_style']) ? $wcmamtx_layout['dash_style'] : "01";
 
 $items                 =  wc_get_account_menu_items();
+
+
+if (count($wcmamtx_tabs) === 1 && empty(reset($wcmamtx_tabs))) {
+    $wcmamtx_tabs = $items;
+}
 
 foreach ($items as $itkey=>$itvalue) {
     if (!array_key_exists($itkey, $wcmamtx_tabs)) {
@@ -81,6 +88,8 @@ if (!isset($wcmamtx_tabs) || (sizeof($wcmamtx_tabs) == 1)) {
 
 
 $wcmamtx_tabs   = apply_filters('wcmamtx_override_dashlinks',$wcmamtx_tabs);
+
+
 
 $wcmamtx_layout = (array) get_option( 'wcmamtx_layout' );
 

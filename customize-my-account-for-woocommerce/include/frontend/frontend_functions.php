@@ -1,5 +1,30 @@
 <?php 
 
+add_action( 'wp_footer', function() {
+    if ( ! is_account_page() ) {
+        return;
+    }
+
+    $endpoint = 'dashboard';
+
+    foreach ( WC()->query->get_query_vars() as $key => $value ) {
+        if ( is_wc_endpoint_url( $key ) ) {
+            $endpoint = sanitize_html_class( $key );
+            break;
+        }
+    }
+    ?>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const content = document.querySelector('.woocommerce-MyAccount-content');
+        if (content) {
+            content.classList.add('endpoint-<?php echo esc_js( $endpoint ); ?>');
+        }
+    });
+    </script>
+    <?php
+});
+
 if (!class_exists('wcmamtx_add_frontend_class')) {
 
   class wcmamtx_add_frontend_class {
@@ -95,11 +120,7 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
 
         $wcmamtx_layout = (array) get_option( 'wcmamtx_layout' );
 
-        $profile_completion_box_override = isset($wcmamtx_layout['profile_completion_box_override']) ? $wcmamtx_layout['profile_completion_box_override'] : "02";
-
-        if ($profile_completion_box_override != "02") {
-            include('profile_completion.php');
-        }
+        
 
 
         $dashlink_layout_override = isset($wcmamtx_layout['dashlink_layout_override']) ? $wcmamtx_layout['dashlink_layout_override'] : "01";
@@ -108,11 +129,7 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
             include('dashlink_functions.php');
         }
 
-        $dashlink_box_override = isset($wcmamtx_layout['dashlink_box_override']) ? $wcmamtx_layout['dashlink_box_override'] : "02";
-
-        if ($dashlink_box_override != "02") {
-            include('linkboxes.php');
-        }
+        
 
         
     }
@@ -374,91 +391,7 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
     }
 
 
-    public function woocommerce_my_account_my_orders_actions_func($actions,$order) {
-        $new_actions = (array) get_option('wcmamtx_order_actions');
 
-        if (!isset($new_actions) || (!is_array($new_actions)) ) {
-            return $actions;
-        }
-
-        if ((isset($new_actions)) && (is_array($new_actions)) && (!empty($new_actions))) {
-
-            foreach ($new_actions as $key=>$value) {
-
-
-                if (isset($value['endpoint_name']) && (isset($value['action_url'])) && ($value['action_url'] != "")) {
-
-
-
-                    $action_url  = $value['action_url'];
-
-                    
-
-
-                    $params = $this->parseUrl($action_url);
-
-                    
-                
-
-
-
-                    foreach ($params as $skey=>$svalue) {
-                        
-
-                        if ($svalue == "{orderid}") {
-                            $action_url = preg_replace('{orderid}', $order->ID , $action_url);
-                        } else {
-
-                            $svalue = substr($svalue, 1, -1);
-
-                            $matchtext  ='{'.$svalue.'}';
-
-                            $metavalue  = get_post_meta($order->ID,$svalue,true);
-
-                            
-
-                            $action_url = preg_replace($matchtext,  $metavalue , $action_url);
-
-                        } 
-
-                    }
-
-                    $icon_source       = isset($value['icon_source']) ? $value['icon_source'] : "";
-
-
-                    if ($icon_source == "custom") {
-                        $icon       = isset($value['icon']) ? $value['icon'] : "";
-
-                        if ($icon != '') {
-                            $icon_html ='<i class="wcmtx_float_right '.$icon.'"></i>';
-                        }
-                    } else if ($icon_source == "dashicon") {
-                        $icon       = isset($value['dashicon']) ? $value['dashicon'] : "";
-
-                        if ($icon != '') {
-                             $icon_html ='<span class="dashicons wcmtx_float_right '.$icon.'"></span>'; 
-                         }
-
-                    }
-
-                    
-                    $action_name = ''.$value['endpoint_name'].'';
-                    $actions[] = array(
-                        "url" => $action_url,
-                        "name" => $action_name,
-                        "icon_html" => $icon_html
-                    );
-               }
-
-
-           }
-
-       }
-
-        
-
-        return $actions;
-    }
 
 
     public function woocommerce_account_orders_columns_func($columns = array()) {
@@ -748,38 +681,7 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
         */
 
 
-        
-        if (isset($plugin_options['override_endpoints']) && ($plugin_options['override_endpoints'] == "yes") ) {
-
-
-            
-
-
-            if ( strstr($template, 'orders.php') && (isset($plugin_options['custom_templates']['orders'])) && ($plugin_options['custom_templates']['orders'] != "default")) {
-                $template = $this->wcmamtx_override_template_child_theme_or_direct_free("orders");
-
-                if (class_exists("\\Elementor\\Plugin")) {
-                    $post_ID = $plugin_options['custom_templates']['orders'];
-
-                    
-
-                    $pluginElementor = \Elementor\Plugin::instance();
-                    $contentElementor = $pluginElementor->frontend->get_builder_content($post_ID);
-
-                    
-                }
-                
-
-                echo $pluginElementor->frontend->get_builder_content($post_ID);
-
-                $template = $this->wcmamtx_override_template_child_theme_or_direct_free("empty_form");
-               
-            }
-           
-
-            
-           
-        }    
+ 
 
 
         
@@ -1240,12 +1142,14 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
 
         if (!is_array($wcmamtx_tabs)) {
 
-            return;
+            return $url;
         }
 
         if (!isset($wcmamtx_tabs) || (sizeof($wcmamtx_tabs) == 1)) {
-            return;
-        } 
+            return $url;
+        }
+
+
 
 
         foreach ($wcmamtx_tabs as $key=>$value) {

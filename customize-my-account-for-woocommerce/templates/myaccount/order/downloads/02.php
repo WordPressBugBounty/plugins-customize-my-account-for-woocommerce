@@ -59,7 +59,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 									if ( ! empty( $download['access_expires'] ) ) {
 										echo '<time datetime="' . esc_attr( date( 'Y-m-d', strtotime( $download['access_expires'] ) ) ) . '" title="' . esc_attr( strtotime( $download['access_expires'] ) ) . '">' . esc_html( date_i18n( get_option( 'date_format' ), strtotime( $download['access_expires'] ) ) ) . '</time>';
 									} else {
-										esc_html_e( 'Never', 'customize-my-account-for-woocommerce-pro' );
+										esc_html_e( 'Never', 'customize-my-account-for-woocommerce' );
 									}
 									break;
 							}

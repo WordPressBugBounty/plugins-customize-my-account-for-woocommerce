@@ -78,7 +78,7 @@ function custom_add_order_again_button( $actions, $order ) {
             ),
             'woocommerce-order_again'
         ),
-        'name' => __( 'Order again', 'customize-my-account-for-woocommerce-pro' ),
+        'name' => __( 'Order again', 'customize-my-account-for-woocommerce' ),
         'classes' => 'custom-order-again-btn', // custom CSS class
     ];
 
@@ -113,9 +113,9 @@ function custom_view_order_again_button( $order ) {
     ?>
     <a href="<?php echo esc_url( $order_again_url ); ?>"
        class="wcmamtx_view_order-btn"
-       aria-label="<?php esc_attr_e( 'Order the same items again', 'customize-my-account-for-woocommerce-pro' ); ?>">
+       aria-label="<?php esc_attr_e( 'Order the same items again', 'customize-my-account-for-woocommerce' ); ?>">
         <i class="fa fa-repeat"></i>
-        <?php esc_html_e( 'Order again', 'customize-my-account-for-woocommerce-pro' ); ?>
+        <?php esc_html_e( 'Order again', 'customize-my-account-for-woocommerce' ); ?>
     </a>
     <?php
 }
@@ -136,12 +136,12 @@ function custom_view_order_again_button( $order ) {
     <div class="wcmamtx_view_order-header">
         <div>
             <h2 class="wcmamtx_view_order-header__title">
-                <?php printf( esc_html__( 'Order #%s', 'customize-my-account-for-woocommerce-pro' ), $order->get_order_number() ); ?>
+                <?php printf( esc_html__( 'Order #%s', 'customize-my-account-for-woocommerce' ), $order->get_order_number() ); ?>
             </h2>
             <p class="wcmamtx_view_order-header__meta">
                 <?php
                 printf(
-                    esc_html__( 'Placed on %s &mdash; %d item(s)', 'customize-my-account-for-woocommerce-pro' ),
+                    esc_html__( 'Placed on %s &mdash; %d item(s)', 'customize-my-account-for-woocommerce' ),
                     esc_html( wc_format_datetime( $order_date ) ),
                     count( $items )
                 );
@@ -197,14 +197,14 @@ function custom_view_order_again_button( $order ) {
 
     <!-- ---- Items + Totals ---- -->
     <div class="wcmamtx_view_order-card">
-        <p class="wcmamtx_view_order-card__title"><?php esc_html_e( 'Items ordered', 'customize-my-account-for-woocommerce-pro' ); ?></p>
+        <p class="wcmamtx_view_order-card__title"><?php esc_html_e( 'Items ordered', 'customize-my-account-for-woocommerce' ); ?></p>
 
         <table class="wcmamtx_view_order-items-table">
             <thead>
                 <tr>
-                    <th><?php esc_html_e( 'Product', 'customize-my-account-for-woocommerce-pro' ); ?></th>
-                    <th><?php esc_html_e( 'Qty', 'customize-my-account-for-woocommerce-pro' ); ?></th>
-                    <th><?php esc_html_e( 'Price', 'customize-my-account-for-woocommerce-pro' ); ?></th>
+                    <th><?php esc_html_e( 'Product', 'customize-my-account-for-woocommerce' ); ?></th>
+                    <th><?php esc_html_e( 'Qty', 'customize-my-account-for-woocommerce' ); ?></th>
+                    <th><?php esc_html_e( 'Price', 'customize-my-account-for-woocommerce' ); ?></th>
                 </tr>
             </thead>
             <tbody>
@@ -258,13 +258,13 @@ function custom_view_order_again_button( $order ) {
         <table class="wcmamtx_view_order-totals">
             <tbody>
                 <tr>
-                    <td><?php esc_html_e( 'Subtotal', 'customize-my-account-for-woocommerce-pro' ); ?></td>
+                    <td><?php esc_html_e( 'Subtotal', 'customize-my-account-for-woocommerce' ); ?></td>
                     <td><?php echo wp_kses_post( $order->get_subtotal_to_display() ); ?></td>
                 </tr>
 
                 <?php foreach ( $order->get_shipping_methods() as $shipping ) : ?>
                 <tr>
-                    <td><?php esc_html_e( 'Shipping', 'customize-my-account-for-woocommerce-pro' ); ?> (<?php echo esc_html( $shipping->get_name() ); ?>)</td>
+                    <td><?php esc_html_e( 'Shipping', 'customize-my-account-for-woocommerce' ); ?> (<?php echo esc_html( $shipping->get_name() ); ?>)</td>
                     <td><?php echo wp_kses_post( wc_price( $shipping->get_total() ) ); ?></td>
                 </tr>
                 <?php endforeach; ?>
@@ -278,20 +278,20 @@ function custom_view_order_again_button( $order ) {
 
                 <?php if ( $order->get_total_discount() ) : ?>
                 <tr>
-                    <td><?php esc_html_e( 'Discount', 'customize-my-account-for-woocommerce-pro' ); ?></td>
+                    <td><?php esc_html_e( 'Discount', 'customize-my-account-for-woocommerce' ); ?></td>
                     <td>-<?php echo wp_kses_post( wc_price( $order->get_total_discount() ) ); ?></td>
                 </tr>
                 <?php endif; ?>
 
                 <?php if ( wc_tax_enabled() && $order->get_total_tax() ) : ?>
                 <tr>
-                    <td><?php esc_html_e( 'Tax', 'customize-my-account-for-woocommerce-pro' ); ?></td>
+                    <td><?php esc_html_e( 'Tax', 'customize-my-account-for-woocommerce' ); ?></td>
                     <td><?php echo wp_kses_post( wc_price( $order->get_total_tax() ) ); ?></td>
                 </tr>
                 <?php endif; ?>
 
                 <tr class="wcmamtx_view_order-totals__grand">
-                    <td><?php esc_html_e( 'Order total', 'customize-my-account-for-woocommerce-pro' ); ?></td>
+                    <td><?php esc_html_e( 'Order total', 'customize-my-account-for-woocommerce' ); ?></td>
                     <td><?php echo wp_kses_post( $order->get_formatted_order_total() ); ?></td>
                 </tr>
             </tbody>
@@ -305,9 +305,9 @@ function custom_view_order_again_button( $order ) {
     <!-- ---- Addresses ---- -->
     <div class="wcmamtx_view_order-address-grid">
         <div class="wcmamtx_view_order-card" style="margin-bottom:0">
-            <p class="wcmamtx_view_order-card__title"><?php esc_html_e( 'Billing address', 'customize-my-account-for-woocommerce-pro' ); ?></p>
+            <p class="wcmamtx_view_order-card__title"><?php esc_html_e( 'Billing address', 'customize-my-account-for-woocommerce' ); ?></p>
             <div class="wcmamtx_view_order-address">
-                <?php echo wp_kses_post( $order->get_formatted_billing_address() ?: __( 'N/A', 'customize-my-account-for-woocommerce-pro' ) ); ?>
+                <?php echo wp_kses_post( $order->get_formatted_billing_address() ?: __( 'N/A', 'customize-my-account-for-woocommerce' ) ); ?>
                 <?php if ( $phone = $order->get_billing_phone() ) : ?>
                     <p><?php echo esc_html( $phone ); ?></p>
                 <?php endif; ?>
@@ -318,9 +318,9 @@ function custom_view_order_again_button( $order ) {
         </div>
 
         <div class="wcmamtx_view_order-card" style="margin-bottom:0">
-            <p class="wcmamtx_view_order-card__title"><?php esc_html_e( 'Shipping address', 'customize-my-account-for-woocommerce-pro' ); ?></p>
+            <p class="wcmamtx_view_order-card__title"><?php esc_html_e( 'Shipping address', 'customize-my-account-for-woocommerce' ); ?></p>
             <div class="wcmamtx_view_order-address">
-                <?php echo wp_kses_post( $order->get_formatted_shipping_address() ?: __( 'Same as billing', 'customize-my-account-for-woocommerce-pro' ) ); ?>
+                <?php echo wp_kses_post( $order->get_formatted_shipping_address() ?: __( 'Same as billing', 'customize-my-account-for-woocommerce' ) ); ?>
             </div>
         </div>
     </div>
@@ -330,13 +330,13 @@ function custom_view_order_again_button( $order ) {
 
     <!-- ---- Order Status Timeline ---- -->
     <div class="wcmamtx_view_order-card">
-        <p class="wcmamtx_view_order-card__title"><?php esc_html_e( 'Order progress', 'customize-my-account-for-woocommerce-pro' ); ?></p>
+        <p class="wcmamtx_view_order-card__title"><?php esc_html_e( 'Order progress', 'customize-my-account-for-woocommerce' ); ?></p>
 
         <?php if ( $status === 'cancelled' || $status === 'failed' || $status === 'refunded' ) : ?>
             <p style="font-size:13px;color:#b91c1c;">
                 <?php
                 printf(
-                    esc_html__( 'This order was %s on %s.', 'customize-my-account-for-woocommerce-pro' ),
+                    esc_html__( 'This order was %s on %s.', 'customize-my-account-for-woocommerce' ),
                     esc_html( $status_label ),
                     esc_html( wc_format_datetime( $order_date ) )
                 );
@@ -346,9 +346,9 @@ function custom_view_order_again_button( $order ) {
 
         <?php
         $steps = [
-            [ 'index' => 0, 'label' => __( 'Order placed', 'customize-my-account-for-woocommerce-pro' ),      'date' => wc_format_datetime( $order_date ) ],
-            [ 'index' => 1, 'label' => __( 'Processing', 'customize-my-account-for-woocommerce-pro' ),         'date' => $current_step >= 1 ? wc_format_datetime( $order_date ) : __( 'Pending', 'customize-my-account-for-woocommerce-pro' ) ],
-            [ 'index' => 2, 'label' => __( 'Delivered / Completed', 'customize-my-account-for-woocommerce-pro' ), 'date' => $current_step >= 3 ? wc_format_datetime( $order->get_date_completed() ) : __( 'Pending', 'customize-my-account-for-woocommerce-pro' ) ],
+            [ 'index' => 0, 'label' => __( 'Order placed', 'customize-my-account-for-woocommerce' ),      'date' => wc_format_datetime( $order_date ) ],
+            [ 'index' => 1, 'label' => __( 'Processing', 'customize-my-account-for-woocommerce' ),         'date' => $current_step >= 1 ? wc_format_datetime( $order_date ) : __( 'Pending', 'customize-my-account-for-woocommerce' ) ],
+            [ 'index' => 2, 'label' => __( 'Delivered / Completed', 'customize-my-account-for-woocommerce' ), 'date' => $current_step >= 3 ? wc_format_datetime( $order->get_date_completed() ) : __( 'Pending', 'customize-my-account-for-woocommerce' ) ],
         ];
         ?>
         <div class="wcmamtx_view_order-timeline">
@@ -374,20 +374,20 @@ function custom_view_order_again_button( $order ) {
 
     <!-- ---- Payment Info ---- -->
     <div class="wcmamtx_view_order-card">
-        <p class="wcmamtx_view_order-card__title"><?php esc_html_e( 'Payment', 'customize-my-account-for-woocommerce-pro' ); ?></p>
+        <p class="wcmamtx_view_order-card__title"><?php esc_html_e( 'Payment', 'customize-my-account-for-woocommerce' ); ?></p>
         <div class="wcmamtx_view_order-payment-row">
             <span class="wcmamtx_view_order-payment__method">
                 &#128179; <?php echo esc_html( $order->get_payment_method_title() ); ?>
             </span>
             <?php if ( $order->is_paid() ) : ?>
-                <span class="wcmamtx_view_order-badge wcmamtx_badge-completed">&#10003; <?php esc_html_e( 'Paid', 'customize-my-account-for-woocommerce-pro' ); ?></span>
+                <span class="wcmamtx_view_order-badge wcmamtx_badge-completed">&#10003; <?php esc_html_e( 'Paid', 'customize-my-account-for-woocommerce' ); ?></span>
             <?php else : ?>
-                <span class="wcmamtx_view_order-badge wcmamtx_badge-pending"><?php esc_html_e( 'Unpaid', 'customize-my-account-for-woocommerce-pro' ); ?></span>
+                <span class="wcmamtx_view_order-badge wcmamtx_badge-pending"><?php esc_html_e( 'Unpaid', 'customize-my-account-for-woocommerce' ); ?></span>
             <?php endif; ?>
         </div>
         <?php if ( $txn_id = $order->get_transaction_id() ) : ?>
             <p style="font-size:12px;color:#aaa;margin-top:8px;">
-                <?php printf( esc_html__( 'Transaction ID: %s', 'customize-my-account-for-woocommerce-pro' ), esc_html( $txn_id ) ); ?>
+                <?php printf( esc_html__( 'Transaction ID: %s', 'customize-my-account-for-woocommerce' ), esc_html( $txn_id ) ); ?>
             </p>
         <?php endif; ?>
     </div>
@@ -396,7 +396,7 @@ function custom_view_order_again_button( $order ) {
     <?php $notes = wc_get_order_notes( [ 'order_id' => $order_id, 'type' => 'customer' ] ); ?>
     <?php if ( $notes ) : ?>
     <div class="wcmamtx_view_order-card">
-        <p class="wcmamtx_view_order-card__title"><?php esc_html_e( 'Order updates', 'customize-my-account-for-woocommerce-pro' ); ?></p>
+        <p class="wcmamtx_view_order-card__title"><?php esc_html_e( 'Order updates', 'customize-my-account-for-woocommerce' ); ?></p>
         <ul class="wcmamtx_view_order-notes">
             <?php foreach ( $notes as $note ) : ?>
             <li>
@@ -415,7 +415,7 @@ function custom_view_order_again_button( $order ) {
         
 
         <a href="<?php echo esc_url( wc_get_endpoint_url( 'orders' ) ); ?>" class="wcmamtx_view_order-btn">
-            <i class="fa fa-arrow-left" aria-hidden="true"></i> <?php esc_html_e( 'Back to orders', 'customize-my-account-for-woocommerce-pro' ); ?>
+            <i class="fa fa-arrow-left" aria-hidden="true"></i> <?php esc_html_e( 'Back to orders', 'customize-my-account-for-woocommerce' ); ?>
         </a>
 
 

@@ -2527,3 +2527,25 @@ nav.wcmam-nav.wcmam-style-1 a.woocommerce-MyAccount-navigation-link_a.woocommerc
     }
 
 }
+
+.woocommerce-account .woocommerce-MyAccount-content.endpoint-edit-address > p:first-of-type {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    margin-bottom: 2rem;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 12px;
+    color: #1e40af;
+    padding: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.woocommerce-account .woocommerce-MyAccount-content.endpoint-edit-address > p:first-of-type::before {
+    content: "ℹ";
+    flex-shrink: 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+}

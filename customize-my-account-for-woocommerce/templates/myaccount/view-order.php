@@ -7,7 +7,7 @@ $notes = $order->get_customer_order_notes();
 
 $wcmamtx_layout = (array) get_option( 'wcmamtx_layout' );
 
-$view_order_style = isset($wcmamtx_layout['view_order_style']) ? $wcmamtx_layout['view_order_style'] : "02";
+$view_order_style = isset($wcmamtx_layout['view_order_style']) ? $wcmamtx_layout['view_order_style'] : "01";
 
 
 

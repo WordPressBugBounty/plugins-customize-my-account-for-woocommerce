@@ -9,14 +9,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 
     <?php 
 
-    $default_desc_text_link = array(
-        'orders'          => esc_html__('View and track your orders','customize-my-account-for-woocommerce'),
-        'downloads'       => esc_html__('Get your Downloads','customize-my-account-for-woocommerce'),
-        'edit-address'    => esc_html__('Manage your addresses','customize-my-account-for-woocommerce'),
-        'edit-account'    => esc_html__('Update your account info','customize-my-account-for-woocommerce'),
-    );
+
 
     foreach ( $wcmamtx_tabs as $key => $value ) {
+
+        if (isset($value['endpoint_name']) && ($value['endpoint_name'] != '')) {
+            $name = $value['endpoint_name'];
+        } else {
+            $name = $value;
+        }  
+
+        $default_desc_text_link = wcmamtx_deshlink_default_description($key,$name);
 
         $should_show = 'yes';
 
@@ -49,11 +52,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
     
-        if (isset($value['endpoint_name']) && ($value['endpoint_name'] != '')) {
-            $name = $value['endpoint_name'];
-        } else {
-            $name = $value;
-        }  
+        
 
     
 
@@ -106,9 +105,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
                 $ajax_class = isset($wcmamtx_plugin_options['ajax_navigation']) && ($wcmamtx_plugin_options['ajax_navigation'] == "yes") ? "wcmamtx_ajax_enabled" : "";
 
-                $default_desc_text = isset($default_desc_text_link[$key]) ? $default_desc_text_link[$key] : "";
 
-                $default_desc_text = isset($value['default_desc_text']) ? $value['default_desc_text'] : $default_desc_text;
+                $default_desc_text = isset($value['default_desc_text']) ? $value['default_desc_text'] : $default_desc_text_link;
 
                 $default_desc_icon_colors = array(
                     'orders'          => esc_html__('#f97316','customize-my-account-for-woocommerce'),

@@ -129,6 +129,7 @@
 					?>
     <?php wp_nonce_field('ajax_file_upload_nonce', 'security_nonce'); ?>
     <input type="file" id="wcmamtx_wp-user-file" name="basic-user-avatar" accept="image/*" />
+    
     <?php echo '<input type="submit" name="manage_avatar_submit" class="wcmamtx_update_avatar_btn" value="" />'; ?>
     <div id="wcmamtx_upload_response"></div>
 

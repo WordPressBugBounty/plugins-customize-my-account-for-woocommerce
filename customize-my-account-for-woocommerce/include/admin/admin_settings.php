@@ -25,28 +25,10 @@ class wcmamtx_add_settings_page_class {
 		add_action( 'admin_enqueue_scripts', array($this, 'wcmamtx_register_admin_scripts'));
 		add_action( 'admin_enqueue_scripts', array($this, 'wcmamtx_load_admin_menu_style'));
         add_action( 'wp_ajax_restore_my_account_tabs', array( $this, 'restore_my_account_tabs' ) );
-        add_action( 'wp_ajax_restore_my_account_order', array( $this, 'restore_my_account_order' ) );
-        add_action( 'wp_ajax_wcmamtxadmin_add_new_template', array( $this, 'wcmamtxadmin_add_new_template' ) );
-        add_action( 'wp_ajax_get_elementor_templates', array( $this, 'wcmamtx_get_posts_ajax_callback' ) );
-        add_action( 'admin_post_nds_form_response_endpoint', array( $this, 'add_endpoint_form_response' ));
-        add_action( 'admin_post_nds_form_response_column', array( $this, 'add_column_form_response' ));
-		add_action( 'admin_post_nds_form_response_action', array( $this, 'add_action_form_response' ));
+        add_action( 'admin_post_nds_form_response_endpoint', array( $this, 'add_endpoint_form_response' ));    
         add_action( 'wp_ajax_wcmamtxadmin_get_users_ajax', array( $this, 'wcmamtxadmin_get_users_ajax_function' ) );
-        add_action( 'wp_ajax_wcmamtx_dismiss_renew_notice', array( $this, 'wcmamtx_dismiss_renew_notice_function' ) );
-
-         add_action( 'wp_ajax_wcmamtx_dismiss_dashboard_text_notice', array( $this, 'wcmamtx_dismiss_dashboard_text_notice_function' ) );
-
-         add_action( 'wp_ajax_nopriv_wcmamtx_dismiss_dashboard_text_notice', array( $this, 'wcmamtx_dismiss_dashboard_text_notice_function' ) );
-
-         add_action( 'wp_ajax_wcmamtx_dismiss_dashboard_text_notice2', array( $this, 'wcmamtx_dismiss_dashboard_text_notice_function2' ) );
-
-         add_action( 'wp_ajax_nopriv_wcmamtx_dismiss_dashboard_text_notice2', array( $this, 'wcmamtx_dismiss_dashboard_text_notice_function2' ) );
-
-        
-
-         add_action( 'wp_ajax_wcmamtx_export_endpoints', array( $this, 'wcmamtx_export_endpoints_function' ) );
-
-         add_action( 'wp_ajax_wcmamtx_import_menu', array( $this, 'wcmamtx_import_menu_function' ) );
+        add_action( 'wp_ajax_wcmamtx_export_endpoints', array( $this, 'wcmamtx_export_endpoints_function' ) );
+        add_action( 'wp_ajax_wcmamtx_import_menu', array( $this, 'wcmamtx_import_menu_function' ) );
         
 	}
 
@@ -108,36 +90,6 @@ class wcmamtx_add_settings_page_class {
     }
 
 
-    
-
-
-
-    public function wcmamtx_dismiss_renew_notice_function() {
-
-         update_option("wcmamtx_dismiss_renew_notice_permanately","yes");
-
-         die;
-
-    }
-
-    public function wcmamtx_dismiss_dashboard_text_notice_function() {
-
-         update_option("wcmamtx_dismiss_dashboard_text_notice_permanately","yes");
-
-         die;
-
-    }
-
-
-    public function wcmamtx_dismiss_dashboard_text_notice_function2() {
-
-         update_option("wcmamtx_dismiss_dashboard_text_notice_permanately2","yes");
-
-         die;
-
-    }
-
-
 
     public function wcmamtxadmin_get_users_ajax_function() {
         $return = array();
@@ -168,194 +120,6 @@ class wcmamtx_add_settings_page_class {
         die;
     }
 
-
-
-    public function add_action_form_response() {
-
-        if( isset( $_POST['wcmamtx_add_action_nonce'] ) && wp_verify_nonce( $_POST['wcmamtx_add_action_nonce'], 'wcmamtx_nonce_hidden_action') ) {
-
-
-        
-        if (isset($_POST['ndsaction']['label'])) {
-            $new_name      = sanitize_text_field($_POST['ndsaction']['label']);
-
-            $random_number  = mt_rand(100000, 999999);
-            
-            $new_key   = 'custom-action-'.$random_number.'';
-        }
-
-
-    
-
-
-        $new_row_values    = array();
-
-        $advancedsettings  = (array) get_option('wcmamtx_order_actions');
-
-        
-
-        if ((isset($advancedsettings))  && (sizeof($advancedsettings) >= 1) && (!array_key_exists(0, $advancedsettings))) {
-
-            foreach ($advancedsettings as $key2=>$value2) {
-
-                
-                $new_row_values[$key2]['endpoint_key']        = isset($value2['endpoint_key']) ? $value2['endpoint_key'] : $key2;;
-                $new_row_values[$key2]['endpoint_name']       = $value2['endpoint_name'];
-                $new_row_values[$key2]['wcmamtx_type']        = $value2['wcmamtx_type'];
-                $new_row_values[$key2]['parent']              = 'none';
-
-
-
-            }
-
-        }
-            
-
-
-
-        if (isset($new_name) && ($new_name != '')) {
-            $new_row_values[$new_key]['endpoint_key']        = $new_key;
-            $new_row_values[$new_key]['endpoint_name']       = $new_name;
-            $new_row_values[$new_key]['wcmamtx_type']        = $row_type;
-            $new_row_values[$new_key]['parent']              = 'none';
-
-        }
-
-        
-
-
-       
-        
-
-        if (($new_row_values != $advancedsettings) && !empty($new_row_values)) {
-            update_option('wcmamtx_order_actions',$new_row_values);
-        }
-
-
-        
-
-        // redirect the user to the appropriate page
-            wp_redirect('admin.php?page=wcmamtx_advanced_settings&tab=wcmamtx_order_actions');
-            exit;
-        }           
-        else {
-            wp_die( __( 'Invalid nonce specified','customize-my-account-for-woocommerce' ), __( 'Error','customize-my-account-for-woocommerce' ), array(
-                'response'  => 403,
-                'back_link' => 'admin.php?page=wcmamtx_advanced_settings&tab=wcmamtx_order_actions',
-
-            ) );
-        }
-
-    }
-
-    public function add_column_form_response() {
-        
-        if( isset( $_POST['wcmamtx_add_column_nonce'] ) && wp_verify_nonce( $_POST['wcmamtx_add_column_nonce'], 'wcmamtx_nonce_hidden_column') ) {
-
-        
-        
-            
-
-
-        
-        if (isset($_POST['ndscolumn']['label'])) {
-            $new_name      = sanitize_text_field($_POST['ndscolumn']['label']);
-        }
-
-
-        $random_number  = mt_rand(100000, 999999);
-        $random_number2 = mt_rand(100000, 999999);
-
-        $row_type = 'endpoint';
-
-
-
-        switch($row_type) {
-            case "endpoint":
-                $new_key   = 'custom-order-'.$random_number.'';
-            break;
-
-            
-            default:
-                $new_key   = 'custom-order-'.$random_number.'';
-            break;
-        }
-
-
-        $new_row_values    = array();
-
-        $advancedsettings  = (array) get_option('wcmamtx_order_settings');
-
-        if (!isset($advancedsettings) || (sizeof($advancedsettings) == 1)) {
-            $tabs  = wcmamtx_get_account_order_items();
-
-            foreach ($tabs as $key=>$value) {
-            
-                $new_row_values[$key]['endpoint_key']        = $key;
-                $new_row_values[$key]['endpoint_name']       = $value;
-                $new_row_values[$key]['wcmamtx_type']        = 'endpoint';
-                $new_row_values[$key]['parent']              = 'none';
-
-
-            }
-
-        } else {
-            
-
-            foreach ($advancedsettings as $key2=>$value2) {
-
-                
-            
-                $new_row_values[$key2]['endpoint_key']        = isset($value2['endpoint_key']) ? $value2['endpoint_key'] : $key2;
-                $new_row_values[$key2]['endpoint_name']       = $value2['endpoint_name'];
-                $new_row_values[$key2]['wcmamtx_type']        = $value2['wcmamtx_type'];
-                $new_row_values[$key2]['parent']              = 'none';
-                
-                $new_row_values[$key2]['show']                = isset($value2['show']) ? $value2['show'] : "yes";
-
-
-
-            }
-
-        }
-
-
-
-
-            if (isset($new_name) && ($new_name != '')) {
-                $new_row_values[$new_key]['endpoint_key']        = $new_key;
-                $new_row_values[$new_key]['endpoint_name']       = $new_name;
-                $new_row_values[$new_key]['wcmamtx_type']        = $row_type;
-                $new_row_values[$new_key]['parent']              = 'none';
-
-            }
-
-        
-
-
-
-        
-
-        if (($new_row_values != $advancedsettings) && !empty($new_row_values)) {
-            update_option('wcmamtx_order_settings',$new_row_values);
-        }
-
-
-
-        
-
-        // redirect the user to the appropriate page
-            wp_redirect('admin.php?page=wcmamtx_advanced_settings&tab=wcmamtx_order_settings');
-            exit;
-        }           
-        else {
-            wp_die( __( 'Invalid nonce specified','customize-my-account-for-woocommerce' ), __( 'Error','customize-my-account-for-woocommerce' ), array(
-                'response'  => 403,
-                'back_link' => 'admin.php?page=wcmamtx_advanced_settings&tab=wcmamtx_order_settings',
-
-            ) );
-        }
-    }
 
 
 	public function add_endpoint_form_response() {
@@ -403,86 +167,7 @@ class wcmamtx_add_settings_page_class {
     }
 
 
-	public function wcmamtxadmin_add_new_template() {
 
-		
-        /* First, check nonce */
-        check_ajax_referer( 'wcmamtx_nonce', 'security' );
-        check_ajax_referer( 'wcmamtx_nonce_hidden', 'nonce' );
-        
-        if (isset($_POST['row_type'])) {
-            $row_type     = sanitize_text_field($_POST['row_type']);
-        }
-        
-        if (isset($_POST['new_row'])) {
-            $new_name      = sanitize_text_field($_POST['new_row']);
-
-        }
-
-
-
-
-        $new = array(
-            'post_title' => $new_name,
-            'post_status' => 'publish',
-            'post_type' => 'elementor_library'
-        );
-
-        $post_id = wp_insert_post( $new );
-
-
-
-        if (isset($post_id) && isset($row_type) && ($row_type != "") ) {
-            
-            switch($row_type) {
-
-                
-
-                case "myaccount":
-                   $content = '[{"id":"a1ab84e","elType":"section","settings":[],"elements":[{"id":"ab99e3e","elType":"column","settings":{"_column_size":100,"_inline_size":null},"elements":[{"id":"f41d127","elType":"widget","settings":{"shortcode":"[woocommerce_my_account]","_margin":{"unit":"px","top":"10","right":"10","bottom":"10","left":"10","isLinked":true},"_padding":{"unit":"px","top":"10","right":"10","bottom":"10","left":"10","isLinked":true}},"elements":[],"widgetType":"shortcode"}],"isInner":false}],"isInner":false}]';
-                break;
-
-
-                case "cart":
-                   $content = '[{"id":"a1ab84e","elType":"section","settings":[],"elements":[{"id":"ab99e3e","elType":"column","settings":{"_column_size":100,"_inline_size":null},"elements":[{"id":"f41d127","elType":"widget","settings":{"shortcode":"[woocommerce_cart]","_margin":{"unit":"px","top":"10","right":"10","bottom":"10","left":"10","isLinked":true},"_padding":{"unit":"px","top":"10","right":"10","bottom":"10","left":"10","isLinked":true}},"elements":[],"widgetType":"shortcode"}],"isInner":false}],"isInner":false}]';
-                break;
-
-
-                case "checkout":
-                   $content = '[{"id":"a1ab84e","elType":"section","settings":[],"elements":[{"id":"ab99e3e","elType":"column","settings":{"_column_size":100,"_inline_size":null},"elements":[{"id":"f41d127","elType":"widget","settings":{"shortcode":"[woocommerce_checkout]","_margin":{"unit":"px","top":"10","right":"10","bottom":"10","left":"10","isLinked":true},"_padding":{"unit":"px","top":"10","right":"10","bottom":"10","left":"10","isLinked":true}},"elements":[],"widgetType":"shortcode"}],"isInner":false}],"isInner":false}]';
-                break;
-
-
-                case "orders":
-                   $content = '[{"id":"06f0109","elType":"section","settings":[],"elements":[{"id":"5c84546","elType":"column","settings":{"_column_size":100,"_inline_size":null},"elements":[{"id":"7bd5aca","elType":"widget","settings":[],"elements":[],"widgetType":"my_orders_widget"}],"isInner":false}],"isInner":false}]';
-                break;
-
-                
-
-                default:
-                   $content = "";
-                break;
-
-            }
-
-
-            if ($content != "") {
-
-                update_post_meta( $post_id, '_elementor_data', $content );
-
-            }
-            
-
-        }
-
-        $elementor_edit_link = ''.admin_url().'post.php?post='.$post_id.'&action=elementor';
-
-        $result = array('redirect_url'=>$elementor_edit_link,'id'=>$post_id,'text'=>get_the_title($post_id));
-
-        echo json_encode( $result );
-
-        die();
-	}
 
 
 	public function wcmamtx_load_admin_menu_style() {
@@ -511,20 +196,6 @@ class wcmamtx_add_settings_page_class {
 	   die();
 	}
 
-
-	public function restore_my_account_order() {
-	    if( current_user_can('editor') || current_user_can('administrator') ) {
-
-	    	if ( !wp_verify_nonce($_POST['nonce'], 'wcmamtx_nonce') ){ 
-				die(); 
-			}
-			
-	        delete_option( 'wcmamtx_order_settings' );
-        } 
-	   die();
-	}
-	
-	
 
 
 
@@ -618,6 +289,10 @@ class wcmamtx_add_settings_page_class {
                     'view_order2'          => ''.wcmamtx_PLUGIN_URL.'assets/images/vieworder2.png',
                     'thankyou1'          => ''.wcmamtx_PLUGIN_URL.'assets/images/thankyou1.png',
                     'thankyou2'          => ''.wcmamtx_PLUGIN_URL.'assets/images/thankyou2.png',
+                    'linkbox1'          => ''.wcmamtx_PLUGIN_URL.'assets/images/linkbox1.png',
+                    'profilebox1'          => ''.wcmamtx_PLUGIN_URL.'assets/images/profilebox1.png',
+                    'orderpay1'          => ''.wcmamtx_PLUGIN_URL.'assets/images/orderpay1.png',
+                    'orderpay2'          => ''.wcmamtx_PLUGIN_URL.'assets/images/orderpay2.png',
                 );
 
                wp_localize_script( 'wcmamtx_layout', 'wcmamtx_layout', $wcmamtx_js_array_layout );
@@ -830,14 +505,6 @@ class wcmamtx_add_settings_page_class {
     }
 
 
-
-
-    public function wcmamtx_wizard_page() {
-
-        include ('forms/wizard_form.php');
-
-    }
-
     public function wcmamtx_avatar_page() {
         include ('forms/avatar_form.php');
     }
@@ -905,33 +572,6 @@ class wcmamtx_add_settings_page_class {
     }
 
 
-
-
-
-	/*
-     * Linked product swatached settings
-     * includes form field from forms folder
-     */
-	
-	public function linked_product_swatches_order() { 
-         
-         include ('forms/modules_form.php');
-        
-    }
-
-
-	/*
-     * Linked product swatached settings
-     * includes form field from forms folder
-     */
-	
-	public function linked_product_swatches_order_actions() { 
-
-
-         wcmamtx_load_pro_reminder_div();
-	   
-		   
-	}
 
 
 

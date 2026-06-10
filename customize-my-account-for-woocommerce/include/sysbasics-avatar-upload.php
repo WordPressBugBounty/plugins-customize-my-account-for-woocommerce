@@ -30,14 +30,9 @@ class wcmamtx_upload_avatar_tab {
 
 		add_action('wp_ajax_handle_ajax_file_upload', array( $this, 'backend_ajax_file_uploader'));
 
-		add_action('wp_ajax_nopriv_handle_ajax_file_upload', array( $this, 'backend_ajax_file_uploader'));
-
 		add_action('wp_ajax_wcmamtx_restore_avatar_function', array( $this, 'wcmamtx_restore_avatar_function'));
 
-		add_action('wp_ajax_nopriv_wcmamtx_restore_avatar_function', array( $this, 'wcmamtx_restore_avatar_function'));
-
-		
-
+	
 		add_action('init',array( $this, 'wcmamtx_capture_upload_camera_image'));
 
 		add_action('wp_ajax_wcmam_save_avatar',array( $this, 'wcmam_save_avatar'));
@@ -46,16 +41,62 @@ class wcmamtx_upload_avatar_tab {
 
 	public function wcmam_save_avatar() {
 
+		check_ajax_referer(
+			'wcmamtx_ajax_security_nonce',
+			'security'
+		);
+
+		if ( ! is_user_logged_in() ) {
+			wp_send_json_error(
+				array(
+					'message' => esc_html__("User is not logged in","customize-my-account-for-woocommerce")
+				)
+			);
+		}
+
 		if ( empty( $_FILES['avatar'] ) ) {
 			wp_send_json_error();
 		}
 
 		require_once ABSPATH . 'wp-admin/includes/file.php';
 
+		$avatar_settings = (array) get_option( 'wcmamtx_avatar_settings' );
+
+		$default_options_format = array ( 0 => 'jpg', 1 => 'jpeg', 2 => 'jpe', 3 => 'gif', 4 => 'png', 5 => 'webp' );
+
+        
+        $chosen_formats = isset($avatar_settings['allowed_formats']) ? $avatar_settings['allowed_formats'] : $default_options_format;
+
+		add_filter( 'wp_handle_upload_prefilter', array( $this, 'custom_limit_image_upload_size'), 10, 1 );
+
+
+        // Allowed file extensions/types
+		$mimes = array(
+			'jpg'          => 'image/jpeg',
+			'jpeg'         => 'image/jpeg',
+			'jpe'          => 'image/jpeg',
+			'gif'          => 'image/gif',
+			'png'          => 'image/png',
+			'webp'         => 'image/webp',
+		);
+
+
+		foreach ($mimes as $mkey=>$mvalue) {
+
+			if (!in_array($mkey, $chosen_formats)) {
+
+				unset($mimes[$mkey]);
+
+			}
+
+		}
+
+
 		$upload = wp_handle_upload(
 			$_FILES['avatar'],
 			array(
-				'test_form' => false
+				'test_form' => false,
+				'mimes' => $mimes
 			)
 		);
 
@@ -89,6 +130,8 @@ class wcmamtx_upload_avatar_tab {
 			$metadata
 		);
 
+		
+
 		$feat_image_url = wp_get_attachment_url( $attachment_id );
 
 		$user_id = get_current_user_id();
@@ -96,6 +139,8 @@ class wcmamtx_upload_avatar_tab {
 		delete_user_meta( $user_id, 'sysbasics_user_avatar' );
 
 		update_user_meta( $user_id, 'sysbasics_user_avatar', array( 'full' => $feat_image_url) );
+
+		remove_filter('wp_handle_upload_prefilter',array( $this, 'custom_limit_image_upload_size' ),10);
 
 		wp_send_json_success();
 
@@ -248,6 +293,7 @@ class wcmamtx_upload_avatar_tab {
 
 
 	public function backend_ajax_file_uploader() {
+
         // 1. Validate security nonce
 		if (!isset($_POST['security']) || !wp_verify_nonce($_POST['security'], 'ajax_file_upload_nonce')) {
 
@@ -311,7 +357,7 @@ class wcmamtx_upload_avatar_tab {
 		    );
 
 			if ($movefile && !isset($movefile['error'])) {
-        // Success: $movefile['url'] contains the public link to your file
+            // Success: $movefile['url'] contains the public link to your file
 				$user_id = get_current_user_id();
 			// Nuke the current avatar
 				$this->avatar_delete( $user_id );
@@ -320,7 +366,7 @@ class wcmamtx_upload_avatar_tab {
 				$sucess['url'] = $movefile['url'];
 				wp_send_json_success($sucess);
 			} else {
-        // Failure: Output the specific system error
+                // Failure: Output the specific system error
 				wp_send_json_error($movefile['error']);
 			}
 
@@ -334,6 +380,8 @@ class wcmamtx_upload_avatar_tab {
 			$sucess['url'] = '';
 			wp_send_json_success($sucess);
 		}
+
+		remove_filter('wp_handle_upload_prefilter',array( $this, 'custom_limit_image_upload_size' ),10);
 		
 	}
 

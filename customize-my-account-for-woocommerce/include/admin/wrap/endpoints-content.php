@@ -140,15 +140,10 @@ $default_color_font = '#334155';
 
 <?php if (($key != "dashboard")) { 
 
-    $default_desc_text_link = array(
-        'orders'          => esc_html__('View and track your orders','customize-my-account-for-woocommerce'),
-        'downloads'       => esc_html__('Get your Downloads','customize-my-account-for-woocommerce'),
-        'edit-address'    => esc_html__('Manage your addresses','customize-my-account-for-woocommerce'),
-        'edit-account'    => esc_html__('Update your account info','customize-my-account-for-woocommerce'),
-        'customer-logout'    => esc_html__('Logout from site','customize-my-account-for-woocommerce'),
-    );
 
-    $default_desc_text = isset($default_desc_text_link[$key]) ? $default_desc_text_link[$key] : "";
+    $custom_label = (isset($value['endpoint_name'])) ? $value['endpoint_name'] : $name;
+    
+    $default_desc_text = wcmamtx_deshlink_default_description($key,$custom_label);
 
     $default_desc_text = isset($value['default_desc_text']) ? $value['default_desc_text'] : $default_desc_text;
 

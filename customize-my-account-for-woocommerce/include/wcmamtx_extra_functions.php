@@ -104,6 +104,31 @@ if (!function_exists('wcmamtx_get_user_ip')) {
 }
 
 
+if (!function_exists('wcmamtx_deshlink_default_description')) {
+
+
+    function wcmamtx_deshlink_default_description($key,$label) {
+        $default_desc_text_links = array(
+            'orders'             => esc_html__('View and track your orders','customize-my-account-for-woocommerce'),
+            'downloads'          => esc_html__('Get your Downloads','customize-my-account-for-woocommerce'),
+            'edit-address'       => esc_html__('Manage your addresses','customize-my-account-for-woocommerce'),
+            'edit-account'       => esc_html__('Update your account info','customize-my-account-for-woocommerce'),
+            'payment-methods'    => esc_html__('Manage your payment methods','customize-my-account-for-woocommerce'),
+            'customer-logout'    => esc_html__('Logout from site','customize-my-account-for-woocommerce'),
+        );
+
+        
+
+        $default_desc_text1 = ''.esc_html__('Manage','customize-my-account-for-woocommerce').' '.$label.'';
+
+        $default_desc_text = isset($default_desc_text_links[$key]) ? $default_desc_text_links[$key] :  $default_desc_text1;
+
+        return apply_filters('wcmamtx_deshlink_default_description_override',$default_desc_text);
+    }
+
+}
+
+
 if (!function_exists('wcmamtx_get_avatar_default')) {
 
 
