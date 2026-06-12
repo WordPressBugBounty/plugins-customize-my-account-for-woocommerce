@@ -194,12 +194,7 @@ var $vas = jQuery.noConflict();
            
             if (response.success) {
                 
-                
-
-                
-            } else {
-
-                    $vas('#wcmamtx_upload_response').text(response.data);
+                   $vas('#wcmamtx_upload_response').text(response.data);
 
                
                
@@ -244,6 +239,20 @@ var $vas = jQuery.noConflict();
                     $vas(".wcmamtx_restore_default_link").hide();
 
                     $vas('#mywcmamtx_modal').hide();
+
+                
+            } else {
+
+                    $vas('#wcmamtx_upload_response').text(response.data);
+
+               
+               
+                    $vas('#wcmamtx_upload_response').show();
+
+
+    
+
+                    
             }
         }, 'json'); // Explicitly parse the response as JSON format
       

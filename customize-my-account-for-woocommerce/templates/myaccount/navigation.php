@@ -158,7 +158,7 @@ if ($menu_shape == 'vertical') {
     $wcmamtx_layout = (array) get_option( 'wcmamtx_layout' );
 
 
-    $nav_style = isset($wcmamtx_layout['nav_style']) ? $wcmamtx_layout['nav_style'] : "01";
+    $nav_style = isset($wcmamtx_layout['nav_style']) ? $wcmamtx_layout['nav_style'] : "02";
 
     
 

@@ -3,7 +3,7 @@
     Plugin Name: SysBasics Customize My Account for WooCommerce
     Plugin URI: https://sysbasics.com
     Description: Easily customize the WooCommerce My Account page. Mobile Friendly User avatar, redesign the WooCommerce dashboard, manage menus, and apply premium styles for a better user experience.
-    Version: 4.3.5
+    Version: 4.3.6
     Author: SysBasics
     Author URI: https://sysbasics.com
     Domain Path: /languages
@@ -45,7 +45,7 @@ if ( !defined( 'wcmamtx_pro_price_show' ) )
     define( 'wcmamtx_pro_price_show', 'yes' );
 
 if( !defined( 'wcmamtx_redirect_URL' ) )
-define( 'wcmamtx_redirect_URL',"admin.php?page=wcmamtx_advanced_settings" );
+define( 'wcmamtx_redirect_URL',"admin.php?page=wcmamtx_advanced_settings&tab=wcmamtx_layout" );
 
 
 
@@ -130,73 +130,6 @@ include dirname( __FILE__ ) . '/include/wcmamtx_extra_functions.php';
 
 
 
-
-
-
-
-
-
-
-
-register_activation_hook(__FILE__, 'wcmamtx_plugin_activation_hook');
-
-add_action('admin_init', 'wcmamtx_admin_plugin_redirect');
-
-/**
- * Get account menu item classes.
- *
- * @since 1.0.0
- */
-
-if (!function_exists('wcmamtx_plugin_activation_hook')) {
-
-    function wcmamtx_plugin_activation_hook() {
-
-        // Don't forget to exit() because wp_redirect doesn't exit automatically
-        add_option('wcmamtx_do_activation_redirect', true);
-        
-        
-
-
-    }
-
-}
-
-
-/**
- * Get account menu item classes.
- *
- * @since 1.0.0
- */
-
-if (!function_exists('wcmamtx_admin_plugin_redirect')) {
-
-    function wcmamtx_admin_plugin_redirect() {
-
-        $wcmamtx_act_date_free = get_option('wcmamtx_act_date_free');
-
-        $date_today = date("Ymd");
-
-        if (!isset($wcmamtx_act_date_free) || ($wcmamtx_act_date_free == "")) {
-            update_option('wcmamtx_act_date_free',$date_today);
-        }
-
-        if (get_option('wcmamtx_do_activation_redirect', false)) {
-            delete_option('wcmamtx_do_activation_redirect');
-
-            
-
-           
-            wp_redirect("".wcmamtx_redirect_URL."");
-           
-           
-            //wp_redirect() does not exit automatically and should almost always be followed by exit.
-            exit;
-        }
-
-    }
-
-}
 
 
 /**

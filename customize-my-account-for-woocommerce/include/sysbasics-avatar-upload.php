@@ -283,9 +283,9 @@ class wcmamtx_upload_avatar_tab {
 
 		$message = array();
 
-        $message['message'] = esc_html__('Avatar restored sucessfully','customize-my-account-for-woocommerce-pro');
+        $message['message'] = esc_html__('Avatar restored successfully','customize-my-account-for-woocommerce-pro');
        
-		wp_send_json_error($message);
+		wp_send_json_success($message);
 	
 
     

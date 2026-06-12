@@ -154,6 +154,7 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
 
 				    		if ( ! empty( $actions ) ) {
 				    			unset($actions['order-again']);
+				    			unset($actions[0]);
 				    			foreach ( $actions as $key => $action ) { 
 
 
@@ -180,7 +181,10 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
 				    						$icon_html = '<i class="fa fa-times"></i>';
 				    						break;
 
-
+                                            
+                                            case "invoice":
+				    						$icon_html = '<i class="fa fa-file-invoice"></i>';
+				    						break;
 				    					}
 
 				    					?>
