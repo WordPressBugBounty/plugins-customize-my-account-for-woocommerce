@@ -699,7 +699,7 @@ class wcmamtx_add_settings_page_class {
                        
                     <?php } ?>
 
-                    <div class="wcmamtx_submit_section_div <?php echo $current_tab; ?>">
+                    <div class="wcmamtx_submit_section_div <?php echo esc_attr($current_tab); ?>">
 
                         <?php if (isset($current_tab)  && ($current_tab != "wcmamtx_wizard_settings")) {  
 
@@ -707,7 +707,7 @@ class wcmamtx_add_settings_page_class {
 
                             ?>
 
-                            <input type="submit" name="submit" id="submit" class="btn <?php echo $load_wcmamtx_optional_class; ?> btn-sm btn-success wcmamtx_submit_button <?php echo sanitize_text_field($current_tab); ?>" value="<?php echo esc_html__( 'Save Changes' ,'customize-my-account-for-woocommerce'); ?>">
+                            <input type="submit" name="submit" id="submit" class="btn <?php echo $load_wcmamtx_optional_class; ?> btn-sm btn-success wcmamtx_submit_button <?php echo esc_attr($current_tab); ?>" value="<?php echo esc_html__( 'Save Changes' ,'customize-my-account-for-woocommerce'); ?>">
 
                         <?php }  ?>
 
@@ -964,7 +964,7 @@ class wcmamtx_add_settings_page_class {
 	
 	public function wcmamtx_options_tab_wrap() {
 
-        $current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : sanitize_text_field($this->wcmamtx_notices_settings_page);
+        $current_tab = isset( $_GET['tab'] ) ? esc_attr($_GET['tab']) : sanitize_text_field($this->wcmamtx_notices_settings_page);
 
         if (isset($current_tab)  && ($current_tab != "wcmamtx_wizard_settings")) {
 
@@ -1022,7 +1022,7 @@ class wcmamtx_add_settings_page_class {
         <?php
 
 
-        $current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : sanitize_text_field($this->wcmamtx_notices_settings_page);
+        $current_tab = isset( $_GET['tab'] ) ? esc_attr($_GET['tab']) : sanitize_text_field($this->wcmamtx_notices_settings_page);
 
         
         

@@ -216,8 +216,8 @@ if (array_key_exists(0, $avatar_settings)) {
                             <img src="<?php if (isset($swatchurl) && ($swatchurl != '')) { echo $swatchurl; } else { echo wcmamtx_placeholder_img_src(); }  ?>" width="60px" height="60px" />
                             <div  class="image-upload-div" >
                                 <input type="hidden" class="facility_thumbnail_id" name="<?php  echo esc_html__($this->wcmamtx_avatar_settings_page); ?>[upload_icon]" value="<?php if (isset($swatchimage)) { echo $swatchimage; } ?>"/>
-                                <button type="submit" class="upload_image_button button"><?php echo esc_html__( 'Upload/Add image', 'wcva' ); ?></button>
-                                <button type="submit" class="remove_image_button button"><?php echo esc_html__( 'Remove image', 'wcva' ); ?></button>
+                                <button type="submit" class="upload_image_button button"><?php echo esc_html__( 'Upload/Add image', 'customize-my-account-for-woocommerce' ); ?></button>
+                                <button type="submit" class="remove_image_button button"><?php echo esc_html__( 'Remove image', 'customize-my-account-for-woocommerce' ); ?></button>
                             </div>
                         </div>
 

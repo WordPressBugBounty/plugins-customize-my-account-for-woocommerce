@@ -838,3 +838,14 @@ select.wcmamtx_layout_orderpay_select_override {
     color: #fff;
     word-break: break-all;
 }
+
+
+.wcmamtx-card-body label {
+    float: left;
+    min-width: 30%;
+}
+
+.wcmamtx-card-body input {
+    /* float: left; */
+    min-width: 30%;
+}

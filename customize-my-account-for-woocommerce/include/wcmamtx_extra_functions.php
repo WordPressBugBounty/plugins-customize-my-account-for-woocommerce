@@ -1,83 +1,7 @@
 <?php
 
 include('wcmamtx_countof_functions.php');
-/**
- * Get account menu item classes.
- *
- * @since 1.0.0
- * @param string $endpoint Endpoint.
- * @return string
- */
 
-if (!function_exists('wcmamtx_placeholder_img_src')) {
-
-	function sysbasics_menu_item_custom_output( $item_output, $item, $depth, $args ) {
-
-		$menu_item_classes = $item->classes;
-
-        //print_r($item);
-
-		if ( is_array($menu_item_classes) &&  !in_array( 'customize-my-account-for-woocommerce-dropdown', $menu_item_classes ) ) {
-			return $item_output;
-		}
-
-				$frontend_url = get_permalink(get_option('woocommerce_myaccount_page_id'));
-		$wcmamtx_plugin_options = (array) get_option('wcmamtx_plugin_options');
-
-		if ( !is_user_logged_in() ) {
-
-            $show_only_logged_in = isset($wcmamtx_plugin_options['show_only_logged_in']) ? $wcmamtx_plugin_options['show_only_logged_in'] : "no";
-
-            if ($show_only_logged_in == "yes") {
-                return $item_output;
-            }
-
-            $nav_header_widget_text_logout = isset($wcmamtx_plugin_options['nav_header_widget_text_logout']) ? $wcmamtx_plugin_options['nav_header_widget_text_logout'] : esc_html__('Log In','customize-my-account-for-woocommerce');
-
-            $item_output = '<li class="menu-item menu-item-type-post_type menu-item-object-page wcmamtx_menu wcmamtx_menu_logged_out"><a class="menu-link nav-top-link" aria-expanded="true" aria-haspopup="menu"  href="'.esc_url($frontend_url).'">'.esc_html($nav_header_widget_text_logout).'<\/a><\/li>';
-
-            return $item_output;
-        
-        } 
-
-		ob_start(); 
-
-		$frontend_url = get_permalink(get_option('woocommerce_myaccount_page_id'));
-
-
-		$wcmamtx_plugin_options = (array) get_option('wcmamtx_plugin_options');
-
-		$nav_header_widget_text = isset($wcmamtx_plugin_options['nav_header_widget_text']) ? $wcmamtx_plugin_options['nav_header_widget_text'] : esc_html__('My Account','customize-my-account-for-woocommerce');
-
-		?>
-		<ul class="custom-sub-menu">
-			<?php 
-
-
-
-
-
-            //$items = wcmamtx_get_my_account_menu();
-
-			wcmamtx_get_menu_shortcode_content($items,$item); 
-
-
-
-			?>
-
-
-		</li>
-	</ul>
-	<?php
-
-	$custom_sub_menu_html = ob_get_clean();
-
-    // Append after <a> element of the menu item targeted
-	$item_output = $custom_sub_menu_html;
-
-	return $item_output;
-     }
-}
 
 if (!function_exists('wcmamtx_get_user_ip')) {
 
@@ -101,6 +25,167 @@ if (!function_exists('wcmamtx_get_user_ip')) {
 	}
 
 }
+
+
+// Social login functions starts
+
+if (!function_exists('wcmamtx_generate_state')) {
+
+
+    function wcmamtx_generate_state() {
+
+        $state = wp_generate_password( 32, false );
+
+        set_transient(
+            'wcmamtx_oauth_' . $state,
+            true,
+            15 * MINUTE_IN_SECONDS
+        );
+
+        return $state;
+    }
+
+}
+
+
+if (!function_exists('wcmamtx_get_google_login_url')) {
+
+
+    function wcmamtx_get_google_login_url() {
+
+
+        $wcmamtx_layout = (array) get_option( 'wcmamtx_layout' );
+
+        $client_id = isset( $wcmamtx_layout['google_client_id'] ) ? $wcmamtx_layout['google_client_id'] : '';
+
+        $state = wcmamtx_generate_state();
+
+        $params = [
+            'client_id'     => $client_id,
+            'redirect_uri'  => home_url('/?wcmamtx-social=google'),
+            'response_type' => 'code',
+            'scope'         => 'openid email profile',
+            'state'         => $state,
+        ];
+
+        return add_query_arg(
+            $params,
+            'https://accounts.google.com/o/oauth2/v2/auth'
+        );
+    }
+
+}
+
+
+if (!function_exists('wcmamtx_get_google_token')) {
+
+
+    function wcmamtx_get_google_token($code) {
+
+        $wcmamtx_layout = (array) get_option( 'wcmamtx_layout' );
+
+        $client_id = isset( $wcmamtx_layout['google_client_id'] ) ? $wcmamtx_layout['google_client_id'] : '';
+        $client_secret = isset( $wcmamtx_layout['google_client_secret'] ) ? $wcmamtx_layout['google_client_secret'] : '';
+
+        $response = wp_remote_post(
+            'https://oauth2.googleapis.com/token',
+            [
+                'body' => [
+                    'client_id' => $client_id,
+                    'client_secret' => $client_secret,
+                    'code' => $code,
+                    'grant_type' => 'authorization_code',
+                    'redirect_uri' => home_url('/?wcmamtx-social=google'),
+                ],
+            ]
+        );
+
+        $body = json_decode(
+            wp_remote_retrieve_body($response),
+            true
+        );
+
+        return $body['access_token'];
+    }
+
+}
+
+
+if (!function_exists('wcmamtx_get_google_user')) {
+
+
+    function wcmamtx_get_google_user($token) {
+
+        $response = wp_remote_get(
+            'https://www.googleapis.com/oauth2/v2/userinfo',
+            [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $token,
+                ],
+            ]
+        );
+
+        return json_decode(
+            wp_remote_retrieve_body($response),
+            true
+        );
+    }
+
+}
+
+
+if (!function_exists('wcmamtx_login_or_create_user')) {
+
+
+    function wcmamtx_login_or_create_user($social_user) {
+
+        $email = sanitize_email(
+            $social_user['email']
+        );
+
+        $user = get_user_by(
+            'email',
+            $email
+        );
+
+        if (!$user) {
+
+            $password = wp_generate_password();
+
+            $user_id = wc_create_new_customer(
+                $email,
+                sanitize_user(
+                    current(
+                        explode('@', $email)
+                    )
+                ),
+                $password
+            );
+
+            $user = get_user_by(
+                'id',
+                $user_id
+            );
+        }
+
+        wp_set_current_user(
+            $user->ID
+        );
+
+        wp_set_auth_cookie(
+            $user->ID,
+            true
+        );
+
+        wp_safe_redirect(
+            wc_get_page_permalink('myaccount')
+        );
+
+        exit;
+    }
+}
+
+// Social login functions ends
 
 
 if (!function_exists('wcmamtx_deshlink_default_description')) {
@@ -151,14 +236,14 @@ if (!function_exists('wcmamtx_get_avatar_default')) {
             $min_height = (isset($avatar_settings['min_height']) ) ? $avatar_settings['min_height'] : '150';
             $min_width = (isset($avatar_settings['min_width']) ) ? $avatar_settings['min_width'] : '150';
 
-            $min_height = (isset($atts['min_height']) ) ? $atts['min_height'] : $min_height;
-            $min_width = (isset($atts['min_width']) ) ? $atts['min_width'] : $min_width;
+            $min_height = (isset($atts['min_height']) ) ? esc_attr((int) $atts['min_height'])  : $min_height;
+            $min_width = (isset($atts['min_width']) ) ? esc_attr((int) $atts['min_width'])  : $min_width;
 
             $max_height = (isset($avatar_settings['max_height']) ) ? $avatar_settings['max_height'] : '200';
             $max_width = (isset($avatar_settings['max_width']) ) ? $avatar_settings['max_width'] : '200';
 
-            $max_height = (isset($atts['max_height']) ) ? $atts['max_height'] : $max_height;
-            $max_width = (isset($atts['max_width']) ) ? $atts['max_width'] : $max_width;
+            $max_height = (isset($atts['max_height']) ) ? esc_attr((int) $atts['max_height'])  : $max_height;
+            $max_width = (isset($atts['max_width']) ) ? esc_attr((int) $atts['max_width'])  : $max_width;
 
             $args['extra_attr'] = 'style="min-height: '.$min_height.'px; min-width: '.$min_width.'px; max-height: '.$max_height.'px; max-width: '.$max_width.'px;"';
         }
@@ -466,17 +551,14 @@ if (!function_exists('wcmamtx_get_new_row_values')) {
 
                 $new_row_values[$key2]['icon_color_ds']                  = isset($value2['icon_color_ds']) ? $value2['icon_color_ds'] : $default_desc_color;
 
+                $new_label = $value2['endpoint_name'];
 
-                $default_desc_text_link = array(
-                    'orders'          => esc_html__('View and track your orders','customize-my-account-for-woocommerce'),
-                    'downloads'       => esc_html__('Get your Downloads','customize-my-account-for-woocommerce'),
-                    'edit-address'    => esc_html__('Manage your addresses','customize-my-account-for-woocommerce'),
-                    'edit-account'    => esc_html__('Update your account info','customize-my-account-for-woocommerce'),
-                );
+
+                $default_desc_text_link = wcmamtx_deshlink_default_description($key2,$new_label);
 
                 $default_desc_text = isset($default_desc_text_link[$key2]) ? $default_desc_text_link[$key2] : "";
 
-                $new_row_values[$key2]['default_desc_text']  = isset($value['default_desc_text']) ? $value['default_desc_text'] : $default_desc_text;
+                $new_row_values[$key2]['default_desc_text']  = isset($value2['default_desc_text']) ? $value2['default_desc_text'] : $default_desc_text;
 
 
                 $new_row_values[$key2]['count_of'] = isset($value2['count_of']) ? $value2['count_of'] : "none";

@@ -55,3 +55,280 @@ li.woocommerce-MyAccount-navigation-link {
 .woocommerce-account h1.entry-title {
     display:none;
 }
+
+/* custom login and register css */
+
+.wcmamtx_custom_login_register .wc-auth-container {
+    min-height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background:
+    linear-gradient(135deg,#667eea,#764ba2);
+    padding: 30px;
+}
+
+.wcmamtx_custom_login_register .wc-auth-card {
+    margin-left: 30%;
+    width: 100%;
+    max-width: 40%;
+    background: #fff;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, .15);
+}
+
+.wcmamtx_custom_login_register .wc-auth-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.wcmamtx_custom_login_register .wc-auth-header h2 {
+    margin-bottom: 8px;
+    font-size: 32px;
+}
+
+.wcmamtx_custom_login_register .wc-auth-header p {
+    color: #777;
+}
+
+.wcmamtx_custom_login_register .wc-auth-tabs {
+    display: flex;
+    border-radius: 50px;
+    padding: 5px;
+    margin-bottom: 25px;
+}
+
+.wcmamtx_custom_login_register .wc-tab-btn {
+    flex: 1;
+    border: 0;
+    padding: 12px;
+    cursor: pointer;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 12px;
+    margin-right: 10px;
+}
+
+.wcmamtx_custom_login_register .wc-tab-btn.active {
+    background: #6c63ff;
+    color: white;
+}
+
+.wcmamtx_custom_login_register .wc-tab-content {
+    display: none;
+}
+
+.wcmamtx_custom_login_register .wc-tab-content.active {
+    display: block;
+}
+
+.wcmamtx_custom_login_register .form-group {
+    position: relative;
+    margin-bottom: 22px;
+}
+
+.wcmamtx_custom_login_register .form-group input {
+    width: 100%;
+    height: 56px;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    padding: 15px;
+    font-size: 15px;
+    outline: none;
+}
+
+.wcmamtx_custom_login_register .form-group input:focus {
+    border-color: #6c63ff;
+}
+
+.wcmamtx_custom_login_register .form-group label {
+    position: absolute;
+    top: 17px;
+    left: 15px;
+    color: #888;
+    transition: .3s;
+    pointer-events: none;
+    background: #fff;
+    padding: 0 5px;
+}
+
+.wcmamtx_custom_login_register .form-group input:focus + label,
+.wcmamtx_custom_login_register .form-group input:valid + label {
+    top: -10px;
+    font-size: 12px;
+    color: #6c63ff;
+}
+
+.wcmamtx_custom_login_register .auth-btn {
+    width: 100%;
+    border: 0;
+    padding: 15px;
+    border-radius: 12px;
+    cursor: pointer;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    background: linear-gradient(
+        135deg,
+        #6c63ff,
+        #8a6dff
+    );
+}
+
+.wcmamtx_custom_login_register .auth-btn:hover {
+    opacity: .9;
+}
+
+.wcmamtx_custom_login_register .remember-forgot {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+}
+
+.wcmamtx_custom_login_register .remember-forgot a {
+    text-decoration: none;
+    color: #6c63ff;
+}
+
+.wcmamtx_custom_login_register .password-wrapper {
+    position: relative;
+}
+
+.wcmamtx_custom_login_register .toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 18px;
+    cursor: pointer;
+}
+
+
+
+.wcmamtx_lost_password.wc-tab-content .woocommerce-js form .form-row input.input-text, .woocommerce-js form .form-row textarea {
+    width:100%;
+}
+
+div.wcmamtx_login_boxes .form-group input {
+    width: 100%;
+    height: 56px;
+    padding: 15px;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    box-sizing: border-box;
+}
+
+@media screen and (max-width: 800px) { 
+
+    .wcmamtx_custom_login_register .wc-auth-card{
+        padding:25px;
+    }
+
+    .wcmamtx_custom_login_register .wc-auth-header h2{
+        font-size:26px;
+    }
+
+
+    .wcmamtx_custom_login_register .wc-auth-card {
+        margin-left: 0%;
+        width: 100%;
+        max-width: 100%;
+       
+    }
+
+}
+
+div.wcmamtx_login_boxes .woocommerce-form-row.woocommerce-form-row--first {
+    width:100%;
+}
+
+
+div.wcmamtx_login_boxes.wcmamtx_login  .wc-tab-btn {
+    padding: 5px; 
+    font-size: 14px;
+
+}
+
+
+
+div.wcmamtx_login_boxes .social-login-wrapper {
+    margin-bottom: 24px;
+}
+
+div.wcmamtx_login_boxes .google-login-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+
+    width: 100%;
+    height: 58px;
+
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+
+    color: #111827;
+    font-size: 15px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition: all .25s ease;
+
+    box-shadow:
+        0 1px 3px rgba(0,0,0,.08);
+}
+
+div.wcmamtx_login_boxes .google-login-btn:hover {
+    background: #f9fafb;
+    border-color: #d1d5db;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,.08);
+}
+
+div.wcmamtx_login_boxes .google-login-btn:active {
+    transform: translateY(0);
+}
+
+div.wcmamtx_login_boxes .google-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+div.wcmamtx_login_boxes .divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 24px 0;
+}
+
+div.wcmamtx_login_boxes .divider::before,
+div.wcmamtx_login_boxes .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #e5e7eb;
+}
+
+div.wcmamtx_login_boxes .divider span {
+    padding: 0 15px;
+    font-size: 13px;
+    color: #9ca3af;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.wc-auth-container.wcmamtx_custom_login_register {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+button.woocommerce-button.button.woocommerce-form-login__submit,button.woocommerce-Button.woocommerce-button.button.woocommerce-form-register__submit {
+    width: 100%;
+}

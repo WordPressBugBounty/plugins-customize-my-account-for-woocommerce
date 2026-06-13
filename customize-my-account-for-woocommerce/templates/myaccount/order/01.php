@@ -162,7 +162,7 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
 				    				if ( empty( $action['aria-label'] ) ) {
                                             // Generate the aria-label based on the action name.
 				    					/* translators: %1$s Action name, %2$s Order number. */
-				    					$action_aria_label = sprintf( __( '%1$s order number %2$s', 'woocommerce' ), $action['name'], $order->get_order_number() );
+				    					$action_aria_label = sprintf( __( '%1$s order number %2$s', 'customize-my-account-for-woocommerce' ), $action['name'], $order->get_order_number() );
 				    				} else {
 				    					$action_aria_label = $action['aria-label'];
 				    				}

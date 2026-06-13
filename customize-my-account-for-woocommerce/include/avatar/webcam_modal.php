@@ -3,7 +3,7 @@ $atts = shortcode_atts( array(
         'slug' => '',
     ), $atts, 'wcmamtx-web-cam' );
 
-    $slug_raw = (string) $atts['slug'];
+    $slug_raw = (string) esc_attr($atts['slug']);
     $slug_raw = trim( $slug_raw );
     $slug = preg_replace( '/[^A-Za-z0-9_-]/', '', $slug_raw );
 

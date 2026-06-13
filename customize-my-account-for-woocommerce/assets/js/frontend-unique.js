@@ -15,3 +15,51 @@ var $laz = jQuery.noConflict();
 
     });
 })( jQuery );
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const tabs = document.querySelectorAll(".wc-tab-btn");
+    const contents = document.querySelectorAll(".wc-tab-content");
+
+    tabs.forEach(tab => {
+
+        tab.addEventListener("click", function () {
+
+            tabs.forEach(btn =>
+                btn.classList.remove("active")
+            );
+
+            contents.forEach(content =>
+                content.classList.remove("active")
+            );
+
+            this.classList.add("active");
+
+            document
+                .getElementById(this.dataset.tab)
+                .classList.add("active");
+
+        });
+
+    });
+
+    document
+        .querySelectorAll(".toggle-password")
+        .forEach(toggle => {
+
+            toggle.addEventListener("click", function () {
+
+                const input =
+                    this.parentElement.querySelector("input");
+
+                if (input.type === "password") {
+                    input.type = "text";
+                } else {
+                    input.type = "password";
+                }
+
+            });
+
+        });
+
+});

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<bundle name="Customize My Account for WooCommerce ">
+  <domain name="customize-my-account-for-woocommerce">
+    <project name="Customize My Account for WooCommerce" slug="customize-my-account-for-woocommerce">
+      <source>
+        <directory>.</directory>
+      </source>
+      <target>
+        <directory>languages</directory>
+      </target>
+      <template>
+        <file>languages/customize-my-account-for-woocommerce.pot</file>
+      </template>
+    </project>
+  </domain>
+</bundle>

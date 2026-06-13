@@ -2559,3 +2559,7 @@ nav.wcmam-nav.wcmam-style-1 a.woocommerce-MyAccount-navigation-link_a.woocommerc
 .order-arrow.\30 {
     display: none;
 }
+
+p.wcmamtx_default_text_below_avatar {
+    font-size: 12px;
+}

@@ -347,7 +347,7 @@ defined( 'ABSPATH' ) || exit;
     <?php wc_print_notices(); ?>
 
     <p class="woocommerce-notice woocommerce-notice--success woocommerce-thankyou-order-received">
-        <?php echo apply_filters( 'woocommerce_thankyou_order_received_text', esc_html__( 'Thank you. Your order has been received.', 'woocommerce' ), null ); ?>
+        <?php echo apply_filters( 'woocommerce_thankyou_order_received_text', esc_html__( 'Thank you. Your order has been received.', 'customize-my-account-for-woocommerce' ), null ); ?>
     </p>
 
 <?php else : ?>
@@ -361,19 +361,19 @@ defined( 'ABSPATH' ) || exit;
             <div class="or-checkmark">&#10003;</div>
 
             <?php if ( $order->has_status( 'failed' ) ) : ?>
-                <h1><?php esc_html_e( 'Payment failed', 'woocommerce' ); ?></h1>
+                <h1><?php esc_html_e( 'Payment failed', 'customize-my-account-for-woocommerce' ); ?></h1>
                 <p>
-                    <?php esc_html_e( 'Unfortunately your order cannot be processed. Please attempt your purchase again.', 'woocommerce' ); ?>
+                    <?php esc_html_e( 'Unfortunately your order cannot be processed. Please attempt your purchase again.', 'customize-my-account-for-woocommerce' ); ?>
                 </p>
             <?php else : ?>
                 <h1>
-                    <?php echo apply_filters( 'woocommerce_thankyou_order_received_text', esc_html__( 'Order confirmed!', 'woocommerce' ), $order ); ?>
+                    <?php echo apply_filters( 'woocommerce_thankyou_order_received_text', esc_html__( 'Order confirmed!', 'customize-my-account-for-woocommerce' ), $order ); ?>
                 </h1>
                 <p>
                     <?php
                     printf(
                         /* translators: %s: customer email */
-                        esc_html__( 'Thank you for your purchase. A confirmation has been sent to %s', 'woocommerce' ),
+                        esc_html__( 'Thank you for your purchase. A confirmation has been sent to %s', 'customize-my-account-for-woocommerce' ),
                         '<strong>' . esc_html( $order->get_billing_email() ) . '</strong>'
                     );
                     ?>
@@ -387,26 +387,26 @@ defined( 'ABSPATH' ) || exit;
         <?php if ( ! $order->has_status( 'failed' ) ) : ?>
         <div class="or-notice">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-            <?php esc_html_e( "We've emailed your receipt and order details. Check your spam folder if you don't see it within a few minutes.", 'woocommerce' ); ?>
+            <?php esc_html_e( "We've emailed your receipt and order details. Check your spam folder if you don't see it within a few minutes.", 'customize-my-account-for-woocommerce' ); ?>
         </div>
         <?php endif; ?>
 
         <!-- ---- Summary strip ---- -->
         <div class="or-summary-grid">
             <div class="or-summary-card">
-                <div class="or-summary-card__label"><?php esc_html_e( 'Order', 'woocommerce' ); ?></div>
+                <div class="or-summary-card__label"><?php esc_html_e( 'Order', 'customize-my-account-for-woocommerce' ); ?></div>
                 <div class="or-summary-card__value">#<?php echo esc_html( $order->get_order_number() ); ?></div>
             </div>
             <div class="or-summary-card">
-                <div class="or-summary-card__label"><?php esc_html_e( 'Date', 'woocommerce' ); ?></div>
+                <div class="or-summary-card__label"><?php esc_html_e( 'Date', 'customize-my-account-for-woocommerce' ); ?></div>
                 <div class="or-summary-card__value"><?php echo esc_html( wc_format_datetime( $order->get_date_created() ) ); ?></div>
             </div>
             <div class="or-summary-card">
-                <div class="or-summary-card__label"><?php esc_html_e( 'Payment', 'woocommerce' ); ?></div>
+                <div class="or-summary-card__label"><?php esc_html_e( 'Payment', 'customize-my-account-for-woocommerce' ); ?></div>
                 <div class="or-summary-card__value"><?php echo esc_html( $order->get_payment_method_title() ); ?></div>
             </div>
             <div class="or-summary-card">
-                <div class="or-summary-card__label"><?php esc_html_e( 'Total', 'woocommerce' ); ?></div>
+                <div class="or-summary-card__label"><?php esc_html_e( 'Total', 'customize-my-account-for-woocommerce' ); ?></div>
                 <div class="or-summary-card__value"><?php echo wp_kses_post( $order->get_formatted_order_total() ); ?></div>
             </div>
         </div>
@@ -414,34 +414,34 @@ defined( 'ABSPATH' ) || exit;
         <!-- ---- What happens next (steps) ---- -->
         <?php if ( ! $order->has_status( [ 'failed', 'cancelled' ] ) ) : ?>
         <div class="or-card">
-            <p class="or-card__title"><?php esc_html_e( 'What happens next', 'woocommerce' ); ?></p>
+            <p class="or-card__title"><?php esc_html_e( 'What happens next', 'customize-my-account-for-woocommerce' ); ?></p>
             <div class="or-steps">
                 <div class="or-step">
                     <div class="or-step__dot or-step__dot--done">&#10003;</div>
                     <div class="or-step__label">
-                        <strong><?php esc_html_e( 'Order placed', 'woocommerce' ); ?></strong>
-                        <span><?php esc_html_e( 'Just now', 'woocommerce' ); ?></span>
+                        <strong><?php esc_html_e( 'Order placed', 'customize-my-account-for-woocommerce' ); ?></strong>
+                        <span><?php esc_html_e( 'Just now', 'customize-my-account-for-woocommerce' ); ?></span>
                     </div>
                 </div>
                 <div class="or-step">
                     <div class="or-step__dot or-step__dot--active">&#9881;</div>
                     <div class="or-step__label">
-                        <strong><?php esc_html_e( 'Processing', 'woocommerce' ); ?></strong>
-                        <span><?php esc_html_e( '1–2 hours', 'woocommerce' ); ?></span>
+                        <strong><?php esc_html_e( 'Processing', 'customize-my-account-for-woocommerce' ); ?></strong>
+                        <span><?php esc_html_e( '1–2 hours', 'customize-my-account-for-woocommerce' ); ?></span>
                     </div>
                 </div>
                 <div class="or-step">
                     <div class="or-step__dot or-step__dot--pending">&#9993;</div>
                     <div class="or-step__label">
-                        <strong><?php esc_html_e( 'Shipped', 'woocommerce' ); ?></strong>
-                        <span><?php esc_html_e( '1–2 days', 'woocommerce' ); ?></span>
+                        <strong><?php esc_html_e( 'Shipped', 'customize-my-account-for-woocommerce' ); ?></strong>
+                        <span><?php esc_html_e( '1–2 days', 'customize-my-account-for-woocommerce' ); ?></span>
                     </div>
                 </div>
                 <div class="or-step">
                     <div class="or-step__dot or-step__dot--pending">&#8962;</div>
                     <div class="or-step__label">
-                        <strong><?php esc_html_e( 'Delivered', 'woocommerce' ); ?></strong>
-                        <span><?php esc_html_e( '3–5 days', 'woocommerce' ); ?></span>
+                        <strong><?php esc_html_e( 'Delivered', 'customize-my-account-for-woocommerce' ); ?></strong>
+                        <span><?php esc_html_e( '3–5 days', 'customize-my-account-for-woocommerce' ); ?></span>
                     </div>
                 </div>
             </div>
@@ -450,14 +450,14 @@ defined( 'ABSPATH' ) || exit;
 
         <!-- ---- Order items & totals ---- -->
         <div class="or-card">
-            <p class="or-card__title"><?php esc_html_e( 'Items in your order', 'woocommerce' ); ?></p>
+            <p class="or-card__title"><?php esc_html_e( 'Items in your order', 'customize-my-account-for-woocommerce' ); ?></p>
 
             <table class="or-items-table">
                 <thead>
                     <tr>
-                        <th><?php esc_html_e( 'Product', 'woocommerce' ); ?></th>
-                        <th><?php esc_html_e( 'Qty', 'woocommerce' ); ?></th>
-                        <th><?php esc_html_e( 'Price', 'woocommerce' ); ?></th>
+                        <th><?php esc_html_e( 'Product', 'customize-my-account-for-woocommerce' ); ?></th>
+                        <th><?php esc_html_e( 'Qty', 'customize-my-account-for-woocommerce' ); ?></th>
+                        <th><?php esc_html_e( 'Price', 'customize-my-account-for-woocommerce' ); ?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -501,13 +501,13 @@ defined( 'ABSPATH' ) || exit;
             <!-- Totals -->
             <table class="or-totals">
                 <tr>
-                    <td><?php esc_html_e( 'Subtotal', 'woocommerce' ); ?></td>
+                    <td><?php esc_html_e( 'Subtotal', 'customize-my-account-for-woocommerce' ); ?></td>
                     <td><?php echo wp_kses_post( $order->get_subtotal_to_display() ); ?></td>
                 </tr>
 
                 <?php foreach ( $order->get_shipping_methods() as $shipping ) : ?>
                 <tr>
-                    <td><?php printf( esc_html__( 'Shipping (%s)', 'woocommerce' ), esc_html( $shipping->get_name() ) ); ?></td>
+                    <td><?php printf( esc_html__( 'Shipping (%s)', 'customize-my-account-for-woocommerce' ), esc_html( $shipping->get_name() ) ); ?></td>
                     <td><?php echo wp_kses_post( wc_price( $shipping->get_total() ) ); ?></td>
                 </tr>
                 <?php endforeach; ?>
@@ -521,20 +521,20 @@ defined( 'ABSPATH' ) || exit;
 
                 <?php if ( $order->get_total_discount() ) : ?>
                 <tr>
-                    <td><?php esc_html_e( 'Discount', 'woocommerce' ); ?></td>
+                    <td><?php esc_html_e( 'Discount', 'customize-my-account-for-woocommerce' ); ?></td>
                     <td>-<?php echo wp_kses_post( wc_price( $order->get_total_discount() ) ); ?></td>
                 </tr>
                 <?php endif; ?>
 
                 <?php if ( wc_tax_enabled() && $order->get_total_tax() ) : ?>
                 <tr>
-                    <td><?php esc_html_e( 'Tax', 'woocommerce' ); ?></td>
+                    <td><?php esc_html_e( 'Tax', 'customize-my-account-for-woocommerce' ); ?></td>
                     <td><?php echo wp_kses_post( wc_price( $order->get_total_tax() ) ); ?></td>
                 </tr>
                 <?php endif; ?>
 
                 <tr class="or-grand">
-                    <td><?php esc_html_e( 'Order total', 'woocommerce' ); ?></td>
+                    <td><?php esc_html_e( 'Order total', 'customize-my-account-for-woocommerce' ); ?></td>
                     <td><?php echo wp_kses_post( $order->get_formatted_order_total() ); ?></td>
                 </tr>
             </table>
@@ -543,9 +543,9 @@ defined( 'ABSPATH' ) || exit;
         <!-- ---- Addresses ---- -->
         <div class="or-addr-grid">
             <div class="or-addr-card">
-                <p class="or-card__title"><?php esc_html_e( 'Billing address', 'woocommerce' ); ?></p>
+                <p class="or-card__title"><?php esc_html_e( 'Billing address', 'customize-my-account-for-woocommerce' ); ?></p>
                 <address>
-                    <?php echo wp_kses_post( $order->get_formatted_billing_address() ?: esc_html__( 'N/A', 'woocommerce' ) ); ?>
+                    <?php echo wp_kses_post( $order->get_formatted_billing_address() ?: esc_html__( 'N/A', 'customize-my-account-for-woocommerce' ) ); ?>
                     <?php if ( $phone = $order->get_billing_phone() ) : ?>
                         <br><?php echo esc_html( $phone ); ?>
                     <?php endif; ?>
@@ -553,9 +553,9 @@ defined( 'ABSPATH' ) || exit;
             </div>
 
             <div class="or-addr-card">
-                <p class="or-card__title"><?php esc_html_e( 'Shipping address', 'woocommerce' ); ?></p>
+                <p class="or-card__title"><?php esc_html_e( 'Shipping address', 'customize-my-account-for-woocommerce' ); ?></p>
                 <address>
-                    <?php echo wp_kses_post( $order->get_formatted_shipping_address() ?: esc_html__( 'Same as billing', 'woocommerce' ) ); ?>
+                    <?php echo wp_kses_post( $order->get_formatted_shipping_address() ?: esc_html__( 'Same as billing', 'customize-my-account-for-woocommerce' ) ); ?>
                 </address>
             </div>
         </div>
@@ -564,23 +564,23 @@ defined( 'ABSPATH' ) || exit;
         <div class="or-cta-row">
             <?php if ( $order->has_status( 'failed' ) ) : ?>
                 <a href="<?php echo esc_url( $order->get_checkout_payment_url() ); ?>" class="or-btn or-btn--primary">
-                    &#128179; <?php esc_html_e( 'Pay for this order', 'woocommerce' ); ?>
+                    &#128179; <?php esc_html_e( 'Pay for this order', 'customize-my-account-for-woocommerce' ); ?>
                 </a>
             <?php else : ?>
                 <a href="<?php echo esc_url( wc_get_endpoint_url( 'view-order', $order->get_id(), wc_get_page_permalink( 'myaccount' ) ) ); ?>"
                    class="or-btn or-btn--primary">
-                    &#128196; <?php esc_html_e( 'View order details', 'woocommerce' ); ?>
+                    &#128196; <?php esc_html_e( 'View order details', 'customize-my-account-for-woocommerce' ); ?>
                 </a>
             <?php endif; ?>
 
             <a href="<?php echo esc_url( wc_get_page_permalink( 'shop' ) ); ?>" class="or-btn">
-                &#128722; <?php esc_html_e( 'Continue shopping', 'woocommerce' ); ?>
+                &#128722; <?php esc_html_e( 'Continue shopping', 'customize-my-account-for-woocommerce' ); ?>
             </a>
 
             <?php if ( $order->is_download_permitted() ) : ?>
                 <a href="<?php echo esc_url( wc_get_endpoint_url( 'downloads', '', wc_get_page_permalink( 'myaccount' ) ) ); ?>"
                    class="or-btn">
-                    &#11015; <?php esc_html_e( 'Your downloads', 'woocommerce' ); ?>
+                    &#11015; <?php esc_html_e( 'Your downloads', 'customize-my-account-for-woocommerce' ); ?>
                 </a>
             <?php endif; ?>
 

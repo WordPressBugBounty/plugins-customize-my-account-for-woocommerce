@@ -147,6 +147,13 @@ class wcmamtx_upload_avatar_tab {
 	}
 
 	public function wcmamtx_capture_upload_camera_image() {
+
+
+		if ( ! is_user_logged_in() ) {
+			return '';
+		}
+
+
 		if ( empty( $_POST['web_cam_submit'] ) ) {
 			return '';
 		}
@@ -267,7 +274,7 @@ class wcmamtx_upload_avatar_tab {
             $current_size = $file['size'] / 1024; // Convert bytes to KB
 
             if ( $current_size > $image_size_limit ) {
-        	    $file['error'] = sprintf( __( 'ERROR: Images cannot be larger than %d KB.','customize-my-account-for-woocommerce-pro' ), $image_size_limit );
+        	    $file['error'] = sprintf( __( 'ERROR: Images cannot be larger than %d KB.','customize-my-account-for-woocommerce' ), $image_size_limit );
             }
         }
         return $file;
@@ -283,7 +290,7 @@ class wcmamtx_upload_avatar_tab {
 
 		$message = array();
 
-        $message['message'] = esc_html__('Avatar restored successfully','customize-my-account-for-woocommerce-pro');
+        $message['message'] = esc_html__('Avatar restored successfully','customize-my-account-for-woocommerce');
        
 		wp_send_json_success($message);
 	
@@ -297,14 +304,14 @@ class wcmamtx_upload_avatar_tab {
         // 1. Validate security nonce
 		if (!isset($_POST['security']) || !wp_verify_nonce($_POST['security'], 'ajax_file_upload_nonce')) {
 
-			$st_message = esc_html__('Security validation failed','customize-my-account-for-woocommerce-pro');
+			$st_message = esc_html__('Security validation failed','customize-my-account-for-woocommerce');
 			wp_send_json_error($st_message);
 			
 		}
 
         // 2. Ensure a file was actually sent
 		if (!isset($_FILES['file_data'])) {
-			$st_message = esc_html__('No file was detected in the payload','customize-my-account-for-woocommerce-pro');
+			$st_message = esc_html__('No file was detected in the payload','customize-my-account-for-woocommerce');
 			wp_send_json_error($st_message);
 			
 		}
@@ -362,7 +369,7 @@ class wcmamtx_upload_avatar_tab {
 			// Nuke the current avatar
 				$this->avatar_delete( $user_id );
 				update_user_meta( $user_id, 'sysbasics_user_avatar', array( 'full' => $movefile['url'] ) );
-				$sucess['message'] = esc_html__('Avatar uploaded sucessfully','customize-my-account-for-woocommerce-pro');
+				$sucess['message'] = esc_html__('Avatar uploaded sucessfully','customize-my-account-for-woocommerce');
 				$sucess['url'] = $movefile['url'];
 				wp_send_json_success($sucess);
 			} else {
@@ -376,7 +383,7 @@ class wcmamtx_upload_avatar_tab {
 			// Nuke the current avatar
 			$this->avatar_delete( $user_id );
 
-			$sucess['message'] = esc_html__('Avatar restored sucessfully','customize-my-account-for-woocommerce-pro');
+			$sucess['message'] = esc_html__('Avatar restored sucessfully','customize-my-account-for-woocommerce');
 			$sucess['url'] = '';
 			wp_send_json_success($sucess);
 		}
@@ -567,7 +574,9 @@ class wcmamtx_upload_avatar_tab {
 
 			$avatar_size = isset($avatar_settings['avatar_size']) ? $avatar_settings['avatar_size'] : "200";
 
-			$avatar_size = isset($atts['size']) ? $atts['size'] : $avatar_size;
+
+
+			$avatar_size = isset($atts['size']) ? esc_attr((int) $atts['size']) : $avatar_size;
 
 
 			echo wcmamtx_get_avatar_default($profileuser,$avatar_size,$atts);
@@ -639,7 +648,7 @@ class wcmamtx_upload_avatar_tab {
 				<span class="wcmamtx_modal_close_webcam">&times;</span>
                 <?php include('avatar/webcam_modal.php'); ?>
                 <div class="woocommerce-message wcmamtx_no_camera_message" style="display:none;">
-                	<?php echo esc_html__('Camera access is blocked. Allow it in your browser settings','customize-my-account-for-woocommerce-pro'); ?>
+                	<?php echo esc_html__('Camera access is blocked. Allow it in your browser settings','customize-my-account-for-woocommerce'); ?>
                 </div>
 			</div>
 

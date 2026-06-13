@@ -66,6 +66,8 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
 
        add_action( 'admin_bar_menu', array( $this, 'register_custom_menu_link' ),999);
 
+       add_action('init',array( $this, 'wcmamtx_google_callback' ));
+
        
 
     }
@@ -73,7 +75,25 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
 
 
 
+    public function wcmamtx_google_callback() {
 
+        if (
+            empty($_GET['wcmamtx-social']) ||
+            $_GET['wcmamtx-social'] !== 'google'
+        ) {
+            return;
+        }
+
+        $code = sanitize_text_field($_GET['code']);
+
+        $token = wcmamtx_get_google_token($code);
+
+        $user = wcmamtx_get_google_user($token);
+
+        wcmamtx_login_or_create_user($user);
+
+        exit;
+    }
 
 
     public function register_custom_menu_link($wp_admin_bar){
@@ -563,21 +583,23 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
             $template = wcmamtx_plugin_path() . '/templates/myaccount/view-order.php';
         }
 
-        /*
-        $thankyou_template_override = isset($wcmamtx_layout['thankyou_template_override']) ? $wcmamtx_layout['thankyou_template_override'] : "01";
+        
+        $formlogin_layout_override = isset($wcmamtx_layout['formlogin_layout_override']) ? $wcmamtx_layout['formlogin_layout_override'] : "02";
         
 
 
-        if ( strstr($template, 'thankyou.php') && ($thankyou_template_override != "02")) {
-            $template = wcmamtx_plugin_path() . '/templates/myaccount/thankyou.php';
+        if ( strstr($template, 'form-login.php') && ($formlogin_layout_override != "02") && is_account_page()) {
+            $template = wcmamtx_plugin_path() . '/templates/myaccount/form-login.php';
+
+
+
+             $file_to_check = "wcmamtx_template/form-login.php"; // Change to your relative file path
+
+             if ( file_exists( get_stylesheet_directory() . '/' . $file_to_check ) ) {
+         // The file exists in the active child theme
+                $template = ''.get_stylesheet_directory().'/wcmamtx_template/form-login.php';
+            }
         }
-
-        */
-
-
- 
-
-
         
         return $template;
     }
@@ -632,13 +654,12 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
 
                 $last_gravtar_url = get_user_meta($user_id,"wcmamtx_last_gravtar",true);
 
-                if ( (empty($last_gravtar_url)) && (str_contains($user_gravatar_url, "gravatar"))) {
-
+                if ( (empty($last_gravtar_url)) && (strpos($user_gravatar_url, "gravatar") !== false) ) {
                     
 
                     update_user_meta($user_id,"wcmamtx_last_gravtar",$user_gravatar_url);
 
-                } else if (($last_gravtar_url != $user_gravatar_url) && ($user_gravatar_url != $default_pic) && (str_contains($user_gravatar_url, "gravatar"))) {
+                } else if (($last_gravtar_url != $user_gravatar_url) && ($user_gravatar_url != $default_pic) && (strpos($user_gravatar_url, "gravatar") !== false)) {
 
 
 
@@ -733,17 +754,17 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
 
         if (is_account_page() && is_user_logged_in()) {
             wp_enqueue_script( 'wcmamtxfrontend', ''.wcmamtx_PLUGIN_URL.'assets/js/frontend.js',array( 'jquery'), false, true);
-
-            
-
-            
             
         }
 
-        $version = wcmamtx_get_woo_version_number_free();
+        if ( is_account_page() ) {
 
-        wp_enqueue_style( 'wcmamtx-frontend-unique', ''.wcmamtx_PLUGIN_URL.'assets/css/frontend-unique.css' );
-        wp_enqueue_script( 'wcmamtx-frontend-unique', ''.wcmamtx_PLUGIN_URL.'assets/js/frontend-unique.js',array('jquery'),$version );
+            $version = wcmamtx_get_woo_version_number_free();
+
+            wp_enqueue_style( 'wcmamtx-frontend-unique', ''.wcmamtx_PLUGIN_URL.'assets/css/frontend-unique.css' );
+            wp_enqueue_script( 'wcmamtx-frontend-unique', ''.wcmamtx_PLUGIN_URL.'assets/js/frontend-unique.js',array('jquery'),$version );
+
+        }
 		
    
 	}
