@@ -90,6 +90,32 @@ if (!isset($wcmamtx_tabs) || (sizeof($wcmamtx_tabs) == 1)) {
 $wcmamtx_tabs   = apply_filters('wcmamtx_override_dashlinks',$wcmamtx_tabs);
 
 
+                    $core_fields_array_filter =  array(
+                        'dashboard'=>'dashboard',
+                        'orders'=>'orders',
+                        'downloads'=>'downloads',
+                        'edit-address'=>'edit-address',
+                        'edit-account'=>'edit-account',
+                        'customer-logout'=>'customer-logout',
+                        'payment-methods'=>'payment-methods'
+                    );
+
+
+        foreach($wcmamtx_tabs as $gtkey=>$gtvalue) {
+
+            if (!array_key_exists($gtkey, $core_fields_array_filter)) {
+                  $third_party_check = wcmamtx_third_party_goahead_check($gtkey);
+
+                  $wcmamtx_type = isset($gtvalue['wcmamtx_type']) ? $gtvalue['wcmamtx_type'] : "endpoint";
+
+                  if (($third_party_check == "no") && ($wcmamtx_type == "endpoint")) {
+                     unset($wcmamtx_tabs[$gtkey]);
+                  }
+            }
+
+        }
+
+
 
 $wcmamtx_layout = (array) get_option( 'wcmamtx_layout' );
 

@@ -1304,11 +1304,22 @@ if ( ! function_exists( 'wcmamtx_get_my_account_menu_plain_li' ) ) {
             'downloads'=>'downloads',
             'edit-address'=>'edit-address',
             'edit-account'=>'edit-account',
-            'customer-logout'=>'customer-logout'
+            'customer-logout'=>'customer-logout',
+            'payment-methods'=>'payment-methods'
         );
 
 
+        foreach($items as $gtkey=>$gtvalue) {
 
+            if (!array_key_exists($gtkey, $core_fields_array)) {
+                  $third_party_check = wcmamtx_third_party_goahead_check($gtkey);
+
+                  if ($third_party_check == "no") {
+                     unset($items[$gtkey]);
+                  }
+            }
+
+        }
 
 
 
@@ -1398,6 +1409,32 @@ if ( ! function_exists( 'wcmamtx_get_my_account_menu_plain_li' ) ) {
                 $menu_position_extra_class = "";
                 break;
             }
+        }
+
+
+     $core_fields_array_filter =  array(
+                        'dashboard'=>'dashboard',
+                        'orders'=>'orders',
+                        'downloads'=>'downloads',
+                        'edit-address'=>'edit-address',
+                        'edit-account'=>'edit-account',
+                        'customer-logout'=>'customer-logout',
+                        'payment-methods'=>'payment-methods'
+                    );
+
+
+        foreach($wcmamtx_tabs as $gtkey=>$gtvalue) {
+
+            if (!array_key_exists($gtkey, $core_fields_array_filter)) {
+                  $third_party_check = wcmamtx_third_party_goahead_check($gtkey);
+
+                  $wcmamtx_type = isset($gtvalue['wcmamtx_type']) ? $gtvalue['wcmamtx_type'] : "endpoint";
+
+                  if (($third_party_check == "no") && ($wcmamtx_type == "endpoint")) {
+                     unset($wcmamtx_tabs[$gtkey]);
+                  }
+            }
+
         }
 
 

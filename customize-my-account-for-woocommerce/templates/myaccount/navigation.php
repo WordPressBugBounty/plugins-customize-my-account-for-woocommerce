@@ -26,7 +26,18 @@ $items                 =  wc_get_account_menu_items();
 foreach ($items as $itkey=>$itvalue) {
     if (!array_key_exists($itkey, $wcmamtx_tabs)) {
 
-        $new_array = array($itkey=>$itvalue);
+        $third_party_check = wcmamtx_third_party_goahead_check($key);
+
+
+        if ($third_party_check == "yes") {
+
+            unset($items[$itkey]);
+            $new_array = array($itkey=>$itvalue);
+        }
+
+        
+
+
         update_option('wcmamtx_tabs_to_add_third_party',$new_array);
     }
 }
@@ -103,6 +114,32 @@ if (!isset($wcmamtx_tabs) || (sizeof($wcmamtx_tabs) === 1) || isset($wcmamtx_tab
     $wcmamtx_tabs = $items;
     
 }
+
+
+                    $core_fields_array_filter =  array(
+                        'dashboard'=>'dashboard',
+                        'orders'=>'orders',
+                        'downloads'=>'downloads',
+                        'edit-address'=>'edit-address',
+                        'edit-account'=>'edit-account',
+                        'customer-logout'=>'customer-logout',
+                        'payment-methods'=>'payment-methods'
+                    );
+
+
+        foreach($wcmamtx_tabs as $gtkey=>$gtvalue) {
+
+            if (!array_key_exists($gtkey, $core_fields_array_filter)) {
+                  $third_party_check = wcmamtx_third_party_goahead_check($gtkey);
+
+                  $wcmamtx_type = isset($gtvalue['wcmamtx_type']) ? $gtvalue['wcmamtx_type'] : "endpoint";
+
+                  if (($third_party_check == "no") && ($wcmamtx_type == "endpoint")) {
+                     unset($wcmamtx_tabs[$gtkey]);
+                  }
+            }
+
+        }
 
 
 
