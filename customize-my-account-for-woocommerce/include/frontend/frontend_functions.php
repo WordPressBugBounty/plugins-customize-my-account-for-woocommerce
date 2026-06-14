@@ -25,6 +25,11 @@ add_action( 'wp_footer', function() {
     <?php
 });
 
+
+
+
+
+
 if (!class_exists('wcmamtx_add_frontend_class')) {
 
   class wcmamtx_add_frontend_class {
@@ -37,41 +42,179 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
     private $column_key_custom;
     
     public function __construct() {
-	
-	
-	  add_action( 'wp_enqueue_scripts', array( $this, 'wcmamtx_load_assets' ) );
-	  add_action( 'woocommerce_account_menu_items', array($this, 'wcmamtx_rename_my_account_menu_items'), 100, 1);
-      add_action( 'woocommerce_locate_template', array($this,'wcmamtx_override_default_navigation_template'), 100, 3 );
 
-      
-      add_filter( 'wpml_sl_blacklist_requests',  array($this,'wpml_sl_blacklist_requests'), 10, 2 );
-      add_action( 'init', array($this,'wcmamtx_add_custom_endpoint_page') );
-      
-      
 
-      add_filter( 'woocommerce_get_endpoint_url', array( $this, 'wcmamtx_link_url_redirect' ), 10, 4 );
+     add_action( 'wp_enqueue_scripts', array( $this, 'wcmamtx_load_assets' ) );
+     add_action( 'woocommerce_account_menu_items', array($this, 'wcmamtx_rename_my_account_menu_items'), 100, 1);
+     add_action( 'woocommerce_locate_template', array($this,'wcmamtx_override_default_navigation_template'), 100, 3 );
+
+
+     add_filter( 'wpml_sl_blacklist_requests',  array($this,'wpml_sl_blacklist_requests'), 10, 2 );
+     add_action( 'init', array($this,'wcmamtx_add_custom_endpoint_page') );
+
+
+
+     add_filter( 'woocommerce_get_endpoint_url', array( $this, 'wcmamtx_link_url_redirect' ), 10, 4 );
+    
+
+
+
+     add_action('the_content', array( $this, 'wcmamtx_modify_post_content' ));
+
+
+
+
+     add_shortcode('sysbasics_dashboard_menu', array( $this, 'sysbasics_dashboard_menu_function' ));
+
+     add_action( 'admin_bar_menu', array( $this, 'register_custom_menu_link' ),999);
+
+     add_action('init',array( $this, 'wcmamtx_google_callback' ));
+
+     add_action( 'wp_nav_menu_items', array( $this, 'wcmamtx_add_menu_items' ), 10, 2 );
+
+     add_filter('wp_nav_menu_items', array( $this, 'wcmamtx_optimize_avatar_into_logged_in_li' ), 20, 2);
+
+     add_action( 'wp_enqueue_scripts', array( $this, 'wcmamtx_sb_enqueue_chart_assets' ) );
+
+     add_action('woocommerce_account_dashboard',array( $this, 'wcmamtx_sb_customer_spending_chart' ));
+
       add_action( 'woocommerce_account_dashboard', array($this,'wcmamtx_add_myaccount_links'), 10 );
-      
-      
 
-        add_action('the_content', array( $this, 'wcmamtx_modify_post_content' ));
-
-
-       
-
-       add_shortcode('sysbasics_dashboard_menu', array( $this, 'sysbasics_dashboard_menu_function' ));
-
-       add_action( 'admin_bar_menu', array( $this, 'register_custom_menu_link' ),999);
-
-       add_action('init',array( $this, 'wcmamtx_google_callback' ));
-
-       add_action( 'wp_nav_menu_items', array( $this, 'wcmamtx_add_menu_items' ), 10, 2 );
-
-        add_filter('wp_nav_menu_items', array( $this, 'wcmamtx_optimize_avatar_into_logged_in_li' ), 20, 2);
 
     }
 
-        public function wcmamtx_add_menu_items( $items, $args ) {
+
+
+    public function wcmamtx_sb_enqueue_chart_assets() {
+
+        if ( ! is_account_page() ) {
+            return;
+        }
+
+        if ( ! is_user_logged_in() ) {
+            return;
+        }
+
+        $wcmamtx_layout = (array) get_option('wcmamtx_layout');
+
+
+        $spending_layout_override = isset($wcmamtx_layout['spending_layout_override']) ? $wcmamtx_layout['spending_layout_override'] : "02";
+
+        if ($spending_layout_override == "01") {
+
+            wp_enqueue_script(
+                'wcmamtx_chart_js',
+                wcmamtx_PLUGIN_URL . 'assets/js/chart.js',
+                array(),
+                '4.4.0',
+                true
+            );
+
+            wp_enqueue_script(
+                'wcmamtxchart',
+                wcmamtx_PLUGIN_URL . 'assets/js/account-chart.js',
+                array( 'wcmamtx_chart_js' ),
+                '1.0',
+                true
+            );
+
+
+            $wcmamtx_locals_chart = array(
+                'amountspent_label'              => esc_html__('Amount Spent','customize-my-account-for-woocommerce'),
+            );
+
+
+            wp_localize_script( 'wcmamtxchart', 'wcmamtxchart', $wcmamtx_locals_chart );
+
+            wp_enqueue_style(
+                'wcmamtxchart-style',
+                wcmamtx_PLUGIN_URL . 'assets/css/account-chart.css'
+            );
+
+        }
+
+
+    }
+
+
+
+    public function wcmamtx_sb_customer_spending_chart() {
+
+        if ( ! is_user_logged_in() ) {
+            return;
+        }
+
+        if ( ! is_account_page() ) {
+            return;
+        }
+
+
+        $wcmamtx_layout = (array) get_option('wcmamtx_layout');
+
+
+        $spending_layout_override = isset($wcmamtx_layout['spending_layout_override']) ? $wcmamtx_layout['spending_layout_override'] : "02";
+
+        if ($spending_layout_override != "01") { 
+           return;
+        }
+
+        $data = wcmamtx_sb_get_customer_spending_data( get_current_user_id() );
+
+        $navwidget_disable_spendboxes = isset($wcmamtx_layout['navwidget_disable_spendboxes']) ? $wcmamtx_layout['navwidget_disable_spendboxes'] : "no";
+
+        $navwidget_disable_spendchart = isset($wcmamtx_layout['navwidget_disable_spendchart']) ? $wcmamtx_layout['navwidget_disable_spendchart'] : "no";
+
+        ?>
+
+        <?php if ($navwidget_disable_spendboxes != "yes") { ?>
+
+        <div class="sb-stats-grid wcmamtx_spending_chart_dash">
+
+            <div class="sb-stat-box wcmamtx_total_spent">
+                <span><?php echo esc_html__('Total Spent','customize-my-account-for-woocommerce'); ?></span>
+                <strong><?php echo wc_price(wc_get_customer_total_spent( get_current_user_id() )); ?></strong>
+            </div>
+
+            <div class="sb-stat-box wcmamtx_total_orders">
+                <span><?php echo esc_html__('Total Orders','customize-my-account-for-woocommerce'); ?></span>
+                <strong><?php echo wc_get_customer_order_count( get_current_user_id() ); ?></strong>
+            </div>
+
+            <div class="sb-stat-box wcmamtx_total_average_order">
+                <span><?php echo esc_html__('Average Order','customize-my-account-for-woocommerce'); ?></span>
+                <strong><?php echo wc_price(wcmamtx_my_get_customer_average_order_value( get_current_user_id() )); ?></strong>
+            </div>
+
+        </div>
+
+        <?php } ?>
+
+        <?php if ($navwidget_disable_spendchart != "yes") { ?>
+
+        <div class="sb-spending-chart-card wcmamtx_spending_chart">
+
+            <div class="sb-chart-header">
+                <h3><?php echo esc_html__('Spending Overview','customize-my-account-for-woocommerce'); ?></h3>
+                <span><?php echo esc_html__('Last 12 Months','customize-my-account-for-woocommerce'); ?></span>
+            </div>
+
+            <canvas id="sbCustomerSpendingChart"></canvas>
+
+        </div>
+
+        <script>
+            window.sbChartData = <?php echo wp_json_encode( $data ); ?>;
+        </script>
+
+        <?php } ?>
+
+        <?php
+    }
+
+    
+
+
+    public function wcmamtx_add_menu_items( $items, $args ) {
 
         $frontend_url = get_permalink(get_option('woocommerce_myaccount_page_id'));
 
@@ -85,7 +228,7 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
 
         $wcmamtx_layout = (array) get_option('wcmamtx_layout');
 
-        $nav_header_widget_text = isset($wcmamtx_layout['nav_header_widget_text']) ? $wcmamtx_layout['nav_header_widget_text'] : esc_html__('My Account','customize-my-account-for-woocommerce-pro');
+        $nav_header_widget_text = isset($wcmamtx_layout['nav_header_widget_text']) ? $wcmamtx_layout['nav_header_widget_text'] : esc_html__('My Account','customize-my-account-for-woocommerce');
 
 
         
@@ -119,7 +262,7 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
             }
 
 
-            $nav_header_widget_text_logout = isset($wcmamtx_layout['nav_header_widget_text_logout']) ? $wcmamtx_layout['nav_header_widget_text_logout'] : esc_html__('Log In','customize-my-account-for-woocommerce-pro');
+            $nav_header_widget_text_logout = isset($wcmamtx_layout['nav_header_widget_text_logout']) ? $wcmamtx_layout['nav_header_widget_text_logout'] : esc_html__('Log In','customize-my-account-for-woocommerce');
 
 
             $Menu_link = '<li class="menu-item menu-item-type-post_type menu-item-object-page wcmamtx_menu wcmamtx_menu_logged_out"><a class="menu-link nav-top-link" aria-expanded="true" aria-haspopup="menu"  href="'.$frontend_url.'">'.$nav_header_widget_text_logout.'</a>';
@@ -148,6 +291,9 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
 
         return $items;
     }
+
+
+
 
 
 
@@ -182,7 +328,7 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
     $wcmamtx_layout        = (array) get_option('wcmamtx_layout');
     $nav_header_widget_text = isset($wcmamtx_layout['nav_header_widget_text'])
     ? esc_html($wcmamtx_layout['nav_header_widget_text'])
-    : esc_html__('My Account', 'customize-my-account-for-woocommerce-pro');
+    : esc_html__('My Account', 'customize-my-account-for-woocommerce');
 
     $navwidget_disable_avatar = isset($wcmamtx_layout['navwidget_disable_avatar'])
     ? esc_html($wcmamtx_layout['navwidget_disable_avatar'])
@@ -269,7 +415,7 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
 
             $args = array(
                 'id'    => 'wcmamtx_customize_myaccount', // Unique ID for your link
-                'title' => 'Customize My Account', // The text that will appear in the admin bar
+                'title' =>  esc_html__('Customize My Account','customize-my-account-for-woocommerce'), // The text that will appear in the admin bar
                 'href'  => ''.admin_url().'admin.php?page=wcmamtx_advanced_settings', // The URL the link will point to
                 'meta'  => array(
                     'class'  => 'wcmamtx_customize_myaccount-class', // Custom CSS class

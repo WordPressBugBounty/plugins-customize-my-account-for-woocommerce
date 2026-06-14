@@ -200,6 +200,72 @@ if (!function_exists('wcmamtx_generate_state')) {
 }
 
 
+if (!function_exists('wcmamtx_sb_get_customer_spending_data')) {
+
+
+    function wcmamtx_sb_get_customer_spending_data( $user_id ) {
+
+        $months = array();
+        $totals = array();
+
+        for ( $i = 11; $i >= 0; $i-- ) {
+
+            $month_key = date( 'Y-m', strtotime( "-$i months" ) );
+
+            $months[] = date( 'M Y', strtotime( $month_key . '-01' ) );
+
+            $orders = wc_get_orders( array(
+                'customer_id' => $user_id,
+                'status'      => array( 'wc-completed', 'wc-processing' ),
+                'limit'       => -1,
+                'date_created'=> $month_key . '...'.$month_key . '-31',
+            ) );
+
+            $total = 0;
+
+            foreach ( $orders as $order ) {
+                $total += $order->get_total();
+            }
+
+            $totals[] = round( $total, 2 );
+        }
+
+        return array(
+            'labels' => $months,
+            'values' => $totals,
+        );
+    }
+
+}
+
+
+/**
+ * Get customer's average order value
+ *
+ * @param int $user_id
+ * @return float
+ */
+
+if (!function_exists('wcmamtx_my_get_customer_average_order_value')) {
+
+    function wcmamtx_my_get_customer_average_order_value( $user_id ) {
+
+        if ( ! $user_id ) {
+            return 0;
+        }
+
+        $total_spent = wc_get_customer_total_spent( $user_id );
+        $order_count = wc_get_customer_order_count( $user_id );
+
+        if ( $order_count <= 0 ) {
+            return 0;
+        }
+
+        return $total_spent / $order_count;
+    }
+}
+
+
 if (!function_exists('wcmamtx_get_google_login_url')) {
 
 
