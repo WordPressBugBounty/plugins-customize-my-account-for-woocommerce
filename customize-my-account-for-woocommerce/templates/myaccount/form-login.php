@@ -9,17 +9,20 @@ do_action('woocommerce_before_customer_login_form');
     <div class="wc-auth-card">
 
 
-
-        <div class="wc-auth-tabs">
-            <button class="wc-tab-btn active" data-tab="login">
+        <div class="wc-auth-tabs wcmamtx_login_register_buttons">
+            <button class="btn btn-login wc-tab-btn active" data-tab="login">
+                <i class="fa-solid fa-right-to-bracket"></i>
                 <?php esc_html_e( 'Login', 'customize-my-account-for-woocommerce' ); ?> 
             </button>
 
-            <button class="wc-tab-btn" data-tab="register">
+            
                 <?php if ( 'yes' === get_option( 'woocommerce_enable_myaccount_registration' ) ) { ?>
+                    <button class="btn btn-register wc-tab-btn" data-tab="register">
+                        <i class="fa-solid fa-user-plus"></i>
                     <?php esc_html_e( 'Register', 'customize-my-account-for-woocommerce' ); ?> 
+                    </button>
                 <?php } ?>               
-            </button>
+            
         </div>
 
         <!-- LOGIN -->
@@ -156,7 +159,7 @@ do_action('woocommerce_before_customer_login_form');
 
             <form method="post" class="woocommerce-ResetPassword lost_reset_password">
 
-                <p><?php echo apply_filters( 'woocommerce_lost_password_message', esc_html__( 'Lost your password? Please enter your username or email address. You will receive a link to create a new password via email.', 'customize-my-account-for-woocommerce' ) ); ?></p><?php // @codingStandardsIgnoreLine ?>
+                <p class="wcmamtx_lost_password_info" ><?php echo apply_filters( 'woocommerce_lost_password_message', esc_html__( 'Lost your password? Please enter your username or email address. You will receive a link to create a new password via email.', 'customize-my-account-for-woocommerce' ) ); ?></p><?php // @codingStandardsIgnoreLine ?>
 
                 <p class="woocommerce-form-row woocommerce-form-row--first form-row form-row-first">
                     <label for="user_login"><?php esc_html_e( 'Username or email', 'customize-my-account-for-woocommerce' ); ?>&nbsp;<span class="required" aria-hidden="true">*</span><span class=" screen-reader-text"><?php esc_html_e( 'Required', 'customize-my-account-for-woocommerce' ); ?></span></label>

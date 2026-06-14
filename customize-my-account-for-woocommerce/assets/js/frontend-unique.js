@@ -16,6 +16,38 @@ var $laz = jQuery.noConflict();
     });
 })( jQuery );
 
+/*
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    const widget = document.querySelector('.sb-account-widget');
+
+    if (!widget) {
+        return;
+    }
+
+    const trigger = widget.querySelector('.sb-account-trigger');
+
+    trigger.addEventListener('click', function (e) {
+
+        e.preventDefault();
+
+        widget.classList.toggle('active');
+
+    });
+
+    document.addEventListener('click', function (e) {
+
+        if (!widget.contains(e.target)) {
+            widget.classList.remove('active');
+        }
+
+    });
+
+});
+
+*/
+
 document.addEventListener("DOMContentLoaded", function () {
 
     const tabs = document.querySelectorAll(".wc-tab-btn");

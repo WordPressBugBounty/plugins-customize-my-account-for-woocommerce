@@ -6,13 +6,20 @@ $wcmamtx_layout = (array) get_option( 'wcmamtx_layout' );
 if (array_key_exists(0, $wcmamtx_layout)) {
     $wcmamtx_layout['formlogin_layout_override'] = "01";
 
-
+    $wcmamtx_layout['navigationwidget_layout_override'] = "01";
+    
+    $wcmamtx_layout['nav_header_widget'] = "yes";
+    
 }
 
 
+
+
+$nav_style = isset($wcmamtx_layout['nav_style']) ? $wcmamtx_layout['nav_style'] : wcmamtx_get_clean_design_theme_array();
+
 $dash_style = isset($wcmamtx_layout['dash_style']) ? $wcmamtx_layout['dash_style'] : "01";
 $sidebar_style = isset($wcmamtx_layout['sidebar_style']) ? $wcmamtx_layout['sidebar_style'] : "01";
-$nav_style = isset($wcmamtx_layout['nav_style']) ? $wcmamtx_layout['nav_style'] : "02";
+
 $order_style = isset($wcmamtx_layout['order_style']) ? $wcmamtx_layout['order_style'] : "01";
 $order_template_override = isset($wcmamtx_layout['order_template_override']) ? $wcmamtx_layout['order_template_override'] : "01";
 
@@ -48,13 +55,16 @@ $formlogin_layout_override = isset($wcmamtx_layout['formlogin_layout_override'])
 
 $google_client_id = isset( $wcmamtx_layout['google_client_id'] ) ? $wcmamtx_layout['google_client_id'] : '';
 $google_client_secret = isset( $wcmamtx_layout['google_client_secret'] ) ? $wcmamtx_layout['google_client_secret'] : '';
+
+$frontend_url = get_permalink(get_option('woocommerce_myaccount_page_id'));
 ?>
 
 
-
+<a type="button" target="_blank" href="<?php echo $frontend_url; ?>" id="wcmamtx_frontend_link" class="btn btn-sm btn-primary wcmamtx_frontend_link wcmamtx_frontend_link_top_sticky" >
+	<span class="dashicons dashicons-welcome-view-site"></span>
+	<?php echo esc_html__( 'Frontend' ,'customize-my-account-for-woocommerce'); ?>
+</a>
 <div class="wcmamtx-layout-settings">
-
-
 
 	<div class="wcmamtx-setting-card">
 
@@ -325,6 +335,37 @@ $google_client_secret = isset( $wcmamtx_layout['google_client_secret'] ) ? $wcma
     	</div>
 
     </div>
+
+    <?php
+    $navigationwidget_layout_override = isset($wcmamtx_layout['navigationwidget_layout_override']) ? $wcmamtx_layout['navigationwidget_layout_override'] : "01";
+    ?>
+
+
+    <!-- My Account Navigation Menu widget Style -->
+	<div class="wcmamtx-setting-card">
+
+		<div class="wcmamtx-card-header">
+			<div>
+				<h2><?php esc_html_e('My Account Navigation Menu widget','customize-my-account-for-woocommerce'); ?></h2>
+				<p><?php esc_html_e('Add My Account Navigation menu widget with all chosen endpoints.','customize-my-account-for-woocommerce'); ?></p>
+
+				<select class="wcmamtx_layout_select_override wcmamtx_layout_order_select_override" name="<?php  echo esc_html__($this->wcmamtx_layout_page); ?>[navigationwidget_layout_override]" style="">			
+					<option value="01" <?php if (isset($navigationwidget_layout_override) && ($navigationwidget_layout_override == 01)) { echo 'selected'; } ?>>
+						<?php echo esc_html__('Enable','customize-my-account-for-woocommerce'); ?>
+					</option> 
+					<option value="02" <?php if (isset($navigationwidget_layout_override) && ($navigationwidget_layout_override == 02)) { echo 'selected'; } ?>>
+						<?php echo esc_html__('Disable','customize-my-account-for-woocommerce'); ?>
+					</option> 
+			</select>
+			</div>
+		</div>
+
+		<div class="wcmamtx-card-body" style="<?php if (isset($navigationwidget_layout_override) && ($navigationwidget_layout_override == 01)) { echo 'display:block;'; } else { echo 'display:none;'; } ?>">
+			<?php include('layouts/navigationwidget.php'); ?>
+
+		</div>
+
+	</div>
 
 
 

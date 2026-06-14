@@ -531,9 +531,11 @@ class wcmamtx_upload_avatar_tab {
 	public function wcmamtx_shortcode($atts=null) {
 
 		$attributes = shortcode_atts( array(
-		  'size' => 200,
+		  'size' => 150,
 		  'min_height' => 150,
-		  'min_width' => 150
+		  'min_width' => 150,
+		  'max_height' => 150,
+		  'max_width' => 150,
 	    ), $atts );
 
 		ob_start();
@@ -556,7 +558,7 @@ class wcmamtx_upload_avatar_tab {
 
 			$avatar_settings['round_avatar'] = "yes";
 
-			$avatar_settings['avatar_size'] = "200";
+			$avatar_settings['avatar_size'] = "150";
 			
 			$avatar_settings['webcam_capture'] = "yes";
 
@@ -572,7 +574,7 @@ class wcmamtx_upload_avatar_tab {
 
 			
 
-			$avatar_size = isset($avatar_settings['avatar_size']) ? $avatar_settings['avatar_size'] : "200";
+			$avatar_size = isset($avatar_settings['avatar_size']) ? $avatar_settings['avatar_size'] : "150";
 
 
 

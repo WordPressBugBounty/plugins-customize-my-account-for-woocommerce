@@ -871,4 +871,19 @@ jQuery(document).ready(function($){
         return false;
     });
 
+    $('.wcmamtx_show_nav_header_widget').on("change",function() {
+               
+        if($(this).prop("checked")) {
+            $('tr.nav_header_widget_tr').show();
+        } else {
+            $('tr.nav_header_widget_tr').hide();
+        }
+    });
+
+    if ($(".wcmamtx_one_time_save").length > 0){
+
+        $(".wcmamtx_one_time_save").trigger("click");
+
+    }
+
 });

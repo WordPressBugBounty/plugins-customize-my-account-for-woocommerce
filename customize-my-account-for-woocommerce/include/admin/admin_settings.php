@@ -1,5 +1,4 @@
 <?php
-
 if (!class_exists('wcmamtx_add_settings_page_class')) {
 
 class wcmamtx_add_settings_page_class {
@@ -703,7 +702,7 @@ class wcmamtx_add_settings_page_class {
 
                         <?php if (isset($current_tab)  && ($current_tab != "wcmamtx_wizard_settings")) {  
 
-                            $load_wcmamtx_optional_class = load_wcmamtx_optional_class();
+                            $load_wcmamtx_optional_class = load_wcmamtx_optional_class($current_tab);
 
                             ?>
 

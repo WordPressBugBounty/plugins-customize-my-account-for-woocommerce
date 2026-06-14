@@ -2,6 +2,75 @@
 
 include('wcmamtx_countof_functions.php');
 
+// Social login functions starts
+
+if (!function_exists('wcmamtx_get_clean_design_theme_array')) {
+
+
+    function wcmamtx_get_clean_design_theme_array() {
+
+        //echo wp_get_theme();
+
+         $supported_themes = array(
+        'Astra',
+        'Astra Child',
+        'Divi',
+        'Divi Child',
+        'Woodmart',
+        'Woodmart Child',
+        'Kadence',
+        'Kadence Child',
+        'Avada',
+        'Avada Child',
+        'GeneratePress',
+        'GeneratePress Child',
+        'Blocksy',
+        'Blocksy Child',
+        'OceanWP',
+        'OceanWP Child',
+        'Extendable',
+        'Extendable Child',
+        'Customify',
+        'Customify Child',
+        'Xstore',
+        'Xstore Child',
+        'Shoptimizer',
+        'Shoptimizer Child',
+        'Porto',
+        'Porto Child',
+        'Pepper',
+        'Pepper Child',
+        'Electro',
+        'Electro Child',
+        'Martfury',
+        'Martfury Child',
+        'Motta',
+        'Motta Child',
+        'Betheme',
+        'Betheme Child',
+        'The7',
+        'The7 Child',
+        'Neve',
+        'Neve Child',
+        'Hello Elementor',
+        'Hello Elementor Child',
+        'Orchid Store',
+        'Orchid Store Child',
+        'Royal Elementor Kit',
+        'Royal Elementor Kit Child',
+        'Bluehost Blueprint',
+        'Bluehost Blueprint Child',
+        'Elessi Theme',
+        'Elessi Theme Child'
+    );
+
+    return in_array((string) wp_get_theme(), $supported_themes, true)
+        ? '02'
+        : '01';
+    }
+
+}
+
 
 if (!function_exists('wcmamtx_get_user_ip')) {
 
@@ -24,6 +93,89 @@ if (!function_exists('wcmamtx_get_user_ip')) {
 		return $ip;
 	}
 
+}
+
+
+/**
+ * Get account menu item classes.
+ *
+ * @since 1.0.0
+ * @param string $endpoint Endpoint.
+ * @return string
+ */
+
+if (!function_exists('sysbasics_menu_item_custom_output_premium')) {
+
+    function sysbasics_menu_item_custom_output_premium( $item_output, $item, $depth, $args ) {
+
+        $menu_item_classes = $item->classes;
+
+        $frontend_url = get_permalink(get_option('woocommerce_myaccount_page_id'));
+
+    //print_r($item);
+
+        if ( is_array($menu_item_classes) && !in_array( 'customize-my-account-for-woocommerce-dropdown', $menu_item_classes )) {
+            return $item_output;
+        }
+
+
+        if ( !is_user_logged_in() ) {
+
+            $show_only_logged_in    = isset($wcmamtx_plugin_options['show_only_logged_in']) ? $wcmamtx_plugin_options['show_only_logged_in'] : "no";
+
+            if ($show_only_logged_in == "yes") {
+                return $items;
+            }
+
+
+            $nav_header_widget_text_logout = isset($wcmamtx_plugin_options['nav_header_widget_text_logout']) ? $wcmamtx_plugin_options['nav_header_widget_text_logout'] : esc_html__('Log In','customize-my-account-for-woocommerce');
+
+
+            $Menu_link = '<li class="menu-item menu-item-type-post_type menu-item-object-page wcmamtx_menu wcmamtx_menu_logged_out"><a class="menu-link nav-top-link" aria-expanded="true" aria-haspopup="menu"  href="'.$frontend_url.'">'.$nav_header_widget_text_logout.'</a>';
+
+            $items .= $Menu_link;
+
+            return $items;
+            
+        } 
+
+        ob_start(); 
+
+        $frontend_url = get_permalink(get_option('woocommerce_myaccount_page_id'));
+
+
+        $wcmamtx_plugin_options = (array) get_option('wcmamtx_plugin_options');
+
+        $nav_header_widget_text = isset($wcmamtx_plugin_options['nav_header_widget_text']) ? $wcmamtx_plugin_options['nav_header_widget_text'] : esc_html__('My Account','customize-my-account-for-woocommerce');
+
+        ?>
+        <ul class="custom-sub-menu">
+           <?php 
+
+           
+
+
+
+           $items = '';
+
+           wcmamtx_get_menu_shortcode_content($items,$item); 
+
+           
+
+           ?>
+
+
+       </li>
+   </ul>
+   <?php
+
+   $custom_sub_menu_html = ob_get_clean();
+
+    // Append after <a> element of the menu item targeted
+   $item_output = $custom_sub_menu_html;
+
+   return $item_output;
+}
 }
 
 
@@ -216,7 +368,7 @@ if (!function_exists('wcmamtx_deshlink_default_description')) {
 if (!function_exists('wcmamtx_get_avatar_default')) {
 
 
-    function wcmamtx_get_avatar_default($profileuser,$avatar_size,$atts,$modal_popup = null) {
+    function wcmamtx_get_avatar_default($profileuser,$avatar_size,$atts,$modal_popup = null,$nav_widget = null) {
 
 
         if ( ! is_user_logged_in() ) {
@@ -232,7 +384,7 @@ if (!function_exists('wcmamtx_get_avatar_default')) {
 
         
 
-        if ($modal_popup == null) {
+        if (($modal_popup == null) && ($nav_widget == null)) {
             $min_height = (isset($avatar_settings['min_height']) ) ? $avatar_settings['min_height'] : '150';
             $min_width = (isset($avatar_settings['min_width']) ) ? $avatar_settings['min_width'] : '150';
 
@@ -672,78 +824,95 @@ if (!function_exists('wcmamtx_is_module_enabled_init')) {
 
 if (!function_exists('load_wcmamtx_optional_class')) {
 
-	function load_wcmamtx_optional_class() {
+	function load_wcmamtx_optional_class($current_tab) {
 
 		$default_class = '';
-		
-		$advancedsettings  = (array) get_option('wcmamtx_advanced_settings');  
-
-		$tabs              = wc_get_account_menu_items();
-
-		$core_fields       = 'dashboard,orders,downloads,edit-address,edit-account,customer-logout';
 
 
+        if ($current_tab == "wcmamtx_advanced_settings") {
 
+          $advancedsettings  = (array) get_option('wcmamtx_advanced_settings');  
 
+          $tabs              = wc_get_account_menu_items();
 
-		$core_fields_array =  array(
-			'dashboard'       => esc_html__('Dashboard','customize-my-account-for-woocommerce'),
-			'orders'          => esc_html__('Orders','customize-my-account-for-woocommerce'),
-			'downloads'       => esc_html__('Downloads','customize-my-account-for-woocommerce'),
-			'edit-address'    => esc_html__('Addresses','customize-my-account-for-woocommerce'),
-			'edit-account'    => esc_html__('Account Details','customize-my-account-for-woocommerce'),
-			'customer-logout' => esc_html__('Log out','customize-my-account-for-woocommerce')
-		);
-
-		$tabs                = apply_filters( 'woocommerce_account_menu_items', $tabs, $core_fields_array );
-
-
-
-		$frontend_menu_items = get_option('wcmamtx_frontend_items');
-
-
-
-
-		if ((sizeof($advancedsettings) != 1)) {
-
-			foreach ($tabs as $ikey=>$ivalue) {
-
-				$match = wcmtxka_find_string_match_pro($ikey,$advancedsettings);
-
-				if (!array_key_exists($ikey, $advancedsettings) && !array_key_exists($ikey, $core_fields_array) && ($match == "notfound")) {
-
-
-
-					$advancedsettings[$ikey] = array(
-						'show' => 'yes',
-						'third_party' => 'yes',
-						'endpoint_key' => $ikey,
-						'wcmamtx_type' => 'endpoint',
-						'parent'       => 'none',
-						'endpoint_name'=> $ivalue,
-					);           
-
-				}
-			}
+          $core_fields       = 'dashboard,orders,downloads,edit-address,edit-account,customer-logout';
 
 
 
 
 
+          $core_fields_array =  array(
+             'dashboard'       => esc_html__('Dashboard','customize-my-account-for-woocommerce'),
+             'orders'          => esc_html__('Orders','customize-my-account-for-woocommerce'),
+             'downloads'       => esc_html__('Downloads','customize-my-account-for-woocommerce'),
+             'edit-address'    => esc_html__('Addresses','customize-my-account-for-woocommerce'),
+             'edit-account'    => esc_html__('Account Details','customize-my-account-for-woocommerce'),
+             'customer-logout' => esc_html__('Log out','customize-my-account-for-woocommerce')
+         );
 
-		}
+          $tabs                = apply_filters( 'woocommerce_account_menu_items', $tabs, $core_fields_array );
+
+
+
+          $frontend_menu_items = get_option('wcmamtx_frontend_items');
+
+
+
+
+          if ((sizeof($advancedsettings) != 1)) {
+
+             foreach ($tabs as $ikey=>$ivalue) {
+
+                $match = wcmtxka_find_string_match_pro($ikey,$advancedsettings);
+
+                if (!array_key_exists($ikey, $advancedsettings) && !array_key_exists($ikey, $core_fields_array) && ($match == "notfound")) {
+
+
+
+                   $advancedsettings[$ikey] = array(
+                      'show' => 'yes',
+                      'third_party' => 'yes',
+                      'endpoint_key' => $ikey,
+                      'wcmamtx_type' => 'endpoint',
+                      'parent'       => 'none',
+                      'endpoint_name'=> $ivalue,
+                  );           
+
+               }
+           }
 
 
 
 
 
-		if (!isset($advancedsettings) || (sizeof($advancedsettings) == 1)) {
-			$default_class = "wcmamtx_one_time_save";
 
-		} else {
+       }
 
-			$default_class = "";
-		}
+
+
+
+
+        if (!isset($advancedsettings) || (sizeof($advancedsettings) == 1)) {
+         $default_class = "wcmamtx_one_time_save";
+
+        } else {
+
+         $default_class = "";
+        }
+
+    }
+
+    if ($current_tab == "wcmamtx_layout") {
+
+        $wcmamtx_layout = (array) get_option( 'wcmamtx_layout' );
+
+        if (array_key_exists(0, $wcmamtx_layout)) {
+
+            $default_class = "wcmamtx_one_time_save";
+
+        }
+
+    }
 
 		return $default_class;
 
@@ -1051,280 +1220,202 @@ if (!function_exists('wcmamtx_get_account_menu_item_classes')) {
 // **********************************************************************//
 
 if ( ! function_exists( 'wcmamtx_get_my_account_menu_plain_li' ) ) {
-	function wcmamtx_get_my_account_menu_plain_li() {
-		$user_info  = get_userdata( get_current_user_id() );
-		$user_roles = $user_info->roles;
+    function wcmamtx_get_my_account_menu_plain_li() {
+        $user_info  = get_userdata( get_current_user_id() );
+        $user_roles = $user_info->roles;
 
-		$out = '';
+        $out = '';
 
-		$wcmamtx_tabs   =  (array) get_option('wcmamtx_advanced_settings');
+        $wcmamtx_tabs   =  (array) get_option('wcmamtx_advanced_settings');
 
-		$items = wc_get_account_menu_items();
+        $items = wc_get_account_menu_items();
 
-		$core_fields    = 'dashboard,orders,downloads,edit-address,edit-account,customer-logout';
+        $core_fields    = 'dashboard,orders,downloads,edit-address,edit-account,customer-logout';
 
-		$core_fields_array =  array(
-			'dashboard'=>'dashboard',
-			'orders'=>'orders',
-			'downloads'=>'downloads',
-			'edit-address'=>'edit-address',
-			'edit-account'=>'edit-account',
-			'customer-logout'=>'customer-logout'
-		);
-
-
-
-
-
-		foreach ($items as $ikey=>$ivalue) {
-			if (!array_key_exists($ikey, $wcmamtx_tabs) && !array_key_exists($ikey, $core_fields_array) ) {
-
-				$match_index = 0;
-
-				foreach ($wcmamtx_tabs as $tkey=>$tvalue) {
-					if (isset($tvalue['endpoint_key']) && ($tvalue['endpoint_key'] == $ikey)) {
-						$match_index++;
-					}
-				}
-
-				if ($match_index == 0) {
-					$wcmamtx_tabs[$ikey] = array(
-						'show' => 'yes',
-						'third_party' => 'yes',
-						'endpoint_key' => $ikey,
-						'wcmamtx_type' => 'endpoint',
-						'parent'       => 'none',
-						'endpoint_name'=> $ivalue,
-					);   
-				}           
-
-			}
-		}
+        $core_fields_array =  array(
+            'dashboard'=>'dashboard',
+            'orders'=>'orders',
+            'downloads'=>'downloads',
+            'edit-address'=>'edit-address',
+            'edit-account'=>'edit-account',
+            'customer-logout'=>'customer-logout'
+        );
 
 
 
 
 
-		$plugin_options = get_option('wcmamtx_plugin_options');
 
-		$icon_position  = 'right';
-		$icon_extra_class = '';
+        if (count($wcmamtx_tabs) === 1 && empty(reset($wcmamtx_tabs))) {
+            $wcmamtx_tabs = $items;
+        }
 
-		if (!is_array($wcmamtx_tabs)) { 
-			$wcmamtx_tabs = $items;
-		}
+        foreach ($items as $ikey=>$ivalue) {
+            if (!array_key_exists($ikey, $wcmamtx_tabs) && !array_key_exists($ikey, $core_fields_array) ) {
 
-		if (!isset($wcmamtx_tabs) || (sizeof($wcmamtx_tabs) == 1)) {
-			$wcmamtx_tabs = $items;
-		}
+                $match_index = 0;
 
-		if (isset($plugin_options['icon_position']) && ($plugin_options['icon_position'] != '')) {
-			$icon_position = $plugin_options['icon_position'];
-		}
+                foreach ($wcmamtx_tabs as $tkey=>$tvalue) {
+                    if (isset($tvalue['endpoint_key']) && ($tvalue['endpoint_key'] == $ikey)) {
+                        $match_index++;
+                    }
+                }
 
-		if (isset($plugin_options['menu_position']) && ($plugin_options['menu_position'] != '')) {
-			$menu_position = $plugin_options['menu_position'];
-		}
+                if ($match_index == 0) {
+                    $wcmamtx_tabs[$ikey] = array(
+                        'show' => 'yes',
+                        'third_party' => 'yes',
+                        'endpoint_key' => $ikey,
+                        'wcmamtx_type' => 'endpoint',
+                        'parent'       => 'none',
+                        'endpoint_name'=> $ivalue,
+                    );   
+                }           
 
-
-
-		switch($icon_position) {
-			case "right":
-			$icon_extra_class = "wcmamtx_custom_right";
-			break;
-
-			case "left":
-			$icon_extra_class = "wcmamtx_custom_left";
-			break;
-
-			default:
-			$icon_extra_class = "wcmamtx_custom_right";
-			break;
-		}
-
-		$menu_position_extra_class = "";
-
-		if (isset($menu_position) && ($menu_position != '')) {
-			switch($menu_position) {
-				case "left":
-				$menu_position_extra_class = "wcmamtx_menu_left";
-				break;
-
-				case "right":
-				$menu_position_extra_class = "wcmamtx_menu_right";
-				break;
-
-				default:
-				$menu_position_extra_class = "";
-				break;
-			}
-		}
+            }
+        }
 
 
 
 
 
-		foreach ( $wcmamtx_tabs as $key => $value ) {
-			
-			if (isset($value['endpoint_name']) && ($value['endpoint_name'] != '')) {
-				$name = $value['endpoint_name'];
-			} else {
-				$name = $value;
-			}
+        $plugin_options = get_option('wcmamtx_plugin_options');
 
-			$should_show = 'yes';
+        $icon_position  = 'right';
+        $icon_extra_class = '';
 
+        if (!is_array($wcmamtx_tabs)) { 
+            $wcmamtx_tabs = $items;
+        }
 
-			if (isset($value['visibleto']) && ($value['visibleto'] != "all")) {
+        if (!isset($wcmamtx_tabs) || (sizeof($wcmamtx_tabs) == 1)) {
+            $wcmamtx_tabs = $items;
+        }
 
-				$allowedroles  = isset($value['roles']) ? $value['roles'] : "";
-                
-                $allowedusers  = isset($value['users']) ? $value['users'] : array();
+        if (isset($plugin_options['icon_position']) && ($plugin_options['icon_position'] != '')) {
+            $icon_position = $plugin_options['icon_position'];
+        }
 
-
-				$is_visible = wcmamtx_check_role_visibility($allowedroles,$value['visibleto'],$allowedusers);
-
-			} else {
-
-				$is_visible = 'yes';
-			}
+        if (isset($plugin_options['menu_position']) && ($plugin_options['menu_position'] != '')) {
+            $menu_position = $plugin_options['menu_position'];
+        }
 
 
 
-			if (isset($value['show']) && ($value['show'] == "no")) {
+        switch($icon_position) {
+            case "right":
+            $icon_extra_class = " wcmamtx_custom_right";
+            break;
 
-				$should_show = 'no';
+            case "left":
+            $icon_extra_class = " wcmamtx_custom_left";
+            break;
 
-			}
+            default:
+            $icon_extra_class = " wcmamtx_custom_right";
+            break;
+        }
+
+        $menu_position_extra_class = "";
+
+        if (isset($menu_position) && ($menu_position != '')) {
+            switch($menu_position) {
+                case "left":
+                $menu_position_extra_class = "wcmamtx_menu_left";
+                break;
+
+                case "right":
+                $menu_position_extra_class = "wcmamtx_menu_right";
+                break;
+
+                default:
+                $menu_position_extra_class = "";
+                break;
+            }
+        }
 
 
-			if (isset($value['class']) && ($value['class'] != '')) {
-				$extraclass = str_replace(',',' ', $value['class']);
-			} else {
-				$extraclass = '';
-			}
-
-			if (isset($value['endpoint_key']) && ($value['endpoint_key'] != '')) {
-				$key = $value['endpoint_key'];
-			}
-
-			if (isset($value['parent']) && ($value['parent'] != '')) {
-				$parent = $value['parent'];
-			} else {
-				$parent = 'none';
-			}
+        
 
 
-
-			$icon_source       = "default";
-
-			$hide_myaccount_widget = isset($value['hide_myaccount_widget']) && ($value['hide_myaccount_widget'] == "01") ? "enabled" : "disabled";
-
-            if (isset($hide_myaccount_widget) && ($hide_myaccount_widget == "enabled")) {
-                
-                 $should_show = 'no';
-                
+        foreach ( $wcmamtx_tabs as $key => $value ) {
+            
+            if (isset($value['endpoint_name']) && ($value['endpoint_name'] != '')) {
+                $name = $value['endpoint_name'];
+            } else {
+                $name = $value;
             }
 
-			if (($should_show == "yes") && ($is_visible == "yes")) {
-
-				if (isset($value['wcmamtx_type']) && ($value['wcmamtx_type'] == "group")) {
 
 
-					$openclose = 'closed';
-
-					$out .='<li class="wcmamtx_group2_sub menu-item menu-item-type-post_type menu-item-object-page '.$extraclass.' closed"><a href="#" class="wcmamtx_group_sub menu-link">'.esc_html( $name ).'&emsp;<i class="fa fa-chevron-down wcmamtx_group_fa"></i></a>';
+            $should_show = 'yes';
 
 
+            if (isset($value['visibleto']) && ($value['visibleto'] != "all")) {
 
+                $allowedroles  = isset($value['roles']) ? $value['roles'] : "";
 
-					
-					$m_icon_extra_class = '';
+                $allowedusers  = isset($value['users']) ? $value['users'] : array();
 
+                $is_visible    = wcmamtx_check_role_visibility($allowedroles,$value['visibleto'],$allowedusers);
 
+            } else {
 
-
-
-
-					$all_keys  = get_option('wcmamtx_advanced_settings'); 
-					$plugin_options = get_option('wcmamtx_plugin_options'); 
-
-					$matches   = wcmamtx_get_child_li($all_keys, $key); 
+                $is_visible = 'yes';
+            }
 
 
 
 
-					if (sizeof($matches) > 0) { 
-						$out .='<ul class="wcmamtx_sub_level" style="display:none;">';
-
-						foreach ($matches as $mkey=>$mvalue) {
-
-							$mkey  = isset($mvalue['endpoint_key']) ? $mvalue['endpoint_key'] : $mkey;
-
-							if (isset($mvalue['endpoint_name']) && ($mvalue['endpoint_name'] != '')) {
-								$liname = $mvalue['endpoint_name'];
-							} else {
-								$liname = $mvalue;
-							}
-
-							$should_show = 'yes';
 
 
+            if (isset($value['show']) && ($value['show'] == "no")) {
 
-							if (isset($mvalue['show']) && ($mvalue['show'] == "no")) {
+                $should_show = 'no';
 
-								$should_show = 'no';
-
-							}
-
-							if (isset($mvalue['visibleto']) && ($mvalue['visibleto'] != "all")) {
-
-								$allowedroles  = isset($mvalue['roles']) ? $mvalue['roles'] : "";
-								$allowedusers  = isset($mvalue['users']) ? $mvalue['users'] : array();
-
-								$is_visible = wcmamtx_check_role_visibility($allowedroles,$mvalue['visibleto'],$allowedusers);
-
-							} else {
-
-								$is_visible = 'yes';
-							}
-
-							$icon_source_child       = "default";
-
-							if (isset($mvalue['class']) && ($mvalue['class'] != '')) {
-								$mextraclass = str_replace(',',' ', $mvalue['class']);
-							} else {
-								$mextraclass = '';
-							}
-
-
-							if (($should_show == "yes") && ($is_visible == "yes")) {
-
-								$out .= '<li class="menu-item menu-item-type-post_type menu-item-object-page"><a class="menu-link sub-menu-link" href="' . wcmamtx_get_account_endpoint_url( $mkey ) . '"><span>' . esc_html( $liname ) . '</span></a></li>';
-							}
-						}
-						$out .='</ul>';
-					} 
-
-					$out .='</li>';
+            }
 
 
 
 
-				} else {
+            if (isset($value['class']) && ($value['class'] != '')) {
+                $extraclass = str_replace(',',' ', $value['class']);
+            } else {
+                $extraclass = '';
+            }
 
-					if ($parent == "none") {
-						$out .= '<li class="menu-item menu-item-type-post_type menu-item-object-page"><a class="menu-link" href="' . wcmamtx_get_account_endpoint_url( $key ) . '"><span>' . esc_html( $name ) . '</span></a></li>';
-					}
+            $key = isset($value['endpoint_key']) ? $value['endpoint_key'] : $key;
 
-				} 
-			}
-		}
 
-		$out .='';
 
-		return $out;
-	}
+            if (isset($value['parent']) && ($value['parent'] != '')) {
+                $parent = $value['parent'];
+            } else {
+                $parent = 'none';
+            }
+
+
+           $wcmamtx_type = isset($value['wcmamtx_type']) ? $value['wcmamtx_type'] : "endpoint";
+
+
+            if (($should_show == "yes") && ($is_visible == "yes")) {
+
+                if (isset($wcmamtx_type) && ($wcmamtx_type != "group")) {
+
+
+                    $out .= '<li class="menu-item menu-item-type-post_type menu-item-object-page"><a class="menu-link" href="'.wcmamtx_get_account_endpoint_url( $key ) .'"><span>' . esc_html( $name ) . '</span></a></li>';
+
+
+
+                }
+
+            }
+        }
+
+        $out .='';
+
+        return $out;
+    }
 }
 
 

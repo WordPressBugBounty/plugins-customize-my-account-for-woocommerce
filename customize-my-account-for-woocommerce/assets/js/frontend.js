@@ -227,6 +227,13 @@ var $vas = jQuery.noConflict();
                     $vas("li#wp-admin-bar-my-account").find("img.avatar.photo").attr("srcset",default_pic);
                     $vas("li#wp-admin-bar-user-info").find("img.avatar.photo").attr("srcset",default_pic);
 
+
+                    $vas("li.wcmamtx_menu_logged_in").find("img.avatar.photo").attr("src",default_pic);
+                    $vas("li.wcmamtx_menu_logged_in").find("img.avatar.photo").attr("src",default_pic);
+
+                    $vas("li.wcmamtx_menu_logged_in").find("img.avatar.photo").attr("srcset",default_pic);
+                    $vas("li.wcmamtx_menu_logged_in").find("img.avatar.photo").attr("srcset",default_pic);
+
                     
                     
                     $vas('#wcmamtx_upload_response').hide(200);
@@ -347,6 +354,13 @@ var $vas = jQuery.noConflict();
 
                     $vas("li#wp-admin-bar-my-account").find("img.avatar.photo").attr("srcset",sucess_data.url);
                     $vas("li#wp-admin-bar-user-info").find("img.avatar.photo").attr("srcset",sucess_data.url);
+
+
+                     $vas("li.wcmamtx_menu_logged_in").find("img.avatar.photo").attr("src",sucess_data.url);
+                    $vas("li.wcmamtx_menu_logged_in").find("img.avatar.photo").attr("src",sucess_data.url);
+
+                    $vas("li.wcmamtx_menu_logged_in").find("img.avatar.photo").attr("srcset",sucess_data.url);
+                    $vas("li.wcmamtx_menu_logged_in").find("img.avatar.photo").attr("srcset",sucess_data.url);
 
                     
                     
@@ -481,34 +495,4 @@ jQuery(function($){
 
     });
 
-});
-
-
-
-
-// Toggle the visibility of a dropdown menu
-const toggleDropdown = (dropdown, menu, isOpen) => {
-  dropdown.classList.toggle("open", isOpen);
-  menu.style.height = isOpen ? `${menu.scrollHeight}px` : 0;
-};
-
-// Close all open dropdowns
-const closeAllDropdowns = () => {
-  document.querySelectorAll(".dropdown-container.open").forEach((openDropdown) => {
-    toggleDropdown(openDropdown, openDropdown.querySelector(".dropdown-menu"), false);
-  });
-};
-
-// Attach click event to all dropdown toggles
-document.querySelectorAll(".dropdown-toggle").forEach((dropdownToggle) => {
-  dropdownToggle.addEventListener("click", (e) => {
-    e.preventDefault();
-
-    const dropdown = dropdownToggle.closest(".dropdown-container");
-    const menu = dropdown.querySelector(".dropdown-menu");
-    const isOpen = dropdown.classList.contains("open");
-
-    closeAllDropdowns(); // Close all open dropdowns
-    toggleDropdown(dropdown, menu, !isOpen); // Toggle current dropdown visibility
-  });
 });

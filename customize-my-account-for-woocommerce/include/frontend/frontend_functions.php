@@ -57,10 +57,7 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
         add_action('the_content', array( $this, 'wcmamtx_modify_post_content' ));
 
 
-
-       add_filter('woodmart_override_heading_my_account_menu', array( $this, 'wp_nav_menu_items_function' ), 10, 1 );
-
-       add_action( 'wp_nav_menu_items', array( $this, 'wcmamtx_add_menu_items' ), 10, 2 );
+       
 
        add_shortcode('sysbasics_dashboard_menu', array( $this, 'sysbasics_dashboard_menu_function' ));
 
@@ -68,9 +65,175 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
 
        add_action('init',array( $this, 'wcmamtx_google_callback' ));
 
-       
+       add_action( 'wp_nav_menu_items', array( $this, 'wcmamtx_add_menu_items' ), 10, 2 );
+
+        add_filter('wp_nav_menu_items', array( $this, 'wcmamtx_optimize_avatar_into_logged_in_li' ), 20, 2);
 
     }
+
+        public function wcmamtx_add_menu_items( $items, $args ) {
+
+        $frontend_url = get_permalink(get_option('woocommerce_myaccount_page_id'));
+
+        $flush_cache = get_option('wcmamtx_flush_rewrite_cache_required',"no");
+
+        if ($flush_cache == "yes") {
+            add_action( 'wp_loaded', array($this,'wcmamtx_flush_rewrite_rules') );
+
+            update_option('wcmamtx_flush_rewrite_cache_required',"no");
+        }
+
+        $wcmamtx_layout = (array) get_option('wcmamtx_layout');
+
+        $nav_header_widget_text = isset($wcmamtx_layout['nav_header_widget_text']) ? $wcmamtx_layout['nav_header_widget_text'] : esc_html__('My Account','customize-my-account-for-woocommerce-pro');
+
+
+        
+
+        $widget_show_enabled    = isset($wcmamtx_layout['nav_header_widget']) ? $wcmamtx_layout['nav_header_widget'] : "no";
+
+        if ($widget_show_enabled != "yes") {
+            return $items;
+        }
+
+        $navigationwidget_layout_override = isset($wcmamtx_layout['navigationwidget_layout_override']) ? $wcmamtx_layout['navigationwidget_layout_override'] : "02";
+
+
+        if (isset($navigationwidget_layout_override) && ($navigationwidget_layout_override == 02)) { 
+            return $items;
+        }
+
+        $widget_show_location    = isset($wcmamtx_layout['widget_menu_location']) ? $wcmamtx_layout['widget_menu_location'] : "primary";
+
+        if( $args->theme_location != $widget_show_location ) {
+            return $items;
+        }
+
+       
+        if ( !is_user_logged_in() ) {
+
+            $show_only_logged_in    = isset($wcmamtx_layout['show_only_logged_in']) ? $wcmamtx_layout['show_only_logged_in'] : "no";
+
+            if ($show_only_logged_in == "yes") {
+                return $items;
+            }
+
+
+            $nav_header_widget_text_logout = isset($wcmamtx_layout['nav_header_widget_text_logout']) ? $wcmamtx_layout['nav_header_widget_text_logout'] : esc_html__('Log In','customize-my-account-for-woocommerce-pro');
+
+
+            $Menu_link = '<li class="menu-item menu-item-type-post_type menu-item-object-page wcmamtx_menu wcmamtx_menu_logged_out"><a class="menu-link nav-top-link" aria-expanded="true" aria-haspopup="menu"  href="'.$frontend_url.'">'.$nav_header_widget_text_logout.'</a>';
+
+            $items .= $Menu_link;
+
+            return $items;
+        
+        }
+
+
+
+        
+
+        $Menu_link  = '<li style="" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item current_page_item current-menu-ancestor current-menu-parent current_page_parent current_page_ancestor menu-item-has-children fusion-dropdown-menu menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children wcmamtx_menu wcmamtx_menu_logged_in" style=""><a class="menu-link" href="'.$frontend_url.'">'.$nav_header_widget_text.'<i class="fa fa-chevron-down wcmamtx_nav_chevron"></i></a>';
+
+        $Menu_link .= '<ul class="sub-menu" style="">';
+
+        $Menu_link .= wcmamtx_get_my_account_menu_plain_li();
+
+        $Menu_link .= '</ul></li>';
+
+        
+
+        $items .= $Menu_link;
+
+        return $items;
+    }
+
+
+
+
+
+  public function wcmamtx_optimize_avatar_into_logged_in_li($items, $args) {
+
+    if (!is_user_logged_in()) {
+        return $items;
+    }
+
+    // Only act if the logged-in menu item was actually added by the plugin
+    if (strpos($items, 'wcmamtx_menu_logged_in') === false) {
+        return $items;
+    }
+
+    $current_user      = wp_get_current_user();
+    $display_name      = esc_html($current_user->display_name);
+    $frontend_url      = esc_url(get_permalink(get_option('woocommerce_myaccount_page_id')));
+
+    $avatar_size       = "38";
+
+    $user_id     = get_current_user_id();
+    $profileuser = get_userdata( $user_id );
+
+    $nav_widget = true;
+
+    $atts = array();
+
+    $avatar_html       = wcmamtx_get_avatar_default($profileuser,$avatar_size,$atts,$nav_widget);
+
+    $wcmamtx_layout        = (array) get_option('wcmamtx_layout');
+    $nav_header_widget_text = isset($wcmamtx_layout['nav_header_widget_text'])
+    ? esc_html($wcmamtx_layout['nav_header_widget_text'])
+    : esc_html__('My Account', 'customize-my-account-for-woocommerce-pro');
+
+    $navwidget_disable_avatar = isset($wcmamtx_layout['navwidget_disable_avatar'])
+    ? esc_html($wcmamtx_layout['navwidget_disable_avatar'])
+    : "no";
+
+    $navwidget_disable_username = isset($wcmamtx_layout['navwidget_disable_username'])
+    ? esc_html($wcmamtx_layout['navwidget_disable_username'])
+    : "no";
+
+    $avatar_html_final = '';
+
+    $display_name_final = '';
+
+    if ($navwidget_disable_avatar != "yes") {
+        $avatar_html_final = '<span class="wcmamtx-nav-avatar-wrap">' . $avatar_html . '</span>';
+    }
+    
+
+    if ($navwidget_disable_username != "yes") {
+        $display_name_final = '<span class="wcmamtx-nav-name">' . $display_name . '</span>';
+    }
+    
+
+    
+
+    // Build the new trigger anchor (replaces the plain <a class="menu-link" href="...">TEXT<i ...></i></a>)
+    $new_trigger = '<a class="menu-link wcmamtx-nav-trigger" href="' . $frontend_url . '" aria-haspopup="true" aria-expanded="false">
+    ' . $avatar_html_final . '
+    <span class="wcmamtx-nav-user-info">
+    <span class="wcmamtx-nav-label">' . $nav_header_widget_text . '</span>
+    ' . $display_name_final . '
+    </span>
+    <span class="wcmamtx-nav-chevron" aria-hidden="true">
+    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    </span>
+    </a>';
+
+    // Use a regex to replace the existing anchor inside the wcmamtx_menu_logged_in li
+    // The plugin renders: <li ...wcmamtx_menu_logged_in...><a class="menu-link" href="...">TEXT<i ...></i></a><ul...>
+    $items = preg_replace_callback(
+        '/(<li[^>]*wcmamtx_menu_logged_in[^>]*>)(<a[^>]*class="menu-link"[^>]*>.*?<\/a>)/s',
+        function($m) use ($new_trigger) {
+            return $m[1] . $new_trigger;
+        },
+        $items
+    );
+
+    return $items;
+}
 
 
 
@@ -166,78 +329,10 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
 
     }
 
-    public function wcmamtx_add_menu_items( $items, $args ) {
-
-        $flush_cache = get_option('wcmamtx_flush_rewrite_cache_required',"no");
-
-        if ($flush_cache == "yes") {
-            add_action( 'wp_loaded', array($this,'wcmamtx_flush_rewrite_rules') );
-
-            update_option('wcmamtx_flush_rewrite_cache_required',"no");
-        }
-
-        $frontend_url = get_permalink(get_option('woocommerce_myaccount_page_id'));
-
-        $wcmamtx_plugin_options = (array) get_option('wcmamtx_plugin_options');
-
-        $nav_header_widget_text = isset($wcmamtx_plugin_options['nav_header_widget_text']) ? $wcmamtx_plugin_options['nav_header_widget_text'] : esc_html__('My Account','customize-my-account-for-woocommerce');
-
-        $nav_header_widget_text = apply_filters('wcmamtx_my_account_nav_widget_text',$nav_header_widget_text);
-
-
-        
-
-        $widget_show_enabled    = isset($wcmamtx_plugin_options['nav_header_widget']) ? $wcmamtx_plugin_options['nav_header_widget'] : "no";
-
-        if ($widget_show_enabled != "yes") {
-            return $items;
-        }
-
-        $widget_show_location    = isset($wcmamtx_plugin_options['widget_menu_location']) ? $wcmamtx_plugin_options['widget_menu_location'] : "primary";
-
-        if( $args->theme_location != $widget_show_location ) {
-            return $items;
-        }
-
-       
-        if ( !is_user_logged_in() ) {
-
-            $show_only_logged_in    = isset($wcmamtx_plugin_options['show_only_logged_in']) ? $wcmamtx_plugin_options['show_only_logged_in'] : "no";
-
-            if ($show_only_logged_in == "yes") {
-                return $items;
-            }
-
-
-            $nav_header_widget_text_logout = isset($wcmamtx_plugin_options['nav_header_widget_text_logout']) ? $wcmamtx_plugin_options['nav_header_widget_text_logout'] : esc_html__('Log In','customize-my-account-for-woocommerce');
-
-
-            $Menu_link = '<li class="menu-item menu-item-type-post_type menu-item-object-page wcmamtx_menu wcmamtx_menu_logged_out"><a class="menu-link nav-top-link" aria-expanded="true" aria-haspopup="menu"  href="'.$frontend_url.'">'.$nav_header_widget_text_logout.'</a>';
-
-            $items .= $Menu_link;
-
-            return $items;
-        
-        } 
 
 
 
-        
 
-        $Menu_link  = '<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children"><a class="menu-link" href="'.$frontend_url.'">'.$nav_header_widget_text.'<i class="fa fa-chevron-down wcmamtx_nav_chevron"></i></a>';
-
-        $Menu_link .= '<ul class="sub-menu nav-dropdown nav-dropdown-default" style="">';
-
-        $Menu_link .= wcmamtx_get_my_account_menu_plain_li();
-
-        $Menu_link .= '</ul></li>';
-
-
-
-        $items .= $Menu_link;
-
-        return $items;
-    }
     
 
 
@@ -757,14 +852,14 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
             
         }
 
-        if ( is_account_page() ) {
+        
 
             $version = wcmamtx_get_woo_version_number_free();
 
             wp_enqueue_style( 'wcmamtx-frontend-unique', ''.wcmamtx_PLUGIN_URL.'assets/css/frontend-unique.css' );
             wp_enqueue_script( 'wcmamtx-frontend-unique', ''.wcmamtx_PLUGIN_URL.'assets/js/frontend-unique.js',array('jquery'),$version );
 
-        }
+        
 		
    
 	}

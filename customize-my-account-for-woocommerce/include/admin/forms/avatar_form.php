@@ -8,13 +8,13 @@ if (array_key_exists(0, $avatar_settings)) {
     $avatar_settings['intro_text_hello'] = "yes";
     $avatar_settings['disable_avatar'] = "yes";
     $avatar_settings['custom_avatar_content'] = "yes";
-    $avatar_settings['avatar_size'] = "200";
+    $avatar_settings['avatar_size'] = "150";
     $avatar_settings['min_height']  = "150";
     $avatar_settings['min_width']   = "150";
     $avatar_settings['webcam_capture'] = "yes";
 
-    $avatar_settings['max_height']  = "200";
-    $avatar_settings['max_width']   = "200";
+    $avatar_settings['max_height']  = "150";
+    $avatar_settings['max_width']   = "150";
 
 }
 ?> 
@@ -25,7 +25,7 @@ if (array_key_exists(0, $avatar_settings)) {
 		<td><label><?php echo esc_html__('Shortcode','customize-my-account-for-woocommerce'); ?></label> <br />
 		</td>
 		<td>
-			<code>[sysbasics_user_avatar size="200" min_height="150" min_width="150"]</code>
+			<code>[sysbasics_user_avatar size="200"]</code>
 			<p><?php echo esc_html__('Use this shortcode to insert this user avatar outside my account page and woocommerce','customize-my-account-for-woocommerce'); ?></p>
 		</td>
 			
