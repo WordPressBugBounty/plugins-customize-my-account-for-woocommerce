@@ -1430,7 +1430,7 @@ if ( ! function_exists( 'wcmamtx_get_my_account_menu_plain_li' ) ) {
 
                   $wcmamtx_type = isset($gtvalue['wcmamtx_type']) ? $gtvalue['wcmamtx_type'] : "endpoint";
 
-                  if (($third_party_check == "no") && ($wcmamtx_type == "endpoint")) {
+                  if (($third_party_check == "no") && ($wcmamtx_type == "endpoint") && (strpos($gtkey, 'custom-') === false)) {
                      unset($wcmamtx_tabs[$gtkey]);
                   }
             }
