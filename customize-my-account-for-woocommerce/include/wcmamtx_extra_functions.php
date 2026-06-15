@@ -72,6 +72,108 @@ if (!function_exists('wcmamtx_get_clean_design_theme_array')) {
 }
 
 
+if (!function_exists('wcmamtx_get_nav_widget_default_array')) {
+
+
+    function wcmamtx_get_nav_widget_default_array() {
+
+         $supported_themes = array(
+        'Astra',
+        'Astra Child',
+        'GeneratePress',
+        'GeneratePress Child',
+        'Hello Elementor',
+        'Hello Elementor Child',
+        'Divi',
+        'Divi Child',
+        'Kadence',
+        'Kadence Child',
+        'Avada',
+        'Avada Child',
+        );
+
+         return $supported_themes;
+
+    }
+
+}
+
+
+
+if (!function_exists('wcmamtx_get_nav_widget_array_theme')) {
+
+
+    function wcmamtx_get_nav_widget_array_theme() {
+
+        //echo wp_get_theme();
+
+         $supported_themes = wcmamtx_get_nav_widget_default_array();
+
+    return in_array((string) wp_get_theme(), $supported_themes, true)
+        ? 'yes'
+        : 'no';
+    }
+
+}
+
+
+if (!function_exists('wcmamtx_get_nav_widget_array_theme2')) {
+
+
+    function wcmamtx_get_nav_widget_array_theme2() {
+
+        //echo wp_get_theme();
+
+         $supported_themes = wcmamtx_get_nav_widget_default_array();
+
+    return in_array((string) wp_get_theme(), $supported_themes, true)
+        ? '01'
+        : '02';
+    }
+
+}
+
+
+if (!function_exists('wcmamtx_get_nav_widget_default_location_menu')) {
+
+
+    function wcmamtx_get_nav_widget_default_location_menu() {
+
+         $default_location = "primary";
+
+         $menu_locations = get_nav_menu_locations();
+
+         if (!empty($menu_locations)) {
+
+           $default_location = array_key_first($menu_locations); 
+
+         }
+
+         return $default_location;
+
+    }
+
+}
+
+
+if (!function_exists('wcmamtx_get_nav_widget_array_show_only_loggedin')) {
+
+
+    function wcmamtx_get_nav_widget_array_show_only_loggedin() {
+
+        $wcmamtx_layout = (array) get_option( 'wcmamtx_layout' );
+
+        if (array_key_exists(0, $wcmamtx_layout)) {
+            return "yes";
+        }
+
+         return "no";
+
+    }
+
+}
+
+
 if (!function_exists('wcmamtx_get_user_ip')) {
 
 
@@ -1430,7 +1532,7 @@ if ( ! function_exists( 'wcmamtx_get_my_account_menu_plain_li' ) ) {
 
                   $wcmamtx_type = isset($gtvalue['wcmamtx_type']) ? $gtvalue['wcmamtx_type'] : "endpoint";
 
-                  if (($third_party_check == "no") && ($wcmamtx_type == "endpoint") && (strpos($gtkey, 'custom-') === false)) {
+                  if (($third_party_check == "no") && ($wcmamtx_type == "endpoint") && (strpos($gtkey, 'custom-endpoint-') === false)) {
                      unset($wcmamtx_tabs[$gtkey]);
                   }
             }

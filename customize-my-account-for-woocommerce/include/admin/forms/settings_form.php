@@ -17,8 +17,6 @@ if ((isset($new_entries)) && (!empty($new_entries))) {
             $third_party_goahead = wcmamtx_third_party_goahead_check($itkey);
 
             if ($third_party_goahead == "yes") {
-
-
                 $tabs[$itkey] = $itvalue;
 
                 if (array_key_exists($itkey, $advancedsettings)) {
@@ -29,6 +27,8 @@ if ((isset($new_entries)) && (!empty($new_entries))) {
 
                 
             }
+
+            
             
         }
     }
@@ -89,6 +89,7 @@ if ((sizeof($advancedsettings) != 1)) {
 }
       
 
+
                     $core_fields_array_filter =  array(
                         'dashboard'=>'dashboard',
                         'orders'=>'orders',
@@ -107,7 +108,7 @@ if ((sizeof($advancedsettings) != 1)) {
 
                   $wcmamtx_type = isset($gtvalue['wcmamtx_type']) ? $gtvalue['wcmamtx_type'] : "endpoint";
 
-                  if (($third_party_check == "no") && ($wcmamtx_type == "endpoint") && (strpos($gtkey, 'custom-') === false)) {
+                  if (($third_party_check == "no") && ($wcmamtx_type == "endpoint") && (strpos($gtkey, 'custom-endpoint-') === false)) {
                      unset($advancedsettings[$gtkey]);
                   }
             }
@@ -148,8 +149,6 @@ if ((sizeof($advancedsettings) != 1)) {
             <?php
                 $rownum = 0;
                 foreach ($advancedsettings as $key=>$value) {
-
-
 
                     
 

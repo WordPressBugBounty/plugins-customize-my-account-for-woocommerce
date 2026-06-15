@@ -233,20 +233,20 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
 
         
 
-        $widget_show_enabled    = isset($wcmamtx_layout['nav_header_widget']) ? $wcmamtx_layout['nav_header_widget'] : "no";
+        $widget_show_enabled    = isset($wcmamtx_layout['nav_header_widget']) ? $wcmamtx_layout['nav_header_widget'] : wcmamtx_get_nav_widget_array_theme();
 
         if ($widget_show_enabled != "yes") {
             return $items;
         }
 
-        $navigationwidget_layout_override = isset($wcmamtx_layout['navigationwidget_layout_override']) ? $wcmamtx_layout['navigationwidget_layout_override'] : "02";
+        $navigationwidget_layout_override = isset($wcmamtx_layout['navigationwidget_layout_override']) ? $wcmamtx_layout['navigationwidget_layout_override'] : wcmamtx_get_nav_widget_array_theme2();
 
 
         if (isset($navigationwidget_layout_override) && ($navigationwidget_layout_override == 02)) { 
             return $items;
         }
 
-        $widget_show_location    = isset($wcmamtx_layout['widget_menu_location']) ? $wcmamtx_layout['widget_menu_location'] : "primary";
+        $widget_show_location    = isset($wcmamtx_layout['widget_menu_location']) ? $wcmamtx_layout['widget_menu_location'] : wcmamtx_get_nav_widget_default_location_menu();
 
         if( $args->theme_location != $widget_show_location ) {
             return $items;
@@ -255,7 +255,7 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
        
         if ( !is_user_logged_in() ) {
 
-            $show_only_logged_in    = isset($wcmamtx_layout['show_only_logged_in']) ? $wcmamtx_layout['show_only_logged_in'] : "no";
+            $show_only_logged_in    = isset($wcmamtx_layout['show_only_logged_in']) ? $wcmamtx_layout['show_only_logged_in'] :  wcmamtx_get_nav_widget_array_show_only_loggedin();
 
             if ($show_only_logged_in == "yes") {
                 return $items;

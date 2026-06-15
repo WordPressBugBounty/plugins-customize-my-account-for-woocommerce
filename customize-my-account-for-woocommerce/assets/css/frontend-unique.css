@@ -542,3 +542,13 @@ li.wcmamtx_menu_logged_in > ul.sub-menu li a:hover {
     font-size: 12px;
     border-radius: 10px;
 }
+
+.theme-hello-elementor .site-navigation ul.menu li.menu-item-has-children::after,
+.theme-Divi #top-menu .menu-item-has-children>a:first-child:after {
+    display:none;
+}
+
+.theme-Avada li.wcmamtx_menu_logged_in a.menu-link.wcmamtx-nav-trigger {
+    border-top-width: 0 !important;
+        border: 0px !important;
+}

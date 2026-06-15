@@ -18,6 +18,8 @@
 
     		$menu_locations = get_nav_menu_locations();
 
+            //$firstKey = array_key_first($menu_locations); 
+
 
 
     		?>
