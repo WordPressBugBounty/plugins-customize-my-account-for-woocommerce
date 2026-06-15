@@ -101,19 +101,23 @@ if ((sizeof($advancedsettings) != 1)) {
                     );
 
 
-        foreach($advancedsettings as $gtkey=>$gtvalue) {
+                    if ((sizeof($advancedsettings) != 1)) {
 
-            if (!array_key_exists($gtkey, $core_fields_array_filter)) {
-                  $third_party_check = wcmamtx_third_party_goahead_check($gtkey);
+                        foreach($advancedsettings as $gtkey=>$gtvalue) {
 
-                  $wcmamtx_type = isset($gtvalue['wcmamtx_type']) ? $gtvalue['wcmamtx_type'] : "endpoint";
+                            if (!array_key_exists($gtkey, $core_fields_array_filter)) {
+                              $third_party_check = wcmamtx_third_party_goahead_check($gtkey);
 
-                  if (($third_party_check == "no") && ($wcmamtx_type == "endpoint") && (strpos($gtkey, 'custom-endpoint-') === false)) {
-                     unset($advancedsettings[$gtkey]);
-                  }
-            }
+                              $wcmamtx_type = isset($gtvalue['wcmamtx_type']) ? $gtvalue['wcmamtx_type'] : "endpoint";
 
-        }
+                              if (($third_party_check == "no") && ($wcmamtx_type == "endpoint") && (strpos($gtkey, 'custom-endpoint-') === false)) {
+                               unset($advancedsettings[$gtkey]);
+                           }
+                       }
+
+                   }
+
+                   }
      
 
       if (!isset($advancedsettings) || (sizeof($advancedsettings) == 1)) {
