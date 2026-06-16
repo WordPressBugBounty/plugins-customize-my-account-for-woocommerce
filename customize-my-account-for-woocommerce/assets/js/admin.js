@@ -748,40 +748,7 @@ $var( function() {
 
     
 
-    $var('.wcmamtx_userselect').select2({
 
-        ajax: {
-                url: wcmamtxadmin.ajax_url, // AJAX URL is predefined in WordPress admin
-                dataType: 'json',
-                delay: 250, // delay in ms while typing when to perform a AJAX search
-                data: function (params) {
-                    return {
-                        q: params.term, // search query
-                        action: 'wcmamtxadmin_get_users_ajax' // AJAX action for admin-ajax.php
-                    };
-                },
-                processResults: function( data ) {
-                    var options = [];
-                    if ( data ) {
-
-                    
-
-                    // data is the array of arrays, and each of them contains ID and the Label of the option
-                    $var.each( data, function( index, text ) { // do not forget that "index" is just auto incremented value
-                        options.push( { id: text[0], text: text[1]  } );
-                    });
-
-                }
-                return {
-                    results: options
-                };
-            },
-            cache: true
-        },
-        minimumInputLength: 2 ,
-        minimumResultsForSearch: -1,
-        width: "300px"// the minimum of symbols to input before perform a search
-    });
 
 
     var icons = [  { icon: 'fa fa-search' }, 

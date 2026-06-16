@@ -418,8 +418,7 @@ if (preg_match('/\b'.$key.'\b/', $core_fields ))  {
                             <option value="specific_exclude" <?php if ((isset($value['visibleto'])) && ($value['visibleto'] == "specific_exclude")) { echo "selected"; } ?>><?php echo esc_html__('All roles except specified','customize-my-account-for-woocommerce'); ?></option>
                             <option value="specific" <?php if ((isset($value['visibleto'])) && ($value['visibleto'] == "specific")) { echo "selected"; } ?>><?php echo esc_html__('Only specified roles','customize-my-account-for-woocommerce'); ?></option>
 
-                            <option value="specific_exclude_user" <?php if ((isset($value['visibleto'])) && ($value['visibleto'] == "specific_exclude_user")) { echo "selected"; } ?>><?php echo esc_html__('All users except specified','customize-my-account-for-woocommerce'); ?></option>
-                            <option value="specific_user" <?php if ((isset($value['visibleto'])) && ($value['visibleto'] == "specific_user")) { echo "selected"; } ?>><?php echo esc_html__('Only specified users','customize-my-account-for-woocommerce'); ?></option>
+                            
                         </select>
                
                     </td>
@@ -460,21 +459,7 @@ if (preg_match('/\b'.$key.'\b/', $core_fields ))  {
 
                 ?>
               
-                <tr style="<?php if ((isset($value['visibleto'])) && (($value['visibleto'] == "specific_exclude_user") || ($value['visibleto'] == "specific_user"))) { echo "display:table-row;"; } else { echo "display:none;"; } ?>" class="wcmamtxusers_<?php echo $key; ?>">
-                    <td>
-                        <label class="wcmamtx_roles wcmamtx_accordion_label"><?php echo esc_html__('Select users','customize-my-account-for-woocommerce'); ?></label>
-                    </td>
-                    <td>
-                        <select data-placeholder="<?php echo esc_html__('Choose Users','customize-my-account-for-woocommerce'); ?>" name="wcmamtx_advanced_settings[<?php echo $key; ?>][users][]" class="wcmamtx_userselect" multiple>
-                            <?php foreach ($chosenusers as $ukey => $uvalue) { 
-                                $user = get_user_by( 'id', $uvalue );
 
-                                ?>
-                                <option value="<?php echo $uvalue; ?>" selected><?php echo $user->user_login; ?></option>
-                            <?php } ?>
-                        </select>
-                    </td>
-                </tr>
 
 
             <?php if (($wcmamtx_type == 'endpoint') && (!preg_match('/\b'.$key.'\b/', $exclude_content_core_fields )) && (!isset($third_party))) { ?>

@@ -3,15 +3,15 @@
 
 $wcmamtx_layout = (array) get_option( 'wcmamtx_layout' );
 
-if (array_key_exists(0, $wcmamtx_layout)) {
-    $wcmamtx_layout['formlogin_layout_override'] = "01";
 
-    $wcmamtx_layout['navigationwidget_layout_override'] = "01";
+if (array_key_exists(0, $wcmamtx_layout)) {
+    $wcmamtx_layout['formlogin_layout_override'] = "02";
+
+    $wcmamtx_layout['navigationwidget_layout_override'] = wcmamtx_get_nav_widget_array_theme2();
     
-    $wcmamtx_layout['nav_header_widget'] = "yes";
+    $wcmamtx_layout['nav_header_widget'] = wcmamtx_get_nav_widget_array_theme();
     
 }
-
 
 
 

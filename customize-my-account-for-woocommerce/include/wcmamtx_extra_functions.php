@@ -210,7 +210,7 @@ if (!function_exists('wcmamtx_get_nav_widget_array_show_only_loggedin')) {
             ? 'no'
             : 'yes';
 
-            return "yes";
+            return "no";
 
 
         }

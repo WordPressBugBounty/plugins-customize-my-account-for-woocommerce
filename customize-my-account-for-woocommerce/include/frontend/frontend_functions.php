@@ -47,9 +47,9 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
      add_action( 'wp_enqueue_scripts', array( $this, 'wcmamtx_load_assets' ) );
      add_action( 'woocommerce_account_menu_items', array($this, 'wcmamtx_rename_my_account_menu_items'), 100, 1);
      add_action( 'woocommerce_locate_template', array($this,'wcmamtx_override_default_navigation_template'), 100, 3 );
-     add_action( 'wp_footer', array( $this, 'wcmamtx_print_login_modal' ), 100 );
-     add_action( 'wp_ajax_nopriv_wcmamtx_ajax_login', array( $this, 'wcmamtx_ajax_login' ) );
-     add_action( 'wp_footer', array( $this, 'wcmamtx_print_login_modal_js' ), 101 );
+     
+
+
 
 
      add_filter( 'wpml_sl_blacklist_requests',  array($this,'wpml_sl_blacklist_requests'), 10, 2 );
@@ -268,7 +268,7 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
             $nav_header_widget_text_logout = isset($wcmamtx_layout['nav_header_widget_text_logout']) ? $wcmamtx_layout['nav_header_widget_text_logout'] : wcmamtx_get_nav_logout_default_text();
 
 
-            $Menu_link  = '<li class="menu-item wcmamtx_menu wcmamtx_menu_logged_out">';
+            $Menu_link  = '<li class="menu-item wcmamtx_menu wcmamtx_menu_logged_out2">';
             $Menu_link .= '<a href="' . esc_url( $frontend_url ) . '" class="wcmamtx-login-btn">';
             $Menu_link .= '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
             $Menu_link .= '<span class="wcmamtxx_nav_header_widget_text_logout">' . esc_html( $nav_header_widget_text_logout ) . '</span>';
@@ -391,97 +391,9 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
 
 
 
-    public function wcmamtx_print_login_modal_js(){
 
-        if ( is_user_logged_in() ) return;
-        if ( function_exists('is_account_page') && is_account_page() ) return;
 
-        $ajax_url = admin_url('admin-ajax.php');
-        $nonce = wp_create_nonce('wcmamtx_login_nonce');
-        ?>
-        <script>
-        (function(){
-           var ajaxUrl = '<?php echo esc_js( $ajax_url ); ?>';
-           var wcmamtxNonce = '<?php echo esc_js( $nonce ); ?>';
-           document.addEventListener('DOMContentLoaded', function(){
-               var pop = document.getElementById('wcmamtx-login-popover');
-               if (!pop) return;
-               var form = pop.querySelector('form.woocommerce-form-login');
-               if (!form) return;
-               form.addEventListener('submit', function(e){
 
-                   e.preventDefault();
-
-                   form.querySelector('button.woocommerce-form-login__submit').val("hello world");
-                   var submitBtn = form.querySelector('button[type=submit]');
-                   if (submitBtn) submitBtn.disabled = true;
-                   var formData = new FormData(form);
-                   formData.append('action','wcmamtx_ajax_login');
-                   formData.append('security', wcmamtxNonce);
-                   fetch(ajaxUrl, {
-                       method: 'POST',
-                       credentials: 'same-origin',
-                       body: formData
-                   }).then(function(res){ return res.json(); }).then(function(json){
-                       if (submitBtn) submitBtn.disabled = false;
-                       if (json.success){
-                           if (json.data && json.data.redirect){
-                               window.location.href = json.data.redirect;
-                           } else {
-                               window.location.reload();
-                           }
-                       } else {
-                           var msg = (json.data && json.data.message) ? json.data.message : '<?php echo esc_js( __( 'Login failed. Please try again.', 'customize-my-account-for-woocommerce' ) ); ?>';
-                           var err = pop.querySelector('.wcmamtx-login-error');
-                           if (!err){
-                               err = document.createElement('div');
-                               err.className = 'wcmamtx-login-error';
-                               err.style.color = 'red';
-                               err.style.marginBottom = '8px';
-                               form.insertBefore(err, form.firstChild);
-                           }
-                           err.textContent = msg;
-                       }
-                   }).catch(function(err){
-                       if (submitBtn) submitBtn.disabled = false;
-                       console.error(err);
-                   });
-               });
-           });
-        })();
-        </script>
-        <?php
-
-    }
-
-    public function wcmamtx_ajax_login(){
-        if ( empty($_POST) ) {
-            wp_send_json_error( array('message'=>'Invalid request'), 400 );
-        }
-        if ( ! isset($_POST['security']) || ! wp_verify_nonce( sanitize_text_field($_POST['security']), 'wcmamtx_login_nonce' ) ) {
-            wp_send_json_error( array('message'=> esc_html__('Invalid nonce','customize-my-account-for-woocommerce') ), 400 );
-        }
-        $username = isset($_POST['username']) ? wp_unslash( $_POST['username'] ) : '';
-        $password = isset($_POST['password']) ? $_POST['password'] : '';
-        $remember = isset($_POST['rememberme']) && $_POST['rememberme'] === 'forever' ? true : false;
-        if ( empty( $username ) || empty( $password ) ) {
-            wp_send_json_error( array('message'=> esc_html__('Please enter username and password.','customize-my-account-for-woocommerce') ), 400 );
-        }
-        $creds = array(
-            'user_login'    => sanitize_text_field( $username ),
-            'user_password' => $password,
-            'remember'      => $remember,
-        );
-        $user = wp_signon( $creds, is_ssl() );
-        if ( is_wp_error( $user ) ) {
-            wp_send_json_error( array('message'=> $user->get_error_message() ), 400 );
-        }
-        wp_set_current_user( $user->ID );
-        wp_set_auth_cookie( $user->ID, $remember );
-        $redirect = wc_get_page_permalink( 'myaccount' );
-        if ( ! $redirect ) $redirect = home_url();
-        wp_send_json_success( array('redirect'=>$redirect) );
-    }
 
 public function wcmamtx_google_callback() {
 
@@ -1110,68 +1022,7 @@ public function wcmamtx_google_callback() {
 	}
 
 
-	public function wcmamtx_print_login_modal(){
 
-        if ( is_user_logged_in() ) return;
-        if ( function_exists('is_account_page') && is_account_page() ) return;
-
-        $template = wcmamtx_plugin_path() . '/templates/myaccount/form-login-popup.php';
-        $child_template = get_stylesheet_directory() . '/wcmamtx_template/form-login.php';
-        if ( file_exists( $child_template ) ) {
-            $template = $child_template;
-        }
-
-        ob_start();
-        if ( file_exists( $template ) ){
-            include $template;
-        } else {
-            echo '<p>' . esc_html__( 'Login form not found', 'customize-my-account-for-woocommerce' ) . '</p>';
-        }
-        $form = ob_get_clean();
-        ?>
-  
-
-        <script>
-        (function(){
-            function showPop(e, el){
-                if (typeof e !== 'undefined' && e.preventDefault) e.preventDefault();
-                var pop = document.getElementById('wcmamtx-login-popover');
-                if (!pop) return;
-                document.body.appendChild(pop);
-                pop.style.display = 'block';
-                pop.setAttribute('aria-hidden','false');
-                var rect = el.getBoundingClientRect();
-                var left = rect.left;
-                var top = window.scrollY + rect.bottom + 8;
-                // keep within viewport
-                var popW = Math.min(pop.offsetWidth || 360, 360);
-                if (left + popW > window.innerWidth - 8) left = window.innerWidth - popW - 8;
-                pop.style.left = (left) + 'px';
-                pop.style.top = top + 'px';
-            }
-            function hidePop(){
-                var pop = document.getElementById('wcmamtx-login-popover');
-                if (!pop) return;
-                pop.style.display = 'none';
-                pop.setAttribute('aria-hidden','true');
-            }
-            document.addEventListener('DOMContentLoaded', function(){
-                var anchors = document.querySelectorAll('.wcmamtx_menu_logged_out, .wcmamtx_menu_logged_out a, .wcmamtx-login-btn');
-                anchors.forEach(function(el){
-                    el.addEventListener('click', function(e){ showPop(e, this); });
-                    
-                });
-                document.addEventListener('click', function(e){
-                    var pop = document.getElementById('wcmamtx-login-popover');
-                    if (!pop) return;
-                    if (!pop.contains(e.target) && !e.target.closest('.wcmamtx_menu_logged_out')) { hidePop(); }
-                });
-            });
-        })();
-        </script>
-        <?php
-
-    }
 
 
     public function wcmamtx_rename_my_account_menu_items($items) {

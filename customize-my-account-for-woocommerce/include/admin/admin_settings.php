@@ -25,7 +25,6 @@ class wcmamtx_add_settings_page_class {
 		add_action( 'admin_enqueue_scripts', array($this, 'wcmamtx_load_admin_menu_style'));
         add_action( 'wp_ajax_restore_my_account_tabs', array( $this, 'restore_my_account_tabs' ) );
         add_action( 'admin_post_nds_form_response_endpoint', array( $this, 'add_endpoint_form_response' ));    
-        add_action( 'wp_ajax_wcmamtxadmin_get_users_ajax', array( $this, 'wcmamtxadmin_get_users_ajax_function' ) );
         add_action( 'wp_ajax_wcmamtx_export_endpoints', array( $this, 'wcmamtx_export_endpoints_function' ) );
         add_action( 'wp_ajax_wcmamtx_import_menu', array( $this, 'wcmamtx_import_menu_function' ) );
         
@@ -90,34 +89,7 @@ class wcmamtx_add_settings_page_class {
 
 
 
-    public function wcmamtxadmin_get_users_ajax_function() {
-        $return = array();
 
-
-
-        $users = new WP_User_Query( array(
-            'search'         => '*'.esc_attr( $_GET['q'] ).'*',
-            'search_columns' => array(
-                'user_login',
-                'user_nicename',
-                'user_email',
-                'user_url',
-            ),
-        ) );
-        $users_found = $users->get_results();
-
-        
-
-        foreach ($users_found as $ukey=>$uvalue) {
-            $return[] = array($uvalue->ID,$uvalue->user_login);
-        }
-
-        
-
-
-        echo json_encode( $return );
-        die;
-    }
 
 
 
