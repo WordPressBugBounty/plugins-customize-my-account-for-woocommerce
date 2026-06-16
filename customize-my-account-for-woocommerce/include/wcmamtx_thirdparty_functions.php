@@ -7,7 +7,7 @@ if (!function_exists('wcmamtx_third_party_goahead_check')) {
 		$third_party_plug_array = array(
 
 	// Wallets
-			'my-wallet'                 => array('woo-wallet/woo-wallet.php'),
+			
 			'woo-wallet'                 => array('woo-wallet/woo-wallet.php'),
 			'wallet'                     => array('wallet-system-for-woocommerce/wallet-system-for-woocommerce.php'),
 

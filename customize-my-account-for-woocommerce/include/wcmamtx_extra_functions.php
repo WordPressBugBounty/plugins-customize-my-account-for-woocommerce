@@ -90,6 +90,14 @@ if (!function_exists('wcmamtx_get_nav_widget_default_array')) {
         'Kadence Child',
         'Avada',
         'Avada Child',
+        'My Listing',
+        'My Listing Child',
+        'Elessi Theme',
+        'Elessi Theme Child',
+        'Customify',
+        'Customify Child',
+        'Motta',
+        'Motta Child',
         );
 
          return $supported_themes;
@@ -156,6 +164,37 @@ if (!function_exists('wcmamtx_get_nav_widget_default_location_menu')) {
 }
 
 
+if (!function_exists('wcmamtx_get_nav_widget_default_array_modal_login')) {
+
+
+    function wcmamtx_get_nav_widget_default_array_modal_login() {
+
+         $supported_themes = array(
+        'Astra',
+        'Astra Child',
+        'GeneratePress',
+        'GeneratePress Child',
+        'Kadence',
+        'Kadence Child',
+        'Hello Elementor',
+        'Hello Elementor Child',
+        'Neve',
+        'Neve Child',
+        'Divi',
+        'Divi Child',
+        'Customify',
+        'Customify Child',
+        'Motta',
+        'Motta Child'
+        );
+
+         return $supported_themes;
+
+    }
+
+}
+
+
 if (!function_exists('wcmamtx_get_nav_widget_array_show_only_loggedin')) {
 
 
@@ -164,10 +203,34 @@ if (!function_exists('wcmamtx_get_nav_widget_array_show_only_loggedin')) {
         $wcmamtx_layout = (array) get_option( 'wcmamtx_layout' );
 
         if (array_key_exists(0, $wcmamtx_layout)) {
+
+            $supported_themes = wcmamtx_get_nav_widget_default_array_modal_login();
+
+            return in_array((string) wp_get_theme(), $supported_themes, true)
+            ? 'no'
+            : 'yes';
+
             return "yes";
+
+
         }
 
          return "no";
+
+    }
+
+}
+
+if (!function_exists('wcmamtx_get_nav_logout_default_text')) {
+
+
+    function wcmamtx_get_nav_logout_default_text() {
+
+         if ( 'yes' === get_option( 'woocommerce_enable_myaccount_registration' ) ) {
+             return esc_html__('Log In / Register','customize-my-account-for-woocommerce');
+         }
+
+         return esc_html__('Log In','customize-my-account-for-woocommerce');
 
     }
 

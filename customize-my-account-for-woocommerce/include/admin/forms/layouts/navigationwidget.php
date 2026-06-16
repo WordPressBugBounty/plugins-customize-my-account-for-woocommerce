@@ -55,7 +55,7 @@
     	</td>
     	<td>
     		<?php             
-    		$nav_header_widget_text_logout = isset($wcmamtx_layout['nav_header_widget_text_logout']) ? $wcmamtx_layout['nav_header_widget_text_logout'] : esc_html__('Log In','customize-my-account-for-woocommerce');
+    		$nav_header_widget_text_logout = isset($wcmamtx_layout['nav_header_widget_text_logout']) ? $wcmamtx_layout['nav_header_widget_text_logout'] : wcmamtx_get_nav_logout_default_text();
     		?>
     		<input type="text" name="<?php  echo esc_html__($this->wcmamtx_layout_page); ?>[nav_header_widget_text_logout]" value="<?php echo $nav_header_widget_text_logout; ?>">
 

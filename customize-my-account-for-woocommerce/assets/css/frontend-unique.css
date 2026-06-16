@@ -522,6 +522,8 @@ li.wcmamtx_menu_logged_in > ul.sub-menu li a:hover {
     border-radius: 15px;
     margin-top: 20px;
     width:100%;
+    color: white;
+    font-size: 15px;
 }
 
 .wcmamtx_custom_login_register .woocommerce-privacy-policy-text {
@@ -551,4 +553,84 @@ li.wcmamtx_menu_logged_in > ul.sub-menu li a:hover {
 .theme-Avada li.wcmamtx_menu_logged_in a.menu-link.wcmamtx-nav-trigger {
     border-top-width: 0 !important;
         border: 0px !important;
+}
+
+.theme-my-listing li.wcmamtx_menu_logged_in i.material-icons.arrow_drop_down {
+    display:none;
+}
+
+/* ============================================================
+   wcmamtx Login Button  -  logged-out nav item
+   ============================================================ */
+
+
+
+/* restored original simple styles */
+
+a.wcmamtx-login-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: inherit;
+    text-decoration: none;
+    color: #fff;
+    background: linear-gradient(135deg, #b9b6c1 0%, #9B6DFF 100%);
+    border: none;
+    box-shadow: 0 3px 12px rgba(106,61,232,0.35);
+    transition: box-shadow 0.22s ease, transform 0.18s ease, background 0.22s ease;
+    white-space: nowrap;
+    line-height: 1;
+    cursor: pointer;
+
+}
+
+#wcmamtx-login-popup-overlay .wc-auth-container.wcmamtx_custom_login_register {
+    margin-top: 0px; 
+    margin-bottom: 0px; 
+}
+
+#wcmamtx-login-popup-overlay .wcmamtx_custom_login_register .wc-auth-card {
+    margin-left: 0%;
+    width: 100%;
+    max-width: 100%;
+    padding-tpp:20px;
+    padding-top: 80px;
+}
+
+.wc-auth-container.wcmamtx_custom_login_register input[type=text],
+.wc-auth-container.wcmamtx_custom_login_register label,
+.wc-auth-container.wcmamtx_custom_login_register input[type=password],
+.wc-auth-container.wcmamtx_custom_login_register input[type=email] {
+    /* float: left; */
+    width: 100%;
+}
+
+.theme-generatepress span.wcmamtxx_nav_header_widget_text_logout,.theme-kadence span.wcmamtxx_nav_header_widget_text_logout {
+    margin-left: 5px;
+    color:inherit;
+}
+
+span.wcmamtxx_nav_header_widget_text_logout {
+    margin-left: 5px;
+}
+
+
+.main-header-menu > .menu-item > a.menu-link.wcmamtx-nav-trigger {
+    height:auto;
+}
+
+.theme-Divi .et_header_style_left #et-top-navigation nav>ul>li>a.menu-link.wcmamtx-nav-trigger {
+    padding-bottom:0px !important;
+}
+
+.et_header_style_left #et-top-navigation nav>ul>li>a.wcmamtx-login-btn{
+    padding-bottom:10px !important;
+}
+
+.theme-customify button.show-password-input.display-password {
+    display: none;
 }

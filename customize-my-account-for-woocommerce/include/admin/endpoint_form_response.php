@@ -89,7 +89,7 @@
 
 
 
-        	if (isset($new_name) && ($new_name != '')) {
+        if (isset($new_name) && ($new_name != '') && ($row_type != "endpoint")) {
         	    $new_row_values[$new_key]['endpoint_key']        = $new_key;
                 $new_row_values[$new_key]['endpoint_name']       = $new_name;
                 $new_row_values[$new_key]['wcmamtx_type']        = $row_type;
@@ -133,7 +133,7 @@
                 }
                 
 
-            }
+        }
 
         
 

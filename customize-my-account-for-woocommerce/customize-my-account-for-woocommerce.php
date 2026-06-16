@@ -3,7 +3,7 @@
     Plugin Name: SysBasics Customize My Account for WooCommerce
     Plugin URI: https://sysbasics.com
     Description: Easily customize the WooCommerce My Account page. Mobile Friendly User avatar, redesign the WooCommerce dashboard, manage menus, and apply premium styles for a better user experience.
-    Version: 4.3.13
+    Version: 4.3.14
     Author: SysBasics
     Author URI: https://sysbasics.com
     Domain Path: /languages
@@ -42,7 +42,7 @@ $mt_type = 'specific';
 
 
 if ( !defined( 'wcmamtx_pro_price_html' ) )
-    define( 'wcmamtx_pro_price_html', '$99 USD' );
+    define( 'wcmamtx_pro_price_html', '$49 USD' );
 
 if ( !defined( 'wcmamtx_pro_price_show' ) )
     define( 'wcmamtx_pro_price_show', 'yes' );
