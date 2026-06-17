@@ -185,6 +185,10 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
                                             case "invoice":
 				    						$icon_html = '<i class="fa fa-file-invoice"></i>';
 				    						break;
+
+				    						case "ast_track":
+				    						$icon_html = '<i class="fa fa-ship"></i>';
+				    						break;
 				    					}
 
 				    					?>

@@ -961,6 +961,11 @@ if (!function_exists('wcmamtx_get_new_row_values')) {
                 	$new_row_values[$key2]['link_targetblank']              = $value2['link_targetblank'];
                 }
 
+                $value2['content'] = wp_kses(
+                    $value2['content'],
+                    wp_kses_allowed_html('post')
+                );
+
 
                 if (isset($value2['wcmamtx_type']) && ($value2['wcmamtx_type'] == "endpoint")) {
                     $new_row_values[$key2]['content']              = isset($value2['content']) ? $value2['content'] : "";
@@ -975,9 +980,14 @@ if (!function_exists('wcmamtx_get_new_row_values')) {
                 }
 
 
-                 if ($key2 == "dashboard") {
+                if ($key2 == "dashboard") {
                     $new_row_values[$key2]['hide_dashboard_hello']            = isset($value2['hide_dashboard_hello']) ? $value2['hide_dashboard_hello'] : 00;
                     $new_row_values[$key2]['hide_intro_hello']                = isset($value2['hide_intro_hello']) ? $value2['hide_intro_hello'] : 00;
+
+                    $value2['content_dash'] = wp_kses(
+                        $value2['content_dash'],
+                        wp_kses_allowed_html('post')
+                    );
                     $new_row_values[$key2]['content_dash']                    = isset($value2['content_dash']) ? $value2['content_dash'] : "";
                 }
                 

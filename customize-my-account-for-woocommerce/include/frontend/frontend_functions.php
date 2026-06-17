@@ -426,10 +426,11 @@ public function wcmamtx_google_callback() {
 
             $args = array(
                 'id'    => 'wcmamtx_customize_myaccount', // Unique ID for your link
-                'title' =>  esc_html__('Customize My Account','customize-my-account-for-woocommerce'), // The text that will appear in the admin bar
-                'href'  => ''.admin_url().'admin.php?page=wcmamtx_advanced_settings', // The URL the link will point to
+                'title' =>  esc_html__('Customize My Account Design','customize-my-account-for-woocommerce'), // The text that will appear in the admin bar
+                'href'  => ''.admin_url().'admin.php?page=wcmamtx_advanced_settings&tab=wcmamtx_layout', // The URL the link will point to
                 'meta'  => array(
                     'class'  => 'wcmamtx_customize_myaccount-class', // Custom CSS class
+                    'target' => "_blank",
                 ),
             );
 
@@ -1284,7 +1285,11 @@ public function wcmamtx_google_callback() {
 
                     add_action( 'woocommerce_account_'.$endkey.'_endpoint', function() use ( $content ) {
 
-                       echo apply_filters('the_content',$content);
+                     $allowed_html = wp_kses_allowed_html( 'post' );
+
+                     $content = wp_kses( $content, $allowed_html );
+
+                     echo apply_filters( 'the_content', $content );
                    });
                 }
 

@@ -1,4 +1,121 @@
 <?php
+
+// -- AJAX: Layout form save --
+add_action( 'wp_ajax_wcmamtx_save_layout', function() {
+    check_ajax_referer( 'wcmamtx_layout_ajax_nonce', '_ajax_nonce' );
+
+    if ( ! current_user_can( 'manage_options' ) ) {
+        wp_send_json_error( 'Permission denied.' );
+    }
+
+    $option_name = 'wcmamtx_layout';
+
+    if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ), $option_name . '-options' ) ) {
+        wp_send_json_error( 'Invalid nonce.' );
+    }
+
+    $new_value = isset( $_POST[ $option_name ] ) ? $_POST[ $option_name ] : array();
+    $new_value = map_deep( $new_value, 'sanitize_text_field' );
+
+    update_option( $option_name, $new_value );
+
+    wp_send_json_success( array( 'message' => 'Settings saved!' ) );
+} );
+
+// -- Enqueue AJAX layout JS only on layout tab --
+add_action( 'admin_footer', function() {
+    $page = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
+    $tab  = isset( $_GET['tab'] )  ? sanitize_text_field( wp_unslash( $_GET['tab'] ) )  : '';
+
+    if ( $tab !== 'wcmamtx_layout' ) {
+        return;
+    }
+
+    if ( ! current_user_can( 'manage_options' ) ) return;
+
+    $nonce    = wp_create_nonce( 'wcmamtx_layout_ajax_nonce' );
+    $ajax_url = admin_url( 'admin-ajax.php' );
+    ?>
+    <style>
+        @keyframes wcmamtx_spin { to { transform: rotate(360deg); } }
+        #wcmamtx_layout_loader {
+            display: none;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+        #wcmamtx_layout_loader .wcmamtx-spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #ccc;
+            border-top-color: #2271b1;
+            border-radius: 50%;
+            animation: wcmamtx_spin 0.7s linear infinite;
+            vertical-align: middle;
+        }
+        #wcmamtx_layout_loader .wcmamtx-saving-text {
+            margin-left: 6px;
+            color: #2271b1;
+            font-size: 12px;
+            vertical-align: middle;
+        }
+    </style>
+    <script>
+    (function($){
+        $(document).ready(function(){
+
+            var $form = $('form[action="options.php"]');
+            var $btn  = $('input.wcmamtx_submit_button.wcmamtx_layout');
+
+            if ( ! $btn.length || ! $form.length ) return;
+
+            // Inject spinner after button
+            $btn.after('<span id="wcmamtx_layout_loader"><span class="wcmamtx-spinner"></span><span class="wcmamtx-saving-text">Saving...</span></span>');
+
+            $btn.on('click', function(e) {
+                e.preventDefault();
+
+                var $loader = $('#wcmamtx_layout_loader');
+                $btn.prop('disabled', true).css('opacity', '0.6');
+                $loader.show();
+
+                var formData = $form.serialize();
+                formData += '&action=wcmamtx_save_layout';
+                formData += '&_ajax_nonce=<?php echo $nonce; ?>';
+
+                $.ajax({
+                    url: '<?php echo esc_url( $ajax_url ); ?>',
+                    type: 'POST',
+                    data: formData,
+                    success: function(res) {
+                        $loader.hide();
+                        $btn.prop('disabled', false).css('opacity', '1');
+                        if ( res.success ) {
+                            var origVal = $btn.val();
+                            var origBg  = $btn.css('background-color');
+                            $btn.val('Saved ✓').css({'background-color':'#00a32a','border-color':'#008a20','color':'#fff'});
+                            setTimeout(function(){
+                                $btn.val(origVal).css({'background-color':'','border-color':'','color':''});
+                            }, 2000);
+                        } else {
+                            alert( 'Error: ' + ( res.data || 'Unknown error' ) );
+                        }
+                    },
+                    error: function() {
+                        $loader.hide();
+                        $btn.prop('disabled', false).css('opacity', '1');
+                        alert( 'AJAX request failed. Please try again.' );
+                    }
+                });
+            });
+
+        });
+    })(jQuery);
+    </script>
+    <?php
+} );
+
+
 if (!class_exists('wcmamtx_add_settings_page_class')) {
 
 class wcmamtx_add_settings_page_class {
@@ -43,7 +160,7 @@ class wcmamtx_add_settings_page_class {
 
     public function wcmamtx_import_menu_function() {
         check_ajax_referer( 'wcmamtx_nonce', 'nonce' );
-        if ( ! current_user_can( 'manage_woocommerce' ) ) {
+        if ( ! current_user_can( 'manage_options' ) ) {
             wp_send_json_error( 'Unauthorized' );
         }
 
@@ -75,7 +192,7 @@ class wcmamtx_add_settings_page_class {
 
     public function wcmamtx_export_endpoints_function() {
          check_ajax_referer( 'wcmamtx_nonce', 'nonce' );
-        if ( ! current_user_can( 'manage_woocommerce' ) ) {
+        if ( ! current_user_can( 'manage_options' ) ) {
             wp_send_json_error( 'Unauthorized' );
         }
 

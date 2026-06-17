@@ -570,21 +570,16 @@ li.wcmamtx_menu_logged_in > ul.sub-menu li a:hover {
 a.wcmamtx-login-btn {
     display: inline-flex;
     align-items: center;
-    gap: 7px;
     padding: 8px 20px;
     border-radius: 50px;
     font-size: 13px;
     font-weight: 600;
     font-family: inherit;
     text-decoration: none;
-    color: #fff;
-    background: linear-gradient(135deg, #b9b6c1 0%, #9B6DFF 100%);
-    border: none;
-    box-shadow: 0 3px 12px rgba(106,61,232,0.35);
-    transition: box-shadow 0.22s ease, transform 0.18s ease, background 0.22s ease;
     white-space: nowrap;
     line-height: 1;
     cursor: pointer;
+    border: 1px solid black;
 
 }
 
@@ -633,4 +628,8 @@ span.wcmamtxx_nav_header_widget_text_logout {
 
 .theme-customify button.show-password-input.display-password {
     display: none;
+}
+
+li#wp-admin-bar-wcmamtx_customize_myaccount {
+    background-color:green !important;
 }

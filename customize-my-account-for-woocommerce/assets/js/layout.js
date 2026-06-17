@@ -886,4 +886,47 @@ jQuery(document).ready(function($){
 
     }
 
+
+
+});
+
+jQuery(document).ready(function($){
+
+    $('.wcmamtx_tab_link').on('click', function(e){
+
+        e.preventDefault();
+
+        var target = $(this).data('tab');
+
+        $('.wcmamtx_tab_link').removeClass('active');
+        $('.tab-pane').removeClass('active');
+
+        $(this).addClass('active');
+        $('#' + target).addClass('active');
+
+    });
+
+});
+
+jQuery(document).ready(function($){
+
+    $('.wcmamtx_tab_link').on('click', function(e){
+
+        e.preventDefault();
+
+        var target = $(this).data('tab');
+
+        $('.wcmamtx_tab_link').removeClass('active');
+        $(this).addClass('active');
+
+        $('.tab-pane.active')
+            .removeClass('active')
+            .hide();
+
+        $('#' + target)
+            .addClass('active')
+            .fadeIn(300);
+
+    });
+
 });

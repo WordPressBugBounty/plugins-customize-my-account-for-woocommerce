@@ -385,6 +385,10 @@ if (preg_match('/\b'.$key.'\b/', $core_fields ))  {
 
             <?php 
             $editor_content = isset($value['content_dash']) ? $value['content_dash'] : "";
+    
+            $allowed_html = wp_kses_allowed_html( 'post' );
+
+            $editor_content = wp_kses( $editor_content, $allowed_html );
 
 
 

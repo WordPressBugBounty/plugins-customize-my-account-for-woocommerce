@@ -1625,8 +1625,8 @@ nav.wcmam-nav.wcmam-style-1 .ql-align-center a {
     color: #fff;
 }
 
-.wcmam-order-card:hover i.fa{
-  color:white;
+div.order-arrow:hover i.fa {
+    color: white;
 }
 
 button.wcmamtx_hidden_order_status {

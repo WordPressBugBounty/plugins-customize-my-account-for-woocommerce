@@ -31,6 +31,11 @@ if (isset($advanced_settings['dashboard'])) {
 
 	$content_dash = isset($advanced_settings['dashboard']['content_dash']) ? $advanced_settings['dashboard']['content_dash'] : "";
 
+	$allowed_html = wp_kses_allowed_html( 'post' );
+
+    $content_dash = wp_kses( $content_dash, $allowed_html );
+
+
 	echo apply_filters('the_content',$content_dash);
 
 } else {

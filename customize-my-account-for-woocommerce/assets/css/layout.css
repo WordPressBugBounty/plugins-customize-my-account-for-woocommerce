@@ -950,3 +950,125 @@ input.wcmamtx_submit_button.wcmamtx_layout:active {
         font-size: 12px;
     }
 }
+
+
+
+
+.wcmamtx_layout_tabs{
+    display:flex;
+    gap:30px;
+    margin:auto;
+}
+
+.wcmamtx_layout_tabs .tabs-sidebar{
+    width:280px;
+    background:#fff;
+    padding:20px;
+    border-radius:20px;
+    box-shadow:0 15px 40px rgba(0,0,0,.08);
+}
+
+.wcmamtx_layout_tabs .wcmamtx_tab_link{
+    width:100%;
+    display:flex;
+    align-items:center;
+    gap:14px;
+    border:none;
+    background:transparent;
+    padding:16px 20px;
+    border-radius:14px;
+    cursor:pointer;
+    margin-bottom:10px;
+    font-size:15px;
+    font-weight:600;
+    color:#555;
+    transition:.3s;
+    position:relative;
+}
+
+.wcmamtx_layout_tabs .wcmamtx_tab_link:hover{
+    background:#f5f7ff;
+    color:#4f46e5;
+    transform:translateX(5px);
+}
+
+.wcmamtx_layout_tabs .wcmamtx_tab_link.active{
+    background:linear-gradient(
+        135deg,
+        #6366f1,
+        #8b5cf6
+    );
+    color:#fff;
+    box-shadow:
+        0 10px 25px rgba(99,102,241,.35);
+}
+
+.wcmamtx_layout_tabs .wcmamtx_tab_link.active::before{
+    content:'';
+    position:absolute;
+    left:-20px;
+    top:50%;
+    transform:translateY(-50%);
+    width:5px;
+    height:50%;
+    border-radius:10px;
+    background:#6366f1;
+}
+
+.wcmamtx_layout_tabs .icon{
+    font-size:18px;
+}
+
+.wcmamtx_layout_tabs .tabs-content{
+    flex:1;
+    background:#fff;
+    padding:35px;
+    border-radius:20px;
+    box-shadow:0 15px 40px rgba(0,0,0,.08);
+    max-width: 75% !important;
+}
+
+.wcmamtx_layout_tabs .tab-pane{
+    display:none;
+    animation:fadeIn .4s ease;
+}
+
+.wcmamtx_layout_tabs .tab-pane.active{
+    display:block;
+}
+
+.wcmamtx_layout_tabs @keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(15px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+@media(max-width:768px){
+
+    .wcmamtx_layout_tabs{
+        flex-direction:column;
+    }
+
+    .wcmamtx_layout_tabs .tabs-sidebar{
+        width:100%;
+    }
+
+}
+
+.wcmamtx_layout_tabs .tab-pane{
+    display:none;
+    opacity:0;
+    transform:translateY(10px);
+    transition:all .3s ease;
+}
+
+.wcmamtx_layout_tabs .tab-pane.active{
+    display:block;
+    opacity:1;
+    transform:translateY(0);
+}
