@@ -81,7 +81,7 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
 				    				}
 				    			}
 				    		?>
-
+                            <a href="<?php echo esc_url( $order->get_view_order_url() ); ?>">
 				    		<div class="product-thumb <?php if ($thubm_count > 1) { echo 'multiple'; } ?>">
 				    			<?php 
 
@@ -101,6 +101,7 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
 				    			}
 				    			?>
 				    		</div>
+				    	    </a>
 
 				    		<div class="order-details">
 				    			<h4>

@@ -57,6 +57,12 @@ $google_client_id = isset( $wcmamtx_layout['google_client_id'] ) ? $wcmamtx_layo
 $google_client_secret = isset( $wcmamtx_layout['google_client_secret'] ) ? $wcmamtx_layout['google_client_secret'] : '';
 
 $frontend_url = get_permalink(get_option('woocommerce_myaccount_page_id'));
+
+$spendingbox_dashboard_priority = isset($wcmamtx_layout['spendingbox_dashboard_priority']) ? $wcmamtx_layout['spendingbox_dashboard_priority'] : 10;
+
+$spendingchart_dashboard_priority = isset($wcmamtx_layout['spendingchart_dashboard_priority']) ? $wcmamtx_layout['spendingchart_dashboard_priority'] : 20;
+
+$dashlinks_dashboard_priority = isset($wcmamtx_layout['dashlinks_dashboard_priority']) ? $wcmamtx_layout['dashlinks_dashboard_priority'] : 30;
 ?>
 
 <div class="wcmamtx_layout_tabs">

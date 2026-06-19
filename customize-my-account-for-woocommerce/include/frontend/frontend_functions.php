@@ -79,7 +79,7 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
 
      add_action( 'wp_enqueue_scripts', array( $this, 'wcmamtx_sb_enqueue_chart_assets' ) );
 
-     add_action('woocommerce_account_dashboard',array( $this, 'wcmamtx_sb_customer_spending_chart' ));
+
 
       add_action( 'woocommerce_account_dashboard', array($this,'wcmamtx_add_myaccount_links'), 10 );
 
@@ -137,81 +137,6 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
         }
 
 
-    }
-
-
-
-    public function wcmamtx_sb_customer_spending_chart() {
-
-        if ( ! is_user_logged_in() ) {
-            return;
-        }
-
-        if ( ! is_account_page() ) {
-            return;
-        }
-
-
-        $wcmamtx_layout = (array) get_option('wcmamtx_layout');
-
-
-        $spending_layout_override = isset($wcmamtx_layout['spending_layout_override']) ? $wcmamtx_layout['spending_layout_override'] : "02";
-
-        if ($spending_layout_override != "01") { 
-           return;
-        }
-
-        $data = wcmamtx_sb_get_customer_spending_data( get_current_user_id() );
-
-        $navwidget_disable_spendboxes = isset($wcmamtx_layout['navwidget_disable_spendboxes']) ? $wcmamtx_layout['navwidget_disable_spendboxes'] : "no";
-
-        $navwidget_disable_spendchart = isset($wcmamtx_layout['navwidget_disable_spendchart']) ? $wcmamtx_layout['navwidget_disable_spendchart'] : "no";
-
-        ?>
-
-        <?php if ($navwidget_disable_spendboxes != "yes") { ?>
-
-        <div class="sb-stats-grid wcmamtx_spending_chart_dash">
-
-            <div class="sb-stat-box wcmamtx_total_spent">
-                <span><?php echo esc_html__('Total Spent','customize-my-account-for-woocommerce'); ?></span>
-                <strong><?php echo wc_price(wc_get_customer_total_spent( get_current_user_id() )); ?></strong>
-            </div>
-
-            <div class="sb-stat-box wcmamtx_total_orders">
-                <span><?php echo esc_html__('Total Orders','customize-my-account-for-woocommerce'); ?></span>
-                <strong><?php echo wc_get_customer_order_count( get_current_user_id() ); ?></strong>
-            </div>
-
-            <div class="sb-stat-box wcmamtx_total_average_order">
-                <span><?php echo esc_html__('Average Order','customize-my-account-for-woocommerce'); ?></span>
-                <strong><?php echo wc_price(wcmamtx_my_get_customer_average_order_value( get_current_user_id() )); ?></strong>
-            </div>
-
-        </div>
-
-        <?php } ?>
-
-        <?php if ($navwidget_disable_spendchart != "yes") { ?>
-
-        <div class="sb-spending-chart-card wcmamtx_spending_chart">
-
-            <div class="sb-chart-header">
-                <h3><?php echo esc_html__('Spending Overview','customize-my-account-for-woocommerce'); ?></h3>
-                <span><?php echo esc_html__('Last 12 Months','customize-my-account-for-woocommerce'); ?></span>
-            </div>
-
-            <canvas id="sbCustomerSpendingChart"></canvas>
-
-        </div>
-
-        <script>
-            window.sbChartData = <?php echo wp_json_encode( $data ); ?>;
-        </script>
-
-        <?php } ?>
-
-        <?php
     }
 
     
@@ -461,17 +386,98 @@ public function wcmamtx_google_callback() {
 
         $wcmamtx_layout = (array) get_option( 'wcmamtx_layout' );
 
-        
+        if ( ! is_user_logged_in() ) {
+            return;
+        }
+
+        if ( ! is_account_page() ) {
+            return;
+        }
+
+
+
+
+        $spending_layout_override = isset($wcmamtx_layout['spending_layout_override']) ? $wcmamtx_layout['spending_layout_override'] : "02";
+
+        $navwidget_disable_spendboxes_showhide = "02";
+
+        $navwidget_disable_spendchart_showhide  = "02";
+
+        if ($spending_layout_override != "02") { 
+
+
+
+            $data = wcmamtx_sb_get_customer_spending_data( get_current_user_id() );
+
+            $navwidget_disable_spendboxes = isset($wcmamtx_layout['navwidget_disable_spendboxes']) ? $wcmamtx_layout['navwidget_disable_spendboxes'] : "no";
+
+            $navwidget_disable_spendchart = isset($wcmamtx_layout['navwidget_disable_spendchart']) ? $wcmamtx_layout['navwidget_disable_spendchart'] : "no";
+
+
+            
+
+            if ($navwidget_disable_spendboxes == "yes") {
+
+               $navwidget_disable_spendboxes_showhide = "02";
+
+
+            } else {
+                $navwidget_disable_spendboxes_showhide = "01";
+
+            }
+
+            if ($navwidget_disable_spendchart == "yes") { 
+
+                $navwidget_disable_spendchart_showhide  = "02";
+
+
+            } else {
+
+                $navwidget_disable_spendchart_showhide  = "01";
+
+            }
+
+        } 
 
 
         $dashlink_layout_override = isset($wcmamtx_layout['dashlink_layout_override']) ? $wcmamtx_layout['dashlink_layout_override'] : "01";
 
-        if ($dashlink_layout_override != "02") {
-            include('dashlink_functions.php');
-        }
+        
+        $spendingbox_dashboard_priority = isset($wcmamtx_layout['spendingbox_dashboard_priority']) ? $wcmamtx_layout['spendingbox_dashboard_priority'] : 10;
+
+        $spendingchart_dashboard_priority = isset($wcmamtx_layout['spendingchart_dashboard_priority']) ? $wcmamtx_layout['spendingchart_dashboard_priority'] : 20;
+
+        $dashlinks_dashboard_priority = isset($wcmamtx_layout['dashlinks_dashboard_priority']) ? $wcmamtx_layout['dashlinks_dashboard_priority'] : 30;
+
+
+        $dashboard_widget_array = array(
+            'spendingbox' => array(
+                'show'     => $navwidget_disable_spendboxes_showhide,
+                'priority' => $spendingbox_dashboard_priority
+            ),
+            'spendingchart' => array(
+                'show'      => $navwidget_disable_spendchart_showhide,
+                'priority'  => $spendingchart_dashboard_priority
+            ),
+            'dashlinks' => array(
+                'show'     => $dashlink_layout_override,
+                'priority' => $dashlinks_dashboard_priority
+            ),
+        );
 
         
+        uasort( $dashboard_widget_array, function( $a, $b ) {
+            return (int) $a['priority'] <=> (int) $b['priority'];
+        } );
 
+
+
+
+        foreach ($dashboard_widget_array as $dkey=>$dvalue) {
+            if ($dvalue['show'] == "01") {
+                include (''.$dkey.'.php');
+            }
+        }
         
     }
 

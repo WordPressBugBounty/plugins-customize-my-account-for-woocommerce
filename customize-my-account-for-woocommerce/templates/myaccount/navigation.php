@@ -26,7 +26,9 @@ $items                 =  wc_get_account_menu_items();
 foreach ($items as $itkey=>$itvalue) {
     if (!array_key_exists($itkey, $wcmamtx_tabs)) {
 
-        $third_party_check = wcmamtx_third_party_goahead_check($key);
+        $third_party_check = wcmamtx_third_party_goahead_check($itkey);
+
+        $new_array = array();
 
 
         if ($third_party_check == "yes") {

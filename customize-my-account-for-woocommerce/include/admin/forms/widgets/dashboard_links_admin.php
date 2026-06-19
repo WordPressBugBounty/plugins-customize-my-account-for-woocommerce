@@ -41,6 +41,22 @@
 				<code><?php echo ''.get_stylesheet_directory().'/wcmamtx_template/dashlinks/<span class="wcmamtx_layout_template_override_no">'.$dash_style.'</span>.php'; ?></code>
 			</p>
 
+
+			<table>  
+
+
+
+
+				<tr class="nav_header_widget_tr" style="">
+					<td><label><?php echo esc_html__('Dashboard Links location priority on dashboard','customize-my-account-for-woocommerce'); ?></label> <br />
+					</td>
+					<td>
+						<input type="number" class="" name="<?php  echo esc_html__($this->wcmamtx_layout_page); ?>[dashlinks_dashboard_priority]" value="<?php echo $dashlinks_dashboard_priority; ?>">
+
+					</td>
+				</tr>
+			</table>
+
 		</div>
 
         
