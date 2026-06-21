@@ -3,7 +3,7 @@
     Plugin Name: SysBasics Customize My Account for WooCommerce
     Plugin URI: https://sysbasics.com
     Description: Easily customize the WooCommerce My Account page. Mobile Friendly User avatar, redesign the WooCommerce dashboard, manage menus, and apply premium styles for a better user experience.
-    Version: 4.3.22
+    Version: 4.3.23
     Author: SysBasics
     Author URI: https://sysbasics.com
     Domain Path: /languages
@@ -50,8 +50,6 @@ if ( !defined( 'wcmamtx_pro_price_html' ) )
 if ( !defined( 'wcmamtx_pro_price_show' ) )
     define( 'wcmamtx_pro_price_show', 'yes' );
 
-if( !defined( 'wcmamtx_redirect_URL' ) )
-define( 'wcmamtx_redirect_URL',"admin.php?page=wcmamtx_advanced_settings&tab=wcmamtx_layout" );
 
 
 
@@ -122,7 +120,7 @@ if ( is_plugin_active( 'sysbasics-account-fields/sysbasics-account-fields.php' )
     }
 
 
-    
+    include dirname( __FILE__ ) . '/include/wcmamtx-shipment-tracking/wcmamtx-shipment-tracking.php';
 
     
 
@@ -391,4 +389,15 @@ if (!function_exists('wcmamtx_admin_plugin_redirect')) {
     }
 
 }
+
+function wcmamtx_upload_avatar_tab_uninstall() {
+    $wcmamtx_upload_avatar_tab = new wcmamtx_upload_avatar_tab;
+    $users = get_users();
+
+    foreach ( $users as $user )
+        $wcmamtx_upload_avatar_tab->avatar_delete( $user->user_id );
+
+    delete_option( 'wcmamtx_upload_avatar_tab_caps' );
+}
+register_uninstall_hook( __FILE__, 'wcmamtx_upload_avatar_tab_uninstall' );
 ?>

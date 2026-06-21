@@ -151,6 +151,34 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
 				    		</div>
 
 				    		<?php
+				    		// Shipment tracking icon - shown only when tracking info is saved
+				    		if ( function_exists( 'wcmamtx_tracking_enabled' ) && wcmamtx_tracking_enabled() ) :
+				    		    $wcmamtx_courier = get_post_meta( $order->get_id(), '_wcmamtx_courier_name', true );
+				    		    $wcmamtx_turl    = get_post_meta( $order->get_id(), '_wcmamtx_tracking_url', true );
+				    		    if ( $wcmamtx_courier || $wcmamtx_turl ) :
+				    		        $wcmamtx_track_title = $wcmamtx_courier
+				    		            ? sprintf( esc_html__( 'Track via %s', 'customize-my-account-for-woocommerce' ), $wcmamtx_courier )
+				    		            : esc_html__( 'Track Shipment', 'customize-my-account-for-woocommerce' );
+				    		?>
+				    		<div class="order-arrow wcmamtx-tracking">
+				    		    <?php if ( $wcmamtx_turl ) : ?>
+				    		        <a title="<?php echo esc_attr( $wcmamtx_track_title ); ?>"
+				    		           href="<?php echo esc_url( $wcmamtx_turl ); ?>"
+				    		           target="_blank" rel="noopener noreferrer">
+				    		            <i class="fa fa-truck"></i>
+				    		        </a>
+				    		    <?php else : ?>
+				    		        <span title="<?php echo esc_attr( $wcmamtx_track_title ); ?>" style="cursor:default;">
+				    		            <i class="fa fa-truck"></i>
+				    		        </span>
+				    		    <?php endif; ?>
+				    		</div>
+				    		<?php
+				    		    endif;
+				    		endif;
+				    		?>
+
+				    		<?php
 				    		$actions = wc_get_account_orders_actions( $order );
 
 				    		if ( ! empty( $actions ) ) {

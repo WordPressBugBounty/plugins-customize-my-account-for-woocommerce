@@ -1,5 +1,5 @@
 		<!-- Social Login Style -->
-	<div class="wcmamtx-setting-card">
+	<div class="wcmamtx-setting-card wcmamtx_login_card">
 
 		<div class="wcmamtx-card-header">
 			<div>

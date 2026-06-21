@@ -372,7 +372,67 @@ function custom_view_order_again_button( $order ) {
         <?php endif; ?>
     </div>
 
-    <!-- ---- Payment Info ---- -->
+        <!-- ---- Shipment Tracking ---- -->
+    <?php
+    if ( function_exists( 'wcmamtx_tracking_enabled' ) && wcmamtx_tracking_enabled() ) :
+        $wcmamtx_courier = get_post_meta( $order->get_id(), '_wcmamtx_courier_name', true );
+        $wcmamtx_turl    = get_post_meta( $order->get_id(), '_wcmamtx_tracking_url', true );
+        if ( $wcmamtx_courier || $wcmamtx_turl ) :
+    ?>
+    <div class="wcmamtx_view_order-card wcmamtx_view_order-tracking-card">
+        <p class="wcmamtx_view_order-card__title">
+            <i class="fa fa-truck" style="margin-right:6px;"></i>
+            <?php esc_html_e( 'Shipment Tracking', 'customize-my-account-for-woocommerce' ); ?>
+        </p>
+        <div class="wcmamtx_view_order-tracking-body">
+            <?php if ( $wcmamtx_courier ) : ?>
+            <div class="wcmamtx_view_order-tracking-row">
+                <span class="wcmamtx_view_order-tracking-label">
+                    <?php esc_html_e( 'Courier', 'customize-my-account-for-woocommerce' ); ?>
+                </span>
+                <span class="wcmamtx_view_order-tracking-value">
+                    <?php echo esc_html( $wcmamtx_courier ); ?>
+                </span>
+            </div>
+            <?php endif; ?>
+            <?php if ( $wcmamtx_turl ) : ?>
+            <div class="wcmamtx_view_order-tracking-row" style="margin-top:10px;">
+                <span class="wcmamtx_view_order-tracking-label">
+                    <?php esc_html_e( 'Tracking', 'customize-my-account-for-woocommerce' ); ?>
+                </span>
+                <a href="<?php echo esc_url( $wcmamtx_turl ); ?>"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="wcmamtx_view_order-tracking-link">
+                    <i class="fa fa-location-arrow" style="margin-right:5px;"></i>
+                    <?php esc_html_e( 'Track your package', 'customize-my-account-for-woocommerce' ); ?>
+                    <i class="fa fa-external-link" style="margin-left:5px; font-size:11px;"></i>
+                </a>
+            </div>
+            <?php endif; ?>
+        </div>
+    </div>
+    <style>
+        .wcmamtx_view_order-tracking-card .wcmamtx_view_order-card__title { display:flex; align-items:center; }
+        .wcmamtx_view_order-tracking-body { padding: 4px 0; }
+        .wcmamtx_view_order-tracking-row { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; }
+        .wcmamtx_view_order-tracking-label { font-size:13px; color:#6b7280; font-weight:500; }
+        .wcmamtx_view_order-tracking-value { font-size:14px; font-weight:600; color:#1d2327; }
+        .wcmamtx_view_order-tracking-link {
+            display:inline-flex; align-items:center;
+            font-size:13px; font-weight:600;
+            background:#2271b1; color:#fff;
+            padding:7px 14px; border-radius:5px;
+            text-decoration:none; transition:background .15s;
+        }
+        .wcmamtx_view_order-tracking-link:hover { background:#135e96; color:#fff; }
+    </style>
+    <?php
+        endif;
+    endif;
+    ?>
+
+<!-- ---- Payment Info ---- -->
     <div class="wcmamtx_view_order-card">
         <p class="wcmamtx_view_order-card__title"><?php esc_html_e( 'Payment', 'customize-my-account-for-woocommerce' ); ?></p>
         <div class="wcmamtx_view_order-payment-row">
