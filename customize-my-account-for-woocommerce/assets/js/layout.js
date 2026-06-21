@@ -178,7 +178,23 @@ jQuery(document).ready(function($){
         "01": wcmamtx_layout.navigation1,
         "02": wcmamtx_layout.navigation2,
         "03": wcmamtx_layout.navigation3,
+        "04": wcmamtx_layout.navigation4,
     };
+
+    $('select.wcmamtx_layout_navigation_select').on("change",function(){
+
+        var selectedValue_layout = $(this).val();
+
+        if (selectedValue_layout == "04") {
+            $(this).parents(".wcmamtx-setting-card").find(".wcmamtx_template_override_a").hide();
+            $(this).parents(".wcmamtx-setting-card").find(".wcmamtx_layout_template_override_navigation ").hide();
+            $(this).parents(".wcmamtx-setting-card").find(".wcmamtx_layout_template_override_navigation_react ").show();
+        } else {
+            $(this).parents(".wcmamtx-setting-card").find(".wcmamtx_template_override_a").show();
+            $(this).parents(".wcmamtx-setting-card").find(".wcmamtx_layout_template_override_navigation_react ").hide();
+        }
+
+    });
 
     $('select.wcmamtx_layout_navigation_select').each(function(){
 
@@ -188,6 +204,14 @@ jQuery(document).ready(function($){
         var swatches3 = '<div class="sb-image-swatches-navigation">';
 
         var selectedValue3 = $select3.val();
+
+
+
+        if (selectedValue3 == "04") {
+            $(this).parents(".wcmamtx-setting-card").find(".wcmamtx_template_override_a").hide();
+            $(this).parents(".wcmamtx-setting-card").find(".wcmamtx_layout_template_override_navigation ").hide();
+            $(this).parents(".wcmamtx-setting-card").find(".wcmamtx_layout_template_override_navigation_react ").show();
+        }
 
         
 

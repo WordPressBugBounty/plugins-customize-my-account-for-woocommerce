@@ -107,6 +107,105 @@ if (!function_exists('wcmamtx_get_nav_widget_default_array')) {
 }
 
 
+if (!function_exists('wcmamtx_get_account_menu_items')) {
+
+
+    function wcmamtx_get_account_menu_items() {
+
+       $items                 =  wc_get_account_menu_items();
+
+       $wcmamtx_tabs          =  (array) get_option('wcmamtx_advanced_settings');
+
+       if (count($wcmamtx_tabs) === 1 && empty(reset($wcmamtx_tabs))) {
+            $wcmamtx_tabs = $items;
+       }
+
+       $core_fields    = 'dashboard,orders,downloads,edit-address,edit-account,customer-logout';
+
+       $core_fields_array =  array(
+        'dashboard'       => esc_html__('Dashboard','customize-my-account-for-woocommerce'),
+        'orders'          => esc_html__('Orders','customize-my-account-for-woocommerce'),
+        'downloads'       => esc_html__('Downloads','customize-my-account-for-woocommerce'),
+        'edit-address'    => esc_html__('Addresses','customize-my-account-for-woocommerce'),
+        'edit-account'    => esc_html__('Account Details','customize-my-account-for-woocommerce'),
+        'customer-logout' => esc_html__('Log out','customize-my-account-for-woocommerce')
+        );
+
+
+
+
+
+
+       foreach ($items as $ikey=>$ivalue) {
+
+        if (!array_key_exists($ikey, $wcmamtx_tabs) && !array_key_exists($ikey, $core_fields_array) ) {
+
+            $match_index = 0;
+
+            foreach ($wcmamtx_tabs as $tkey=>$tvalue) {
+                if (isset($tvalue['endpoint_key']) && ($tvalue['endpoint_key'] == $ikey)) {
+                    $match_index++;
+                }
+            }
+
+            if ($match_index == 0) {
+                $wcmamtx_tabs[$ikey] = array(
+                  'show' => 'yes',
+                  'third_party'  => 'yes',
+                  'endpoint_key' => $ikey,
+                  'wcmamtx_type' => 'endpoint',
+                  'parent'       => 'none',
+                  'endpoint_name'=> $ivalue,
+              );   
+            }           
+
+        }
+    }
+
+    if (!isset($wcmamtx_tabs) || (sizeof($wcmamtx_tabs) == 1)) {
+
+        $wcmamtx_tabs = $items;
+
+    }
+
+
+        $wcmamtx_tabs   = apply_filters('wcmamtx_override_dashlinks',$wcmamtx_tabs);
+
+
+                    $core_fields_array_filter =  array(
+                        'dashboard'=>'dashboard',
+                        'orders'=>'orders',
+                        'downloads'=>'downloads',
+                        'edit-address'=>'edit-address',
+                        'edit-account'=>'edit-account',
+                        'customer-logout'=>'customer-logout',
+                        'payment-methods'=>'payment-methods'
+                    );
+
+
+        foreach($wcmamtx_tabs as $gtkey=>$gtvalue) {
+
+            if (!array_key_exists($gtkey, $core_fields_array_filter)) {
+                  $third_party_check = wcmamtx_third_party_goahead_check($gtkey);
+
+                  $wcmamtx_type = isset($gtvalue['wcmamtx_type']) ? $gtvalue['wcmamtx_type'] : "endpoint";
+
+                  if (($third_party_check == "no") && ($wcmamtx_type == "endpoint") && (strpos($gtkey, 'custom-endpoint-') === false)) {
+                     unset($wcmamtx_tabs[$gtkey]);
+                  }
+            }
+
+        }
+
+
+
+    return $wcmamtx_tabs;
+
+}
+
+}
+
+
 
 if (!function_exists('wcmamtx_get_nav_widget_array_theme')) {
 
@@ -939,7 +1038,7 @@ if (!function_exists('wcmamtx_get_new_row_values')) {
 
                 $default_desc_text_link = wcmamtx_deshlink_default_description($key2,$new_label);
 
-                $default_desc_text = isset($default_desc_text_link[$key2]) ? $default_desc_text_link[$key2] : "";
+                $default_desc_text      = isset($default_desc_text_link[$key2]) ? $default_desc_text_link[$key2] : "";
 
                 $new_row_values[$key2]['default_desc_text']  = isset($value2['default_desc_text']) ? $value2['default_desc_text'] : $default_desc_text;
 

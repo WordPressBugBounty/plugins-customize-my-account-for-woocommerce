@@ -19,7 +19,7 @@ do_action( 'woocommerce_before_account_navigation' );
 
 $wcmamtx_tabs          =  (array) get_option('wcmamtx_advanced_settings');
 
-$wcmamtx_pro_settings  = (array) get_option('wcmamtx_pro_settings'); 
+
 
 $items                 =  wc_get_account_menu_items();
 

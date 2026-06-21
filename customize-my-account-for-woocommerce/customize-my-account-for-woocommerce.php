@@ -3,7 +3,7 @@
     Plugin Name: SysBasics Customize My Account for WooCommerce
     Plugin URI: https://sysbasics.com
     Description: Easily customize the WooCommerce My Account page. Mobile Friendly User avatar, redesign the WooCommerce dashboard, manage menus, and apply premium styles for a better user experience.
-    Version: 4.3.18
+    Version: 4.3.19
     Author: SysBasics
     Author URI: https://sysbasics.com
     Domain Path: /languages
@@ -37,6 +37,9 @@ if ( !defined( 'pro_url' ) )
 
 if( !defined( 'wcmamtx_redirect_URL' ) )
 define( 'wcmamtx_redirect_URL',"admin.php?page=wcmamtx_advanced_settings&tab=wcmamtx_layout" );
+
+
+
 
 $mt_type = 'specific';
 
@@ -99,25 +102,24 @@ if ( is_plugin_active( 'sysbasics-account-fields/sysbasics-account-fields.php' )
 }
 
 
-include dirname( __FILE__ ) . '/include/wcmamtx_extra_functions.php';
-
-
-
-
- 
+    include dirname( __FILE__ ) . '/include/wcmamtx_extra_functions.php';
 
 
       //include the classes
     include dirname( __FILE__ ) . '/include/admin/admin_settings.php';
     include dirname( __FILE__ ) . '/include/frontend/frontend_functions.php';
-    
 
-    
 
     include dirname( __FILE__ ) . '/include/sysbasics-avatar-upload.php';
 
     
-    
+    $wcmamtx_layout = (array) get_option('wcmamtx_layout');
+
+    $nav_style = isset($wcmamtx_layout['nav_style']) ? $wcmamtx_layout['nav_style'] : wcmamtx_get_clean_design_theme_array();
+
+    if ($nav_style == "04") {
+        include dirname( __FILE__ ) . '/react-myaccount/react-myaccount.php';
+    }
 
 
     

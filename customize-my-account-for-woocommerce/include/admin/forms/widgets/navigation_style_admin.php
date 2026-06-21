@@ -13,6 +13,8 @@
     			<option value="02" vpreview="" gtext="<?php echo esc_html__('Clean','customize-my-account-for-woocommerce'); ?>"  <?php if (isset($nav_style) && ($nav_style == 02)) { echo 'selected'; } ?>></option>
     			
     			<option value="03" vpreview="https://www.sysbasics.com/wp-content/uploads/2026/06/screen-capture-2.webm" gtext="<?php echo esc_html__('Banking App','customize-my-account-for-woocommerce'); ?>"  <?php if (isset($nav_style) && ($nav_style == 03)) { echo 'selected'; } ?> disabled></option> 
+
+                <option value="04" vpreview="" gtext="<?php echo esc_html__('React Based','customize-my-account-for-woocommerce-pro'); ?>"  <?php if (isset($nav_style) && ($nav_style == 04)) { echo 'selected'; } ?> ></option> 
     			
     		</select>
 
@@ -27,6 +29,10 @@
 
     			<code><?php echo ''.get_stylesheet_directory().'/wcmamtx_template/navigation/<span class="wcmamtx_layout_navigation_override_no">'.$nav_style.'</span>.php'; ?></code>
     		</p>
+
+             <p class="wcmamtx_layout_template_override_navigation_react alert alert-success" style="display:none;">
+                <?php echo esc_html__('This will fully replace your woocommerce My account page with react based navigation system.User avatar is currently not supported. If you experience any third party plugin javascript getting broken , consider switching back to any of the other available navigation styles.','customize-my-account-for-woocommerce-pro'); ?>&emsp;
+            </p>
 
     	</div>
 

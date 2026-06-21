@@ -2563,3 +2563,17 @@ nav.wcmam-nav.wcmam-style-1 a.woocommerce-MyAccount-navigation-link_a.woocommerc
 p.wcmamtx_default_text_below_avatar {
     font-size: 12px;
 }
+
+.entry-content ul.rma-nav-list {
+    padding-left: 0px !important;
+}
+
+ .woocommerce-account .rma-main .woocommerce-MyAccount-content
+ {
+    float: left;
+    width: 100%;
+}
+
+ul.woocommerce-PaymentMethods.payment_methods.methods {
+    padding-left:0px !important;
+}
