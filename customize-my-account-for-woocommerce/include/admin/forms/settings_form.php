@@ -101,23 +101,52 @@ if ((sizeof($advancedsettings) != 1)) {
                     );
 
 
+                    $custom_endpoint_index = 0;
+
+
                     if ((sizeof($advancedsettings) != 1)) {
 
                         foreach($advancedsettings as $gtkey=>$gtvalue) {
 
                             if (!array_key_exists($gtkey, $core_fields_array_filter)) {
-                              $third_party_check = wcmamtx_third_party_goahead_check($gtkey);
 
-                              $wcmamtx_type = isset($gtvalue['wcmamtx_type']) ? $gtvalue['wcmamtx_type'] : "endpoint";
+                                $third_party_check = wcmamtx_third_party_goahead_check($gtkey);
 
-                              if (($third_party_check == "no") && ($wcmamtx_type == "endpoint") && (strpos($gtkey, 'custom-endpoint-') === false)) {
-                               unset($advancedsettings[$gtkey]);
-                           }
-                       }
+                                $wcmamtx_type = isset($gtvalue['wcmamtx_type']) ? $gtvalue['wcmamtx_type'] : "endpoint";
 
-                   }
+                                $act_goahead = "yes";
 
-                   }
+                                $act_goahead = wcmamtx_act_goahead_check_verified();
+
+
+                                if ($act_goahead == "yes") {
+                                  
+                                    if (($third_party_check == "no") && ($wcmamtx_type == "endpoint") && (strpos($gtkey, 'custom-endpoint-') === false))   {
+                                        unset($advancedsettings[$gtkey]);
+                                    }
+                               } else if ($act_goahead == "no") {
+                                    if (($third_party_check == "no") && ($wcmamtx_type == "endpoint")) {
+                                        unset($advancedsettings[$gtkey]);
+                                    }
+                               }
+
+                                if (($third_party_check == "no") && (strpos($gtkey, 'custom-endpoint-') === true) && ($wcmamtx_type == "endpoint") && ( $custom_endpoint_index > 2)) {
+                                    unset($advancedsettings[$gtkey]);
+                                }
+
+                                if (strpos($gtkey, 'custom-endpoint-') === true) {
+                                     $custom_endpoint_index++;
+                                }
+
+
+                               
+
+
+                            }
+
+                        }
+
+                    }
      
 
       if (!isset($advancedsettings) || (sizeof($advancedsettings) == 1)) {

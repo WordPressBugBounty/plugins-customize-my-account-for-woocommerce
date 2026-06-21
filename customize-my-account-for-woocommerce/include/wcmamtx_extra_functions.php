@@ -106,6 +106,27 @@ if (!function_exists('wcmamtx_get_nav_widget_default_array')) {
 
 }
 
+if (!function_exists('wcmamtx_act_goahead_check_verified')) {
+
+
+    function wcmamtx_act_goahead_check_verified() {
+
+        $act_goahead = 'yes';
+
+        $act_goahead_date = get_option("wcmamtx_act_date_free");
+
+        $date_today       = '20260621';
+
+        if ($act_goahead_date >= $date_today) {
+          $act_goahead = 'no';
+        }
+
+        return $act_goahead;
+
+  }
+
+}
+
 
 if (!function_exists('wcmamtx_get_account_menu_items')) {
 
@@ -190,9 +211,23 @@ if (!function_exists('wcmamtx_get_account_menu_items')) {
 
                   $wcmamtx_type = isset($gtvalue['wcmamtx_type']) ? $gtvalue['wcmamtx_type'] : "endpoint";
 
-                  if (($third_party_check == "no") && ($wcmamtx_type == "endpoint") && (strpos($gtkey, 'custom-endpoint-') === false)) {
-                     unset($wcmamtx_tabs[$gtkey]);
-                  }
+                  $act_goahead = "yes";
+
+                  $act_goahead = wcmamtx_act_goahead_check_verified();
+
+
+                    if ($act_goahead == "yes") {
+                      if (($third_party_check == "no") && ($wcmamtx_type == "endpoint") && (strpos($gtkey, 'custom-endpoint-') === false))   {
+                         unset($wcmamtx_tabs[$gtkey]);
+                        }
+                    } else if ($act_goahead == "no") {
+                        if (($third_party_check == "no") && ($wcmamtx_type == "endpoint")) {
+                            unset($wcmamtx_tabs[$gtkey]);
+                        }
+                   }
+
+
+                  
             }
 
         }
@@ -1704,9 +1739,20 @@ if ( ! function_exists( 'wcmamtx_get_my_account_menu_plain_li' ) ) {
 
                   $wcmamtx_type = isset($gtvalue['wcmamtx_type']) ? $gtvalue['wcmamtx_type'] : "endpoint";
 
-                  if (($third_party_check == "no") && ($wcmamtx_type == "endpoint") && (strpos($gtkey, 'custom-endpoint-') === false)) {
-                     unset($wcmamtx_tabs[$gtkey]);
-                  }
+                    $act_goahead = "yes";
+
+                  $act_goahead = wcmamtx_act_goahead_check_verified();
+
+
+                    if ($act_goahead == "yes") {
+                      if (($third_party_check == "no") && ($wcmamtx_type == "endpoint") && (strpos($gtkey, 'custom-endpoint-') === false))   {
+                         unset($wcmamtx_tabs[$gtkey]);
+                        }
+                    } else if ($act_goahead == "no") {
+                        if (($third_party_check == "no") && ($wcmamtx_type == "endpoint")) {
+                            unset($wcmamtx_tabs[$gtkey]);
+                        }
+                   }
             }
 
         }

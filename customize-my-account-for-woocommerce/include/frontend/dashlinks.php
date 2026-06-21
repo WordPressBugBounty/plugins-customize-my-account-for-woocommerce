@@ -104,14 +104,25 @@ $wcmamtx_tabs   = apply_filters('wcmamtx_override_dashlinks',$wcmamtx_tabs);
         foreach($wcmamtx_tabs as $gtkey=>$gtvalue) {
 
             if (!array_key_exists($gtkey, $core_fields_array_filter)) {
-                  $third_party_check = wcmamtx_third_party_goahead_check($gtkey);
+              $third_party_check = wcmamtx_third_party_goahead_check($gtkey);
 
-                  $wcmamtx_type = isset($gtvalue['wcmamtx_type']) ? $gtvalue['wcmamtx_type'] : "endpoint";
+              $wcmamtx_type = isset($gtvalue['wcmamtx_type']) ? $gtvalue['wcmamtx_type'] : "endpoint";
 
-                  if (($third_party_check == "no") && ($wcmamtx_type == "endpoint") && (strpos($gtkey, 'custom-endpoint-') === false)) {
+              $act_goahead = "yes";
+
+              $act_goahead = wcmamtx_act_goahead_check_verified();
+
+
+              if ($act_goahead == "yes") {
+                  if (($third_party_check == "no") && ($wcmamtx_type == "endpoint") && (strpos($gtkey, 'custom-endpoint-') === false))   {
                      unset($wcmamtx_tabs[$gtkey]);
-                  }
+                 }
+             } else if ($act_goahead == "no") {
+                if (($third_party_check == "no") && ($wcmamtx_type == "endpoint")) {
+                    unset($wcmamtx_tabs[$gtkey]);
+                }
             }
+        }
 
         }
 

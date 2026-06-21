@@ -136,9 +136,20 @@ if (!isset($wcmamtx_tabs) || (sizeof($wcmamtx_tabs) === 1) || isset($wcmamtx_tab
 
                   $wcmamtx_type = isset($gtvalue['wcmamtx_type']) ? $gtvalue['wcmamtx_type'] : "endpoint";
 
-                  if (($third_party_check == "no") && ($wcmamtx_type == "endpoint") && (strpos($gtkey, 'custom-endpoint-') === false)) {
+                                $act_goahead = "yes";
+
+              $act_goahead = wcmamtx_act_goahead_check_verified();
+
+
+              if ($act_goahead == "yes") {
+                  if (($third_party_check == "no") && ($wcmamtx_type == "endpoint") && (strpos($gtkey, 'custom-endpoint-') === false))   {
                      unset($wcmamtx_tabs[$gtkey]);
-                  }
+                 }
+             } else if ($act_goahead == "no") {
+                if (($third_party_check == "no") && ($wcmamtx_type == "endpoint")) {
+                    unset($wcmamtx_tabs[$gtkey]);
+                }
+            }
             }
 
         }
