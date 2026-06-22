@@ -27,6 +27,8 @@ add_filter( 'wcmamtx_add_new_layout_settings_tab', function( $html ) {
     return $html;
 } );
 
+include ('wcmamtx-tracking-delete.php');
+
 // ─────────────────────────────────────────────────────────────
 // 3. ADD TAB CONTENT PANE
 // ─────────────────────────────────────────────────────────────
@@ -74,7 +76,7 @@ add_filter( 'wcmamtx_add_new_layout_settings_content', function( $html ) {
                 </div>
                 
                 <div class="form-group">
-                    <h4 style="margin-top:0;"><?php esc_html_e( 'What this feature does', 'customize-my-account-for-woocommerce' ); ?></h4>
+                    <h4 style="margin-top:0;"><?php esc_html_e( "What this feature doesn't", 'customize-my-account-for-woocommerce' ); ?></h4>
                     <ul style="margin:0 0 0 1.2em; padding:0; color:#555; font-size:13px; line-height:1.8;">
                         <li> <span class="dashicons dashicons-no-alt" style="color:#00a32a; vertical-align:middle;"></span><?php esc_html_e( 'It does not perform any API check with your courier partner.', 'customize-my-account-for-woocommerce' ); ?></li>
                         <li> <span class="dashicons dashicons-no-alt" style="color:#00a32a; vertical-align:middle;"></span><?php esc_html_e( 'It can not detect weather shipment is actually delivered or in transit. It simply provides Easy UI to attach shipment tracking detail to order.', 'customize-my-account-for-woocommerce' ); ?></li>

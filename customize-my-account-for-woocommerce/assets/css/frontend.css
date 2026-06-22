@@ -2577,3 +2577,11 @@ p.wcmamtx_default_text_below_avatar {
 ul.woocommerce-PaymentMethods.payment_methods.methods {
     padding-left:0px !important;
 }
+
+.sb-stats-grid.wcmamtx_spending_chart_dash {
+    margin-top: 10px;
+}
+
+.wcmam-tile-grid {
+    margin-top: 10px;
+}

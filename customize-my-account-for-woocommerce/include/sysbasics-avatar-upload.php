@@ -141,7 +141,11 @@ class wcmamtx_upload_avatar_tab {
 		}
 
 
-		if ( empty( $_POST['web_cam_submit'] ) ) {
+		if ( empty( $_POST['web_cam_submit'] ) ||
+        ! wp_verify_nonce(
+            sanitize_text_field( wp_unslash( $_POST['wcmamtx_webcam_nonce'] ) ),
+            'wcmamtx_webcam_action'
+        ) ) {
 			return '';
 		}
 

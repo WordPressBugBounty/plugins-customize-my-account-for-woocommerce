@@ -1883,7 +1883,7 @@ if (!function_exists('wcmamtx_get_account_menu_li_html')) {
 
 
 
-		<li  class="<?php echo wcmamtx_get_account_menu_item_classes( $key , $value ); ?> <?php echo  $wcmamtx_type; ?> <?php echo $extraclass; ?> <?php if ($icon_source == "custom") { echo $icon_extra_class; } ?>">
+		<li  class="<?php echo wcmamtx_get_account_menu_item_classes( $key , $value ); ?> <?php echo  esc_attr($wcmamtx_type); ?> <?php echo esc_attr($extraclass); ?> <?php if ($icon_source == "custom") { echo $icon_extra_class; } ?>">
 			<a class="woocommerce-MyAccount-navigation-link_a"  href="<?php echo wcmamtx_get_account_endpoint_url( $key ); ?>" <?php if (isset($wcmamtx_type) && ($wcmamtx_type == "link") && (isset($value['link_targetblank'])) && ($value['link_targetblank'] == 01) ) { echo 'target="_blank"'; } ?>>
 				<?php wcmamtx_get_account_menu_li_icon_html($icon_source,$value,$key); ?>
 				<span class="wcmamtx_sticky_icon_name">
@@ -2158,7 +2158,7 @@ if (!function_exists('wcmamtx_get_account_menu_group_html')) {
 
 		?>
 
-		<li class="wcmamtx_group2 <?php echo wcmamtx_get_account_menu_item_classes( $key , $value ); ?> <?php echo $extraclass; ?> <?php if ($icon_source == "custom") { echo $icon_extra_class; } ?> <?php echo $openclose; ?> ">
+		<li class="wcmamtx_group2 <?php echo wcmamtx_get_account_menu_item_classes( $key , $value ); ?> <?php echo esc_attr($extraclass); ?> <?php if ($icon_source == "custom") { echo esc_attr($icon_extra_class); } ?> <?php echo esc_attr($openclose); ?> ">
 			<a href="#" class="wcmamtx_group">
 				<?php 
 				if ($openclose == 'open') { ?>
@@ -2172,13 +2172,13 @@ if (!function_exists('wcmamtx_get_account_menu_group_html')) {
 					$icon       = isset($value['icon']) ? $value['icon'] : "";
 
 					if ($icon != '') { ?>
-						<i class="<?php echo $icon; ?>"></i>
+						<i class="<?php echo esc_attr($icon); ?>"></i>
 					<?php }
 				} else if ($icon_source == "dashicon") {
 					$icon       = isset($value['dashicon']) ? $value['dashicon'] : "";
 
 					if ($icon != '') { ?>
-						<span class="dashicons <?php echo $icon; ?>"></span>
+						<span class="dashicons <?php echo esc_attr($icon); ?>"></span>
 					<?php }
 
 				}

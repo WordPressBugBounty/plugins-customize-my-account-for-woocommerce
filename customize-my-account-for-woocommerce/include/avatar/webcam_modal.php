@@ -12,7 +12,7 @@ $atts = shortcode_atts( array(
 
     $output = '<form method="POST" action="" name="web_cam" id="web_cam">';
 
-    $output = $output.'<div class="row">';
+    $output = $output.''.wp_nonce_field( 'wcmamtx_webcam_action', 'wcmamtx_webcam_nonce' ).'<div class="row">';
 
     $output = $output.'<div class="col-md-6">';
 
