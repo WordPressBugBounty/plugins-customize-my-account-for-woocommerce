@@ -235,7 +235,7 @@ if (array_key_exists(0, $avatar_settings)) {
 			
 	</tr>
 
-	<tr class="wcmamtx_show_avatar_content_tr" style="<?php if (isset($avatar_settings['custom_avatar_content']) && ($avatar_settings['custom_avatar_content'] == "yes")) { echo 'display:table-row;'; } else { echo 'display:none;'; } ?>">
+	<tr id="wcmamtx_custom_content_textarea_tr" class="wcmamtx_show_avatar_content_tr" style="<?php if (isset($avatar_settings['custom_avatar_content']) && ($avatar_settings['custom_avatar_content'] == "yes")) { echo 'display:table-row;'; } else { echo 'display:none;'; } ?>">
 		<td><label><?php echo esc_html__('Custom content','customize-my-account-for-woocommerce'); ?></label>
 		</td>
 		<td>

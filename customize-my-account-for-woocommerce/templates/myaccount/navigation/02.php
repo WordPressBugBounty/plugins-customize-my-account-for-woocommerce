@@ -23,13 +23,20 @@ if ($sidebar_style == "02") {
     $avatar_settings = (array) get_option( 'wcmamtx_avatar_settings' );
 
 
-    if (array_key_exists(0, $avatar_settings)) {
+    if (!isset($avatar_settings['disable_avatar'])) {
 
 
-        $avatar_settings['intro_text_hello'] = "yes";
-        $avatar_settings['disable_avatar'] = "yes";
-        $avatar_settings['custom_avatar_content'] = "yes";
+        $avatar_settings['intro_text_hello']      = 'yes';
+        $avatar_settings['disable_avatar']        = 'yes';
+        $avatar_settings['custom_avatar_content'] = 'yes';
 
+    }
+
+    // Always use the saved DB value for custom_avatar_content so setting it
+    // to 'no' in the customizer is respected even when above defaults ran.
+    $_fresh_avatar = (array) get_option( 'wcmamtx_avatar_settings' );
+    if ( array_key_exists( 'custom_avatar_content', $_fresh_avatar ) ) {
+        $avatar_settings['custom_avatar_content'] = $_fresh_avatar['custom_avatar_content'];
     }
 
     if (isset($avatar_settings['disable_avatar']) && ($avatar_settings['disable_avatar'] == "yes")) {

@@ -101,9 +101,10 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
         $wcmamtx_layout = (array) get_option('wcmamtx_layout');
 
 
-        $spending_layout_override = isset($wcmamtx_layout['spending_layout_override']) ? $wcmamtx_layout['spending_layout_override'] : "02";
+        $spending_layout_override  = isset($wcmamtx_layout['spending_layout_override'])  ? $wcmamtx_layout['spending_layout_override']  : '02';
+        $spendingchart_override    = isset($wcmamtx_layout['spendingchart_override'])    ? $wcmamtx_layout['spendingchart_override']    : '01';
 
-        if ($spending_layout_override == "01") {
+        if ($spending_layout_override === '01' || $spendingchart_override === '01') {
 
             wp_enqueue_script(
                 'wcmamtx_chart_js',
@@ -351,8 +352,8 @@ public function wcmamtx_google_callback() {
 
             $args = array(
                 'id'    => 'wcmamtx_customize_myaccount', // Unique ID for your link
-                'title' =>  esc_html__('Customize My Account Design','customize-my-account-for-woocommerce'), // The text that will appear in the admin bar
-                'href'  => ''.admin_url().'admin.php?page=wcmamtx_advanced_settings&tab=wcmamtx_layout', // The URL the link will point to
+                'title' =>  esc_html__('My account live customizer','customize-my-account-for-woocommerce'), // The text that will appear in the admin bar
+                'href'  => ''.admin_url().'admin.php?page=wcmamtx_frontend_customizer', // The URL the link will point to
                 'meta'  => array(
                     'class'  => 'wcmamtx_customize_myaccount-class', // Custom CSS class
                     'target' => "_blank",
@@ -397,13 +398,14 @@ public function wcmamtx_google_callback() {
 
 
 
-        $spending_layout_override = isset($wcmamtx_layout['spending_layout_override']) ? $wcmamtx_layout['spending_layout_override'] : "02";
+        $spending_layout_override  = isset($wcmamtx_layout['spending_layout_override'])  ? $wcmamtx_layout['spending_layout_override']  : '02';
+        $spendingchart_override    = isset($wcmamtx_layout['spendingchart_override'])    ? $wcmamtx_layout['spendingchart_override']    : '01';
 
-        $navwidget_disable_spendboxes_showhide = "02";
+        $navwidget_disable_spendboxes_showhide = '02';
 
-        $navwidget_disable_spendchart_showhide  = "02";
+        $navwidget_disable_spendchart_showhide  = '02';
 
-        if ($spending_layout_override != "02") { 
+        if ($spending_layout_override === '01' || $spendingchart_override === '01') { 
 
 
 
@@ -437,8 +439,15 @@ public function wcmamtx_google_callback() {
 
             }
 
-        } 
+        }
 
+        // Respect top-level customizer toggles: if disabled in Dashboard Widgets, force hide
+        if ($spending_layout_override !== '01') {
+            $navwidget_disable_spendboxes_showhide = '02';
+        }
+        if ($spendingchart_override !== '01') {
+            $navwidget_disable_spendchart_showhide = '02';
+        }
 
         $dashlink_layout_override = isset($wcmamtx_layout['dashlink_layout_override']) ? $wcmamtx_layout['dashlink_layout_override'] : "01";
 
