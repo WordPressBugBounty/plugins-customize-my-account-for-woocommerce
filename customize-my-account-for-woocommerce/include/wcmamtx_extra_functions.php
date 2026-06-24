@@ -503,37 +503,42 @@ if (!function_exists('wcmamtx_sb_get_customer_spending_data')) {
 
 
     function wcmamtx_sb_get_customer_spending_data( $user_id ) {
+        $cache_key = 'wcmamtx_spending_' . $user_id;
+        $cached = get_transient( $cache_key );
+        if ( $cached !== false ) return $cached;
 
-        $months = array();
-        $totals = array();
+        $months = [];
+        $totals = [];
+        $monthly = [];
 
-        for ( $i = 11; $i >= 0; $i-- ) {
+    // Single query: all orders in the last 12 months
+        $start = date( 'Y-m-01', strtotime( '-11 months' ) );
+    $end   = date( 'Y-m-t' ); // last day of current month
 
-            $month_key = date( 'Y-m', strtotime( "-$i months" ) );
+    $orders = wc_get_orders( [
+        'customer_id'  => $user_id,
+        'status'       => [ 'wc-completed', 'wc-processing' ],
+        'limit'        => -1,
+        'return'       => 'ids',
+        'date_created' => $start . '...' . $end,
+    ] );
 
-            $months[] = date( 'M Y', strtotime( $month_key . '-01' ) );
-
-            $orders = wc_get_orders( array(
-                'customer_id' => $user_id,
-                'status'      => array( 'wc-completed', 'wc-processing' ),
-                'limit'       => -1,
-                'date_created'=> $month_key . '...'.$month_key . '-31',
-            ) );
-
-            $total = 0;
-
-            foreach ( $orders as $order ) {
-                $total += $order->get_total();
-            }
-
-            $totals[] = round( $total, 2 );
-        }
-
-        return array(
-            'labels' => $months,
-            'values' => $totals,
-        );
+    foreach ( $orders as $order_id ) {
+        $order     = wc_get_order( $order_id );
+        $month_key = $order->get_date_created()->format( 'Y-m' );
+        $monthly[ $month_key ] = ( $monthly[ $month_key ] ?? 0 ) + $order->get_total();
     }
+
+    for ( $i = 11; $i >= 0; $i-- ) {
+        $month_key = date( 'Y-m', strtotime( "-$i months" ) );
+        $months[]  = date( 'M Y', strtotime( $month_key . '-01' ) );
+        $totals[]  = round( $monthly[ $month_key ] ?? 0, 2 );
+    }
+
+    $result = [ 'labels' => $months, 'values' => $totals ];
+    set_transient( $cache_key, $result, 3 * HOUR_IN_SECONDS );
+    return $result;
+}
 
 }
 

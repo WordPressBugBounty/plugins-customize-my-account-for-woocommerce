@@ -1,3 +1,6 @@
+<?php
+$data = wcmamtx_sb_get_customer_spending_data( get_current_user_id() );
+?>
         <div class="sb-spending-chart-card wcmamtx_spending_chart">
 
             <div class="sb-chart-header">

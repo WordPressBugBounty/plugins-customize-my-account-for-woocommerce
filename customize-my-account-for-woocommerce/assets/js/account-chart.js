@@ -1,10 +1,15 @@
-document.addEventListener('DOMContentLoaded', function () {
+function sbInitSpendingChart() {
 
     const canvas = document.getElementById('sbCustomerSpendingChart');
 
-    if (!canvas || typeof Chart === 'undefined') {
+    if (!canvas || typeof Chart === 'undefined' || typeof sbChartData === 'undefined') {
         return;
     }
+
+    if (canvas._sbChartInitialized) {
+        return;
+    }
+    canvas._sbChartInitialized = true;
 
     new Chart(canvas, {
         type: 'line',
@@ -36,4 +41,10 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-});
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', sbInitSpendingChart);
+} else {
+    sbInitSpendingChart();
+}

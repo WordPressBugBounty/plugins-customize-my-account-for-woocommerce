@@ -27,7 +27,22 @@ add_action( 'wp_footer', function() {
 
 
 
+/**
+ * Clear the wcmamtx spending chart transient cache whenever an order
+ * is created or its status changes, so the chart always shows fresh data.
+ */
 
+function wcmamtx_bust_spending_cache( $order_id ) {
+    $order = wc_get_order( $order_id );
+    if ( ! $order ) return;
+    $user_id = $order->get_customer_id();
+    if ( $user_id ) {
+        delete_transient( 'wcmamtx_spending_' . $user_id );
+    }
+}
+
+add_action( 'woocommerce_new_order',            'wcmamtx_bust_spending_cache', 10, 1 );
+add_action( 'woocommerce_order_status_changed', 'wcmamtx_bust_spending_cache', 10, 1 );
 
 
 if (!class_exists('wcmamtx_add_frontend_class')) {
@@ -409,7 +424,7 @@ public function wcmamtx_google_callback() {
 
 
 
-            $data = wcmamtx_sb_get_customer_spending_data( get_current_user_id() );
+            
 
             $navwidget_disable_spendboxes = isset($wcmamtx_layout['navwidget_disable_spendboxes']) ? $wcmamtx_layout['navwidget_disable_spendboxes'] : "no";
 
@@ -484,7 +499,7 @@ public function wcmamtx_google_callback() {
 
         foreach ($dashboard_widget_array as $dkey=>$dvalue) {
             if ($dvalue['show'] == "01") {
-                include (''.$dkey.'.php');
+                include( plugin_dir_path( __FILE__ ) . $dkey . '.php' );
             }
         }
         
