@@ -27,19 +27,7 @@ add_action( 'wp_footer', function() {
 
 
 
-/**
- * Clear the wcmamtx spending chart transient cache whenever an order
- * is created or its status changes, so the chart always shows fresh data.
- */
 
-function wcmamtx_bust_spending_cache( $order_id ) {
-    $order = wc_get_order( $order_id );
-    if ( ! $order ) return;
-    $user_id = $order->get_customer_id();
-    if ( $user_id ) {
-        delete_transient( 'wcmamtx_spending_' . $user_id );
-    }
-}
 
 add_action( 'woocommerce_new_order',            'wcmamtx_bust_spending_cache', 10, 1 );
 add_action( 'woocommerce_order_status_changed', 'wcmamtx_bust_spending_cache', 10, 1 );
@@ -371,7 +359,6 @@ public function wcmamtx_google_callback() {
                 'href'  => ''.admin_url().'admin.php?page=wcmamtx_frontend_customizer', // The URL the link will point to
                 'meta'  => array(
                     'class'  => 'wcmamtx_customize_myaccount-class', // Custom CSS class
-                    'target' => "_blank",
                 ),
             );
 

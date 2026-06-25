@@ -564,7 +564,7 @@ class wcmamtx_upload_avatar_tab {
 		?>
 		<center>
 
-		<div class="wcmamtx_upload_div <?php echo $round_avatar; ?>">
+		<div class="wcmamtx_upload_div <?php echo $round_avatar; ?> round">
 			<?php
 
 			

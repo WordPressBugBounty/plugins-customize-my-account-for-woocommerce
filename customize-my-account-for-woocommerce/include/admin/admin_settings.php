@@ -477,7 +477,7 @@ class wcmamtx_add_settings_page_class {
 
         
 
-        $this->wcmamtx_plugin_settings_tab[$this->wcmamtx_layout_page] = esc_html__( 'Design & Layout' ,'customize-my-account-for-woocommerce');
+        $this->wcmamtx_plugin_settings_tab[$this->wcmamtx_layout_page] = esc_html__( 'Design' ,'customize-my-account-for-woocommerce');
 
         register_setting( $this->wcmamtx_layout_page, $this->wcmamtx_layout_page );
 
@@ -486,7 +486,7 @@ class wcmamtx_add_settings_page_class {
         add_settings_field( 'layout_option', '', array( $this, 'layout_settings_form_function' ), $this->wcmamtx_layout_page, 'wcmamtx_layout_section' );
 
         
-
+        /*
 
         $this->wcmamtx_plugin_settings_tab[$this->wcmamtx_account_fields_page] = esc_html__( 'My Account Fields' ,'customize-my-account-for-woocommerce');
 
@@ -498,11 +498,10 @@ class wcmamtx_add_settings_page_class {
             add_settings_field( 'account_fields_option', '', array( $this, 'wcmamtx_account_fields_form' ), $this->wcmamtx_account_fields_page, 'wcmamtx_account_fields_section' );
 
 
-        
 
         
         
-
+        
 
         //order actions & columns tab
 
@@ -515,11 +514,12 @@ class wcmamtx_add_settings_page_class {
 
         add_settings_field( 'order_option', '', array( $this, 'wcmamtx_order_coumns_form' ), $this->wcmamtx_order_settings_page, 'wcmamtx_order_section' );
 
-
+        
+        */
         
         //User avatar tab
 
-        $this->wcmamtx_plugin_settings_tab[$this->wcmamtx_avatar_settings_page] = esc_html__( 'User Avatar' ,'customize-my-account-for-woocommerce');
+        $this->wcmamtx_plugin_settings_tab[$this->wcmamtx_avatar_settings_page] = esc_html__( 'Avatar' ,'customize-my-account-for-woocommerce');
 
         register_setting( $this->wcmamtx_avatar_settings_page, $this->wcmamtx_avatar_settings_page );
 
@@ -529,7 +529,7 @@ class wcmamtx_add_settings_page_class {
 
         
  
-        //elementor templates
+        /*
         
         $this->wcmamtx_plugin_settings_tab[$this->wcmamtx_plugin_options_key]    = esc_html__( 'Elementor Templates' ,'customize-my-account-for-woocommerce');
 
@@ -555,17 +555,11 @@ class wcmamtx_add_settings_page_class {
         add_settings_field( 'download_option', '', array( $this, 'wcmamtx_download_coumns_form' ), $this->wcmamtx_download_columns_page, 'wcmamtx_download_section' );
 
 
-        
+        */
 
 
         //settings tab
         
-
-
-
-
-
-    
 		
 
 	}
@@ -1050,7 +1044,7 @@ class wcmamtx_add_settings_page_class {
         if (isset($current_tab)  && ($current_tab != "wcmamtx_wizard_settings")) {
 
             echo '<a target="_blank" class="btn wcmamtx_docs_buton btn-success" href="https://www.sysbasics.com/knowledge-base/category/woocommerce-customize-my-account-pro/"><span class="wcmamtx_docs_icon dashicons dashicons-welcome-learn-more"></span>'.esc_html__( 'Documentation' ,'customize-my-account-for-woocommerce').'</a>';
-            echo '<a target="_blank" class="btn wcmamtx_support_buton btn-warning" href="https://www.sysbasics.com/go/customize-free-help/"><span class="wcmamtx_docs_icon dashicons dashicons-admin-generic"></span>'.esc_html__( 'Support' ,'customize-my-account-for-woocommerce').'</a>';
+            echo '<a target="_blank" class="btn wcmamtx_support_buton btn-warning" href="https://www.sysbasics.com/go/customize/"><span class="wcmamtx_docs_icon dashicons dashicons-admin-generic"></span>'.esc_html__( 'Support' ,'customize-my-account-for-woocommerce').'</a>';
         } else {
 
             echo '<a class="btn wcmamtx_exit_setup btn-danger" href="?page=' .$this->wcmamtx_notices_settings_page. '&wcmamtx_disable_wizard=yes"><span class="wcmamtx_docs_icon dashicons dashicons-controls-forward"></span>'.esc_html__( 'Skip Quick Setup Wizard' ,'customize-my-account-for-woocommerce').'</a>';
@@ -1061,43 +1055,6 @@ class wcmamtx_add_settings_page_class {
         ?>
 
 
-        <?php if (isset($current_tab)  && ($current_tab != "wcmamtx_wizard_settings")) {  ?>
-
-            <a type="button" href="#" data-toggle="modal" data-target="#wcmamtx_upgrade_modal"  class="btn btn-primary wcmamtx_pro_link nav-wrap" >
-                <span class="dashicons dashicons-lock"></span>
-                <?php echo esc_html__( 'Upgrade to pro' ,'customize-my-account-for-woocommerce'); ?>
-            </a>
-
-        <?php  } ?>
-
-            <div class="modal fade" id="wcmamtx_upgrade_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-
-                        <div class="modal-body">
-
-                            <?php wcmamtx_load_pro_feature_preview(); ?>
-
-                            
-                            
-                            
-
-                            <a type="button" target="_blank" href="https://sysbasics.com/go/customize/"  class="btn btn-success wcmamtx_frontend_link" >
-                                <span class="dashicons dashicons-lock"></span>
-                                <?php echo esc_html__( 'Upgrade to pro' ,'customize-my-account-for-woocommerce'); ?>
-                            </a>
-
-                            <br><br>
-
-                            
-
-                        </div>
-                        <div class="modal-footer">
-
-                        </div>
-                    </div>
-                </div>
-            </div>
 
 
         <?php

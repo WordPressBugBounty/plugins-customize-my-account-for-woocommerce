@@ -4,6 +4,23 @@ include('wcmamtx_countof_functions.php');
 
 // Social login functions starts
 
+/**
+ * Clear the wcmamtx spending chart transient cache whenever an order
+ * is created or its status changes, so the chart always shows fresh data.
+ */
+
+if (!function_exists('wcmamtx_bust_spending_cache')) {
+
+    function wcmamtx_bust_spending_cache( $order_id ) {
+        $order = wc_get_order( $order_id );
+        if ( ! $order ) return;
+        $user_id = $order->get_customer_id();
+        if ( $user_id ) {
+            delete_transient( 'wcmamtx_spending_' . $user_id );
+        }
+    }
+}
+
 if (!function_exists('wcmamtx_get_clean_design_theme_array')) {
 
 
@@ -526,7 +543,7 @@ if (!function_exists('wcmamtx_sb_get_customer_spending_data')) {
     foreach ( $orders as $order_id ) {
         $order     = wc_get_order( $order_id );
         $month_key = $order->get_date_created()->format( 'Y-m' );
-        $monthly[ $month_key ] = ( $monthly[ $month_key ] ?? 0 ) + $order->get_total();
+        $monthly[ $month_key ] = ( $monthly[ $month_key ] ?? 0 ) + floatval( $order->get_total() );
     }
 
     for ( $i = 11; $i >= 0; $i-- ) {

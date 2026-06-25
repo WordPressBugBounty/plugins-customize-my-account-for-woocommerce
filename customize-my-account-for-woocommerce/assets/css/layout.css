@@ -1075,3 +1075,15 @@ input.wcmamtx_submit_button.wcmamtx_layout:active {
 p.wcmamtx_layout_template_override_navigation_react.alert.alert-success {
     margin-left:0px !important;
 }
+
+div#astra-sites-on-active {
+    display: none;
+}
+
+div#astra-optin-notice {
+    display: none;
+}
+
+a.btn.wcmamtx_docs_buton.btn-success {
+    display: none;
+}

@@ -7,7 +7,7 @@ Tested up to: 7.0.0
 WC Tested up to: 10.8.1
 WC Requires at least: 4.0
 Requires PHP: 5.2
-Stable tag: 4.4.2
+Stable tag: 4.4.4
 Requires Plugins: woocommerce
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -20,9 +20,15 @@ Convert WooCommerce My Account page into a modern dashboard,avatar,dashboard car
 
 Transform the default WooCommerce My Account page into a modern customer dashboard with custom menus, avatars, dashboard cards, endpoints, icons, and role-based navigation.
 
+
+
+= 🚀 Try the live interactive demo =
+
+Try the live interactive demo and explore a fully customized WooCommerce My Account page with Optimized order page , view order page , downloads and live frontend my account customizer.
+
+[Launch live demo](https://playground.wordpress.net/?plugin=customize-my-account-for-woocommerce&blueprint-url=https://wordpress.org/plugins/wp-json/plugins/v1/plugin/customize-my-account-for-woocommerce/blueprint.json)
+
 <p><a href="https://sysbasics.com/go/customize/" title="Customize My Account for WooCommerce pro" rel="nofollow">Upgrade to pro</a></p>
-
-
 
 == Description ==
 

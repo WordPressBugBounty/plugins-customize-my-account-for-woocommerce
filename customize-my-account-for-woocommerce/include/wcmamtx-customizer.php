@@ -302,6 +302,9 @@ function wcmamtx_customizer_render_page() {
 
 <style>
 /* Reset WP admin */
+.wcmamtx_fornt_prevew_demo_only,a.skip-link.screen-reader-text{
+    display: none !important;
+}
 #wpwrap,#wpcontent,#wpbody,#wpbody-content{float:none!important;margin:0!important;padding:0!important;width:100%!important;}
 #adminmenuwrap,#adminmenuback,#wpadminbar{display:none!important;}
 body.wp-customizer{margin:0!important;padding:0!important;}
