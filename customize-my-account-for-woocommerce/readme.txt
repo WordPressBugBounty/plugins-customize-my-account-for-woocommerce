@@ -1,9 +1,9 @@
 === SysBasics Customize My Account for WooCommerce - Live My Account Customizer  ===
-Contributors: phppoet
+Contributors: phppoet,SysBasics
 Tags: my-account,customer-dashboard,user-avatar, endpoints, shipment-tracking
 Requires at least: 5.0
 Tested up to: 6.8
-Stable tag: 4.4.5
+Stable tag: 4.4.6
 Requires PHP: 7.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html

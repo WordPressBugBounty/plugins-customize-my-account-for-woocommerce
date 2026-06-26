@@ -314,6 +314,10 @@ div.woocommerce-MyAccount-content.endpoint-dashboard div.wcmamtx_fornt_prevew_de
     display: none !important;
 }
 
+.cz-inline-row {
+    color: white;
+}
+
 #wpwrap,#wpcontent,#wpbody,#wpbody-content{float:none!important;margin:0!important;padding:0!important;width:100%!important;}
 #adminmenuwrap,#adminmenuback,#wpadminbar{display:none!important;}
 body.wp-customizer{margin:0!important;padding:0!important;}
@@ -650,7 +654,7 @@ a.wcmamtx_accordion_label_small
                             <div class="cz-toggle-group" style="flex-direction:column;">
                                 <button class="cz-toggle <?php echo esc_attr($sidebar_style==='01'?'active':''); ?>" data-key="sidebar_style" data-value="01"><?php esc_html_e('Left','customize-my-account-for-woocommerce'); ?></button>
                                 <button class="cz-toggle cz-pro-locked" type="button" title="Pro feature"><?php esc_html_e('Right','customize-my-account-for-woocommerce'); ?><span class="cz-pro-badge">&#128274;</span></button>
-                                <button class="cz-toggle cz-pro-locked" type="button" title="Pro feature"><?php esc_html_e('Full Width','customize-my-account-for-woocommerce'); ?><span class="cz-pro-badge">&#128274;</span></button>
+                                
                             </div>
                         </div>
                     </div>
@@ -1726,7 +1730,7 @@ setTimeout(function() {
     <button class="cz-pm-close cz-pm-close-all" aria-label="Close">&times;</button>
     <div class="cz-pm-icon">&#128274;</div>
     <h3 id="cz-pm-title"><?php esc_html_e('Pro Feature','customize-my-account-for-woocommerce'); ?></h3>
-    <p><?php esc_html_e('Right sidebar and Full Width layout are available in the Pro version. Upgrade to unlock all layout options and more.','customize-my-account-for-woocommerce'); ?></p>
+    <p><?php esc_html_e('Right sidebar Layout is available in the Pro version. Upgrade to unlock all layout options and more.','customize-my-account-for-woocommerce'); ?></p>
     <div class="cz-pm-actions">
       <a href="https://sysbasics.com/go/customize/" target="_blank" class="cz-pm-btn">&#9889; <?php esc_html_e('Upgrade to Pro','customize-my-account-for-woocommerce'); ?></a>
     </div>

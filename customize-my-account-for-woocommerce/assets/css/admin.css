@@ -607,7 +607,7 @@ a.btn.btn-success.wcmamtx_frontend_link {
     cursor: default;
     -webkit-filter: grayscale(100%);
     filter: grayscale(100%);
-    opacity: inherit;
+    opacity: 0.45;
 }
 .wcmamtx_notice_div.review.bottom {
     margin-top: 60px;
@@ -866,4 +866,151 @@ span.wcmamtx_new_tab_note {
 
 a.nav-tab.wcmamtx_plugin_options {
     opacity: 0.4;
+}
+/* ============================================================
+   Responsive Buttons Section
+   ============================================================ */
+
+.wcmamtx_buttons_section {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 0;
+    border-top: 1px solid #e5e7eb;
+    margin-top: 16px;
+}
+
+.wcmamtx-btn-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+}
+
+.wcmamtx-btn-group--actions {
+    margin-left: auto;
+}
+
+.wcmamtx-action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.4;
+    cursor: pointer;
+    border: 1px solid transparent;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 0.15s, border-color 0.15s;
+    background: #f6f7f7;
+    color: #2c3338;
+    border-color: #c3c4c7;
+}
+
+.wcmamtx-action-btn:hover {
+    background: #e5e5e5;
+    color: #1d2327;
+    text-decoration: none;
+}
+
+.wcmamtx-action-btn .dashicons {
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+    margin-top: 0;
+    flex-shrink: 0;
+}
+
+.wcmamtx-action-btn--save {
+    background: #2271b1;
+    color: #fff;
+    border-color: #2271b1;
+}
+.wcmamtx-action-btn--save:hover {
+    background: #135e96;
+    border-color: #135e96;
+    color: #fff;
+}
+
+.wcmamtx-action-btn--danger {
+    background: #d63638;
+    color: #fff;
+    border-color: #d63638;
+}
+.wcmamtx-action-btn--danger:hover {
+    background: #b32d2e;
+    border-color: #b32d2e;
+    color: #fff;
+}
+
+.wcmamtx-action-btn--primary {
+    background: #2271b1;
+    color: #fff;
+    border-color: #2271b1;
+}
+.wcmamtx-action-btn--primary:hover {
+    background: #135e96;
+    border-color: #135e96;
+    color: #fff;
+}
+
+.wcmamtx-action-btn--info {
+    background: #0a7ef9;
+    color: #fff;
+    border-color: #0a7ef9;
+}
+.wcmamtx-action-btn--info:hover {
+    background: #0369d1;
+    border-color: #0369d1;
+    color: #fff;
+}
+
+.wcmamtx_buttons_section .wcmamtx_submit_section_div {
+    margin-left: auto;
+    float: none;
+}
+
+.wcmamtx_buttons_section a#wcmamtx_frontend_link,
+.wcmamtx_buttons_section #wcmamtx_frontend_link {
+    float: none;
+    margin-right: 0;
+}
+
+.wcmamtx_buttons_section button.button.expimpbuttons,
+.wcmamtx_buttons_section button.btn.btn-sm.btn-info.expimpbuttons {
+    float: none;
+    margin-right: 0;
+}
+
+@media (max-width: 782px) {
+    .wcmamtx_buttons_section {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .wcmamtx-btn-group {
+        width: 100%;
+        justify-content: flex-start;
+    }
+    .wcmamtx-btn-group--actions {
+        margin-left: 0;
+        border-top: 1px solid #e5e7eb;
+        padding-top: 8px;
+    }
+    .wcmamtx-action-btn {
+        flex: 1 1 auto;
+        justify-content: center;
+        min-width: 80px;
+    }
+}
+
+.wcmamtx_avatar_settings button.wcmamtx-action-btn.wcmamtx-action-btn--info.expimpbuttons {
+    display: none;
+}
+
+.wcmamtx_avatar_settings a.wcmamtx-action-btn.wcmamtx-action-btn--primary.wcmamtx_frontend_link {
+    display: none;
 }

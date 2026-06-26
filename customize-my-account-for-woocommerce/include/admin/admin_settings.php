@@ -747,114 +747,87 @@ class wcmamtx_add_settings_page_class {
                 ?>
 
                 <div class="wcmamtx_buttons_section">
-                    
+
                     <?php if (isset($current_tab) && ($current_tab == "wcmamtx_advanced_settings") && ($current_tab != "wcmamtx_wizard_settings") ) { ?>
-                        <div class="wcmamtx_add_section_div">
-                            <button type="button" href="#" data-toggle="modal" data-target="<?php echo $endpoint_button_id; ?>" data-etype="endpoint" id="wcmamtx_add_endpoint" class="btn btn-sm btn-primary wcmamtx_add_group <?php echo $endpoint_button_class; ?>">
-                                <span class="dashicons dashicons-insert"></span>
-                                <?php echo esc_html__( 'Endpoint' ,'customize-my-account-for-woocommerce'); ?>
-                            </button>
-
-                            <button type="button" href="#" data-toggle="modal" data-target="<?php echo $link_button_id; ?>" data-etype="link" id="wcmamtx_add_link" class="btn btn-sm btn-primary wcmamtx_add_group <?php echo $link_button_class; ?>">
-                                <span class="dashicons dashicons-insert"></span>
-                                <?php echo esc_html__( 'Link' ,'customize-my-account-for-woocommerce'); ?>
-                            </button>
-
-                            <button type="button" href="#" data-toggle="modal" data-target="#wcmamtx_example_modal2" data-etype="group" id="wcmamtx_add_group" class="btn btn-sm btn-primary wcmamtx_add_group wcmamtx_disabled2">
-                                <span class="dashicons dashicons-insert"></span>
-                                <?php echo esc_html__( 'Group' ,'customize-my-account-for-woocommerce'); ?>
-                            </button>
-
-
-                            
-
-                            
-                            
-                        </div>
-                       
+                    <div class="wcmamtx-btn-group wcmamtx-btn-group--add">
+                        <button type="button" data-toggle="modal" data-target="<?php echo $endpoint_button_id; ?>" data-etype="endpoint" id="wcmamtx_add_endpoint" class="wcmamtx-action-btn wcmamtx_add_group <?php echo $endpoint_button_class; ?>">
+                            <span class="dashicons dashicons-insert"></span>
+                            <span class="wcmamtx-btn-label"><?php echo esc_html__( 'Endpoint', 'customize-my-account-for-woocommerce' ); ?></span>
+                        </button>
+                        <button type="button" data-toggle="modal" data-target="<?php echo $link_button_id; ?>" data-etype="link" id="wcmamtx_add_link" class="wcmamtx-action-btn wcmamtx_add_group <?php echo $link_button_class; ?>">
+                            <span class="dashicons dashicons-insert"></span>
+                            <span class="wcmamtx-btn-label"><?php echo esc_html__( 'Link', 'customize-my-account-for-woocommerce' ); ?></span>
+                        </button>
+                        <button type="button" data-toggle="modal" data-target="#wcmamtx_example_modal2" data-etype="group" id="wcmamtx_add_group" class="wcmamtx-action-btn wcmamtx_add_group wcmamtx_disabled2">
+                            <span class="dashicons dashicons-insert"></span>
+                            <span class="wcmamtx-btn-label"><?php echo esc_html__( 'Group', 'customize-my-account-for-woocommerce' ); ?></span>
+                        </button>
+                        <button type="submit" form="wcmamtx_separater_form" id="wcmamtx_add_space" class="wcmamtx-action-btn wcmamtx_add_group">
+                            <span class="dashicons dashicons-insert"></span>
+                            <span class="wcmamtx-btn-label"><?php echo esc_html__( 'Separater', 'customize-my-account-for-woocommerce' ); ?></span>
+                        </button>
+                        <button type="button" data-toggle="modal" data-target="#wcmamtx_example_modal3" data-etype="heading" class="wcmamtx-action-btn wcmamtx_add_group">
+                            <span class="dashicons dashicons-insert"></span>
+                            <span class="wcmamtx-btn-label"><?php echo esc_html__( 'Heading', 'customize-my-account-for-woocommerce' ); ?></span>
+                        </button>
+                    </div>
                     <?php } ?>
 
-                    <div class="wcmamtx_submit_section_div <?php echo esc_attr($current_tab); ?>">
+                    <div class="wcmamtx-btn-group wcmamtx-btn-group--actions wcmamtx_submit_section_div <?php echo esc_attr($current_tab); ?>">
 
-                        <?php if (isset($current_tab)  && ($current_tab != "wcmamtx_wizard_settings")) {  
-
+                        <?php if (isset($current_tab) && ($current_tab != "wcmamtx_wizard_settings")) {
                             $load_wcmamtx_optional_class = load_wcmamtx_optional_class($current_tab);
-
-                            ?>
-
-                            <input type="submit" name="submit" id="submit" class="btn <?php echo $load_wcmamtx_optional_class; ?> btn-sm btn-success wcmamtx_submit_button <?php echo esc_attr($current_tab); ?>" value="<?php echo esc_html__( 'Save Changes' ,'customize-my-account-for-woocommerce'); ?>">
-
-                        <?php }  ?>
+                        ?>
+                        <input type="submit" name="submit" id="submit" class="wcmamtx-action-btn wcmamtx-action-btn--save wcmamtx_submit_button <?php echo esc_attr($current_tab); ?> <?php echo $load_wcmamtx_optional_class; ?>" value="<?php echo esc_html__( 'Save Changes', 'customize-my-account-for-woocommerce' ); ?>">
+                        <?php } ?>
 
                         <?php if (isset($current_tab) && ($current_tab == "wcmamtx_advanced_settings") && ($current_tab != "wcmamtx_wizard_settings")) { ?>
-
-                           
-
-                            <input type="button" href="#" name="submit" id="wcmamtx_reset_tabs_button" class="btn-sm btn btn-danger wcmamtx_reset_tabs_button" value="<?php echo esc_html__( 'Restore Default' ,'customize-my-account-for-woocommerce'); ?>">
-                           
-
-                            
-                        <?php } elseif (isset($current_tab) && ($current_tab == "wcmamtx_order_settings") && ($current_tab != "wcmamtx_wizard_settings")) {  ?>
-
-                                <input type="button" href="#" name="submit" id="wcmamtx_reset_order_button" class="btn btn-sm btn-danger wcmamtx_reset_order_button" value="<?php echo esc_html__( 'Restore Default' ,'customize-my-account-for-woocommerce'); ?>">
-
+                            <input type="button" id="wcmamtx_reset_tabs_button" class="wcmamtx-action-btn wcmamtx-action-btn--danger wcmamtx_reset_tabs_button" value="<?php echo esc_html__( 'Restore Default', 'customize-my-account-for-woocommerce' ); ?>">
+                        <?php } elseif (isset($current_tab) && ($current_tab == "wcmamtx_order_settings") && ($current_tab != "wcmamtx_wizard_settings")) { ?>
+                            <input type="button" id="wcmamtx_reset_order_button" class="wcmamtx-action-btn wcmamtx-action-btn--danger wcmamtx_reset_order_button" value="<?php echo esc_html__( 'Restore Default', 'customize-my-account-for-woocommerce' ); ?>">
                         <?php } ?>
 
                         <?php
-                         $frontend_url = get_permalink(get_option('woocommerce_myaccount_page_id'));
-
-                         if (($tab == "wcmamtx_order_settings") || ($tab == "wcmamtx_order_actions")) {
-                             $frontend_url =  wc_get_account_endpoint_url( 'orders' );
-                         }
-
+                        $frontend_url = get_permalink( get_option( 'woocommerce_myaccount_page_id' ) );
+                        if ( ( $tab == "wcmamtx_order_settings" ) || ( $tab == "wcmamtx_order_actions" ) ) {
+                            $frontend_url = wc_get_account_endpoint_url( 'orders' );
+                        }
                         ?>
 
-                        <?php if (isset($current_tab)  && ($current_tab != "wcmamtx_wizard_settings")) {  ?>
-
-                             <button type="button" class="btn btn-sm btn-info expimpbuttons wcmamtx-btn-export"><span class="dashicons dashicons-upload"></span> <?php esc_html_e( 'Export', 'customize-my-account-for-woocommerce' ); ?></button>
-                             <button type="button" class="btn btn-sm btn-info expimpbuttons wcmamtx-btn-import"><span class="dashicons dashicons-download"></span> <?php esc_html_e( 'Import', 'customize-my-account-for-woocommerce' ); ?></button>
-                             <input type="file" id="wcmamtx-import-file" accept=".json" style="display:none;">
-
-                            <a type="button" target="_blank" href="<?php echo $frontend_url; ?>" name="submit" id="wcmamtx_frontend_link" class="btn btn-sm btn-primary wcmamtx_frontend_link" >
-                               <span class="dashicons dashicons-welcome-view-site"></span>
-                               <?php echo esc_html__( 'Frontend' ,'customize-my-account-for-woocommerce'); ?>
-                           </a>
-
-                       <?php } ?>
-
-                       
+                        <?php if (isset($current_tab) && ($current_tab != "wcmamtx_wizard_settings")) { ?>
+                            <button type="button" class="wcmamtx-action-btn wcmamtx-action-btn--info expimpbuttons wcmamtx-btn-export">
+                                <span class="dashicons dashicons-upload"></span>
+                                <span class="wcmamtx-btn-label"><?php esc_html_e( 'Export', 'customize-my-account-for-woocommerce' ); ?></span>
+                            </button>
+                            <button type="button" class="wcmamtx-action-btn wcmamtx-action-btn--info expimpbuttons wcmamtx-btn-import">
+                                <span class="dashicons dashicons-download"></span>
+                                <span class="wcmamtx-btn-label"><?php esc_html_e( 'Import', 'customize-my-account-for-woocommerce' ); ?></span>
+                            </button>
+                            <input type="file" id="wcmamtx-import-file" accept=".json" style="display:none;">
+                            <a type="button" target="_blank" href="<?php echo esc_url( $frontend_url ); ?>" class="wcmamtx-action-btn wcmamtx-action-btn--primary wcmamtx_frontend_link">
+                                <span class="dashicons dashicons-welcome-view-site"></span>
+                                <span class="wcmamtx-btn-label"><?php echo esc_html__( 'Frontend', 'customize-my-account-for-woocommerce' ); ?></span>
+                            </a>
+                        <?php } ?>
 
                         <?php do_action( 'wcmamtx_add_author_links' ); ?>
                     </div>
-                    
 
-                    
-                </div>
-                
-            </form>
-
-
-            <form action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" method="post" class="nds_add_user_meta_form" >            
-
-
-                <input type="hidden" name="action" value="nds_form_response_endpoint">
-                <input type="hidden" name="wcmamtx_add_endpoint_nonce" value="<?php echo wp_create_nonce( 'wcmamtx_nonce_hidden' ); ?>" />          
-                <div class="form-group">
-                    
-                    <input type="hidden" class="form-control" nonce="<?php echo wp_create_nonce( 'wcmamtx_nonce_hidden' ); ?>" name="<?php echo "nds"; ?>[row_type]" id="wcmamtx_hidden_endpoint_type" value="separater">
                 </div>
 
-                
-                <button type="submit" href="#" id="wcmamtx_add_space" class="btn btn-sm btn-primary wcmamtx_add_group">
-                    <span class="dashicons dashicons-insert"></span>
-                    <?php echo esc_html__( 'Separater' ,'customize-my-account-for-woocommerce'); ?>
-                </button>
+                </form>
 
-                <button type="button" href="#" data-toggle="modal" data-target="#wcmamtx_example_modal3" data-etype="heading" id="wcmamtx_add_group" class="btn btn-sm btn-primary wcmamtx_add_group ">
-                    <span class="dashicons dashicons-insert"></span>
-                    <?php echo esc_html__( 'Heading' ,'customize-my-account-for-woocommerce'); ?>
-                </button>
-            </form>
+                <form id="wcmamtx_separater_form" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" method="post" class="nds_add_user_meta_form" style="display:none;">
+                    <input type="hidden" name="action" value="nds_form_response_endpoint">
+                    <input type="hidden" name="wcmamtx_add_endpoint_nonce" value="<?php echo wp_create_nonce( 'wcmamtx_nonce_hidden' ); ?>" />
+                    <input type="hidden" class="form-control" nonce="<?php echo wp_create_nonce( 'wcmamtx_nonce_hidden' ); ?>" name="<?php echo 'nds'; ?>[row_type]" id="wcmamtx_hidden_endpoint_type" value="separater">
+                </form>
+
+                <form id="wcmamtx_separater_form" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" method="post" class="nds_add_user_meta_form" style="display:none;">
+                    <input type="hidden" name="action" value="nds_form_response_endpoint">
+                    <input type="hidden" name="wcmamtx_add_endpoint_nonce" value="<?php echo wp_create_nonce( 'wcmamtx_nonce_hidden' ); ?>" />
+                    <input type="hidden" class="form-control" nonce="<?php echo wp_create_nonce( 'wcmamtx_nonce_hidden' ); ?>" name="<?php echo 'nds'; ?>[row_type]" id="wcmamtx_hidden_endpoint_type" value="separater">
+                </form>
 
 
 
@@ -1043,7 +1016,7 @@ class wcmamtx_add_settings_page_class {
 
         if (isset($current_tab)  && ($current_tab != "wcmamtx_wizard_settings")) {
 
-            echo '<a target="_blank" class="btn wcmamtx_docs_buton btn-success" href="https://www.sysbasics.com/knowledge-base/category/woocommerce-customize-my-account-pro/"><span class="wcmamtx_docs_icon dashicons dashicons-welcome-learn-more"></span>'.esc_html__( 'Documentation' ,'customize-my-account-for-woocommerce').'</a>';
+           
             echo '<a target="_blank" class="btn wcmamtx_support_buton btn-warning" href="https://www.sysbasics.com/go/customize/"><span class="wcmamtx_docs_icon dashicons dashicons-admin-generic"></span>'.esc_html__( 'Support' ,'customize-my-account-for-woocommerce').'</a>';
         } else {
 
