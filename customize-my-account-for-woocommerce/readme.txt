@@ -1,201 +1,249 @@
-=== SysBasics Customize My Account for WooCommerce – Dashboard, Endpoints, Avatar & Menu Manager ===
-Contributors: phppoet,sysbasics
-Donate link: https://www.paypal.com/ncp/payment/Q6ZEJ66THRLVE
-Tags: customize woocommerce,my account,Astra,endpoints,user avatar
-Requires at least: 4.0
-Tested up to: 7.0.0
-WC Tested up to: 10.8.1
-WC Requires at least: 4.0
-Requires PHP: 5.2
-Stable tag: 4.4.4
-Requires Plugins: woocommerce
+=== SysBasics Customize My Account for WooCommerce - Live My Account Customizer  ===
+Contributors: phppoet
+Tags: my-account,customer-dashboard,user-avatar, endpoints, shipment-tracking
+Requires at least: 5.0
+Tested up to: 6.8
+Stable tag: 4.4.5
+Requires PHP: 7.2
 License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Convert WooCommerce My Account page into a modern dashboard,avatar,dashboard cards,endpoints compatible with themes like Astra,woodmart,Divi etc
-
-== Description ==
-
-<h3>Customize My Account for WooCommerce</h3>
-
-Transform the default WooCommerce My Account page into a modern customer dashboard with custom menus, avatars, dashboard cards, endpoints, icons, and role-based navigation.
-
-
-
-= 🚀 Try the live interactive demo =
-
-Try the live interactive demo and explore a fully customized WooCommerce My Account page with Optimized order page , view order page , downloads and live frontend my account customizer.
-
-[Launch live demo](https://playground.wordpress.net/?plugin=customize-my-account-for-woocommerce&blueprint-url=https://wordpress.org/plugins/wp-json/plugins/v1/plugin/customize-my-account-for-woocommerce/blueprint.json)
-
-<p><a href="https://sysbasics.com/go/customize/" title="Customize My Account for WooCommerce pro" rel="nofollow">Upgrade to pro</a></p>
+Customize WooCommerce My Account with a live customizer, spending chart, shipment tracking, Google login, custom endpoints and user avatar.
 
 == Description ==
 
-<h2>Customize My Account for WooCommerce</h2>
+### Customize My Account for WooCommerce — Free Plugin by SysBasics
 
-SysBasics Customize My Account for WooCommerce is a powerful WooCommerce account customization plugin that helps you create a professional and personalized customer dashboard.
+Transform the default WooCommerce My Account page into a modern, professional customer dashboard — with a live frontend customizer, spending overview, shipment tracking, Google login, user avatars, custom endpoints, and role-based navigation. No coding required.
 
-Customize the WooCommerce My Account page with custom menu items, custom endpoints, user avatar uploads, dashboard widgets, menu icons, navigation styles, and role-based visibility controls—all without writing code.
+🚀 **[Try Live Demo](https://playground.wordpress.net/?plugin=customize-my-account-for-woocommerce&blueprint-url=https://wordpress.org/plugins/wp-json/plugins/v1/plugin/customize-my-account-for-woocommerce/blueprint.json)** — Opens instantly in your browser. No installation needed!
 
-Improve customer engagement and provide a better account management experience with a fully customized WooCommerce customer area.
+[Upgrade to Pro](https://sysbasics.com/go/customize/) | [Documentation](https://www.sysbasics.com/knowledge-base/) | [Support](https://wordpress.org/support/plugin/customize-my-account-for-woocommerce/)
 
+---
 
-<h3>Improve design of WooCommerce My Account Page</h3>
+### ✨ What Makes This Plugin Different?
 
-Just by enabling plugin you can optimize default styling of your WooCommerce My Account Page. Here's the before and after screenshots with some of the popular wordpress themes. 
+Most WooCommerce My Account plugins let you add tabs. This one goes further — it ships with a **real-time live frontend customizer**, a **spending overview dashboard with chart**, **built-in shipment tracking**, **Google social login**, and **automatic design improvements** just by activating it.
 
+---
 
-✅ <strong>Astra Theme</strong>
-<a href="https://prnt.sc/0MIMcdWgzd43" target="_blank" rel="noopener noreferrer">Before activation</a>&emsp;|&emsp;<a href="https://prnt.sc/9HZTyLJkLLQU" target="_blank" rel="noopener noreferrer">After activation</a>
+### 🎨 Live Frontend Customizer
 
-✅ <strong>Woodmart Theme</strong>
-<a href="https://prnt.sc/J-Ehcj_Cuv9Y" target="_blank" rel="noopener noreferrer">Before activation</a>&emsp;|&emsp;<a href="https://prnt.sc/Fc1DUbXOGe2V" target="_blank" rel="noopener noreferrer">After activation</a>
+Preview and customize your My Account page in real time — no page refreshes, no guessing. The dark-themed customizer panel shows a live iframe of your actual account page while you make changes.
 
-✅ <strong>Hello Elementor Theme</strong>
-<a href="https://prnt.sc/cYzKJaH89uSL" target="_blank" rel="noopener noreferrer">Before activation</a>&emsp;|&emsp;<a href="https://prnt.sc/kPO6Dk2fFw60" target="_blank" rel="noopener noreferrer">After activation</a>
+✅ Switch navigation styles instantly (Theme Default, Clean, React-Based)
+✅ Toggle dashboard widgets on/off with a single click
+✅ Drag and drop to reorder dashboard sections
+✅ Preview changes across Desktop and Mobile viewports
+✅ Changes save automatically via AJAX — no Save button needed
 
-✅ <strong>GeneratePress Theme</strong>
-<a href="https://prnt.sc/PpAbVJLXEZ5-" target="_blank" rel="noopener noreferrer">Before activation</a>&emsp;|&emsp;<a href="https://prnt.sc/u0ot7Fm9vef2" target="_blank" rel="noopener noreferrer">After activation</a>
+---
 
-✅ <strong>Divi Theme</strong>
-<a href="https://prnt.sc/p_2hXFlS4xRp" target="_blank" rel="noopener noreferrer">Before activation</a>&emsp;|&emsp;<a href="https://prnt.sc/McDYanFUp16i" target="_blank" rel="noopener noreferrer">After activation</a>
+### 📊 Customer Spending Dashboard
 
+Give customers a clear picture of their purchase history right on the dashboard.
 
-These are screenshots with some popular theme's only. This plugin has been optimized for most of widely used 100 themes out there and design is fully responsive which works well on mobile devices too.
+✅ **Total Spent** — lifetime spend displayed with currency formatting
+✅ **Total Orders** — complete order count at a glance
+✅ **Average Order Value** — automatically calculated
+✅ **12-Month Spending Chart** — a beautiful interactive line chart showing monthly spending trends over the last year
 
-<h3>Core Features</h3>
+---
 
-&#9989;  Customize WooCommerce My Account menu items
+### 🎨 Instant Design Improvement — Just Activate
 
-&#9989;  Create custom account endpoints
+Just by enabling the plugin, the default WooCommerce My Account page gets a visual upgrade — no configuration needed. Verified with 100+ popular themes:
 
-&#9989;  Reorder account navigation menus
+✅ **Astra** — [Before](https://prnt.sc/0MIMcdWgzd43) | [After](https://prnt.sc/9HZTyLJkLLQU)
+✅ **Woodmart** — [Before](https://prnt.sc/J-Ehcj_Cuv9Y) | [After](https://prnt.sc/Fc1DUbXOGe2V)
+✅ **Hello Elementor** — [Before](https://prnt.sc/cYzKJaH89uSL) | [After](https://prnt.sc/kPO6Dk2fFw60)
+✅ **GeneratePress** — [Before](https://prnt.sc/PpAbVJLXEZ5-) | [After](https://prnt.sc/u0ot7Fm9vef2)
+✅ **Divi** — [Before](https://prnt.sc/p_2hXFlS4xRp) | [After](https://prnt.sc/McDYanFUp16i)
 
-&#9989;  User avatar upload for customer accounts
+Also compatible with: Avada, Kadence, Neve, OceanWP, Blocksy, Flatsome, Storefront, and many more.
 
-&#9989;  Dashboard customization options
+---
 
-&#9989;  Assign icons to account menu items
+### 🚚 Built-in Shipment Tracking
 
-&#9989;  Show custom content inside account pages
+Add shipment tracking directly to WooCommerce orders — no third-party tracking plugin required.
 
-&#9989;  Role-based menu visibility controls
+✅ Add courier name, tracking number and tracking URL from the order edit page
+✅ Tracking column visible in the WooCommerce orders list
+✅ Customers see a clickable tracking link on their Orders and View Order pages
+✅ Quick Add Tracking button appears when no tracking info has been saved yet
 
-&#9989;  Mobile-friendly account page layouts
+---
 
-&#9989;  Modern WooCommerce dashboard designs
+### 🔑 Google Social Login (Free)
 
-&#9989;  Custom links and account navigation management
+Let customers sign in or register with their Google account in one click — no passwords needed.
 
-&#9989;  Compatible with most WooCommerce themes like Astra , Avada, Woodmart , Hello elementor , flatsome , Divi , Generatepress etc.
+✅ Works with any Google OAuth Client ID
+✅ Automatically creates a WooCommerce customer account on first login
+✅ Fully integrates with the My Account page login form
 
-&#9989;  Lightweight and easy to configure
+---
 
+### 👤 User Avatar Upload
 
-<h3>Customize WooCommerce My Account Page</h3>
+Allow customers to upload and manage their profile photo directly from the My Account page.
 
-Transform the default WooCommerce My Account page into a modern customer dashboard. Create custom tabs, organize navigation menus, display personalized content, and improve the overall customer experience.
+✅ Upload photo from device or capture via webcam
+✅ Optional image cropper for precise avatar selection
+✅ Fallback to Gravatar or a local default avatar
+✅ Configurable size limits and allowed file formats
+✅ Restrict avatar uploads per store settings
 
-<h3>User Avatar Upload</h3>
+---
 
-Allow customers to upload and manage profile avatars directly from their WooCommerce account page. Give your customer dashboard a more personalized and professional appearance.
+### 🗂️ Custom Endpoints & Account Tabs
 
-<h3>Custom Endpoints & Account Tabs</h3>
+Freely add, remove, rename and reorder My Account navigation items:
 
-Create unlimited custom endpoints and account tabs for:
+✅ Custom Endpoints — with shortcode or HTML content
+✅ Custom Links — open in same tab or new tab
+✅ Groups — collapsible sections to organize menu items
+✅ Separators and Headings for visual structure
+✅ Automatic detection and support for third-party endpoints (YITH Wishlist, Tera Wallet, WooCommerce Subscriptions, and more)
 
-&#9989; Support pages
-&#9989; Loyalty programs
-&#9989; Membership information
-&#9989; Download areas
-&#9989; FAQs
-&#9989; Custom account sections
-&#9989; External links
+---
 
+### 🧭 Header Navigation Widget
 
+Add a My Account dropdown to your site's navigation menu.
 
-<h3>Dashboard Customization</h3>
+✅ Shows customer avatar and display name when logged in
+✅ Displays a clean Login button for logged-out visitors
+✅ Fully customizable widget text for logged-in and logged-out states
+✅ Supports all major navigation menu locations
 
-Enhance the WooCommerce dashboard by displaying custom content, welcome messages, shortcuts, widgets, and personalized customer information.
+---
 
-<h3>Menu Icons & Navigation Styles</h3>
+### 👁️ Role-Based Visibility
 
-Improve usability with attractive menu icons and multiple account navigation styles designed for desktop and mobile devices.
+Control exactly which menu items and sections each user role can see.
 
-<h3>Fully Customizable WooCommerce My Account sidebar navigation </h3>
+✅ Show/hide endpoints by user role
+✅ Show/hide endpoints by specific user ID
+✅ Exclude specific roles or users from seeing certain items
+✅ Perfect for membership sites, wholesale stores, and B2B portals
 
-While you can reorder,modify,delete the existing core endpoints like orders,downloads,dashboard,account details,edit addresss and customer logout link as well as you can add new menu items to navigation menu like
+---
 
-&#9989; Custom Endpoints with shortcode
-&#9989; Custom Links that could support modal popup and custom links
-&#9989; Separater
-&#9989; Heading
-&#9989; Compatible with Endpoints that are added via third party plugins like yith wishlist,tera wallet,woocommerce subscription and many more. 
+### 🖼️ Multiple Navigation Styles
 
-<h3>Third Party Endpoint Compatibility</h3>
+Choose from built-in navigation layout styles:
 
-It automatically detects third party endpoints and add it to existing menu. Good thing about this is that you can have full control over third party endpoint customization even though it is being added from somewhere else.
+✅ **Theme Default** — inherits your theme's My Account styling
+✅ **Clean** — a polished, modern sidebar design
+✅ **React-Based** — fully JS-driven navigation (Pro)
+✅ **Banking App Style** — premium bottom-tab navigation (Pro)
 
+---
 
+### 📦 Optimized Order & Download Templates
 
+The plugin ships with improved templates for Orders, View Order, and Downloads pages — replacing the default WooCommerce tables with card-based, mobile-friendly layouts.
 
-<h3>Role-Based Visibility</h3>
+✅ Order cards with status badge, product image, and item count
+✅ Filter orders by status (All / Processing / Completed)
+✅ Download cards with file name, remaining downloads and expiry date
+✅ Switch back to WooCommerce default templates at any time
 
-Display specific menu items and account sections based on user roles, making the plugin suitable for:
+---
 
-&#9989; WooCommerce stores
-&#9989; Membership sites
-&#9989; Wholesale stores
-&#9989; B2B websites
-&#9989; Customer portals
+### 🔧 Core Features at a Glance
 
-<h3>Why Choose SysBasics Customize My Account for WooCommerce?</h3>
+✅ Live frontend customizer with real-time preview
+✅ Spending overview dashboard with 12-month chart
+✅ Built-in shipment tracking
+✅ Google social login
+✅ User avatar upload with webcam and crop support
+✅ Custom endpoints, links, groups, separators and headings
+✅ Reorder and rename all My Account navigation items
+✅ Role-based and user-based menu visibility
+✅ Header navigation menu widget with avatar
+✅ Multiple navigation styles (Clean, React, Banking App Pro)
+✅ Optimized Orders, Downloads and View Order templates
+✅ Compatible with 100+ WooCommerce themes
+✅ Third-party endpoint auto-detection (YITH, Tera Wallet, Subscriptions, etc.)
+✅ Lightweight, no page builders required, works without any coding
 
-The default WooCommerce account page offers limited customization options. This plugin gives store owners complete control over the customer dashboard, helping improve user experience, customer retention, and account navigation.
+---
 
-<h3>Perfect For</h3>
-&#9989; WooCommerce Store Owners
-&#9989; Membership Websites
-&#9989; Wholesale Stores
-&#9989; B2B Portals
-&#9989; Subscription Businesses
-&#9989; Customer Account Dashboards
+### Perfect For
 
+✅ WooCommerce Store Owners
+✅ Membership & Subscription Sites
+✅ Wholesale & B2B Stores
+✅ Customer Portals
+✅ Digital Download Stores
 
+---
 
+### 🚀 Pro Version
 
+[Upgrade to Pro](https://sysbasics.com/go/customize/) to unlock:
 
+✅ Banking App navigation style
+✅ React-based navigation
+✅ Unlimited custom endpoints and groups
+✅ Right sidebar and full-width layout options
+✅ Card and Tile dashboard link styles
+✅ Profile completion wizard
+✅ Custom Elementor templates per endpoint
+✅ Change the default My Account landing tab
+✅ Ajax navigation between endpoints
+✅ Order columns and action customization
+✅ Download column customization
+✅ 6 months of premium support
 
-== Upgrade Notice ==
-
-## Privacy Policy
-Customize My Account for WooCommerce uses [Appsero](https://Appsero.com) SDK to collect some telemetry data upon user's confirmation. This helps us to troubleshoot problems faster & make product improvements.
-
-Appsero SDK **does not gather any data by default.** The SDK only starts gathering basic telemetry data **when a user allows it via the admin notice**. We collect the data to ensure a great user experience for all our users.
-
-Integrating Appsero SDK **DOES NOT IMMEDIATELY** start gathering data, **without confirmation from users in any case.**
-
-Learn more about how [Appsero collects and uses this data](https://Appsero.com/privacy-policy/).
-
-
-
-
-== Screenshots ==
-
-1. WooCommerce My Account Dashboard Customization
-2. Custom WooCommerce Account Endpoints
-3. WooCommerce User Avatar Upload Feature
-4. WooCommerce Registration Fields Manager
-5. Dashboard Links and Quick Access Cards
-6. WooCommerce Account Menu Icons
-7. Endpoint Visibility Controls
-8. WooCommerce Account Navigation Customizer
-
-
-== Frequently Asked Questions ==
-
+---
 
 == Installation ==
 
-Use automatic installer.
+1. Upload the plugin files to `/wp-content/plugins/customize-my-account-for-woocommerce/` or install via the WordPress plugin screen.
+2. Activate the plugin through the **Plugins** screen in WordPress.
+3. Go to **SysBasics → Customize My Account** to manage your endpoints and navigation.
+4. Click the **Live Customizer** button to visually customize your My Account page in real time.
+5. Visit your site's My Account page to see the changes.
+
+== Frequently Asked Questions ==
+
+= Does this work with my theme? =
+
+Yes. The plugin has been tested and optimized for 100+ popular WooCommerce themes including Astra, Woodmart, Divi, Hello Elementor, GeneratePress, Kadence, Neve, OceanWP, Avada, Flatsome, Blocksy, and many more.
+
+= Do I need to write any code? =
+
+No. All customization is done through the admin settings panel and the live frontend customizer. No coding required.
+
+= Will it work with third-party plugins like YITH Wishlist or WooCommerce Subscriptions? =
+
+Yes. The plugin automatically detects endpoints added by third-party plugins and adds them to the navigation menu. You can then fully control their visibility, order and label.
+
+= Can customers upload their own profile photo? =
+
+Yes. The plugin includes a built-in avatar upload feature that lets customers upload a photo, capture one via webcam, or crop an existing image. You can also set file size limits and allowed formats.
+
+= Is Google Login free? =
+
+Yes. Google social login is included in the free version. You just need to create a Google OAuth Client ID and enter it in the plugin settings.
+
+= Does it include shipment tracking? =
+
+Yes. A lightweight shipment tracking feature is built in. You can add courier name, tracking number and URL to any order from the WooCommerce admin, and customers see a tracking link on their order pages.
+
+= Can I try it before installing? =
+
+Yes! Click the **Try Live Demo** link at the top of this page to open a fully working WordPress Playground demo in your browser — no installation needed.
+
+== Screenshots ==
+
+1. Frontend My Account dashboard — spending boxes, chart, avatar and dashboard links
+2. Orders page — card-based layout with status filters and product images
+3. Downloads page — card grid with file info, remaining downloads and expiry
+4. Live Frontend Customizer — dark panel with real-time iframe preview
+5. Admin Endpoints Settings — manage, reorder and configure all My Account tabs

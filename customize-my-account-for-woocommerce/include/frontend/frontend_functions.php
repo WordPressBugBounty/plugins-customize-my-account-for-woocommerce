@@ -461,6 +461,13 @@ public function wcmamtx_google_callback() {
         $dashlinks_dashboard_priority = isset($wcmamtx_layout['dashlinks_dashboard_priority']) ? $wcmamtx_layout['dashlinks_dashboard_priority'] : 30;
 
 
+        $sc1_override  = isset($wcmamtx_layout['shortcode1_override']) ? $wcmamtx_layout['shortcode1_override'] : '02';
+        $sc2_override  = isset($wcmamtx_layout['shortcode2_override']) ? $wcmamtx_layout['shortcode2_override'] : '02';
+        $sc1_value     = isset($wcmamtx_layout['shortcode1_value'])    ? $wcmamtx_layout['shortcode1_value']    : '';
+        $sc2_value     = isset($wcmamtx_layout['shortcode2_value'])    ? $wcmamtx_layout['shortcode2_value']    : '';
+        $sc1_priority  = isset($wcmamtx_layout['shortcode1_dashboard_priority']) ? (int)$wcmamtx_layout['shortcode1_dashboard_priority'] : 60;
+        $sc2_priority  = isset($wcmamtx_layout['shortcode2_dashboard_priority']) ? (int)$wcmamtx_layout['shortcode2_dashboard_priority'] : 70;
+
         $dashboard_widget_array = array(
             'spendingbox' => array(
                 'show'     => $navwidget_disable_spendboxes_showhide,
@@ -474,6 +481,16 @@ public function wcmamtx_google_callback() {
                 'show'     => $dashlink_layout_override,
                 'priority' => $dashlinks_dashboard_priority
             ),
+            'shortcode1' => array(
+                'show'      => $sc1_override,
+                'priority'  => $sc1_priority,
+                'shortcode' => $sc1_value,
+            ),
+            'shortcode2' => array(
+                'show'      => $sc2_override,
+                'priority'  => $sc2_priority,
+                'shortcode' => $sc2_value,
+            ),
         );
 
         
@@ -486,7 +503,15 @@ public function wcmamtx_google_callback() {
 
         foreach ($dashboard_widget_array as $dkey=>$dvalue) {
             if ($dvalue['show'] == "01") {
-                include( plugin_dir_path( __FILE__ ) . $dkey . '.php' );
+                if ( $dkey === 'shortcode1' || $dkey === 'shortcode2' ) {
+                    if ( ! empty( $dvalue['shortcode'] ) ) {
+                        echo '<div class="wcmamtx-shortcode-widget" style="margin-bottom:16px;">';
+                        echo do_shortcode( wp_kses_post( $dvalue['shortcode'] ) );
+                        echo '</div>';
+                    }
+                } else {
+                    include( plugin_dir_path( __FILE__ ) . $dkey . '.php' );
+                }
             }
         }
         
@@ -1376,6 +1401,29 @@ public function wcmamtx_google_callback() {
 
 
 
+    public function wcmamtx_render_shortcode_widgets() {
+        $layout = (array) get_option( 'wcmamtx_layout', [] );
+        $g = function( $k, $d ) use ( $layout ) { return isset( $layout[ $k ] ) ? $layout[ $k ] : $d; };
+
+        $sc1_on       = $g( 'shortcode1_override', '02' ) === '01';
+        $sc2_on       = $g( 'shortcode2_override', '02' ) === '01';
+        $sc1_val      = trim( $g( 'shortcode1_value', '' ) );
+        $sc2_val      = trim( $g( 'shortcode2_value', '' ) );
+        $sc1_priority = (int) $g( 'shortcode1_dashboard_priority', 60 );
+        $sc2_priority = (int) $g( 'shortcode2_dashboard_priority', 70 );
+
+        $widgets = [];
+        if ( $sc1_on && $sc1_val ) $widgets[ $sc1_priority ] = $sc1_val;
+        if ( $sc2_on && $sc2_val ) $widgets[ $sc2_priority ] = $sc2_val;
+        if ( empty( $widgets ) ) return;
+
+        ksort( $widgets );
+        foreach ( $widgets as $shortcode ) {
+            echo '<div class="wcmamtx-shortcode-widget" style="margin-bottom:16px;">';
+            echo do_shortcode( wp_kses_post( $shortcode ) );
+            echo '</div>';
+        }
+    }
    }
 }
 

@@ -26,7 +26,7 @@ add_action( 'wcmamtx_add_author_links', function() {
         $tab  = isset( $_GET['tab'] )  ? sanitize_text_field( wp_unslash( $_GET['tab'] ) )  : '';
 
     if ($tab == "wcmamtx_layout") {
-        echo '<a href="' . esc_url( $url ) . '" target="_blank" class="btn wcmamtx_live_customizer btn-warning" style="position: fixed;
+        echo '<a href="' . esc_url( $url ) . '"  class="btn wcmamtx_live_customizer btn-warning" style="position: fixed;
     top: 220px;
     right: -45px;
     transform: translateX(-50%);
@@ -84,6 +84,12 @@ add_action( 'wp_ajax_wcmamtx_customizer_save', function() {
         'nav_header_widget_text_logout'   => 'text',
         'widget_menu_location'            => 'menuint',
         'shipment_tracking_override'      => ['01','02'],
+        'shortcode1_override'             => ['01','02'],
+        'shortcode2_override'             => ['01','02'],
+        'shortcode1_value'                => 'text',
+        'shortcode2_value'                => 'text',
+        'shortcode1_dashboard_priority'   => 'priority',
+        'shortcode2_dashboard_priority'   => 'priority',
     ];
     if ( ! array_key_exists( $key, $layout_allowed ) ) wp_send_json_error( 'Invalid key' );
     $layout_rule = $layout_allowed[$key];
@@ -258,6 +264,8 @@ function wcmamtx_customizer_render_page() {
         'dashlinks_dashboard_priority'     => ['label'=>__('Dashboard Links','customize-my-account-for-woocommerce'),'priority'=>(int)$g('dashlinks_dashboard_priority',30),    'icon'=>'dashicons-grid-view',  'toggle_key'=>'dashlink_layout_override', 'enabled'=>$g('dashlink_layout_override','02')==='01'],
         'profilebox_dashboard_priority'    => ['label'=>__('Profile Completion Wizard','customize-my-account-for-woocommerce'),'priority'=>(int)$g('profilebox_dashboard_priority',40),'icon'=>'dashicons-id',         'toggle_key'=>'profilebox_override',      'enabled'=>$g('profilebox_override','02')==='01'],
         'linkbox_dashboard_priority'       => ['label'=>__('Link Boxes',   'customize-my-account-for-woocommerce'),'priority'=>(int)$g('linkbox_dashboard_priority',50),     'icon'=>'dashicons-tagcloud',   'toggle_key'=>'dashlink_box_override',    'enabled'=>$g('dashlink_box_override','02')==='01'],
+        'shortcode1_dashboard_priority'    => ['label'=>__('Shortcode 1','customize-my-account-for-woocommerce'),'priority'=>(int)$g('shortcode1_dashboard_priority',60),'icon'=>'dashicons-shortcode','toggle_key'=>'shortcode1_override','enabled'=>$g('shortcode1_override','02')==='01'],
+        'shortcode2_dashboard_priority'    => ['label'=>__('Shortcode 2','customize-my-account-for-woocommerce'),'priority'=>(int)$g('shortcode2_dashboard_priority',70),'icon'=>'dashicons-shortcode','toggle_key'=>'shortcode2_override','enabled'=>$g('shortcode2_override','02')==='01'],
     ];
     uasort($priority_widgets, fn($a,$b) => $a['priority'] - $b['priority']);
 
@@ -302,9 +310,10 @@ function wcmamtx_customizer_render_page() {
 
 <style>
 /* Reset WP admin */
-.wcmamtx_fornt_prevew_demo_only,a.skip-link.screen-reader-text{
+div.woocommerce-MyAccount-content.endpoint-dashboard div.wcmamtx_fornt_prevew_demo_only,a.skip-link.screen-reader-text{
     display: none !important;
 }
+
 #wpwrap,#wpcontent,#wpbody,#wpbody-content{float:none!important;margin:0!important;padding:0!important;width:100%!important;}
 #adminmenuwrap,#adminmenuback,#wpadminbar{display:none!important;}
 body.wp-customizer{margin:0!important;padding:0!important;}
@@ -597,6 +606,34 @@ a.wcmamtx_accordion_label_small
                     </div>
                 </div>
 
+                <!-- SHORTCODE 1 ACCORDION -->
+                <div class="cz-accordion" id="wcmamtx-sc-wrap-1" style="<?php echo $g('shortcode1_override','02')==='01' ? '' : 'display:none;'; ?>">
+                    <div class="cz-accordion-header" data-target="wcmamtx_sc1">
+                        <span class="cz-accordion-title"><span class="dashicons dashicons-shortcode"></span><?php esc_html_e('Shortcode 1','customize-my-account-for-woocommerce'); ?></span>
+                        <span class="cz-accordion-chevron">&#9660;</span>
+                    </div>
+                    <div class="cz-accordion-body" id="cz-acc-wcmamtx_sc1">
+                        <div class="cz-group">
+                            <label class="cz-label"><?php esc_html_e('Shortcode','customize-my-account-for-woocommerce'); ?></label>
+                            <input type="text" class="cz-text-input" data-key="shortcode1_value" value="<?php echo esc_attr($g('shortcode1_value','')); ?>" placeholder="[your_shortcode]">
+                            <p style="font-size:10px;color:#6b6b85;margin-top:5px;"><?php esc_html_e('Enter a shortcode. It will be rendered on the My Account dashboard.','customize-my-account-for-woocommerce'); ?></p>
+                        </div>
+                    </div>
+                </div>
+                <!-- SHORTCODE 2 ACCORDION -->
+                <div class="cz-accordion" id="wcmamtx-sc-wrap-2" style="<?php echo $g('shortcode2_override','02')==='01' ? '' : 'display:none;'; ?>">
+                    <div class="cz-accordion-header" data-target="wcmamtx_sc2">
+                        <span class="cz-accordion-title"><span class="dashicons dashicons-shortcode"></span><?php esc_html_e('Shortcode 2','customize-my-account-for-woocommerce'); ?></span>
+                        <span class="cz-accordion-chevron">&#9660;</span>
+                    </div>
+                    <div class="cz-accordion-body" id="cz-acc-wcmamtx_sc2">
+                        <div class="cz-group">
+                            <label class="cz-label"><?php esc_html_e('Shortcode','customize-my-account-for-woocommerce'); ?></label>
+                            <input type="text" class="cz-text-input" data-key="shortcode2_value" value="<?php echo esc_attr($g('shortcode2_value','')); ?>" placeholder="[your_shortcode]">
+                            <p style="font-size:10px;color:#6b6b85;margin-top:5px;"><?php esc_html_e('Enter a shortcode. It will be rendered on the My Account dashboard.','customize-my-account-for-woocommerce'); ?></p>
+                        </div>
+                    </div>
+                </div>
                 <?php do_action( 'wcmamtx_customizer_section_widgets' ); // Add options to Dashboard Widgets accordion ?>
             </div>
 
@@ -823,7 +860,7 @@ a.wcmamtx_accordion_label_small
                         <div class="cz-field">
                             <div class="cz-toggle-group" style="flex-direction:column;">
                                 
-                            <a target="_blank" href="<?php echo esc_url( admin_url( 'admin.php?page=wcmamtx_advanced_settings' ) ); ?>" class="cz-btn cz-btn-success" id="">
+                            <a href="<?php echo esc_url( admin_url( 'admin.php?page=wcmamtx_advanced_settings' ) ); ?>" class="cz-btn cz-btn-success" id="">
                                   <?php esc_html_e( 'Manage Endpoints', 'customize-my-account-for-woocommerce-pro' ); ?>
                             </a>
                                 
@@ -975,7 +1012,7 @@ a.wcmamtx_accordion_label_small
                             <div id="cz-avatar-content" style="<?php echo $av_custom_cont==='yes'?'':"display:none;"; ?>">
                                 <div style="background:#1e1e2e;border:1px solid #2d2d3f;border-radius:6px;padding:10px 12px;">
                                     <p style="font-size:12px;color:#a0a0b8;line-height:1.6;margin:0 0 8px 0;"><?php esc_html_e('Controls text displayed after the avatar and before the navigation menu.','customize-my-account-for-woocommerce'); ?></p>
-                                    <a href="<?php echo esc_url( admin_url( 'admin.php?page=wcmamtx_advanced_settings&tab=wcmamtx_avatar_settings#wcmamtx_custom_content_textarea_tr' ) ); ?>" target="_blank" style="font-size:12px;color:#a78bfa;text-decoration:none;display:inline-flex;align-items:center;gap:5px;"><span class="dashicons dashicons-edit" style="font-size:13px;width:13px;height:13px;line-height:1;"></span><?php esc_html_e('Edit content in Avatar Settings','customize-my-account-for-woocommerce'); ?></a>
+                                    <a href="<?php echo esc_url( admin_url( 'admin.php?page=wcmamtx_advanced_settings&tab=wcmamtx_avatar_settings#wcmamtx_custom_content_textarea_tr' ) ); ?>"  style="font-size:12px;color:#a78bfa;text-decoration:none;display:inline-flex;align-items:center;gap:5px;"><span class="dashicons dashicons-edit" style="font-size:13px;width:13px;height:13px;line-height:1;"></span><?php esc_html_e('Edit content in Avatar Settings','customize-my-account-for-woocommerce'); ?></a>
                                 </div>
                             </div>
                         </div>
@@ -1022,7 +1059,7 @@ a.wcmamtx_accordion_label_small
                                         <li><span class="dashicons dashicons-no-alt cz-ti"></span><?php esc_html_e('Does not auto-email customers when tracking is added.','customize-my-account-for-woocommerce'); ?></li>
                                     </ul>
                                 </div>
-                                <a href="<?php echo esc_url( admin_url('admin.php?page=wc-orders') ); ?>" target="_blank" class="cz-tracking-link"><span class="dashicons dashicons-cart" style="font-size:13px;width:13px;height:13px;line-height:1;"></span><?php esc_html_e('Add tracking info to your orders','customize-my-account-for-woocommerce'); ?></a>
+                                <a href="<?php echo esc_url( admin_url('admin.php?page=wc-orders') ); ?>" class="cz-tracking-link"><span class="dashicons dashicons-cart" style="font-size:13px;width:13px;height:13px;line-height:1;"></span><?php esc_html_e('Add tracking info to your orders','customize-my-account-for-woocommerce'); ?></a>
                             </div>
                         </div>
                         <div class="cz-group cz-pro-locked-group" style="cursor:pointer;" onclick="openModal('cz-defaulttab-modal-overlay')">
@@ -1040,11 +1077,11 @@ a.wcmamtx_accordion_label_small
 
     <!-- PANEL FOOTER -->
     <div id="wcmcz-panel-footer">
-        <a href="<?php echo esc_url( admin_url( 'admin.php?page=wcmamtx_advanced_settings&tab=wcmamtx_layout' ) ); ?>" target="_blank" class="cz-footer-btn cz-footer-btn-outline">
+        <a href="<?php echo esc_url( admin_url( 'admin.php?page=wcmamtx_advanced_settings&tab=wcmamtx_layout' ) ); ?>" class="cz-footer-btn cz-footer-btn-outline">
             <span class="dashicons dashicons-admin-settings" style="font-size:14px;width:14px;height:14px;line-height:1;"></span>
             <?php esc_html_e( 'All Settings', 'customize-my-account-for-woocommerce' ); ?>
         </a>
-        <a href="<?php echo esc_url( get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ) ); ?>" target="_blank" class="cz-footer-btn cz-footer-btn-purple">
+        <a href="<?php echo esc_url( get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ) ); ?>" class="cz-footer-btn cz-footer-btn-purple">
             <span class="dashicons dashicons-external" style="font-size:14px;width:14px;height:14px;line-height:1;"></span>
             <?php esc_html_e( 'View Page', 'customize-my-account-for-woocommerce' ); ?>
         </a>
@@ -1478,6 +1515,15 @@ a.wcmamtx_accordion_label_small
                     var dlWrap = document.getElementById('cz-acc-wrap-dashlinkstype');
                     if (dlWrap) dlWrap.style.display = cb.checked ? '' : 'none';
                 }
+                // Show\/hide Shortcode accordion when Shortcode widget toggled
+                if (toggleKey === 'shortcode1_override') {
+                    var sc1Wrap = document.getElementById('wcmamtx-sc-wrap-1');
+                    if (sc1Wrap) sc1Wrap.style.display = cb.checked ? '' : 'none';
+                }
+                if (toggleKey === 'shortcode2_override') {
+                    var sc2Wrap = document.getElementById('wcmamtx-sc-wrap-2');
+                    if (sc2Wrap) sc2Wrap.style.display = cb.checked ? '' : 'none';
+                }
             });
             cb.closest('.cz-widget-toggle').addEventListener('mousedown', function(e) {
                 e.stopPropagation();
@@ -1553,6 +1599,43 @@ a.wcmamtx_accordion_label_small
 
 })();
 
+    // ---- SHORTCODE WIDGETS ----
+    (function(){
+        // Show/hide shortcode accordions when widget toggle changes
+        function handleScToggle(cb) {
+            var toggleKey = cb.closest('.cz-priority-item') ? cb.closest('.cz-priority-item').dataset.toggleKey : null;
+            if (!toggleKey) return;
+            var wrapId = toggleKey === 'shortcode1_override' ? 'wcmamtx-sc-wrap-1' : (toggleKey === 'shortcode2_override' ? 'wcmamtx-sc-wrap-2' : null);
+            if (!wrapId) return;
+            var wrap = document.getElementById(wrapId);
+            if (wrap) wrap.style.display = cb.checked ? '' : 'none';
+        }
+        // Hook into existing cz-widget-checkbox change events for shortcode keys
+        document.addEventListener('change', function(e) {
+            var cb = e.target;
+            if (!cb.classList.contains('cz-widget-checkbox')) return;
+            var li = cb.closest('.cz-priority-item');
+            if (!li) return;
+            var tk = li.dataset.toggleKey;
+            if (tk !== 'shortcode1_override' && tk !== 'shortcode2_override') return;
+            handleScToggle(cb);
+        });
+        // Init on load
+        document.querySelectorAll('.cz-widget-checkbox').forEach(function(cb){
+            var li = cb.closest('.cz-priority-item');
+            if (!li) return;
+            var tk = li.dataset.toggleKey;
+            if (tk !== 'shortcode1_override' && tk !== 'shortcode2_override') return;
+            handleScToggle(cb);
+        });
+        // Save shortcode input values
+        document.querySelectorAll('.wcmamtx-sc-input').forEach(function(inp){
+            inp.addEventListener('blur', function(){ saveOption(inp.dataset.scKey, inp.value, true); });
+            inp.addEventListener('keydown', function(e){
+                if(e.key==='Enter'){ e.preventDefault(); saveOption(inp.dataset.scKey, inp.value, true); }
+            });
+        });
+    })();
 // Init link box menus Select2 on page load
 setTimeout(function() {
     var lbWrap = document.getElementById('cz-acc-wrap-linkboxmenus');
