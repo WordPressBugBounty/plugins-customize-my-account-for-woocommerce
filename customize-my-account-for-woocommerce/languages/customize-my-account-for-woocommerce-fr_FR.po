@@ -3,9 +3,9 @@ msgstr ""
 "Project-Id-Version: Customize My Account for WooCommerce\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-06-12 14:32+0000\n"
-"PO-Revision-Date: 2026-06-12 16:33+0000\n"
+"PO-Revision-Date: 2026-06-28 06:58+0000\n"
 "Last-Translator: \n"
-"Language-Team: Français\n"
+"Language-Team: French (France)\n"
 "Language: fr_FR\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "MIME-Version: 1.0\n"
@@ -15,47 +15,70 @@ msgstr ""
 "X-Loco-Version: 2.8.5; wp-7.0; php-8.0.30\n"
 "X-Domain: customize-my-account-for-woocommerce"
 
-#: include/wcmamtx_extra_functions.php:843
+#: include/wcmamtx_extra_functions.php:1409
 msgid " for single domain"
 msgstr " for single domain"
 
-#: include/wcmamtx_extra_functions.php:540
+#: include/wcmamtx-guest-dashboard-customizer.php:438
+msgid "\"Login\" at the start will be wrapped in a link automatically."
+msgstr ""
+
+#: include/wcmamtx_extra_functions.php:1079
 #: include/admin/wrap/endpoints-content.php:215
 #: include/frontend/dashlinks/01.php:113
 msgid "#22c55e"
 msgstr "#22c55e"
 
-#: include/wcmamtx_extra_functions.php:542
+#: include/wcmamtx_extra_functions.php:1081
 #: include/admin/wrap/endpoints-content.php:217
 #: include/frontend/dashlinks/01.php:115
 msgid "#8b5cf6"
 msgstr "#8b5cf6"
 
-#: include/wcmamtx_extra_functions.php:541
+#: include/wcmamtx_extra_functions.php:1080
 #: include/admin/wrap/endpoints-content.php:216
 #: include/frontend/dashlinks/01.php:114
 msgid "#ef4444"
 msgstr "#ef4444"
 
-#: include/wcmamtx_extra_functions.php:539
+#: include/wcmamtx_extra_functions.php:1078
 #: include/admin/wrap/endpoints-content.php:214
 #: include/frontend/dashlinks/01.php:112
 msgid "#f97316"
 msgstr "#f97316"
 
 #. 1: formatted order total 2: total order items
-#: templates/myaccount/order/01.php:141 templates/myaccount/order/02.php:52
+#: templates/myaccount/order/01.php:142 templates/myaccount/order/02.php:52
 #, php-format
 msgid "%1$s for %2$s item"
 msgid_plural "%1$s for %2$s items"
 msgstr[0] ""
 msgstr[1] ""
 
+#. %1$s Action name, %2$s Order number.
+#: templates/myaccount/order/01.php:194
+#: templates/myaccount/view-order/01.php:495
+#, php-format
+msgid "%1$s order number %2$s"
+msgstr ""
+
 #: include/admin/endpoint_form_response.php:18
 msgid "---- Separater ----"
 msgstr "---- Separater ----"
 
-#: include/wcmamtx_extra_functions.php:872
+#: templates/myaccount/thankyou/01.php:437
+msgid "1–2 days"
+msgstr ""
+
+#: templates/myaccount/thankyou/01.php:430
+msgid "1–2 hours"
+msgstr ""
+
+#: templates/myaccount/thankyou/01.php:444
+msgid "3–5 days"
+msgstr ""
+
+#: include/wcmamtx_extra_functions.php:1438
 msgid "6 Month of premium support"
 msgstr "6 Month of premium support"
 
@@ -65,13 +88,16 @@ msgstr "6 Month of premium support"
 msgid "<a href=\"%1$s\">Log out</a>"
 msgstr "<a href=\"%1$s\">Log out</a>"
 
-#: templates/myaccount/form-login.php:129
+#: templates/myaccount/form-login-popup.php:149
+#: templates/myaccount/form-login.php:149
 msgid "A link to set a new password will be sent to your email address."
-msgstr "Un lien pour définir un nouveau mot de passe sera envoyé à votre adresse e-mail."
+msgstr ""
+"Un lien pour définir un nouveau mot de passe sera envoyé à votre adresse e-"
+"mail."
 
-#: include/wcmamtx_extra_functions.php:694
-#: include/frontend/dashlink_functions.php:46
-#: templates/myaccount/navigation.php:41
+#: include/wcmamtx_extra_functions.php:168
+#: include/wcmamtx_extra_functions.php:1246 include/frontend/dashlinks.php:46
+#: templates/myaccount/navigation.php:54
 #: include/admin/forms/settings_form.php:49
 msgid "Account Details"
 msgstr "Détails du compte"
@@ -82,23 +108,57 @@ msgstr "Détails du compte"
 msgid "Actions"
 msgstr "Actions"
 
-#: include/admin/admin_settings.php:830 include/admin/admin_settings.php:881
+#: include/wcmamtx-orders-customizer.php:243
+msgid "Actions Column"
+msgstr ""
+
+#: include/admin/admin_settings.php:878 include/admin/admin_settings.php:929
 msgid "Add"
 msgstr "Ajouter"
+
+#: include/wcmamtx-downloads-customizer.php:278
+msgid ""
+"Add a shortcode block above or below the downloads table. Supports dynamic "
+"attributes:"
+msgstr ""
+
+#: include/wcmamtx-shipment-tracking/wcmamtx-shipment-tracking.php:48
+msgid ""
+"Add courier name and tracking URL fields to orders and display tracking info "
+"in the WooCommerce orders list and view order page."
+msgstr ""
 
 #: include/admin/wrap/subwrap/countof-settings.php:230
 msgid "Add custom count bubble"
 msgstr "Ajouter une bulle de compteur personnalisée"
 
-#: include/admin/admin_settings.php:945
+#: include/admin/forms/widgets/customer_spending_admin.php:12
+msgid "Add customer spending widgets along with chart after dashboard."
+msgstr ""
+
+#: include/admin/forms/widgets/navigation_widget_admin.php:12
+msgid "Add My Account Navigation menu widget with all chosen endpoints."
+msgstr ""
+
+#: include/admin/admin_settings.php:993
 msgid "Add New Action"
 msgstr "Ajouter une nouvelle action"
 
-#: include/admin/admin_settings.php:914
+#: include/admin/admin_settings.php:962
 msgid "Add New Column"
 msgstr "Ajouter une nouvelle colonne"
 
-#: include/admin/admin_settings.php:352
+#: include/wcmamtx-shipment-tracking/wcmamtx-shipment-tracking.php:411
+#: include/wcmamtx-shipment-tracking/wcmamtx-shipment-tracking.php:455
+msgid "Add Shipment Tracking"
+msgstr ""
+
+#: include/wcmamtx-shipment-tracking/wcmamtx-shipment-tracking.php:257
+#: include/wcmamtx-shipment-tracking/wcmamtx-tracking-delete.php:49
+msgid "Add Tracking"
+msgstr ""
+
+#: include/admin/admin_settings.php:441
 msgid "Adding...."
 msgstr "Ajout en cours...."
 
@@ -106,18 +166,34 @@ msgstr "Ajout en cours...."
 msgid "Additional Fields"
 msgstr "Additional Fields"
 
-#: include/wcmamtx_extra_functions.php:693
-#: include/frontend/dashlink_functions.php:45
-#: templates/myaccount/navigation.php:40
+#: include/wcmamtx_extra_functions.php:167
+#: include/wcmamtx_extra_functions.php:1245 include/frontend/dashlinks.php:45
+#: templates/myaccount/navigation.php:53
 #: include/admin/forms/settings_form.php:48
 msgid "Addresses"
 msgstr "Adresses"
 
-#: include/admin/wrap/endpoints-content.php:532
+#: include/wcmamtx-shipment-tracking/wcmamtx-shipment-tracking.php:71
+msgid ""
+"Adds a Tracking column on the WooCommerce orders list (admin.php?page=wc-"
+"orders)."
+msgstr ""
+
+#: include/wcmamtx-shipment-tracking/wcmamtx-shipment-tracking.php:70
+msgid ""
+"Adds Courier Name and Tracking URL fields to the order edit page in "
+"WooCommerce admin."
+msgstr ""
+
+#: include/wcmamtx-whitelabel.php:46
+msgid "Admin Menu Label"
+msgstr ""
+
+#: include/admin/wrap/endpoints-content.php:521
 msgid "After Existing Content"
 msgstr "Après le contenu existant"
 
-#: include/wcmamtx_extra_functions.php:868
+#: include/wcmamtx_extra_functions.php:1434
 msgid "Ajax Navigation between Endpoints"
 msgstr "Navigation Ajax entre les points de terminaison"
 
@@ -125,17 +201,19 @@ msgstr "Navigation Ajax entre les points de terminaison"
 msgid "All"
 msgstr "Tous"
 
-#: include/admin/wrap/endpoints-content.php:416
+#: include/admin/wrap/endpoints-content.php:420
 msgid "All roles"
 msgstr "Tous les rôles"
 
-#: include/admin/wrap/endpoints-content.php:418
+#: include/admin/wrap/endpoints-content.php:422
 msgid "All roles except specified"
 msgstr "Tous les rôles sauf ceux spécifiés"
 
-#: include/admin/wrap/endpoints-content.php:421
-msgid "All users except specified"
-msgstr "All users except specified"
+#: include/wcmamtx-downloads-customizer.php:317
+#: include/wcmamtx-orders-customizer.php:317
+#: include/wcmamtx-view-order-customizer.php:320
+msgid "All Settings"
+msgstr ""
 
 #: include/admin/forms/avatar_form.php:82
 msgid "Allowed Formats"
@@ -145,63 +223,101 @@ msgstr "Formats autorisés"
 msgid "Alternatively you can enable it from "
 msgstr "Alternatively you can enable it from "
 
-#: include/admin/forms/layout_form.php:240
-msgid "Amazon like linkboxes on dashboard."
-msgstr "Amazon like linkboxes on dashboard."
+#: include/admin/forms/widgets/linkboxes_admin.php:6
+msgid ""
+"Amazon like linkboxes on dashboard. Display links from appearance menu "
+"directly into your my account dashboard."
+msgstr ""
 
-#: include/frontend/frontend_functions.php:702
+#: include/frontend/frontend_functions.php:133
+msgid "Amount Spent"
+msgstr ""
+
+#: include/frontend/frontend_functions.php:1003
 msgid "An error occurred during transmission"
 msgstr "An error occurred during transmission"
 
-#: include/wcmamtx_extra_functions.php:870
+#: include/wcmamtx_extra_functions.php:1436
 msgid "And many more features"
 msgstr "And many more features"
 
-#: include/admin/forms/layout_form.php:171
-#: include/admin/forms/layout_form.php:221
-#: include/admin/forms/layout_form.php:320
-#: include/admin/forms/layout_form.php:365
-#: include/admin/forms/layout_form.php:410
-#: include/admin/forms/layout_form.php:454
+#: include/admin/forms/widgets/all_templates_admin.php:35
+#: include/admin/forms/widgets/all_templates_admin.php:80
+#: include/admin/forms/widgets/all_templates_admin.php:124
+#: include/admin/forms/widgets/dashboard_links_admin.php:39
+#: include/admin/forms/widgets/loginbox_admin.php:79
+#: include/admin/forms/widgets/navigation_style_admin.php:28
 msgid "and paste it into your child theme"
 msgstr "and paste it into your child theme"
 
+#: include/wcmamtx-downloads-customizer.php:305
+#: include/wcmamtx-orders-customizer.php:305
+#: include/wcmamtx-view-order-customizer.php:308
+msgid "and paste it into your child theme at:"
+msgstr ""
+
 #: include/admin/forms/wizard_form.php:51
+#: include/admin/forms/widgets/layouts/navigationwidget.php:34
 msgid "Appearance/Menu"
 msgstr "Appearance/Menu"
 
-#: include/admin/admin_settings.php:803
+#: include/wcmamtx-orders-customizer.php:278
+msgid ""
+"Append a custom shortcode row below each order. Supports dynamic order "
+"attributes:"
+msgstr ""
+
+#: include/admin/admin_settings.php:851
 msgid "Apply"
 msgstr "Appliquer"
 
-#: include/admin/admin_settings.php:344
+#: include/admin/admin_settings.php:433
 msgid "Are you sure you want to delete this ?"
 msgstr "Êtes-vous sûr de vouloir supprimer ceci ?"
 
-#: include/admin/admin_settings.php:343
+#: include/admin/admin_settings.php:432
 msgid ""
 "Are you sure you want to restore to default my account tabs ? you can not "
 "undo this."
 msgstr ""
 
-#: include/wcmamtx_frontend_customizer.php:41
-msgid ""
-"Are you sure you want to restore to default settings.You can not undo this."
+#: include/wcmamtx-whitelabel.php:41
+msgid "Author Name"
 msgstr ""
 
-#: include/sysbasics-avatar-upload.php:293
+#: include/wcmamtx-whitelabel.php:42
+msgid "Author URL"
+msgstr ""
+
+#: include/admin/admin_settings.php:522
+msgid "Avatar"
+msgstr ""
+
+#: include/sysbasics-avatar-upload.php:284
 msgid "Avatar restored successfully"
 msgstr "Avatar restauré avec succès"
 
-#: include/sysbasics-avatar-upload.php:386
+#: include/sysbasics-avatar-upload.php:381
 msgid "Avatar restored sucessfully"
 msgstr "Avatar restored sucessfully"
 
-#: include/sysbasics-avatar-upload.php:372
+#: include/sysbasics-avatar-upload.php:367
 msgid "Avatar uploaded sucessfully"
 msgstr "Avatar uploaded sucessfully"
 
-#: templates/myaccount/view-order/01.php:418
+#: include/frontend/spendingbox.php:14
+msgid "Average Order"
+msgstr ""
+
+#: include/wcmamtx-guest-dashboard-customizer.php:464
+msgid "Back"
+msgstr ""
+
+#: include/wcmamtx-guest-dashboard-customizer.php:318
+msgid "Back to customizer"
+msgstr ""
+
+#: templates/myaccount/view-order/01.php:478
 msgid "Back to orders"
 msgstr "Retour aux commandes"
 
@@ -209,14 +325,23 @@ msgstr "Retour aux commandes"
 msgid "Background Color and Font Color"
 msgstr "Couleur d’arrière-plan et couleur du texte"
 
-#: include/admin/forms/layout_form.php:309
+#: include/admin/forms/widgets/navigation_style_admin.php:15
 msgid "Banking App"
 msgstr "Banking App"
 
-#: include/admin/wrap/endpoints-content.php:538
+#: include/admin/wrap/endpoints-content.php:527
 msgid "Before Existing Content"
 msgstr "Before Existing Content"
 
+#: include/wcmamtx-view-order-customizer.php:243
+msgid "Billing & Shipping Address"
+msgstr ""
+
+#: include/wcmamtx-view-order-customizer.php:267
+msgid "Billing Address"
+msgstr ""
+
+#: templates/myaccount/thankyou/01.php:546
 #: templates/myaccount/view-order/01.php:308
 msgid "Billing address"
 msgstr "Adresse de facturation"
@@ -225,24 +350,26 @@ msgstr "Adresse de facturation"
 msgid "Billing Fields"
 msgstr "Champs de facturation"
 
-#: templates/myaccount/downloads.php:58 templates/myaccount/order/01.php:231
+#: templates/myaccount/downloads.php:58 templates/myaccount/order/01.php:264
 #: templates/myaccount/order/02.php:110
 msgid "Browse products"
 msgstr "Parcourir les produits"
 
-#: include/admin/admin_settings.php:359
+#: include/admin/admin_settings.php:448
 msgid "Bulk Action Applied to all sucessfully.Make sure to save changes."
 msgstr "Bulk Action Applied to all sucessfully.Make sure to save changes."
 
-#: include/sysbasics-avatar-upload.php:649
+#: include/sysbasics-avatar-upload.php:648
 msgid "Camera access is blocked. Allow it in your browser settings"
-msgstr "L’accès à la caméra est bloqué. Autorisez-le dans les paramètres de votre navigateur."
+msgstr ""
+"L’accès à la caméra est bloqué. Autorisez-le dans les paramètres de votre "
+"navigateur."
 
-#: include/admin/forms/layout_form.php:207
+#: include/admin/forms/widgets/dashboard_links_admin.php:25
 msgid "Card"
 msgstr "Carte"
 
-#: include/wcmamtx_extra_functions.php:860
+#: include/wcmamtx_extra_functions.php:1426
 msgid "Change Default Dashboard Page"
 msgstr "Change Default Dashboard Page"
 
@@ -254,7 +381,7 @@ msgstr "Change default Endpoint"
 msgid "Change Default My Account Page"
 msgstr "Change Default My Account Page"
 
-#: include/admin/admin_settings.php:559
+#: include/admin/admin_settings.php:642
 msgid "Change Permalink Structure"
 msgstr "Change Permalink Structure"
 
@@ -267,33 +394,35 @@ msgstr "Checkout Field"
 msgid "chevron_left"
 msgstr "chevron_left"
 
-#: include/admin/admin_settings.php:794
+#: include/wcmamtx-downloads-customizer.php:298
+#: include/wcmamtx-orders-customizer.php:298
+#: include/wcmamtx-view-order-customizer.php:301
+msgid "Child Theme Override"
+msgstr ""
+
+#: include/admin/admin_settings.php:842
 msgid "Choose Action"
 msgstr "Choisir une action"
 
-#: include/admin/admin_settings.php:312 include/admin/admin_settings.php:355
+#: include/admin/admin_settings.php:401 include/admin/admin_settings.php:444
 msgid "Choose an image"
 msgstr "Choisir une image"
 
-#: include/admin/forms/layout_form.php:189
+#: include/admin/forms/widgets/dashboard_links_admin.php:7
 msgid "Choose how dashboard links are displayed to customers."
 msgstr "Choose how dashboard links are displayed to customers."
 
-#: include/admin/wrap/endpoints-content.php:443
+#: include/admin/wrap/endpoints-content.php:446
 msgid "Choose Roles"
 msgstr "Choisir des rôles"
 
-#: include/admin/admin_settings.php:354
+#: include/admin/admin_settings.php:443
 msgid "Choose Template"
 msgstr "Choisir un modèle"
 
-#: include/admin/forms/layout_form.php:300
+#: include/admin/forms/widgets/navigation_style_admin.php:6
 msgid "Choose the account menu design."
 msgstr "Choose the account menu design."
-
-#: include/admin/wrap/endpoints-content.php:468
-msgid "Choose Users"
-msgstr "Choisir des utilisateurs"
 
 #: include/admin/wrap/orders-content.php:147
 msgid "Chose an Option"
@@ -309,49 +438,70 @@ msgstr "Chose Dashicon"
 msgid "Chose Font Awesome Icon"
 msgstr "Chose Font Awesome Icon"
 
-#: include/admin/forms/layout_form.php:206
+#: include/admin/forms/widgets/dashboard_links_admin.php:24
 msgid "Classic"
 msgstr "Classique"
 
-#: include/admin/forms/layout_form.php:307
+#: include/admin/forms/widgets/navigation_style_admin.php:13
 msgid "Clean"
 msgstr "Épuré"
 
-#: include/admin/admin_settings.php:805 include/admin/admin_settings.php:829
-#: include/admin/admin_settings.php:880 include/admin/admin_settings.php:913
-#: include/admin/admin_settings.php:944
+#: include/admin/admin_settings.php:853 include/admin/admin_settings.php:877
+#: include/admin/admin_settings.php:928 include/admin/admin_settings.php:961
+#: include/admin/admin_settings.php:992
+#: include/wcmamtx-shipment-tracking/wcmamtx-shipment-tracking.php:414
 msgid "Close"
 msgstr "Fermer"
-
-#: include/wcmamtx_frontend_customizer.php:92
-#: include/wcmamtx_frontend_customizer.php:99
-#: include/wcmamtx_frontend_customizer.php:107
-msgid "Color"
-msgstr "Couleur"
 
 #: include/admin/wrap/orders-content.php:62
 msgid "Column"
 msgstr "Colonne"
 
-#: include/admin/wrap/endpoints-content.php:517
+#: include/wcmamtx-downloads-customizer.php:234
+#: include/wcmamtx-orders-customizer.php:234
+msgid "Column Visibility"
+msgstr ""
+
+#: include/admin/wrap/endpoints-content.php:506
 msgid "Content Settings"
 msgstr "Paramètres du contenu"
+
+#: templates/myaccount/thankyou/01.php:577
+msgid "Continue shopping"
+msgstr ""
 
 #: include/admin/wrap/subwrap/countof-settings.php:180
 msgid "Count Bubble"
 msgstr "Bulle de compteur"
 
+#: templates/myaccount/view-order/01.php:391
+msgid "Courier"
+msgstr ""
+
+#: include/wcmamtx-shipment-tracking/wcmamtx-shipment-tracking.php:129
+#: include/wcmamtx-shipment-tracking/wcmamtx-shipment-tracking.php:418
+msgid "Courier Name"
+msgstr ""
+
+#: include/wcmamtx-shipment-tracking/wcmamtx-shipment-tracking.php:153
+msgid "Courier:"
+msgstr ""
+
 #: include/admin/forms/avatar_form.php:259
-#: include/admin/wrap/endpoints-content.php:402
-#: include/admin/wrap/endpoints-content.php:505
+#: include/admin/wrap/endpoints-content.php:406
+#: include/admin/wrap/endpoints-content.php:494
 msgid "Create your own custom variable"
 msgstr "Create your own custom variable"
+
+#: include/wcmamtx-guest-dashboard-customizer.php:430
+msgid "CTA Text"
+msgstr ""
 
 #: include/admin/forms/avatar_form.php:200
 msgid "Custom Camera Icon"
 msgstr "Custom Camera Icon"
 
-#: include/admin/wrap/endpoints-content.php:484
+#: include/admin/wrap/endpoints-content.php:473
 msgid "Custom Content"
 msgstr "Contenu personnalisé"
 
@@ -367,64 +517,82 @@ msgstr "Custom content after avatar"
 msgid "Custom Content before dashboard"
 msgstr "Custom Content before dashboard"
 
-#: include/wcmamtx_extra_functions.php:858
+#: include/wcmamtx_extra_functions.php:1424
 #: include/admin/wrap/endpoints-content.php:109
 msgid "Custom Endpoint Key"
 msgstr "Clé de point de terminaison personnalisée"
 
-#: include/wcmamtx_extra_functions.php:866
+#: include/wcmamtx_extra_functions.php:1432
 msgid "Custom My Account Elementor Templates"
 msgstr "Custom My Account Elementor Templates"
 
-#: include/admin/forms/layout_form.php:507
+#: include/admin/forms/widgets/all_templates_admin.php:177
 msgid "Custom order pay template for pending payment orders."
 msgstr "Custom order pay template for pending payment orders."
+
+#: include/wcmamtx-downloads-customizer.php:277
+#: include/wcmamtx-view-order-customizer.php:280
+msgid "Custom Shortcode Block"
+msgstr ""
+
+#: include/wcmamtx-orders-customizer.php:277
+msgid "Custom Shortcode Row"
+msgstr ""
 
 #: include/admin/wrap/subwrap/countof-settings.php:6
 msgid "Customer Downloads Count"
 msgstr "Customer Downloads Count"
 
+#: include/wcmamtx-view-order-customizer.php:245
+msgid "Customer Note"
+msgstr ""
+
 #: include/admin/wrap/subwrap/countof-settings.php:5
 msgid "Customer Orders Count"
 msgstr "Customer Orders Count"
 
-#: include/admin/forms/layout_form.php:384
+#: include/admin/forms/widgets/customer_spending_admin.php:11
+msgid "Customer spending chart"
+msgstr ""
+
+#: include/admin/forms/widgets/all_templates_admin.php:54
 msgid "Customize WooCommerce downloads page layout."
 msgstr "Customize WooCommerce downloads page layout."
 
-#: include/admin/forms/layout_form.php:473
+#: include/admin/forms/widgets/all_templates_admin.php:143
 msgid "Customize WooCommerce order received page layout."
 msgstr "Customize WooCommerce order received page layout."
 
-#: include/admin/forms/layout_form.php:336
+#: include/admin/forms/widgets/all_templates_admin.php:6
 msgid "Customize WooCommerce orders page layout."
 msgstr "Customize WooCommerce orders page layout."
 
-#: include/admin/forms/layout_form.php:428
+#: include/admin/forms/widgets/all_templates_admin.php:98
 msgid "Customize WooCommerce view order page layout."
 msgstr "Customize WooCommerce view order page layout."
 
-#: include/wcmamtx_frontend_customizer.php:154
-msgid "Customize your My Account Page."
-msgstr "Customize your My Account Page."
-
-#: include/wcmamtx_extra_functions.php:690
-#: include/frontend/dashlink_functions.php:42
-#: templates/myaccount/navigation.php:37
+#: include/wcmamtx_extra_functions.php:164
+#: include/wcmamtx_extra_functions.php:1242 include/frontend/dashlinks.php:42
+#: templates/myaccount/navigation.php:50
 #: include/admin/forms/settings_form.php:45
 msgid "Dashboard"
 msgstr "Dashboard"
 
-#: include/admin/forms/layout_form.php:239
+#: include/admin/forms/widgets/linkboxes_admin.php:5
 msgid "Dashboard Link Boxes"
 msgstr "Dashboard Link Boxes"
 
+#: include/wcmamtx-guest-dashboard-customizer.php:125
 #: include/admin/forms/wizard_form.php:63
 #: include/admin/forms/wizard_form.php:65
 msgid "Dashboard Links"
 msgstr "Dashboard Links"
 
-#: include/admin/forms/layout_form.php:188
+#: include/admin/forms/widgets/dashboard_links_admin.php:51
+msgid "Dashboard Links location priority on dashboard"
+msgstr ""
+
+#: include/admin/forms/widgets/dashboard_links_admin.php:6
 msgid "Dashboard Links Style"
 msgstr "Dashboard Links Style"
 
@@ -432,6 +600,14 @@ msgstr "Dashboard Links Style"
 #: include/admin/wrap/endpoints-content.php:229
 msgid "Dashboard links styling"
 msgstr "Dashboard links styling"
+
+#: include/wcmamtx-guest-dashboard-customizer.php:373
+msgid "Dashboard Order"
+msgstr ""
+
+#: include/wcmamtx-guest-dashboard-customizer.php:368
+msgid "Dashboard Widgets"
+msgstr ""
 
 #: include/admin/wrap/orders-wrap.php:186
 #: include/admin/wrap/subwrap/icon_settings.php:46
@@ -443,7 +619,8 @@ msgstr "Dashicon"
 msgid "Dashlink description"
 msgstr "Dashlink description"
 
-#: include/wcmamtx_extra_functions.php:1534
+#: include/wcmamtx_extra_functions.php:2070
+#: templates/myaccount/thankyou/01.php:401
 msgid "Date"
 msgstr "Date"
 
@@ -451,12 +628,15 @@ msgstr "Date"
 msgid "Date:"
 msgstr "Date:"
 
-#: include/admin/forms/layout_form.php:205
-#: include/admin/forms/layout_form.php:351
-#: include/admin/forms/layout_form.php:399
-#: include/admin/forms/layout_form.php:443
-#: include/admin/forms/layout_form.php:487
-#: include/admin/forms/layout_form.php:521
+#: include/wcmamtx-downloads-customizer.php:67
+#: include/wcmamtx-orders-customizer.php:67
+#: include/wcmamtx-view-order-customizer.php:70
+#: include/admin/forms/widgets/all_templates_admin.php:21
+#: include/admin/forms/widgets/all_templates_admin.php:69
+#: include/admin/forms/widgets/all_templates_admin.php:113
+#: include/admin/forms/widgets/all_templates_admin.php:157
+#: include/admin/forms/widgets/all_templates_admin.php:191
+#: include/admin/forms/widgets/dashboard_links_admin.php:23
 msgid "Default"
 msgstr "Default"
 
@@ -478,25 +658,68 @@ msgstr "Default Icon"
 msgid "Default texts"
 msgstr "Default texts"
 
+#: include/wcmamtx-shipment-tracking/wcmamtx-tracking-delete.php:153
+msgid "Delete Tracking Info"
+msgstr ""
+
+#: include/wcmamtx-shipment-tracking/wcmamtx-tracking-delete.php:47
+#: include/wcmamtx-shipment-tracking/wcmamtx-tracking-delete.php:155
+msgid "Delete tracking info"
+msgstr ""
+
+#: include/wcmamtx-shipment-tracking/wcmamtx-tracking-delete.php:48
+#: include/wcmamtx-shipment-tracking/wcmamtx-tracking-delete.php:156
+msgid "Delete tracking info for this order? This cannot be undone."
+msgstr ""
+
+#: include/wcmamtx-shipment-tracking/wcmamtx-tracking-delete.php:154
+msgid "Deleting…"
+msgstr ""
+
+#: templates/myaccount/thankyou/01.php:443
+msgid "Delivered"
+msgstr ""
+
 #: templates/myaccount/view-order/01.php:351
 msgid "Delivered / Completed"
 msgstr "Delivered / Completed"
 
-#: include/admin/admin_settings.php:391
-msgid "Design & Layout"
-msgstr "Design & Layout"
+#: include/admin/admin_settings.php:480
+msgid "Design"
+msgstr ""
 
-#: include/admin/forms/layout_form.php:71
-#: include/admin/forms/layout_form.php:106
-#: include/admin/forms/layout_form.php:196
-#: include/admin/forms/layout_form.php:247
+#: include/wcmamtx-whitelabel.php:65
+#: include/wcmamtx-shipment-tracking/wcmamtx-shipment-tracking.php:59
+#: include/admin/forms/widgets/customer_spending_admin.php:19
+#: include/admin/forms/widgets/dashboard_links_admin.php:14
+#: include/admin/forms/widgets/linkboxes_admin.php:13
+#: include/admin/forms/widgets/loginbox_admin.php:14
+#: include/admin/forms/widgets/navigation_widget_admin.php:19
+#: include/admin/forms/widgets/profile_completion_admin.php:13
 msgid "Disable"
 msgstr "Disable"
+
+#: include/admin/forms/widgets/layouts/navigationwidget.php:75
+msgid "Disable Avatar"
+msgstr ""
+
+#: include/admin/forms/widgets/layouts/spending.php:5
+msgid "Disable Customer Spending Boxes"
+msgstr ""
+
+#: include/admin/forms/widgets/layouts/spending.php:23
+msgid "Disable Customer Spending Chart"
+msgstr ""
 
 #: include/admin/forms/pro_settings.php:9
 msgid "Disable Dashboard Links"
 msgstr "Disable Dashboard Links"
 
+#: include/admin/forms/widgets/layouts/navigationwidget.php:84
+msgid "Disable Username"
+msgstr ""
+
+#: templates/myaccount/thankyou/01.php:524
 #: templates/myaccount/view-order/01.php:281
 msgid "Discount"
 msgstr "Discount"
@@ -520,15 +743,20 @@ msgstr "Do not Allow user to upload avatar"
 msgid "Do not use Gravtar as default avatar"
 msgstr "N'utilisez pas Gravtar comme avatar par défaut."
 
-#: customize-my-account-for-woocommerce.php:235
+#: customize-my-account-for-woocommerce.php:248
+#: include/wcmamtx-whitelabel.php:180
 msgid "Docs"
 msgstr "Docs"
 
-#: include/admin/admin_settings.php:971
+#: include/wcmamtx-whitelabel.php:243
 msgid "Documentation"
 msgstr "Documentation"
 
-#: include/wcmamtx_extra_functions.php:864 include/admin/admin_settings.php:459
+#: include/wcmamtx-whitelabel.php:44
+msgid "Documentation URL"
+msgstr ""
+
+#: include/wcmamtx_extra_functions.php:1430
 msgid "Download Columns"
 msgstr "Download Columns"
 
@@ -536,20 +764,60 @@ msgstr "Download Columns"
 msgid "Download Now"
 msgstr "Download Now"
 
-#: include/wcmamtx_extra_functions.php:692
-#: include/frontend/dashlink_functions.php:44
-#: templates/myaccount/navigation.php:39
+#: include/wcmamtx-downloads-customizer.php:10
+#: include/wcmamtx_extra_functions.php:166
+#: include/wcmamtx_extra_functions.php:1244 include/frontend/dashlinks.php:44
+#: templates/myaccount/navigation.php:52
 #: include/admin/forms/settings_form.php:47
+#: templates/myaccount/order/downloads/02.php:24
 msgid "Downloads"
 msgstr "Downloads"
 
-#: include/admin/forms/layout_form.php:383
+#: include/wcmamtx-downloads-customizer.php:9
+msgid "Downloads Customizer"
+msgstr ""
+
+#: include/wcmamtx-downloads-customizer.php:76
+msgid "Downloads Live Customizer"
+msgstr ""
+
+#: include/wcmamtx-downloads-customizer.php:241
+#: include/wcmamtx-downloads-customizer.php:265
+msgid "Downloads Remaining"
+msgstr ""
+
+#: include/admin/forms/widgets/all_templates_admin.php:53
 msgid "Downloads Template"
 msgstr "Downloads Template"
 
-#: include/wcmamtx_frontend_customizer.php:187
-msgid "Each Menu Background"
-msgstr "Each Menu Background"
+#: include/wcmamtx-downloads-customizer.php:258
+#: include/wcmamtx-orders-customizer.php:258
+#: include/wcmamtx-view-order-customizer.php:261
+msgid "Drag & Drop Reorder"
+msgstr ""
+
+#: include/wcmamtx-guest-dashboard-customizer.php:348
+#: include/wcmamtx-guest-dashboard-customizer.php:375
+msgid "Drag to reorder"
+msgstr ""
+
+#: include/wcmamtx-guest-dashboard-customizer.php:334
+msgid ""
+"Drag to reorder. Toggle to show or hide each item on the guest dashboard."
+msgstr ""
+
+#: include/wcmamtx-shipment-tracking/wcmamtx-shipment-tracking.php:135
+#: include/wcmamtx-shipment-tracking/wcmamtx-shipment-tracking.php:419
+msgid "e.g. FedEx, DHL, UPS"
+msgstr ""
+
+#: include/wcmamtx-whitelabel.php:39
+msgid "e.g. My Account Manager"
+msgstr ""
+
+#: include/wcmamtx-whitelabel.php:46
+msgid "e.g. My Plugin"
+msgstr ""
 
 #. Description of the plugin
 msgid ""
@@ -558,15 +826,20 @@ msgid ""
 "styles for a better user experience."
 msgstr ""
 
-#: include/admin/wrap/endpoints-content.php:578
+#: include/admin/wrap/endpoints-content.php:567
 msgid "Edit Account fields"
 msgstr "Edit Account fields"
 
-#: include/admin/admin_settings.php:445
-msgid "Elementor Templates"
-msgstr "Elementor Templates"
+#: include/wcmamtx-shipment-tracking/wcmamtx-shipment-tracking.php:454
+msgid "Edit Shipment Tracking"
+msgstr ""
 
-#: templates/myaccount/form-login.php:116
+#: include/wcmamtx-shipment-tracking/wcmamtx-shipment-tracking.php:244
+msgid "Edit tracking info"
+msgstr ""
+
+#: templates/myaccount/form-login-popup.php:136
+#: templates/myaccount/form-login.php:136
 msgid "Email address"
 msgstr "Email address"
 
@@ -574,12 +847,20 @@ msgstr "Email address"
 msgid "Email:"
 msgstr "Email:"
 
-#: include/admin/forms/layout_form.php:68
-#: include/admin/forms/layout_form.php:103
-#: include/admin/forms/layout_form.php:193
-#: include/admin/forms/layout_form.php:244
+#: include/wcmamtx-whitelabel.php:64
+#: include/wcmamtx-shipment-tracking/wcmamtx-shipment-tracking.php:56
+#: include/admin/forms/widgets/customer_spending_admin.php:16
+#: include/admin/forms/widgets/dashboard_links_admin.php:11
+#: include/admin/forms/widgets/linkboxes_admin.php:10
+#: include/admin/forms/widgets/loginbox_admin.php:11
+#: include/admin/forms/widgets/navigation_widget_admin.php:16
+#: include/admin/forms/widgets/profile_completion_admin.php:10
 msgid "Enable"
 msgstr "Enable"
+
+#: include/wcmamtx-guest-dashboard-customizer.php:385
+msgid "Enable / Disable"
+msgstr ""
 
 #: include/admin/forms/pro_settings.php:53
 msgid "Enable Ajax Navigation Between Endpoints"
@@ -593,6 +874,10 @@ msgstr "Enable cropping"
 msgid "Enable Dashboard links"
 msgstr "Enable Dashboard links"
 
+#: include/wcmamtx-guest-dashboard-customizer.php:301
+msgid "Enable Guest Dashboard"
+msgstr ""
+
 #: include/admin/forms/wizard_form.php:54
 msgid "Enable Menu widget"
 msgstr "Enable Menu widget"
@@ -601,32 +886,38 @@ msgstr "Enable Menu widget"
 msgid "Enable Mobile Friendly Sticky Sidebar Menu"
 msgstr "Enable Mobile Friendly Sticky Sidebar Menu"
 
-#: include/admin/forms/layout_form.php:64
+#: include/admin/forms/widgets/profile_completion_admin.php:6
 msgid "Encourage customer to complete their profile."
 msgstr "Encourage customer to complete their profile."
 
-#: include/admin/admin_settings.php:680
+#: include/admin/admin_settings.php:755
 msgid "Endpoint"
 msgstr "Endpoint"
 
-#: include/admin/admin_settings.php:380
+#: include/wcmamtx-guest-dashboard-customizer.php:329
+#: include/admin/admin_settings.php:469
 msgid "Endpoints"
 msgstr "Endpoints"
 
-#: include/admin/admin_settings.php:825 include/admin/admin_settings.php:876
-#: include/admin/admin_settings.php:909 include/admin/admin_settings.php:940
+#: include/wcmamtx-guest-dashboard-customizer.php:407
+#: include/wcmamtx-guest-dashboard-customizer.php:422
+msgid "Enter a shortcode to render on the guest dashboard."
+msgstr ""
+
+#: include/admin/admin_settings.php:873 include/admin/admin_settings.php:924
+#: include/admin/admin_settings.php:957 include/admin/admin_settings.php:988
 msgid "Enter Label"
 msgstr "Enter Label"
 
-#: include/admin/admin_settings.php:339
+#: include/admin/admin_settings.php:428
 msgid "Enter name for new endpoint"
 msgstr "Enter name for new endpoint"
 
-#: include/admin/admin_settings.php:340
+#: include/admin/admin_settings.php:429
 msgid "Enter name for new group"
 msgstr "Enter name for new group"
 
-#: include/admin/admin_settings.php:341
+#: include/admin/admin_settings.php:430
 msgid "Enter name for new link"
 msgstr "Enter name for new link"
 
@@ -634,7 +925,23 @@ msgstr "Enter name for new link"
 msgid "Error"
 msgstr "Error"
 
-#: include/sysbasics-avatar-upload.php:277
+#: include/wcmamtx-shipment-tracking/wcmamtx-tracking-delete.php:50
+#: include/wcmamtx-shipment-tracking/wcmamtx-tracking-delete.php:157
+msgid "Error deleting tracking info."
+msgstr ""
+
+#: include/wcmamtx-downloads-customizer.php:353
+#: include/wcmamtx-guest-dashboard-customizer.php:502
+#: include/wcmamtx-orders-customizer.php:353
+#: include/wcmamtx-view-order-customizer.php:356
+msgid "Error saving"
+msgstr ""
+
+#: include/wcmamtx-shipment-tracking/wcmamtx-shipment-tracking.php:533
+msgid "Error saving tracking."
+msgstr ""
+
+#: include/sysbasics-avatar-upload.php:268
 msgid "ERROR: Images cannot be larger than %d KB."
 msgstr "ERROR: Images cannot be larger than %d KB."
 
@@ -646,13 +953,33 @@ msgstr "Example"
 msgid "Exclude from WPML Sticky Url to avoid transforming into PageID"
 msgstr "Exclude from WPML Sticky Url to avoid transforming into PageID"
 
-#: include/admin/admin_settings.php:739
+#: include/frontend/guest_dashboard_hooks.php:24
+msgid "Existing page found and linked."
+msgstr ""
+
+#: include/wcmamtx-downloads-customizer.php:179
+#: include/wcmamtx-guest-dashboard-customizer.php:280
+#: include/wcmamtx-orders-customizer.php:179
+#: include/wcmamtx-view-order-customizer.php:182
+msgid "Exit"
+msgstr ""
+
+#: include/wcmamtx-downloads-customizer.php:242
+msgid "Expiry Date"
+msgstr ""
+
+#: include/admin/admin_settings.php:800
 msgid "Export"
 msgstr "Export"
 
-#: include/admin/wrap/endpoints-content.php:564
+#: include/admin/wrap/endpoints-content.php:553
 msgid "Extra Classes"
 msgstr "Extra Classes"
+
+#: include/wcmamtx-downloads-customizer.php:239
+#: include/wcmamtx-downloads-customizer.php:263
+msgid "File Download Link"
+msgstr ""
 
 #: include/admin/wrap/orders-wrap.php:179
 #: include/admin/wrap/subwrap/icon_settings.php:34
@@ -660,17 +987,13 @@ msgstr "Extra Classes"
 msgid "Font Awesome Icon"
 msgstr "Font Awesome Icon"
 
-#: include/wcmamtx_frontend_customizer.php:117
-msgid "Font Size"
-msgstr "Font Size"
-
-#: include/wcmamtx_extra_functions.php:1458
+#: include/wcmamtx_extra_functions.php:1994
 msgid ""
 "Free version of plugin only supports 2 endpoint and 2 groups.Pro Version "
 "supports unlimited number of endpoints and groups."
 msgstr ""
 
-#: include/admin/admin_settings.php:745
+#: include/admin/admin_settings.php:809 include/admin/forms/layout_form.php:127
 msgid "Frontend"
 msgstr "Frontend"
 
@@ -678,36 +1001,59 @@ msgstr "Frontend"
 msgid "Full list of Supported Icons"
 msgstr "Full list of Supported Icons"
 
-#: include/wcmamtx_extra_functions.php:197
+#: include/wcmamtx_extra_functions.php:736
 msgid "Get your Downloads"
 msgstr "Get your Downloads"
 
-#: include/admin/forms/layout_form.php:118
+#: include/admin/forms/widgets/loginbox_admin.php:26
 msgid "Google Client ID"
 msgstr "Google Client ID"
 
-#: include/admin/forms/layout_form.php:135
+#: include/admin/forms/widgets/loginbox_admin.php:43
 msgid "Google Client Secret"
 msgstr "Google Client Secret"
 
-#: include/admin/admin_settings.php:690
+#: include/admin/admin_settings.php:763
 msgid "Group"
 msgstr "Group"
 
-#: include/admin/admin_settings.php:342
+#: include/admin/admin_settings.php:431
 msgid "Group can not be dropped into group"
 msgstr "Group can not be dropped into group"
 
-#: templates/myaccount/order/01.php:108 templates/myaccount/order/02.php:40
+#: include/frontend/frontend_functions.php:1513
+msgid "Guest"
+msgstr ""
+
+#: include/wcmamtx-guest-dashboard-customizer.php:10
+#: include/frontend/guest_dashboard_hooks.php:29
+#: include/frontend/guest_dashboard_hooks.php:41
+msgid "Guest Dashboard"
+msgstr ""
+
+#: include/wcmamtx-guest-dashboard-customizer.php:9
+msgid "Guest Dashboard Customizer"
+msgstr ""
+
+#: include/wcmamtx-guest-dashboard-customizer.php:143
+#: include/wcmamtx-guest-dashboard-customizer.php:269
+msgid "Guest Dashboard Live Customizer"
+msgstr ""
+
+#: templates/myaccount/order/01.php:109 templates/myaccount/order/02.php:40
 msgctxt "hash before order number"
 msgid "#"
 msgstr "#"
 
-#: include/admin/admin_settings.php:780
+#: include/admin/forms/widgets/layouts/navigationwidget.php:14
+msgid "Header Menu Location"
+msgstr ""
+
+#: include/admin/admin_settings.php:771
 msgid "Heading"
 msgstr "Heading"
 
-#: include/wcmamtx_extra_functions.php:323
+#: include/wcmamtx_extra_functions.php:862
 msgid ""
 "Hey {display_name}, Hope you are doing well.To modify this content, Click on "
 "Customize my account link above and visit {endpoint_label} tab."
@@ -759,7 +1105,7 @@ msgstr "Icon"
 msgid "Icon color"
 msgstr "Icon color"
 
-#: include/admin/forms/settings_form.php:158
+#: include/admin/forms/settings_form.php:215
 msgid "Icon Picker"
 msgstr "Icon Picker"
 
@@ -769,29 +1115,70 @@ msgstr "Icon Picker"
 msgid "Icon Settings"
 msgstr "Icon Settings"
 
-#: include/admin/admin_settings.php:740
+#: include/admin/forms/widgets/layouts/navigationwidget.php:34
+msgid ""
+"If this dropdown is empty then either you do not have menus added or your "
+"theme do not support menus. Visit "
+msgstr ""
+
+#: include/admin/admin_settings.php:804
 msgid "Import"
 msgstr "Import"
 
-#: include/admin/admin_settings.php:361
+#: include/admin/admin_settings.php:450
 msgid "Import failed"
 msgstr "Import failed"
 
-#: include/admin/admin_settings.php:360
+#: include/admin/admin_settings.php:449
 msgid "Import sucessfully completed, Click ok to refresh the page."
 msgstr "Import sucessfully completed, Click ok to refresh the page."
+
+#: include/wcmamtx-view-order-customizer.php:281
+msgid "Inject any shortcode into the page. Use dynamic attributes like:"
+msgstr ""
 
 #: include/admin/endpoint_form_response.php:175
 msgid "Invalid nonce specified"
 msgstr "Invalid nonce specified"
 
+#: include/wcmamtx-shipment-tracking/wcmamtx-shipment-tracking.php:82
+msgid ""
+"It can not detect weather shipment is actually delivered or in transit. It "
+"simply provides Easy UI to attach shipment tracking detail to order."
+msgstr ""
+
+#: include/wcmamtx-shipment-tracking/wcmamtx-shipment-tracking.php:83
+msgid ""
+"It does not email customer if shop owners adds shipping data to their order."
+msgstr ""
+
+#: include/wcmamtx-shipment-tracking/wcmamtx-shipment-tracking.php:81
+msgid "It does not perform any API check with your courier partner."
+msgstr ""
+
+#: include/wcmamtx-shipment-tracking/wcmamtx-shipment-tracking.php:74
+msgid "It shows tracking info on orders page and view order page if it exits."
+msgstr ""
+
+#: templates/myaccount/thankyou/01.php:453
+msgid "Items in your order"
+msgstr ""
+
 #: templates/myaccount/view-order/01.php:200
 msgid "Items ordered"
 msgstr "Items ordered"
 
+#: templates/myaccount/thankyou/01.php:423
+msgid "Just now"
+msgstr ""
+
 #: include/admin/wrap/orders-content.php:169
 msgid "Key"
 msgstr "Key"
+
+#: templates/myaccount/view-order/02.php:57
+msgid "l jS \\o\\f F Y, h:ia"
+msgstr ""
 
 #: include/admin/wrap/endpoints-content.php:132
 #: include/admin/wrap/orders-content.php:103
@@ -801,32 +1188,40 @@ msgstr "Key"
 msgid "Label"
 msgstr "Label"
 
-#: include/admin/admin_settings.php:349
+#: include/admin/admin_settings.php:438
 msgid "Label can not be empty."
 msgstr "Label can not be empty."
 
+#: include/frontend/spendingchart.php:8
+msgid "Last 12 Months"
+msgstr ""
+
+#: include/admin/forms/layout_form.php:74
+msgid "Layout"
+msgstr ""
+
 #: templates/myaccount/order/downloads/01.php:38
+#: templates/myaccount/order/downloads/02.php:56
 msgid "left"
 msgstr "left"
 
-#: include/admin/forms/layout_form.php:282
+#: include/admin/forms/widgets/sidebar_position_admin.php:12
 msgid "Left Sidebar"
 msgstr "Left Sidebar"
 
-#: include/wcmamtx_extra_functions.php:874
+#: include/wcmamtx_extra_functions.php:1440
 msgid "Lifetime dashboard updates"
 msgstr "Lifetime dashboard updates"
 
-#: include/wcmamtx_extra_functions.php:841
+#: include/wcmamtx_extra_functions.php:1407
 msgid "Lifetime license starts from "
 msgstr "Lifetime license starts from "
 
-#: include/admin/admin_settings.php:685
+#: include/admin/admin_settings.php:759
 msgid "Link"
 msgstr "Link"
 
-#: include/admin/forms/layout_form.php:81
-#: include/admin/forms/layout_form.php:257
+#: include/admin/forms/widgets/linkboxes_admin.php:23
 msgid "Link Box"
 msgstr "Link Box"
 
@@ -834,60 +1229,85 @@ msgstr "Link Box"
 msgid "Link url"
 msgstr "Link url"
 
-#: include/wcmamtx_extra_functions.php:942
-#: include/frontend/frontend_functions.php:212
+#: include/wcmamtx-guest-dashboard-customizer.php:309
+msgid "Linked Page"
+msgstr ""
+
+#: include/wcmamtx_extra_functions.php:384
+#: include/wcmamtx_extra_functions.php:447
+#: include/wcmamtx_extra_functions.php:1508
 msgid "Log In"
 msgstr "Log In"
 
-#: templates/myaccount/form-login.php:48
+#: templates/myaccount/form-login-popup.php:68
+#: templates/myaccount/form-login.php:68 templates/myaccount/form-login.php:68
 msgid "Log in"
 msgstr "Log in"
 
-#: include/wcmamtx_extra_functions.php:695
-#: include/frontend/dashlink_functions.php:47
-#: templates/myaccount/navigation.php:42
+#: include/wcmamtx_extra_functions.php:381
+msgid "Log In / Register"
+msgstr ""
+
+#: include/wcmamtx_extra_functions.php:169
+#: include/wcmamtx_extra_functions.php:1247 include/frontend/dashlinks.php:47
+#: templates/myaccount/navigation.php:55
 #: include/admin/forms/settings_form.php:50
 msgid "Log out"
 msgstr "Log out"
 
-#: templates/myaccount/form-login.php:15
+#: templates/myaccount/form-login-popup.php:25
+#: templates/myaccount/form-login.php:25
 msgid "Login"
 msgstr "Login"
 
-#: include/admin/forms/layout_form.php:98
+#: include/admin/forms/layout_form.php:89
+#: include/admin/forms/widgets/loginbox_admin.php:6
 msgid "Login & Register"
 msgstr "Login & Register"
 
-#: templates/myaccount/form-login.php:82
+#: include/wcmamtx-guest-dashboard-customizer.php:436
+msgid "Login CTA Text"
+msgstr ""
+
+#: include/wcmamtx-guest-dashboard-customizer.php:100
+#: include/wcmamtx-guest-dashboard-customizer.php:437
+#: include/frontend/frontend_functions.php:1455
+msgid "Login to View and Manage Your Orders"
+msgstr ""
+
+#: templates/myaccount/form-login-popup.php:102
+#: templates/myaccount/form-login.php:102
 msgid "Login with Google"
 msgstr "Login with Google"
 
-#: include/wcmamtx_extra_functions.php:201
+#: include/wcmamtx_extra_functions.php:740
 msgid "Logout from site"
 msgstr "Logout from site"
 
-#: include/admin/admin_settings.php:555
+#: include/admin/admin_settings.php:638
 msgid ""
 "Looks like your site is using default permalink structure (?p=123), which is "
 "not recommended and could cause broken links on frontend, consider changing "
 "it to something else."
 msgstr ""
 
-#: templates/myaccount/form-login.php:51
+#: templates/myaccount/form-login-popup.php:71
+#: templates/myaccount/form-login.php:71
 msgid "Lost your password?"
 msgstr "Lost your password?"
 
-#: templates/myaccount/form-login.php:159
+#: templates/myaccount/form-login-popup.php:179
+#: templates/myaccount/form-login.php:179
 msgid ""
 "Lost your password? Please enter your username or email address. You will "
 "receive a link to create a new password via email."
 msgstr ""
 
-#: include/wcmamtx_extra_functions.php:206
+#: include/wcmamtx_extra_functions.php:745
 msgid "Manage"
 msgstr "Manage"
 
-#: include/admin/wrap/endpoints-content.php:583
+#: include/admin/wrap/endpoints-content.php:572
 msgid "Manage Edit Account Fields"
 msgstr "Manage Edit Account Fields"
 
@@ -901,11 +1321,11 @@ msgstr "Manage Endpoints"
 msgid "Manage Gravtar"
 msgstr "Manage Gravtar"
 
-#: include/wcmamtx_extra_functions.php:198
+#: include/wcmamtx_extra_functions.php:737
 msgid "Manage your addresses"
 msgstr "Manage your addresses"
 
-#: include/wcmamtx_extra_functions.php:200
+#: include/wcmamtx_extra_functions.php:739
 msgid "Manage your payment methods"
 msgstr "Manage your payment methods"
 
@@ -927,8 +1347,11 @@ msgstr "Min height"
 msgid "Min width"
 msgstr "Min width"
 
-#: include/wcmamtx_extra_functions.php:923
-#: include/frontend/frontend_functions.php:183
+#: include/wcmamtx_extra_functions.php:465
+#: include/wcmamtx_extra_functions.php:1489
+#: include/frontend/frontend_functions.php:166
+#: include/frontend/frontend_functions.php:270
+#: include/admin/forms/widgets/layouts/navigationwidget.php:45
 msgid "My Account"
 msgstr "My Account"
 
@@ -936,31 +1359,30 @@ msgstr "My Account"
 msgid "My account"
 msgstr "My account"
 
-#: include/wcmamtx_frontend_customizer.php:152
-msgid "My Account Customizer"
+#: include/frontend/frontend_functions.php:361
+#, fuzzy
+#| msgid "My Account Customizer"
+msgid "My account live customizer"
 msgstr "My Account Customizer"
-
-#: include/admin/admin_settings.php:402
-msgid "My Account Fields"
-msgstr "My Account Fields"
 
 #: include/admin/forms/pro_settings.php:61
 msgid "My Account Navigation Menu Widget"
 msgstr "My Account Navigation Menu Widget"
 
+#: include/admin/forms/widgets/navigation_widget_admin.php:11
+msgid "My Account Navigation Menu widget"
+msgstr ""
+
 #: include/admin/forms/wizard_form.php:39
 msgid "My Account Navigation Widget"
 msgstr "My Account Navigation Widget"
 
+#: templates/myaccount/thankyou/01.php:548
 #: templates/myaccount/view-order/01.php:310
 msgid "N/A"
 msgstr "N/A"
 
-#: include/wcmamtx_frontend_customizer.php:163
-msgid "Navigation Background"
-msgstr "Navigation Background"
-
-#: include/admin/forms/layout_form.php:299
+#: include/admin/forms/widgets/navigation_style_admin.php:5
 msgid "Navigation Style"
 msgstr "Navigation Style"
 
@@ -968,14 +1390,26 @@ msgstr "Navigation Style"
 msgid "Navigation Widget"
 msgstr "Navigation Widget"
 
-#: include/admin/admin_settings.php:1079
+#: include/wcmamtx-downloads-customizer.php:354
+#: include/wcmamtx-guest-dashboard-customizer.php:503
+#: include/wcmamtx-orders-customizer.php:354
+#: include/wcmamtx-view-order-customizer.php:357
+msgid "Network error"
+msgstr ""
+
+#: templates/myaccount/order/downloads/02.php:62
+msgid "Never"
+msgstr ""
+
+#: include/admin/admin_settings.php:1090
 msgid "New"
 msgstr "New"
 
-#: templates/myaccount/order/01.php:224 templates/myaccount/order/02.php:103
+#: templates/myaccount/order/01.php:257 templates/myaccount/order/02.php:103
 msgid "Next"
 msgstr "Next"
 
+#: include/wcmamtx-guest-dashboard-customizer.php:304
 #: include/admin/forms/avatar_form.php:168
 #: include/admin/forms/pro_settings.php:12
 #: include/admin/wrap/endpoints-content.php:174
@@ -983,10 +1417,16 @@ msgstr "Next"
 #: include/admin/wrap/subwrap/countof-settings.php:186
 #: include/admin/wrap/subwrap/countof-settings.php:193
 #: include/admin/wrap/subwrap/countof-settings.php:198
+#: include/admin/forms/widgets/layouts/navigationwidget.php:6
+#: include/admin/forms/widgets/layouts/navigationwidget.php:69
+#: include/admin/forms/widgets/layouts/navigationwidget.php:78
+#: include/admin/forms/widgets/layouts/navigationwidget.php:87
+#: include/admin/forms/widgets/layouts/spending.php:8
+#: include/admin/forms/widgets/layouts/spending.php:26
 msgid "No"
 msgstr "No"
 
-#: include/admin/admin_settings.php:358
+#: include/admin/admin_settings.php:447
 msgid "No Action Selected"
 msgstr "No Action Selected"
 
@@ -995,9 +1435,13 @@ msgstr "No Action Selected"
 msgid "No downloads available yet."
 msgstr "No downloads available yet."
 
-#: include/sysbasics-avatar-upload.php:314
+#: include/sysbasics-avatar-upload.php:305
 msgid "No file was detected in the payload"
 msgstr "No file was detected in the payload"
+
+#: include/wcmamtx-guest-dashboard-customizer.php:317
+msgid "No guest page linked. Go back to the customizer to link or create one."
+msgstr ""
 
 #: include/admin/wrap/orders-wrap.php:173
 #: include/admin/wrap/subwrap/icon_settings.php:24
@@ -1005,27 +1449,25 @@ msgstr "No file was detected in the payload"
 msgid "No Icon"
 msgstr "No Icon"
 
-#: include/admin/forms/layout_form.php:284
-msgid "No navigation"
-msgstr "No navigation"
-
-#: templates/myaccount/order/01.php:231 templates/myaccount/order/02.php:110
+#: templates/myaccount/order/01.php:264 templates/myaccount/order/02.php:110
 msgid "No order has been made yet."
 msgstr "No order has been made yet."
+
+#: include/wcmamtx-downloads-customizer.php:203
+#: include/wcmamtx-orders-customizer.php:203
+#: include/wcmamtx-view-order-customizer.php:206
+msgid "No Override"
+msgstr ""
 
 #: include/admin/wrap/subwrap/countof-settings.php:4
 msgid "None"
 msgstr "None"
 
-#: include/admin/wrap/endpoints-content.php:419
+#: include/admin/wrap/endpoints-content.php:423
 msgid "Only specified roles"
 msgstr "Only specified roles"
 
-#: include/admin/wrap/endpoints-content.php:422
-msgid "Only specified users"
-msgstr "Only specified users"
-
-#: include/admin/wrap/endpoints-content.php:553
+#: include/admin/wrap/endpoints-content.php:542
 msgid "Open by default"
 msgstr "Open by default"
 
@@ -1033,23 +1475,40 @@ msgstr "Open by default"
 msgid "Open in new tab"
 msgstr "Open in new tab"
 
-#: include/admin/forms/layout_form.php:99
+#: include/wcmamtx-downloads-customizer.php:321
+#: include/wcmamtx-guest-dashboard-customizer.php:469
+#: include/wcmamtx-orders-customizer.php:321
+#: include/wcmamtx-view-order-customizer.php:324
+msgid "Open in tab"
+msgstr ""
+
+#: include/admin/forms/widgets/loginbox_admin.php:7
 msgid ""
 "Optimize your WooCommerce My Account login page along with google social "
 "login."
 msgstr ""
 
-#: include/admin/forms/layout_form.php:350
-#: include/admin/forms/layout_form.php:398
-#: include/admin/forms/layout_form.php:442
-#: include/admin/forms/layout_form.php:488
-#: include/admin/forms/layout_form.php:522
+#: include/wcmamtx-downloads-customizer.php:66
+#: include/wcmamtx-orders-customizer.php:66
+#: include/wcmamtx-view-order-customizer.php:69
+#: include/admin/forms/widgets/all_templates_admin.php:20
+#: include/admin/forms/widgets/all_templates_admin.php:68
+#: include/admin/forms/widgets/all_templates_admin.php:112
+#: include/admin/forms/widgets/all_templates_admin.php:158
+#: include/admin/forms/widgets/all_templates_admin.php:192
 msgid "Optimized"
 msgstr "Optimized"
 
-#: include/wcmamtx_extra_functions.php:1533
+#: include/wcmamtx_extra_functions.php:2069
+#: templates/myaccount/thankyou/01.php:397
 msgid "Order"
 msgstr "Order"
+
+#. 1: order number 2: order date 3: order status
+#: templates/myaccount/view-order/02.php:38
+#, php-format
+msgid "Order #%1$s was placed on %2$s and is currently %3$s."
+msgstr ""
 
 #: templates/myaccount/view-order/01.php:139
 #, php-format
@@ -1065,26 +1524,41 @@ msgstr "Order Action"
 msgid "Order again"
 msgstr "Order again"
 
-#: include/admin/admin_settings.php:421
-msgid "Order Columns & Actions"
-msgstr "Order Columns & Actions"
-
-#: include/wcmamtx_extra_functions.php:862
+#: include/wcmamtx_extra_functions.php:1428
 msgid "Order Columns and Actions"
 msgstr "Order Columns and Actions"
+
+#: templates/myaccount/thankyou/01.php:370
+msgid "Order confirmed!"
+msgstr ""
+
+#: include/wcmamtx-orders-customizer.php:239
+#: include/wcmamtx-orders-customizer.php:264
+msgid "Order Date"
+msgstr ""
+
+#: include/wcmamtx-view-order-customizer.php:242
+#: include/wcmamtx-view-order-customizer.php:266
+msgid "Order Details Table"
+msgstr ""
 
 #: include/admin/wrap/orders-content.php:155
 msgid "Order ID"
 msgstr "Order ID"
 
+#: include/wcmamtx-orders-customizer.php:263
+msgid "Order Number"
+msgstr ""
+
 #: templates/myaccount/thankyou/02.php:37
 msgid "Order number:"
 msgstr "Order number:"
 
-#: include/admin/forms/layout_form.php:506
+#: include/admin/forms/widgets/all_templates_admin.php:176
 msgid "Order Pay Template"
 msgstr "Order Pay Template"
 
+#: templates/myaccount/thankyou/01.php:422
 #: templates/myaccount/view-order/01.php:349
 msgid "Order placed"
 msgstr "Order placed"
@@ -1093,26 +1567,54 @@ msgstr "Order placed"
 msgid "Order progress"
 msgstr "Order progress"
 
+#: include/wcmamtx-downloads-customizer.php:243
+msgid "Order Reference"
+msgstr ""
+
+#: include/wcmamtx-orders-customizer.php:240
+#: include/wcmamtx-orders-customizer.php:265
+msgid "Order Status"
+msgstr ""
+
 #: templates/myaccount/view-order/01.php:116
 msgid "Order the same items again"
 msgstr "Order the same items again"
 
+#: include/wcmamtx-orders-customizer.php:241
+msgid "Order Total"
+msgstr ""
+
+#: templates/myaccount/thankyou/01.php:537
 #: templates/myaccount/view-order/01.php:294
 msgid "Order total"
 msgstr "Order total"
 
-#: templates/myaccount/view-order/01.php:399
+#: include/wcmamtx-view-order-customizer.php:246
+msgid "Order Totals"
+msgstr ""
+
+#: templates/myaccount/view-order/01.php:459
+#: templates/myaccount/view-order/02.php:51
 msgid "Order updates"
 msgstr "Order updates"
 
-#: include/wcmamtx_extra_functions.php:691
-#: include/frontend/dashlink_functions.php:43
-#: templates/myaccount/navigation.php:38
+#: include/wcmamtx-orders-customizer.php:10
+#: include/wcmamtx_extra_functions.php:165
+#: include/wcmamtx_extra_functions.php:1243 include/frontend/dashlinks.php:43
+#: templates/myaccount/navigation.php:51
 #: include/admin/forms/settings_form.php:46
 msgid "Orders"
 msgstr "Orders"
 
-#: include/admin/forms/layout_form.php:335
+#: include/wcmamtx-orders-customizer.php:9
+msgid "Orders Customizer"
+msgstr ""
+
+#: include/wcmamtx-orders-customizer.php:76
+msgid "Orders Live Customizer"
+msgstr ""
+
+#: include/admin/forms/widgets/all_templates_admin.php:5
 msgid "Orders Template"
 msgstr "Orders Template"
 
@@ -1120,24 +1622,30 @@ msgstr "Orders Template"
 msgid "Override default avatar texts"
 msgstr "Override default avatar texts"
 
-#: include/admin/forms/layout_form.php:164
-#: include/admin/forms/layout_form.php:214
-#: include/admin/forms/layout_form.php:314
-#: include/admin/forms/layout_form.php:358
-#: include/admin/forms/layout_form.php:403
-#: include/admin/forms/layout_form.php:447
+#: include/admin/forms/widgets/all_templates_admin.php:28
+#: include/admin/forms/widgets/all_templates_admin.php:73
+#: include/admin/forms/widgets/all_templates_admin.php:117
+#: include/admin/forms/widgets/dashboard_links_admin.php:32
+#: include/admin/forms/widgets/loginbox_admin.php:72
+#: include/admin/forms/widgets/navigation_style_admin.php:22
 msgid "Override from child theme or main theme ?"
 msgstr "Override from child theme or main theme ?"
 
-#: include/wcmamtx_frontend_customizer.php:133
-msgid "Padding From Left"
-msgstr "Padding From Left"
+#: include/frontend/guest_dashboard_hooks.php:42
+msgid "Page created and linked automatically."
+msgstr ""
 
-#: templates/myaccount/view-order/01.php:383
+#: include/wcmamtx-guest-dashboard-customizer.php:447
+msgid "Page Shortcode"
+msgstr ""
+
+#: templates/myaccount/view-order/01.php:443
 msgid "Paid"
 msgstr "Paid"
 
-#: templates/myaccount/form-login.php:37 templates/myaccount/form-login.php:123
+#: templates/myaccount/form-login-popup.php:57
+#: templates/myaccount/form-login-popup.php:143
+#: templates/myaccount/form-login.php:57 templates/myaccount/form-login.php:143
 msgid "Password"
 msgstr "Password"
 
@@ -1145,9 +1653,18 @@ msgstr "Password"
 msgid "Pay"
 msgstr "Pay"
 
-#: templates/myaccount/view-order/01.php:377
+#: templates/myaccount/thankyou/01.php:567
+msgid "Pay for this order"
+msgstr ""
+
+#: templates/myaccount/thankyou/01.php:405
+#: templates/myaccount/view-order/01.php:437
 msgid "Payment"
 msgstr "Payment"
+
+#: templates/myaccount/thankyou/01.php:364
+msgid "Payment failed"
+msgstr ""
 
 #: templates/myaccount/thankyou/02.php:60
 msgid "Payment method:"
@@ -1158,89 +1675,183 @@ msgstr "Payment method:"
 msgid "Pending"
 msgstr "Pending"
 
+#: include/wcmamtx-guest-dashboard-customizer.php:452
+msgid "Place this shortcode on your guest dashboard page:"
+msgstr ""
+
 #: templates/myaccount/view-order/01.php:144
 #, php-format
 msgid "Placed on %s &mdash; %d item(s)"
 msgstr "Placed on %s &mdash; %d item(s)"
 
-#: include/frontend/frontend_functions.php:703
+#: include/wcmamtx-shipment-tracking/wcmamtx-shipment-tracking.php:485
+msgid "Please enter at least a courier name or tracking URL."
+msgstr ""
+
+#: include/frontend/frontend_functions.php:1004
 msgid "Please select a file first"
 msgstr "Please select a file first"
 
-#: include/admin/admin_settings.php:353
+#: include/wcmamtx-whitelabel.php:40
+msgid "Plugin Description"
+msgstr ""
+
+#: include/admin/admin_settings.php:442
 msgid "Plugin do not support movement of order actions yet"
 msgstr "Plugin do not support movement of order actions yet"
 
-#: include/admin/forms/layout_form.php:342
-#: include/admin/forms/layout_form.php:390
-#: include/admin/forms/layout_form.php:434
-#: include/admin/forms/layout_form.php:479
-#: include/admin/forms/layout_form.php:513
+#: include/wcmamtx-whitelabel.php:39
+msgid "Plugin Name"
+msgstr ""
+
+#: include/wcmamtx-whitelabel.php:43
+msgid "Plugin URL"
+msgstr ""
+
+#: include/admin/forms/widgets/all_templates_admin.php:12
+#: include/admin/forms/widgets/all_templates_admin.php:60
+#: include/admin/forms/widgets/all_templates_admin.php:104
+#: include/admin/forms/widgets/all_templates_admin.php:149
+#: include/admin/forms/widgets/all_templates_admin.php:183
 msgid "Prevent override from this plugin"
 msgstr "Prevent override from this plugin"
 
-#: include/admin/admin_settings.php:273
+#: include/admin/admin_settings.php:361
 msgid "Preview"
 msgstr "Preview"
 
-#: templates/myaccount/order/01.php:220 templates/myaccount/order/02.php:99
+#: templates/myaccount/order/01.php:253 templates/myaccount/order/02.php:99
 msgid "Previous"
 msgstr "Previous"
 
+#: templates/myaccount/thankyou/01.php:460
 #: templates/myaccount/view-order/01.php:207
 msgid "Price"
 msgstr "Price"
 
-#: include/admin/admin_settings.php:272
+#: include/admin/admin_settings.php:360
 msgid "Pro feature"
 msgstr "Pro feature"
 
-#: include/wcmamtx_extra_functions.php:848
+#: include/wcmamtx-downloads-customizer.php:224
+#: include/wcmamtx-orders-customizer.php:224
+#: include/wcmamtx-view-order-customizer.php:227
+msgid "Pro Features"
+msgstr ""
+
+#: include/wcmamtx_extra_functions.php:1414
 msgid "Pro Version Features"
 msgstr "Pro Version Features"
 
+#: templates/myaccount/thankyou/01.php:429
 #: templates/myaccount/view-order/01.php:350
 msgid "Processing"
 msgstr "Processing"
 
+#: templates/myaccount/thankyou/01.php:458
 #: templates/myaccount/view-order/01.php:205
 msgid "Product"
 msgstr "Product"
 
-#: include/admin/forms/layout_form.php:63
+#: include/wcmamtx-downloads-customizer.php:240
+#: include/wcmamtx-downloads-customizer.php:264
+msgid "Product Name"
+msgstr ""
+
+#: include/wcmamtx-orders-customizer.php:242
+msgid "Product Names"
+msgstr ""
+
+#: include/admin/forms/widgets/profile_completion_admin.php:5
 msgid "Profile completion wizard"
 msgstr "Profile completion wizard"
 
+#: include/admin/forms/widgets/profile_completion_admin.php:23
+msgid "Profile Wizard"
+msgstr ""
+
+#: templates/myaccount/thankyou/01.php:459
 #: templates/myaccount/view-order/01.php:206
 msgid "Qty"
 msgstr "Qty"
 
-#: include/admin/forms/layout_form.php:153
+#: include/admin/forms/widgets/navigation_style_admin.php:17
+msgid "React Based"
+msgstr ""
+
+#: include/wcmamtx-view-order-customizer.php:262
+msgid ""
+"Rearrange the order of every section on the View Order page with drag & drop."
+msgstr ""
+
+#: include/admin/forms/widgets/loginbox_admin.php:61
 msgid "Redirect url"
 msgstr "Redirect url"
 
-#: templates/myaccount/form-login.php:20 templates/myaccount/form-login.php:137
-#: templates/myaccount/form-login.php:137
+#: templates/myaccount/form-login-popup.php:39
+#: templates/myaccount/form-login-popup.php:157
+#: templates/myaccount/form-login-popup.php:157
+#: templates/myaccount/form-login.php:39 templates/myaccount/form-login.php:157
+#: templates/myaccount/form-login.php:157
 msgid "Register"
 msgstr "Register"
 
-#: templates/myaccount/form-login.php:45
+#: templates/myaccount/form-login-popup.php:65
+#: templates/myaccount/form-login.php:65
 msgid "Remember me"
 msgstr "Remember me"
 
-#: templates/myaccount/form-login.php:33 templates/myaccount/form-login.php:37
-#: templates/myaccount/form-login.php:109
-#: templates/myaccount/form-login.php:116
-#: templates/myaccount/form-login.php:123
-#: templates/myaccount/form-login.php:162
+#: include/admin/forms/avatar_form.php:220
+#: include/admin/wrap/endpoints-content.php:302
+msgid "Remove image"
+msgstr ""
+
+#: include/wcmamtx-downloads-customizer.php:259
+msgid ""
+"Reorder the columns of the Downloads table by dragging them into your "
+"preferred sequence."
+msgstr ""
+
+#: include/wcmamtx-orders-customizer.php:259
+msgid ""
+"Reorder the columns of the Orders table by dragging them into your preferred "
+"sequence."
+msgstr ""
+
+#: include/wcmamtx-whitelabel.php:57
+msgid ""
+"Replace plugin branding with your own. When enabled, the plugin name, author,"
+" description, admin menu label, and support links will reflect your entries "
+"below."
+msgstr ""
+
+#: include/wcmamtx-shipment-tracking/wcmamtx-shipment-tracking.php:538
+#: include/wcmamtx-shipment-tracking/wcmamtx-tracking-delete.php:51
+#: include/wcmamtx-shipment-tracking/wcmamtx-tracking-delete.php:158
+msgid "Request failed. Please try again."
+msgstr ""
+
+#: templates/myaccount/form-login-popup.php:53
+#: templates/myaccount/form-login-popup.php:57
+#: templates/myaccount/form-login-popup.php:129
+#: templates/myaccount/form-login-popup.php:136
+#: templates/myaccount/form-login-popup.php:143
+#: templates/myaccount/form-login-popup.php:182
+#: templates/myaccount/form-login.php:53 templates/myaccount/form-login.php:57
+#: templates/myaccount/form-login.php:129
+#: templates/myaccount/form-login.php:136
+#: templates/myaccount/form-login.php:143
+#: templates/myaccount/form-login.php:182
 msgid "Required"
 msgstr "Required"
 
-#: templates/myaccount/form-login.php:172
+#: templates/myaccount/form-login-popup.php:192
+#: templates/myaccount/form-login.php:192
+#: templates/myaccount/form-login.php:192
 msgid "Reset password"
 msgstr "Reset password"
 
-#: include/admin/admin_settings.php:718 include/admin/admin_settings.php:724
+#: include/admin/admin_settings.php:785 include/admin/admin_settings.php:787
 #: include/avatar/upload_form.php:111 include/admin/forms/avatar_form.php:178
 msgid "Restore Default"
 msgstr "Restore Default"
@@ -1249,19 +1860,19 @@ msgstr "Restore Default"
 msgid "restore default"
 msgstr "restore default"
 
-#: include/admin/admin_settings.php:795
+#: include/admin/admin_settings.php:843
 msgid "Restore Default Background Color to all Dashboard Links"
 msgstr "Restore Default Background Color to all Dashboard Links"
 
-#: include/admin/admin_settings.php:796
+#: include/admin/admin_settings.php:844
 msgid "Restore Default Font Color to all Dashboard Links"
 msgstr "Restore Default Font Color to all Dashboard Links"
 
-#: include/frontend/frontend_functions.php:701
+#: include/frontend/frontend_functions.php:1002
 msgid "Restoring... Please wait"
 msgstr "Restoring... Please wait"
 
-#: include/admin/forms/layout_form.php:283
+#: include/admin/forms/widgets/sidebar_position_admin.php:13
 msgid "Right Sidebar"
 msgstr "Right Sidebar"
 
@@ -1269,42 +1880,86 @@ msgstr "Right Sidebar"
 msgid "Round avatar instead of square"
 msgstr "Round avatar instead of square"
 
+#: templates/myaccount/thankyou/01.php:558
 #: templates/myaccount/view-order/01.php:323
 msgid "Same as billing"
 msgstr "Same as billing"
 
-#: include/admin/admin_settings.php:710
+#: include/admin/admin_settings.php:781
 msgid "Save Changes"
 msgstr "Save Changes"
 
-#: include/sysbasics-avatar-upload.php:307
+#: include/wcmamtx-shipment-tracking/wcmamtx-shipment-tracking.php:429
+msgid "Save Tracking"
+msgstr ""
+
+#: include/wcmamtx-downloads-customizer.php:352
+#: include/wcmamtx-guest-dashboard-customizer.php:501
+#: include/wcmamtx-orders-customizer.php:352
+#: include/wcmamtx-view-order-customizer.php:355
+msgid "Saved"
+msgstr ""
+
+#: include/wcmamtx-downloads-customizer.php:351
+#: include/wcmamtx-guest-dashboard-customizer.php:500
+#: include/wcmamtx-orders-customizer.php:351
+#: include/wcmamtx-view-order-customizer.php:354
+msgid "Saving…"
+msgstr ""
+
+#: include/wcmamtx-view-order-customizer.php:237
+msgid "Section Visibility"
+msgstr ""
+
+#: include/sysbasics-avatar-upload.php:298
 msgid "Security validation failed"
 msgstr "Security validation failed"
 
-#: include/admin/wrap/endpoints-content.php:440
+#: include/admin/wrap/endpoints-content.php:443
 msgid "Select roles"
 msgstr "Select roles"
 
-#: include/admin/forms/layout_form.php:276
+#: include/admin/forms/widgets/sidebar_position_admin.php:6
 msgid "Select the sidebar placement."
 msgstr "Select the sidebar placement."
 
-#: include/admin/wrap/endpoints-content.php:465
-msgid "Select users"
-msgstr "Select users"
-
-#: include/admin/admin_settings.php:775
+#: include/admin/admin_settings.php:767
 msgid "Separater"
 msgstr "Separater"
 
-#: customize-my-account-for-woocommerce.php:211
+#: customize-my-account-for-woocommerce.php:224
 msgid "Settings"
 msgstr "Settings"
+
+#: include/wcmamtx-shipment-tracking/wcmamtx-shipment-tracking.php:25
+#: include/wcmamtx-shipment-tracking/wcmamtx-shipment-tracking.php:47
+#: include/wcmamtx-shipment-tracking/wcmamtx-shipment-tracking.php:106
+#: templates/myaccount/view-order/01.php:385
+msgid "Shipment Tracking"
+msgstr ""
+
+#: include/wcmamtx-view-order-customizer.php:244
+msgid "Shipment Tracking Row"
+msgstr ""
+
+#: templates/myaccount/thankyou/01.php:436
+msgid "Shipped"
+msgstr ""
 
 #: templates/myaccount/view-order/01.php:267
 msgid "Shipping"
 msgstr "Shipping"
 
+#: templates/myaccount/thankyou/01.php:510
+#, php-format
+msgid "Shipping (%s)"
+msgstr ""
+
+#: include/wcmamtx-view-order-customizer.php:268
+msgid "Shipping Address"
+msgstr ""
+
+#: templates/myaccount/thankyou/01.php:556
 #: templates/myaccount/view-order/01.php:321
 msgid "Shipping address"
 msgstr "Shipping address"
@@ -1313,47 +1968,132 @@ msgstr "Shipping address"
 msgid "Shipping Fields"
 msgstr "Shipping Fields"
 
+#: include/wcmamtx-whitelabel.php:40
+msgid "Short plugin description…"
+msgstr ""
+
+#: include/wcmamtx-guest-dashboard-customizer.php:405
+#: include/wcmamtx-guest-dashboard-customizer.php:420
 #: include/admin/forms/avatar_form.php:25
 msgid "Shortcode"
 msgstr "Shortcode"
 
-#: include/admin/forms/layout_form.php:275
+#: include/wcmamtx-guest-dashboard-customizer.php:126
+#: include/wcmamtx-guest-dashboard-customizer.php:400
+msgid "Shortcode 1"
+msgstr ""
+
+#: include/wcmamtx-guest-dashboard-customizer.php:127
+#: include/wcmamtx-guest-dashboard-customizer.php:415
+msgid "Shortcode 2"
+msgstr ""
+
+#: include/wcmamtx-guest-dashboard-customizer.php:353
+msgid "Show / Hide"
+msgstr ""
+
+#: include/admin/forms/widgets/layouts/navigationwidget.php:3
+msgid "Show My Account widget on navigation menu"
+msgstr ""
+
+#: include/wcmamtx-downloads-customizer.php:235
+msgid ""
+"Show or hide columns in the Downloads table — product, file, remaining and "
+"more."
+msgstr ""
+
+#: include/wcmamtx-orders-customizer.php:235
+msgid ""
+"Show or hide columns in the Orders table — date, status, total, actions and "
+"more."
+msgstr ""
+
+#: include/wcmamtx-view-order-customizer.php:238
+msgid "Show or hide individual parts of the View Order page per order status."
+msgstr ""
+
+#: include/admin/forms/widgets/layouts/navigationwidget.php:66
+msgid "Show widget only for logged in"
+msgstr ""
+
+#: include/wcmamtx-shipment-tracking/wcmamtx-shipment-tracking.php:73
+msgid ""
+"Shows a quick Add Tracking button that opens an AJAX modal when no info is "
+"saved yet."
+msgstr ""
+
+#: include/wcmamtx-shipment-tracking/wcmamtx-shipment-tracking.php:72
+msgid "Shows courier name and a clickable tracking link when info is saved."
+msgstr ""
+
+#: include/admin/forms/widgets/sidebar_position_admin.php:5
 msgid "Sidebar Position"
 msgstr "Sidebar Position"
 
-#: include/admin/admin_settings.php:975
+#: include/admin/admin_settings.php:1023
 msgid "Skip Quick Setup Wizard"
 msgstr "Skip Quick Setup Wizard"
 
-#: include/admin/forms/layout_form.php:339
-#: include/admin/forms/layout_form.php:387
-#: include/admin/forms/layout_form.php:431
-#: include/admin/forms/layout_form.php:476
-#: include/admin/forms/layout_form.php:510
+#: include/wcmamtx-downloads-customizer.php:199
+#: include/wcmamtx-orders-customizer.php:199
+#: include/wcmamtx-view-order-customizer.php:202
+msgid "Source"
+msgstr ""
+
+#: include/admin/forms/widgets/all_templates_admin.php:9
+#: include/admin/forms/widgets/all_templates_admin.php:57
+#: include/admin/forms/widgets/all_templates_admin.php:101
+#: include/admin/forms/widgets/all_templates_admin.php:146
+#: include/admin/forms/widgets/all_templates_admin.php:180
 msgid "Sourced from this plugin"
 msgstr "Sourced from this plugin"
 
-#: include/wcmamtx_extra_functions.php:1535
+#: include/admin/forms/widgets/layouts/spending.php:14
+msgid "Spending box location priority on dashboard"
+msgstr ""
+
+#: include/admin/forms/widgets/layouts/spending.php:32
+msgid "Spending chart location priority on dashboard"
+msgstr ""
+
+#: include/frontend/spendingchart.php:7
+msgid "Spending Overview"
+msgstr ""
+
+#: include/wcmamtx-guest-dashboard-customizer.php:295
+#: include/wcmamtx_extra_functions.php:2071
 msgid "Status"
 msgstr "Status"
 
+#: include/wcmamtx-downloads-customizer.php:207
+#: include/wcmamtx-orders-customizer.php:207
+#: include/wcmamtx-view-order-customizer.php:210
+msgid "Style"
+msgstr ""
+
+#: templates/myaccount/thankyou/01.php:504
 #: templates/myaccount/view-order/01.php:261
 msgid "Subtotal"
 msgstr "Subtotal"
 
-#: customize-my-account-for-woocommerce.php:236
-#: include/admin/admin_settings.php:972
+#: customize-my-account-for-woocommerce.php:249
+#: include/wcmamtx-whitelabel.php:188 include/wcmamtx-whitelabel.php:251
+#: include/admin/admin_settings.php:1020
 msgid "Support"
 msgstr "Support"
 
+#: include/wcmamtx-whitelabel.php:45
+msgid "Support URL"
+msgstr ""
+
 #: include/admin/forms/avatar_form.php:258
-#: include/admin/wrap/endpoints-content.php:401
-#: include/admin/wrap/endpoints-content.php:504
+#: include/admin/wrap/endpoints-content.php:405
+#: include/admin/wrap/endpoints-content.php:493
 msgid "Supported Variables"
 msgstr "Supported Variables"
 
 #. Author of the plugin
-#: include/admin/admin_settings.php:601
+#: include/admin/admin_settings.php:684
 msgid "SysBasics"
 msgstr "SysBasics"
 
@@ -1361,46 +2101,82 @@ msgstr "SysBasics"
 msgid "SysBasics Customize My Account for WooCommerce"
 msgstr "SysBasics Customize My Account for WooCommerce"
 
+#: include/wcmamtx-downloads-customizer.php:168
+msgid "SysBasics Downloads Live Customizer"
+msgstr ""
+
+#: include/wcmamtx-orders-customizer.php:168
+msgid "SysBasics Orders Live Customizer"
+msgstr ""
+
+#: include/wcmamtx-view-order-customizer.php:171
+msgid "SysBasics View Order Live Customizer"
+msgstr ""
+
+#: include/wcmamtx-view-order-customizer.php:79
+msgid "Sysbasics View Order Live Customizer"
+msgstr ""
+
+#: templates/myaccount/thankyou/01.php:531
 #: templates/myaccount/view-order/01.php:288
 msgid "Tax"
 msgstr "Tax"
+
+#: include/wcmamtx-downloads-customizer.php:194
+#: include/wcmamtx-orders-customizer.php:194
+#: include/wcmamtx-view-order-customizer.php:197
+msgid "Template"
+msgstr ""
+
+#: include/admin/forms/layout_form.php:79
+msgid "Templates"
+msgstr ""
 
 #: include/admin/wrap/subwrap/countof-settings.php:18
 msgid "Tera Wallet Balance"
 msgstr "Tera Wallet Balance"
 
-#: include/wcmamtx_frontend_customizer.php:175
-msgid "Text Color"
-msgstr "Text Color"
+#. %s: customer email
+#: templates/myaccount/thankyou/01.php:376
+#, php-format
+msgid "Thank you for your purchase. A confirmation has been sent to %s"
+msgstr ""
 
+#: templates/myaccount/thankyou/01.php:350
 #: templates/myaccount/thankyou/02.php:26
 #: templates/myaccount/thankyou/02.php:82
 msgid "Thank you. Your order has been received."
 msgstr "Thank you. Your order has been received."
 
-#: include/admin/forms/layout_form.php:472
+#: include/admin/forms/widgets/all_templates_admin.php:142
 msgid "Thankyou Template"
 msgstr "Thankyou Template"
 
-#: include/admin/forms/layout_form.php:306
+#: include/admin/forms/widgets/navigation_style_admin.php:12
 msgid "Theme inherited (default)"
 msgstr "Theme inherited (default)"
+
+#: include/wcmamtx-whitelabel.php:87
+msgid ""
+"These values replace visible branding in the WordPress admin. They do not "
+"modify plugin files."
+msgstr ""
 
 #: include/admin/wrap/endpoints-content.php:87
 msgid "Third Party Endpoint"
 msgstr "Third Party Endpoint"
 
-#: include/wcmamtx_extra_functions.php:1415
-#: include/admin/admin_settings.php:348
+#: include/wcmamtx_extra_functions.php:1951
+#: include/admin/admin_settings.php:437
 msgid "This feature is available in pro version only."
 msgstr "This feature is available in pro version only."
 
-#: include/admin/admin_settings.php:346
+#: include/admin/admin_settings.php:435
 msgid ""
 "this group has core endpoints. please move them before removing this group"
 msgstr ""
 
-#: include/admin/admin_settings.php:345
+#: include/admin/admin_settings.php:434
 msgid ""
 "This is third party endpoint, if parent plugin is active, it will keep "
 "coming back. Only delete after parent plugin is deactivated otherwise just "
@@ -1417,23 +2193,86 @@ msgstr "This is third party endpoint.Some features may not work."
 msgid "This order was %s on %s."
 msgstr "This order was %s on %s."
 
-#: include/admin/forms/layout_form.php:208
+#: include/wcmamtx-downloads-customizer.php:202
+#: include/wcmamtx-orders-customizer.php:202
+#: include/wcmamtx-view-order-customizer.php:205
+msgid "This Plugin"
+msgstr ""
+
+#: include/admin/forms/widgets/navigation_style_admin.php:34
+msgid ""
+"This will fully replace your woocommerce My account page with react based "
+"navigation system.User avatar is currently not supported. If you experience "
+"any third party plugin javascript getting broken , consider switching back "
+"to any of the other available navigation styles."
+msgstr ""
+
+#: include/admin/forms/widgets/dashboard_links_admin.php:26
 msgid "Tile"
 msgstr "Tile"
 
-#: include/wcmamtx_extra_functions.php:1536
+#: include/wcmamtx_extra_functions.php:2072
+#: templates/myaccount/thankyou/01.php:409
 msgid "Total"
 msgstr "Total"
+
+#: include/frontend/spendingbox.php:9
+msgid "Total Orders"
+msgstr ""
 
 #: include/admin/wrap/subwrap/countof-settings.php:22
 msgid "Total Points (WP Swings)"
 msgstr "Total Points (WP Swings)"
 
+#: include/frontend/spendingbox.php:4
+msgid "Total Spent"
+msgstr ""
+
 #: templates/myaccount/thankyou/02.php:54
 msgid "Total:"
 msgstr "Total:"
 
-#: templates/myaccount/view-order/01.php:390
+#: include/wcmamtx-shipment-tracking/wcmamtx-shipment-tracking.php:237
+msgid "Track"
+msgstr ""
+
+#: templates/myaccount/order/01.php:161
+msgid "Track Shipment"
+msgstr ""
+
+#: templates/myaccount/order/01.php:160
+#, php-format
+msgid "Track via %s"
+msgstr ""
+
+#: templates/myaccount/view-order/01.php:408
+msgid "Track your package"
+msgstr ""
+
+#: include/wcmamtx-shipment-tracking/wcmamtx-shipment-tracking.php:156
+msgid "Track:"
+msgstr ""
+
+#: include/wcmamtx-shipment-tracking/wcmamtx-shipment-tracking.php:195
+#: include/wcmamtx-shipment-tracking/wcmamtx-shipment-tracking.php:201
+#: templates/myaccount/view-order/01.php:401
+msgid "Tracking"
+msgstr ""
+
+#: include/wcmamtx-shipment-tracking/wcmamtx-tracking-delete.php:27
+msgid "Tracking info deleted."
+msgstr ""
+
+#: include/wcmamtx-shipment-tracking/wcmamtx-shipment-tracking.php:285
+msgid "Tracking info saved!"
+msgstr ""
+
+#: include/wcmamtx-shipment-tracking/wcmamtx-shipment-tracking.php:140
+#: include/wcmamtx-shipment-tracking/wcmamtx-shipment-tracking.php:422
+msgid "Tracking URL"
+msgstr ""
+
+#: templates/myaccount/view-order/01.php:450
 #, php-format
 msgid "Transaction ID: %s"
 msgstr "Transaction ID: %s"
@@ -1451,32 +2290,43 @@ msgid ""
 "again."
 msgstr ""
 
-#: include/wcmamtx_extra_functions.php:854
+#: templates/myaccount/thankyou/01.php:366
+msgid ""
+"Unfortunately your order cannot be processed. Please attempt your purchase "
+"again."
+msgstr ""
+
+#: include/wcmamtx_extra_functions.php:1420
 msgid "Unlimited Endpoints & links"
 msgstr "Unlimited Endpoints & links"
 
-#: include/wcmamtx_extra_functions.php:856
+#: include/wcmamtx_extra_functions.php:1422
 msgid "Unlimited Groups"
 msgstr "Unlimited Groups"
 
-#: templates/myaccount/view-order/01.php:385
+#: include/wcmamtx-downloads-customizer.php:288
+#: include/wcmamtx-orders-customizer.php:288
+#: include/wcmamtx-view-order-customizer.php:291
+msgid "Unlock Pro Features"
+msgstr ""
+
+#: templates/myaccount/view-order/01.php:445
 msgid "Unpaid"
 msgstr "Unpaid"
 
-#: include/wcmamtx_extra_functions.php:199
+#: include/wcmamtx_extra_functions.php:738
 msgid "Update your account info"
 msgstr "Update your account info"
 
-#: customize-my-account-for-woocommerce.php:216
+#: customize-my-account-for-woocommerce.php:229
 msgid "Upgrade to premium version"
 msgstr "Upgrade to premium version"
 
-#: include/wcmamtx_extra_functions.php:1428
+#: include/wcmamtx_extra_functions.php:1964
 msgid "Upgrade to Pro"
 msgstr "Upgrade to Pro"
 
-#: include/wcmamtx_extra_functions.php:1467
-#: include/admin/admin_settings.php:987 include/admin/admin_settings.php:1006
+#: include/wcmamtx_extra_functions.php:2003
 #: include/admin/wrap/subwrap/icon_settings.php:26
 #: include/admin/wrap/subwrap/icon_settings.php:36
 #: include/admin/wrap/subwrap/icon_settings.php:48
@@ -1495,7 +2345,12 @@ msgstr "Upload Icon"
 msgid "Upload Photo"
 msgstr "Upload Photo"
 
-#: include/frontend/frontend_functions.php:700
+#: include/admin/forms/avatar_form.php:219
+#: include/admin/wrap/endpoints-content.php:301
+msgid "Upload/Add image"
+msgstr ""
+
+#: include/frontend/frontend_functions.php:1001
 msgid "Uploading... Please wait"
 msgstr "Uploading... Please wait"
 
@@ -1507,7 +2362,7 @@ msgstr "Url"
 msgid "Use Camera"
 msgstr "Use Camera"
 
-#: include/admin/admin_settings.php:313 include/admin/admin_settings.php:356
+#: include/admin/admin_settings.php:402 include/admin/admin_settings.php:445
 msgid "Use Image"
 msgstr "Use Image"
 
@@ -1515,7 +2370,7 @@ msgstr "Use Image"
 msgid "Use new custom meta key"
 msgstr "Use new custom meta key"
 
-#: include/admin/forms/settings_form.php:175
+#: include/admin/forms/settings_form.php:232
 msgid "Use Selected Icon"
 msgstr "Use Selected Icon"
 
@@ -1525,23 +2380,22 @@ msgid ""
 "woocommerce"
 msgstr ""
 
-#: include/admin/admin_settings.php:433
-msgid "User Avatar"
-msgstr "User Avatar"
-
-#: include/sysbasics-avatar-upload.php:52
+#: include/sysbasics-avatar-upload.php:39
 msgid "User is not logged in"
 msgstr "User is not logged in"
 
-#: templates/myaccount/form-login.php:109
+#: templates/myaccount/form-login-popup.php:129
+#: templates/myaccount/form-login.php:129
 msgid "Username"
 msgstr "Username"
 
-#: templates/myaccount/form-login.php:162
+#: templates/myaccount/form-login-popup.php:182
+#: templates/myaccount/form-login.php:182
 msgid "Username or email"
 msgstr "Username or email"
 
-#: templates/myaccount/form-login.php:33
+#: templates/myaccount/form-login-popup.php:53
+#: templates/myaccount/form-login.php:53
 msgid "Username or email address"
 msgstr "Username or email address"
 
@@ -1549,25 +2403,68 @@ msgstr "Username or email address"
 msgid "Value"
 msgstr "Value"
 
-#: include/wcmamtx_extra_functions.php:196
+#: include/wcmamtx_extra_functions.php:735
 msgid "View and track your orders"
 msgstr "View and track your orders"
 
-#: templates/myaccount/order/01.php:147
+#: include/wcmamtx-view-order-customizer.php:10
+#: templates/myaccount/order/01.php:148
 msgid "View Order"
 msgstr "View Order"
 
-#: include/admin/forms/layout_form.php:427
+#: include/wcmamtx-view-order-customizer.php:9
+msgid "View Order Customizer"
+msgstr ""
+
+#: templates/myaccount/thankyou/01.php:572
+msgid "View order details"
+msgstr ""
+
+#: include/admin/forms/widgets/all_templates_admin.php:97
 msgid "View Order Template"
 msgstr "View Order Template"
 
-#: include/admin/wrap/endpoints-content.php:412
+#: include/admin/wrap/endpoints-content.php:416
 msgid "Visible to"
 msgstr "Visible to"
+
+#: templates/myaccount/thankyou/01.php:390
+msgid ""
+"We've emailed your receipt and order details. Check your spam folder if you "
+"don't see it within a few minutes."
+msgstr ""
 
 #: include/admin/forms/avatar_form.php:122
 msgid "Webcam capture"
 msgstr "Webcam capture"
+
+#: templates/myaccount/thankyou/01.php:417
+msgid "What happens next"
+msgstr ""
+
+#: include/wcmamtx-shipment-tracking/wcmamtx-shipment-tracking.php:68
+msgid "What this feature does"
+msgstr ""
+
+#: include/wcmamtx-shipment-tracking/wcmamtx-shipment-tracking.php:79
+msgid "What this feature doesn't"
+msgstr ""
+
+#: include/wcmamtx-whitelabel.php:25 include/wcmamtx-whitelabel.php:56
+msgid "White Label"
+msgstr ""
+
+#: include/admin/forms/widgets/layouts/navigationwidget.php:41
+msgid "Widget text (logged in)"
+msgstr ""
+
+#: include/admin/forms/widgets/layouts/navigationwidget.php:54
+msgid "Widget text (logged out)"
+msgstr ""
+
+#: include/admin/forms/layout_form.php:84
+msgid "Widgets"
+msgstr ""
 
 #: include/admin/wrap/subwrap/countof-settings.php:43
 msgid "WoodMart Wishlist Count"
@@ -1581,6 +2478,7 @@ msgstr "WPC Smart Wishlist Count"
 msgid "WPML Sticky Links"
 msgstr "WPML Sticky Links"
 
+#: include/wcmamtx-guest-dashboard-customizer.php:303
 #: include/admin/forms/avatar_form.php:168
 #: include/admin/forms/pro_settings.php:12
 #: include/admin/wrap/endpoints-content.php:174
@@ -1588,6 +2486,12 @@ msgstr "WPML Sticky Links"
 #: include/admin/wrap/subwrap/countof-settings.php:186
 #: include/admin/wrap/subwrap/countof-settings.php:193
 #: include/admin/wrap/subwrap/countof-settings.php:198
+#: include/admin/forms/widgets/layouts/navigationwidget.php:6
+#: include/admin/forms/widgets/layouts/navigationwidget.php:69
+#: include/admin/forms/widgets/layouts/navigationwidget.php:78
+#: include/admin/forms/widgets/layouts/navigationwidget.php:87
+#: include/admin/forms/widgets/layouts/spending.php:8
+#: include/admin/forms/widgets/layouts/spending.php:26
 msgid "Yes"
 msgstr "Yes"
 
@@ -1595,22 +2499,29 @@ msgstr "Yes"
 msgid "Yith Wishlist Count"
 msgstr "Yith Wishlist Count"
 
-#: include/admin/forms/layout_form.php:168
-#: include/admin/forms/layout_form.php:218
-#: include/admin/forms/layout_form.php:317
-#: include/admin/forms/layout_form.php:362
-#: include/admin/forms/layout_form.php:407
-#: include/admin/forms/layout_form.php:451
+#: include/admin/forms/widgets/all_templates_admin.php:32
+#: include/admin/forms/widgets/all_templates_admin.php:77
+#: include/admin/forms/widgets/all_templates_admin.php:121
+#: include/admin/forms/widgets/dashboard_links_admin.php:36
+#: include/admin/forms/widgets/loginbox_admin.php:76
+#: include/admin/forms/widgets/navigation_style_admin.php:25
 msgid ""
 "You can override this template easily from your child theme. Copy the file "
 "from"
+msgstr ""
+
+#: include/wcmamtx-downloads-customizer.php:303
+#: include/wcmamtx-orders-customizer.php:303
+#: include/wcmamtx-view-order-customizer.php:306
+msgid ""
+"You can override this template from your child theme. Copy the file from:"
 msgstr ""
 
 #: include/admin/wrap/orders-wrap.php:148
 msgid "You can use following variables inside url"
 msgstr "You can use following variables inside url"
 
-#: include/wcmamtx_extra_functions.php:442
+#: include/wcmamtx_extra_functions.php:981
 msgid "You have not set up this type of address yet."
 msgstr "You have not set up this type of address yet."
 
@@ -1618,6 +2529,14 @@ msgstr "You have not set up this type of address yet."
 msgid ""
 "Your chosen Endpoints/links you can show on My Account menu widget, you can "
 "simply inject widget into your any menu location your theme supports."
+msgstr ""
+
+#: include/wcmamtx-whitelabel.php:41
+msgid "Your Company Name"
+msgstr ""
+
+#: templates/myaccount/thankyou/01.php:583
+msgid "Your downloads"
 msgstr ""
 
 #: include/admin/wrap/orders-wrap.php:150

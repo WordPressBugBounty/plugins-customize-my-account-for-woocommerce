@@ -3,7 +3,7 @@
     Plugin Name: SysBasics Customize My Account for WooCommerce
     Plugin URI: https://sysbasics.com
     Description: Easily customize the WooCommerce My Account page. Mobile Friendly User avatar, redesign the WooCommerce dashboard, manage menus, and apply premium styles for a better user experience.
-    Version: 4.4.7
+    Version: 4.4.11
     Author: SysBasics
     Author URI: https://sysbasics.com
     Domain Path: /languages
@@ -45,7 +45,7 @@ $mt_type = 'specific';
 
 
 if ( !defined( 'wcmamtx_pro_price_html' ) )
-    define( 'wcmamtx_pro_price_html', '$79 USD' );
+    define( 'wcmamtx_pro_price_html', '$49 USD' );
 
 if ( !defined( 'wcmamtx_pro_price_show' ) )
     define( 'wcmamtx_pro_price_show', 'yes' );
@@ -106,6 +106,7 @@ if ( is_plugin_active( 'sysbasics-account-fields/sysbasics-account-fields.php' )
       //include the classes
     include dirname( __FILE__ ) . '/include/admin/admin_settings.php';
     include dirname( __FILE__ ) . '/include/frontend/frontend_functions.php';
+include dirname( __FILE__ ) . '/include/frontend/guest_dashboard_hooks.php';
 
 
     include dirname( __FILE__ ) . '/include/sysbasics-avatar-upload.php';
@@ -129,6 +130,7 @@ if ( is_plugin_active( 'sysbasics-account-fields/sysbasics-account-fields.php' )
 
     include dirname( __FILE__ ) . '/include/wcmamtx-orders-customizer.php';
     include dirname( __FILE__ ) . '/include/wcmamtx-downloads-customizer.php';
+include dirname( __FILE__ ) . '/include/wcmamtx-guest-dashboard-customizer.php';
 
     
 

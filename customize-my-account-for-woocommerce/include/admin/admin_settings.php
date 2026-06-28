@@ -1015,9 +1015,15 @@ class wcmamtx_add_settings_page_class {
         $current_tab = isset( $_GET['tab'] ) ? esc_attr($_GET['tab']) : sanitize_text_field($this->wcmamtx_notices_settings_page);
 
         if (isset($current_tab)  && ($current_tab != "wcmamtx_wizard_settings")) {
-
            
-            echo '<a target="_blank" class="btn wcmamtx_support_buton btn-warning" href="https://www.sysbasics.com/go/customize/"><span class="wcmamtx_docs_icon dashicons dashicons-admin-generic"></span>'.esc_html__( 'Support' ,'customize-my-account-for-woocommerce').'</a>';
+            if (($current_tab == "wcmamtx_advanced_settings") || ($current_tab == "wcmamtx_avatar_settings")) {
+                echo '<a href="admin.php?page=wcmamtx_frontend_customizer" class="btn wcmamtx_flot_right_endpoint btn-warning wcmamtx_live_customizer_endpoint ">
+                            <span class="dashicons dashicons-art"></span>
+                            <span class="wcmamtx-btn-label">Live Customizer</span>
+                    </a>';
+            }
+           
+            echo '<a target="_blank" class="btn wcmamtx_support_buton btn-success wcmamtx_flot_right_endpoint" href="https://www.sysbasics.com/go/customize/"><span class="wcmamtx_docs_icon dashicons dashicons-admin-generic"></span>'.esc_html__( 'Support' ,'customize-my-account-for-woocommerce').'</a>';
         } else {
 
             echo '<a class="btn wcmamtx_exit_setup btn-danger" href="?page=' .$this->wcmamtx_notices_settings_page. '&wcmamtx_disable_wizard=yes"><span class="wcmamtx_docs_icon dashicons dashicons-controls-forward"></span>'.esc_html__( 'Skip Quick Setup Wizard' ,'customize-my-account-for-woocommerce').'</a>';

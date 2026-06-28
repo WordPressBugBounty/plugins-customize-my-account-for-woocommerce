@@ -1,0 +1,244 @@
+/* =============================================================
+   [wcmamtx_guest_dashboard] Shortcode - Guest Dashboard Styles
+   ============================================================= */
+
+h1.entry-title {
+    display: none;
+}
+
+/* ---- Outer wrapper ---- */
+.wcmamtx-guest-dashboard {
+    display: flex;
+    align-items: flex-start;
+    gap: 30px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* ============================================================
+   SIDEBAR
+   ============================================================ */
+.wcmamtx-guest-sidebar {
+    flex: 0 0 280px;
+    width: 280px;
+    min-width: 0;
+    background: #fff;
+    border-radius: 16px;
+    padding: 15px;
+    box-shadow: 0 4px 20px rgba(0,0,0,.06);
+    box-sizing: border-box;
+}
+
+/* ---- Avatar block ---- */
+.wcmamtx-guest-avatar-wrap {
+    text-align: center;
+    padding: 10px 0 8px;
+}
+
+.wcmamtx-guest-avatar {
+    display: inline-block;
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid #e8e8e8;
+    margin: 0 auto 10px;
+}
+
+.wcmamtx-guest-avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* ---- Login text above nav ---- */
+.wcmamtx-guest-text-above {
+    font-size: 13px;
+    color: #777;
+    margin: 0 0 10px;
+    line-height: 1.5;
+    text-align: center;
+}
+.wcmamtx-guest-text-above a {
+    color: #e07b39;
+    font-weight: 600;
+    text-decoration: none;
+}
+.wcmamtx-guest-text-above a:hover { text-decoration: underline; }
+
+/* ---- Nav list ---- */
+.wcmamtx-guest-nav-list {
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.wcmamtx-guest-nav-list.wcmamtx_vertical li.woocommerce-MyAccount-navigation-link {
+    list-style: none;
+    margin: 0 0 4px !important;
+    padding: 0;
+    background: transparent !important;
+    border: none !important;
+    width: 100% !important;
+    margin-left: 0 !important;
+    font-size: inherit !important;
+}
+
+.wcmamtx-guest-nav-list li.woocommerce-MyAccount-navigation-link a,
+.wcmamtx-guest-nav-list li.woocommerce-MyAccount-navigation-link a.woocommerce-MyAccount-navigation-link_a {
+    display: flex !important;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px !important;
+    text-decoration: none !important;
+    color: #555 !important;
+    border-radius: 12px;
+    transition: .3s;
+    font-size: 14px;
+    font-weight: 500;
+    background: transparent;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.wcmamtx-guest-nav-list li.woocommerce-MyAccount-navigation-link a:hover {
+    background: #f5f7fa !important;
+    color: #333 !important;
+}
+
+.wcmamtx-guest-nav-list a i.fa,
+.wcmamtx-guest-nav-list a .dashicons,
+.wcmamtx-guest-nav-list a img.wcmamtx_upload_image_icon {
+    float: none !important;
+    order: -1;
+    font-size: 16px;
+    width: 18px !important;
+    height: auto;
+    margin: 0 !important;
+    flex-shrink: 0;
+}
+
+/* First nav item active style */
+.wcmamtx-guest-nav-list li.woocommerce-MyAccount-navigation-link:first-child a {
+    background: #2271b1 !important;
+    color: #fff !important;
+    border-radius: 12px;
+}
+.wcmamtx-guest-nav-list li.woocommerce-MyAccount-navigation-link:first-child a i.fa,
+.wcmamtx-guest-nav-list li.woocommerce-MyAccount-navigation-link:first-child a .dashicons {
+    color: #fff !important;
+}
+
+/* ============================================================
+   CONTENT AREA
+   ============================================================ */
+.wcmamtx-guest-content {
+    flex: 1 1 0;
+    min-width: 0;
+    width: 0;
+}
+
+/* ============================================================
+   DASHBOARD CARDS — scoped to guest wrapper
+   ============================================================ */
+.wcmamtx-guest-content .wcmtx_def1-dashboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin: 25px 0;
+}
+
+.wcmamtx-guest-content .wcmtx_def1-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 30px 20px;
+    text-align: center;
+    text-decoration: none;
+    box-shadow: 0 5px 20px rgba(0,0,0,.08);
+    transition: .3s;
+    border: 1px solid #f1f1f1;
+}
+
+.wcmamtx-guest-content .wcmtx_def1-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 30px rgba(0,0,0,.12);
+}
+
+.wcmamtx-guest-content .wcmtx_def1-card .dashicons,
+.wcmamtx-guest-content .wcmtx_def1-card i.fa.wcmamtx_fa_icon {
+    font-size: 30px;
+    width: 30px;
+    height: 30px;
+    margin-bottom: 15px;
+    float: left;
+    color: #3b82f6;
+}
+
+.wcmamtx-guest-content .wcmtx_def1-card span.wcmatx_tab_title_new_de {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #222;
+    margin-top: 6px;
+    float: left;
+    margin-left: 14px;
+}
+
+.wcmamtx-guest-content .wcmtx_def1-dashboard .dashboard i.fa.fa-tachometer-alt.wcmamtx_fa_icon { color: #3b82f6; }
+.wcmamtx-guest-content .wcmtx_def1-dashboard .orders i.fa.fa-shopping-basket.wcmamtx_fa_icon   { color: #f97316; }
+.wcmamtx-guest-content .wcmtx_def1-dashboard .downloads i.fa.fa-file-download.wcmamtx_fa_icon  { color: #22c55e; }
+.wcmamtx-guest-content .wcmtx_def1-dashboard .edit-address i.fa.fa-home.wcmamtx_fa_icon        { color: #ef4444; }
+.wcmamtx-guest-content .wcmtx_def1-dashboard .edit-account i.fa.fa-user.wcmamtx_fa_icon        { color: #8b5cf6; }
+.wcmamtx-guest-content .wcmtx_def1-dashboard .customer-logout i.fa.fa-sign-out-alt.wcmamtx_fa_icon { color: #06b6d4; }
+
+.wcmamtx-guest-content span.wcmatx_tab_desc_below_dashlink {
+    float: left;
+    width: 100%;
+    text-align: left;
+    font-size: 13px;
+    padding: 2px;
+}
+
+.wcmamtx-guest-content .wcmtx_def1-dashboard .wcmamtx-banner-counter {
+    top: 35px !important;
+    right: auto;
+    margin-left: 5px;
+    position: inherit;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media ( max-width: 768px ) {
+    .wcmamtx-guest-dashboard {
+        flex-direction: column;
+        gap: 20px;
+    }
+    .wcmamtx-guest-sidebar {
+        flex: none;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+    .wcmamtx-guest-content {
+        width: 100%;
+        flex: none;
+        min-width: 0;
+    }
+    .wcmamtx-guest-content .wcmtx_def1-dashboard {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media ( max-width: 480px ) {
+    .wcmamtx-guest-dashboard {
+        gap: 16px;
+    }
+    .wcmamtx-guest-content .wcmtx_def1-dashboard {
+        grid-template-columns: 1fr;
+    }
+    .wcmamtx-guest-content .wcmtx_def1-card {
+        padding: 20px 16px;
+    }
+}

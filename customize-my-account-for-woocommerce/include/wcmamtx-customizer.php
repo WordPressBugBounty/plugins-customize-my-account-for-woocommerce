@@ -90,6 +90,8 @@ add_action( 'wp_ajax_wcmamtx_customizer_save', function() {
         'shortcode2_value'                => 'text',
         'shortcode1_dashboard_priority'   => 'priority',
         'shortcode2_dashboard_priority'   => 'priority',
+        'guest_dashboard_enable'          => ['01','02'],
+        'guest_dashboard_page'            => 'posint',
     ];
     if ( ! array_key_exists( $key, $layout_allowed ) ) wp_send_json_error( 'Invalid key' );
     $layout_rule = $layout_allowed[$key];
@@ -192,6 +194,9 @@ function wcmamtx_customizer_render_page() {
     $dash_style    = $g('dash_style',               '01');
     $profilebox    = $g('profilebox_override',      '02');
     $dashlinks     = $g('dashlink_layout_override', '01');
+    $guest_enable  = $g('guest_dashboard_enable', '02');
+    $guest_page_id = (int) $g('guest_dashboard_page', 0);
+    $all_pages_cz  = get_pages( array( 'post_status' => 'publish', 'sort_column' => 'post_title' ) );
     $spending      = $g('spending_layout_override', '01');
     $spendingchart = $g('spendingchart_override',   '01');
     $dashlink_box  = $g('dashlink_box_override',    '02');
@@ -889,7 +894,7 @@ a.wcmamtx_accordion_label_small
                             <div class="cz-toggle-group" style="flex-direction:column;">
                                 
                             <a href="<?php echo esc_url( admin_url( 'admin.php?page=wcmamtx_advanced_settings' ) ); ?>" class="cz-btn cz-btn-success" id="">
-                                  <?php esc_html_e( 'Manage Endpoints', 'customize-my-account-for-woocommerce-pro' ); ?>
+                                  <?php esc_html_e( 'Manage Endpoints', 'customize-my-account-for-woocommerce' ); ?>
                             </a>
                                 
                             </div>
@@ -1052,6 +1057,83 @@ a.wcmamtx_accordion_label_small
                 </div><!-- /accordion-body avatar -->
             </div><!-- /accordion avatar -->
 
+
+
+
+            <!-- GUEST DASHBOARD -->
+            <div class="cz-accordion" data-accordion="guestdashboard">
+                <div class="cz-accordion-header" data-target="guestdashboard">
+                    <span class="cz-accordion-title">
+                        <span class="dashicons dashicons-groups"></span>
+                        <?php esc_html_e('Guest Dashboard','customize-my-account-for-woocommerce'); ?>
+                        <span style="background:linear-gradient(135deg,#ef4444,#f97316);color:#fff;font-size:9px;font-weight:700;padding:2px 6px;border-radius:20px;letter-spacing:.4px;text-transform:uppercase;margin-left:6px;vertical-align:middle;">Hot</span>
+                    </span>
+                    <span class="cz-accordion-chevron">&#9660;</span>
+                </div>
+                <div class="cz-accordion-body" id="cz-acc-guestdashboard">
+                    <div class="cz-group">
+                        <div class="cz-group-title"><?php esc_html_e('Guest Dashboard','customize-my-account-for-woocommerce'); ?></div>
+                        <p style="font-size:11px;color:#6b6b85;margin-bottom:10px;line-height:1.6;"><?php esc_html_e('Show a guest-friendly My Account sidebar and dashboard cards to logged-out visitors.','customize-my-account-for-woocommerce'); ?></p>
+
+                        <!-- Enable toggle -->
+                        <div class="cz-field">
+                            <label class="cz-label"><?php esc_html_e('Enable','customize-my-account-for-woocommerce'); ?></label>
+                            <div class="cz-toggle-group">
+                                <button class="cz-toggle <?php echo $guest_enable==='01'?'active':''; ?>" id="cz-guest-enable-on"  data-guest-toggle="01"><?php esc_html_e('Yes','customize-my-account-for-woocommerce'); ?></button>
+                                <button class="cz-toggle <?php echo $guest_enable!=='01'?'active':''; ?>" id="cz-guest-enable-off" data-guest-toggle="02"><?php esc_html_e('No','customize-my-account-for-woocommerce'); ?></button>
+                            </div>
+                        </div>
+
+                        <!-- Sub-options (shown when enabled) -->
+                        <div id="cz-guest-subopts" style="<?php echo $guest_enable==='01'?'':'display:none;'; ?>margin-top:10px;">
+
+                            <!-- Page selector -->
+                            <div class="cz-field">
+                                <label class="cz-label"><?php esc_html_e('Guest Dashboard Page','customize-my-account-for-woocommerce'); ?></label>
+                                <select id="cz-guest-page-select" style="width:100%;">
+                                    <option value="">&mdash; <?php esc_html_e('Select a page','customize-my-account-for-woocommerce'); ?> &mdash;</option>
+                                    <?php foreach ( $all_pages_cz as $pg ) : ?>
+                                    <option value="<?php echo esc_attr($pg->ID); ?>" <?php selected($guest_page_id,$pg->ID); ?>>
+                                        <?php echo esc_html($pg->post_title); ?>
+                                    </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+
+                            <!-- Auto-detect / create button -->
+                            <div class="cz-field">
+                                <button type="button" id="cz-guest-autolink-btn"
+                                    style="width:100%;background:#1e1e2e;border:1px solid #a78bfa;color:#a78bfa;padding:8px 12px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .2s;">
+                                    <span class="dashicons dashicons-search" style="font-size:13px;width:13px;height:13px;line-height:1;"></span>
+                                    <?php esc_html_e('Auto-detect or Create Page','customize-my-account-for-woocommerce'); ?>
+                                </button>
+                                <p id="cz-guest-autolink-status" style="font-size:11px;margin-top:5px;min-height:14px;"></p>
+                            </div>
+
+                            <!-- Info notice -->
+                            <div style="background:#13131f;border:1px solid #2563eb;border-radius:6px;padding:10px 12px;margin-top:4px;">
+                                <p style="font-size:11px;color:#93c5fd;line-height:1.6;margin:0;">
+                                    <span style="margin-right:4px;">&#8505;</span>
+                                    <?php esc_html_e('Selected page must contain','customize-my-account-for-woocommerce'); ?>
+                                    <code style="background:#0d0d1a;padding:1px 5px;border-radius:3px;color:#a78bfa;">[wcmamtx_guest_dashboard]</code>.
+                                    <?php esc_html_e('Logged-out visitors will be redirected here.','customize-my-account-for-woocommerce'); ?>
+                                </p>
+                            </div>
+
+                            
+                            <div class="cz-field" style="margin-top:8px;">
+                                <a href="<?php echo esc_url(admin_url('admin.php?page=wcmamtx_guest_dashboard_customizer')); ?>" class="cz-tracking-link">
+                                    <span class="dashicons dashicons-art" style="font-size:13px;width:13px;height:13px;"></span>
+                                    <?php esc_html_e('Guest Dashboard Live Customizer','customize-my-account-for-woocommerce'); ?>
+                                </a>
+                            </div>
+                            
+
+                        </div><!-- /#cz-guest-subopts -->
+                    </div>
+                </div><!-- /.cz-accordion-body -->
+                <?php do_action('wcmamtx_customizer_section_guestdashboard'); ?>
+            </div><!-- /.accordion guestdashboard -->
 
                 <!-- OTHER TOOLS -->
                 <div class="cz-accordion" data-accordion="othertools">
@@ -1624,6 +1706,104 @@ a.wcmamtx_accordion_label_small
             });
         }
     })();
+
+
+    // ---- GUEST DASHBOARD ----
+    (function(){
+        var GUEST_NONCE = <?php echo wp_json_encode( wp_create_nonce( 'wcmamtx_guest_dashboard_nonce' ) ); ?>;
+
+        function saveGuestOpt(key, val) {
+            setSaveStatus('saving', i18n.saving);
+            var fd = new FormData();
+            fd.append('action', 'wcmamtx_customizer_save');
+            fd.append('nonce',  NONCE_LAYOUT);
+            fd.append('key',    key);
+            fd.append('value',  val);
+            fetch(AJAX_URL, {method:'POST', body:fd})
+                .then(function(r){ return r.json(); })
+                .then(function(res){ setSaveStatus(res.success ? 'saved' : '', i18n.saved); })
+                .catch(function(){ setSaveStatus('', i18n.networkError); });
+        }
+
+        // Enable / Disable toggles
+        document.querySelectorAll('[data-guest-toggle]').forEach(function(btn){
+            btn.addEventListener('click', function(){
+                document.querySelectorAll('[data-guest-toggle]').forEach(function(b){ b.classList.remove('active'); });
+                btn.classList.add('active');
+                var val = btn.dataset.guestToggle;
+                var sub = document.getElementById('cz-guest-subopts');
+                if (sub) sub.style.display = val === '01' ? '' : 'none';
+                saveGuestOpt('guest_dashboard_enable', val);
+            });
+        });
+
+        // Init Select2 + bind autolink button once accordion opens
+        var guestReady = false;
+        function initGuestPanel() {
+            if (guestReady) return;
+            guestReady = true;
+
+            // Select2
+            if (typeof jQuery !== 'undefined' && jQuery.fn.select2) {
+                jQuery('#cz-guest-page-select').select2({
+                    allowClear: true,
+                    width: '100%',
+                    dropdownParent: jQuery('#cz-acc-guestdashboard')
+                });
+                jQuery('#cz-guest-page-select').on('change', function(){
+                    saveGuestOpt('guest_dashboard_page', jQuery(this).val() || '0');
+                });
+            }
+
+            // Auto-detect / create button
+            var autoBtn = document.getElementById('cz-guest-autolink-btn');
+            if (autoBtn) {
+                autoBtn.addEventListener('click', function(){
+                    var statusEl = document.getElementById('cz-guest-autolink-status');
+                    autoBtn.disabled = true;
+                    autoBtn.style.opacity = '0.6';
+                    if (statusEl) { statusEl.style.color = '#6b6b85'; statusEl.textContent = <?php echo wp_json_encode( __('Searching...','customize-my-account-for-woocommerce') ); ?>; }
+
+                    var fd = new FormData();
+                    fd.append('action', 'wcmamtx_guest_dashboard_autolink');
+                    fd.append('nonce',  GUEST_NONCE);
+                    fetch(AJAX_URL, {method:'POST', body:fd})
+                        .then(function(r){ return r.json(); })
+                        .then(function(res){
+                            autoBtn.disabled = false;
+                            autoBtn.style.opacity = '1';
+                            if (res.success) {
+                                if (statusEl) { statusEl.style.color = '#22c55e'; statusEl.textContent = '\u2713 ' + res.data.message; }
+                                var $s = jQuery('#cz-guest-page-select');
+                                if ($s.length) {
+                                    if (!$s.find('option[value=' + res.data.page_id + ']').length) {
+                                        $s.append(new Option(res.data.page_title, res.data.page_id));
+                                    }
+                                    $s.val(res.data.page_id).trigger('change');
+                                }
+                                showLoader();
+                                iframe.src = PREVIEW + '?wcmcz=' + Date.now();
+                            } else {
+                                if (statusEl) { statusEl.style.color = '#ef4444'; statusEl.textContent = res.data || <?php echo wp_json_encode( __('Error.','customize-my-account-for-woocommerce') ); ?>; }
+                            }
+                        })
+                        .catch(function(){
+                            autoBtn.disabled = false;
+                            autoBtn.style.opacity = '1';
+                            if (statusEl) { statusEl.style.color = '#ef4444'; statusEl.textContent = i18n.networkError; }
+                        });
+                });
+            }
+        }
+
+        // Trigger init when accordion header is clicked
+        document.querySelectorAll('.cz-accordion-header').forEach(function(hdr){
+            if (hdr.dataset.target === 'guestdashboard') {
+                hdr.addEventListener('click', function(){ setTimeout(initGuestPanel, 100); });
+            }
+        });
+    })();
+
 
 })();
 

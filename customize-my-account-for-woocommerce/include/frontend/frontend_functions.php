@@ -48,6 +48,7 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
 
 
      add_action( 'wp_enqueue_scripts', array( $this, 'wcmamtx_load_assets' ) );
+     add_action( 'wp_enqueue_scripts', array( $this, 'wcmamtx_guest_dashboard_enqueue' ) );
      add_action( 'woocommerce_account_menu_items', array($this, 'wcmamtx_rename_my_account_menu_items'), 100, 1);
      add_action( 'woocommerce_locate_template', array($this,'wcmamtx_override_default_navigation_template'), 100, 3 );
      
@@ -71,6 +72,8 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
 
 
      add_shortcode('sysbasics_dashboard_menu', array( $this, 'sysbasics_dashboard_menu_function' ));
+
+     add_shortcode('wcmamtx_guest_dashboard', array( $this, 'wcmamtx_guest_dashboard_shortcode' ));
 
      add_action( 'admin_bar_menu', array( $this, 'register_custom_menu_link' ),999);
 
@@ -1426,6 +1429,171 @@ public function wcmamtx_google_callback() {
             echo do_shortcode( wp_kses_post( $shortcode ) );
             echo '</div>';
         }
+    }
+
+
+    public function wcmamtx_guest_dashboard_enqueue() {
+        global $post;
+        if ( ! is_a( $post, 'WP_Post' ) ) { return; }
+        if ( has_shortcode( $post->post_content, 'wcmamtx_guest_dashboard' ) ) {
+            wp_enqueue_style(
+                'wcmamtx-guest-dashboard',
+                plugins_url( 'assets/css/guest-dashboard.css', dirname( dirname( __FILE__ ) ) ),
+                array(),
+                filemtime( plugin_dir_path( dirname( dirname( __FILE__ ) ) ) . 'assets/css/guest-dashboard.css' )
+            );
+            wp_enqueue_style( 'wcmamtx-font-awesome', ''.wcmamtx_PLUGIN_URL.'assets/css/all.min.css' );
+        }
+    }
+
+    public function wcmamtx_guest_dashboard_shortcode() {
+        ob_start();
+        $login_url      = wc_get_page_permalink( 'myaccount' );
+        $plugin_url     = wcmamtx_PLUGIN_URL;
+        $wcmamtx_layout = (array) get_option( 'wcmamtx_layout' );
+        $default_style  = isset( $wcmamtx_layout['style'] ) ? $wcmamtx_layout['style'] : '01';
+        $guest_cta_text = ! empty( $wcmamtx_layout['guest_cta_text'] ) ? $wcmamtx_layout['guest_cta_text'] : __( 'Login to View and Manage Your Orders', 'customize-my-account-for-woocommerce' );
+
+        // Build nav items: skip logout, separater, heading, hidden
+        $wcmamtx_tabs_raw = (array) get_option( 'wcmamtx_advanced_settings' );
+        $all_items        = wc_get_account_menu_items();
+
+
+        if (count($wcmamtx_tabs_raw) === 1 && empty(reset($wcmamtx_tabs_raw))) {
+            $wcmamtx_tabs_raw = $all_items;
+        }
+
+
+        // Merge third-party tabs that exist in WC but not in plugin settings
+        foreach ( $all_items as $itkey => $itvalue ) {
+            if ( ! array_key_exists( $itkey, $wcmamtx_tabs_raw ) ) {
+                $wcmamtx_tabs_raw[ $itkey ] = array( 'show' => 'yes', 'third_party' => 'yes', 'endpoint_key' => $itkey, 'wcmamtx_type' => 'endpoint', 'parent' => 'none', 'endpoint_name' => $itvalue );
+            }
+        }
+        // Filter out non-verified custom endpoints (same logic as dashlinks/01.php)
+        $core_f = array( 'dashboard'=>1,'orders'=>1,'downloads'=>1,'edit-address'=>1,'edit-account'=>1,'customer-logout'=>1,'payment-methods'=>1 );
+        foreach ( $wcmamtx_tabs_raw as $gtkey => $gtvalue ) {
+            if ( ! array_key_exists( $gtkey, $core_f ) ) {
+                $tp   = wcmamtx_third_party_goahead_check( $gtkey );
+                $type = isset( $gtvalue['wcmamtx_type'] ) ? $gtvalue['wcmamtx_type'] : 'endpoint';
+                $ok   = wcmamtx_act_goahead_check_verified();
+                if ( $ok === 'yes' && $tp === 'no' && $type === 'endpoint' && strpos( $gtkey, 'custom-endpoint-' ) === false ) {
+                    unset( $wcmamtx_tabs_raw[ $gtkey ] );
+                }
+            }
+        }
+
+        // Nav items: remove logout, separater, heading
+        $nav_tabs = $wcmamtx_tabs_raw;
+        unset( $nav_tabs['customer-logout'] );
+        foreach ( $nav_tabs as $k => $v ) {
+            $t = isset( $v['wcmamtx_type'] ) ? $v['wcmamtx_type'] : 'endpoint';
+            if ( in_array( $t, array( 'separater', 'heading' ), true ) ) unset( $nav_tabs[ $k ] );
+        }
+
+        // Apply guest customizer: order + visibility from wcmamtx_guest_endpoint_order / guest_hidden_endpoints
+        $guest_ep_order  = (array) ( $wcmamtx_layout['guest_endpoint_order']   ?? [] );
+        $guest_ep_hidden = (array) ( $wcmamtx_layout['guest_hidden_endpoints']  ?? [] );
+        // Remove hidden items
+        foreach ( $guest_ep_hidden as $hk ) unset( $nav_tabs[ $hk ] );
+        // Reorder
+        if ( $guest_ep_order ) {
+            $ordered_tabs = [];
+            foreach ( $guest_ep_order as $ok ) {
+                if ( isset( $nav_tabs[ $ok ] ) ) $ordered_tabs[ $ok ] = $nav_tabs[ $ok ];
+            }
+            // Append any remaining items not in the saved order
+            foreach ( $nav_tabs as $ok => $ov ) {
+                if ( ! isset( $ordered_tabs[ $ok ] ) ) $ordered_tabs[ $ok ] = $ov;
+            }
+            $nav_tabs = $ordered_tabs;
+        }
+
+        ?>
+        <div class="wcmamtx-guest-dashboard">
+
+            <!-- Sidebar -->
+            <nav class="wcmamtx-guest-sidebar woocommerce-MyAccount-navigation wsmt_extra_navclass">
+                <div class="wcmamtx-guest-avatar-wrap">
+                    <div class="wcmamtx-guest-avatar">
+                        <img src="<?php echo esc_url( $plugin_url . 'assets/images/default_avatar.jpg' ); ?>"
+                             alt="<?php esc_attr_e( 'Guest', 'customize-my-account-for-woocommerce' ); ?>"
+                             class="wcmamtx-guest-avatar-img" />
+                    </div>
+                    <p class="wcmamtx-guest-text-above"><?php
+                        // Wrap the entire CTA text in a single login link
+                        echo '<a href="' . esc_url( add_query_arg( 'skip_guest_dashboard', 'yes', $login_url ) ) . '">';
+                        echo esc_html( $guest_cta_text );
+                        echo '</a>';
+                    ?></p>
+                </div>
+
+                <ul class="wcmamtx_vertical style_<?php echo esc_attr( $default_style ); ?> wcmamtx-guest-nav-list">
+                    <?php foreach ( $nav_tabs as $key => $value ) :
+                        $label       = ( isset( $value['endpoint_name'] ) && $value['endpoint_name'] !== '' ) ? $value['endpoint_name'] : $value;
+                        $icon_source = isset( $value['icon_source'] ) ? $value['icon_source'] : 'default';
+                    ?>
+                        <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--<?php echo esc_attr( $key ); ?>">
+                            <a href="<?php echo esc_url( $key === 'dashboard' ? $login_url : wc_get_account_endpoint_url( $key ) ); ?>" class="woocommerce-MyAccount-navigation-link_a">
+                                <?php wcmamtx_get_account_menu_li_icon_html( $icon_source, $value, $key, '' ); ?>
+                                <span class="wcmamtx_sticky_icon_name"><?php echo esc_html( $label ); ?></span>
+                            </a>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+
+            </nav>
+
+            <!-- Dashboard cards: include the EXACT same template the logged-in dashboard uses -->
+            <div class="woocommerce-MyAccount-content wcmamtx-guest-content">
+                <?php
+                // --- Read widget settings ---
+                $guest_dashlinks_on  = ( $wcmamtx_layout['guest_dashlinks_override'] ?? '01' ) === '01';
+                $guest_sc1_on        = ( $wcmamtx_layout['guest_sc1_override']        ?? '02' ) === '01';
+                $guest_sc2_on        = ( $wcmamtx_layout['guest_sc2_override']        ?? '02' ) === '01';
+                $guest_sc1_val       = $wcmamtx_layout['guest_sc1_value'] ?? '';
+                $guest_sc2_val       = $wcmamtx_layout['guest_sc2_value'] ?? '';
+                $guest_dl_prio       = (int) ( $wcmamtx_layout['guest_dashlinks_priority'] ?? 10 );
+                $guest_sc1_prio      = (int) ( $wcmamtx_layout['guest_sc1_priority']       ?? 20 );
+                $guest_sc2_prio      = (int) ( $wcmamtx_layout['guest_sc2_priority']       ?? 30 );
+
+                // Build widget order by priority
+                $guest_widgets = [];
+                if ( $guest_dashlinks_on ) $guest_widgets[ $guest_dl_prio  ] = 'dashlinks';
+                if ( $guest_sc1_on && $guest_sc1_val !== '' ) $guest_widgets[ $guest_sc1_prio ] = 'sc1';
+                if ( $guest_sc2_on && $guest_sc2_val !== '' ) $guest_widgets[ $guest_sc2_prio ] = 'sc2';
+                ksort( $guest_widgets );
+
+                // Build $wcmamtx_tabs for dashlinks template
+                $wcmamtx_tabs = $wcmamtx_tabs_raw;
+                unset( $wcmamtx_tabs['customer-logout'] );
+                foreach ( $guest_ep_hidden as $ghk ) unset( $wcmamtx_tabs[ $ghk ] );
+                if ( $guest_ep_order ) {
+                    $ordered_cards = [];
+                    foreach ( $guest_ep_order as $gok ) {
+                        if ( isset( $wcmamtx_tabs[ $gok ] ) ) $ordered_cards[ $gok ] = $wcmamtx_tabs[ $gok ];
+                    }
+                    foreach ( $wcmamtx_tabs as $gok => $gov ) {
+                        if ( ! isset( $ordered_cards[ $gok ] ) ) $ordered_cards[ $gok ] = $gov;
+                    }
+                    $wcmamtx_tabs = $ordered_cards;
+                }
+
+                // Render widgets in priority order
+                foreach ( $guest_widgets as $widget_type ) :
+                    if ( $widget_type === 'dashlinks' ) :
+                        include plugin_dir_path( __FILE__ ) . 'dashlinks/01.php';
+                    elseif ( $widget_type === 'sc1' ) :
+                        echo '<div class="wcmamtx-guest-shortcode wcmamtx-guest-sc1">' . do_shortcode( $guest_sc1_val ) . '</div>';
+                    elseif ( $widget_type === 'sc2' ) :
+                        echo '<div class="wcmamtx-guest-shortcode wcmamtx-guest-sc2">' . do_shortcode( $guest_sc2_val ) . '</div>';
+                    endif;
+                endforeach;
+                ?>
+            </div>
+        </div><!-- /.wcmamtx-guest-dashboard -->
+        <?php
+        return ob_get_clean();
     }
    }
 }

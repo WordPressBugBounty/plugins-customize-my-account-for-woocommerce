@@ -1014,3 +1014,8 @@ a.nav-tab.wcmamtx_plugin_options {
 .wcmamtx_avatar_settings a.wcmamtx-action-btn.wcmamtx-action-btn--primary.wcmamtx_frontend_link {
     display: none;
 }
+
+a.btn.wcmamtx_flot_right_endpoint{
+    float: right;
+    margin-right: 5px;
+}
