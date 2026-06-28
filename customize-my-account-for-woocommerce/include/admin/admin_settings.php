@@ -267,7 +267,7 @@ class wcmamtx_add_settings_page_class {
 
 
 	public function restore_my_account_tabs() {
-	    if( current_user_can('editor') || current_user_can('administrator') ) {
+	    if ( current_user_can('manage_options') ) {
 
 	    	if ( !wp_verify_nonce($_POST['nonce'], 'wcmamtx_nonce') ){ 
 				die(); 

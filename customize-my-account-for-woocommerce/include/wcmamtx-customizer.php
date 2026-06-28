@@ -317,7 +317,9 @@ div.woocommerce-MyAccount-content.endpoint-dashboard div.wcmamtx_fornt_prevew_de
 .cz-inline-row {
     color: white;
 }
-
+button.cz-toggle:disabled {
+    font-size: 10px;
+}
 #wpwrap,#wpcontent,#wpbody,#wpbody-content{float:none!important;margin:0!important;padding:0!important;width:100%!important;}
 #adminmenuwrap,#adminmenuback,#wpadminbar{display:none!important;}
 body.wp-customizer{margin:0!important;padding:0!important;}
@@ -820,6 +822,12 @@ a.wcmamtx_accordion_label_small
                                 <button class="cz-toggle active" style="opacity:.45;cursor:not-allowed;" disabled><?php esc_html_e('No Override','customize-my-account-for-woocommerce'); ?></button>
                             </div>
                         </div>
+                        <div class="cz-field">
+                            <button type="button" onclick="event.stopPropagation(); openModal('<?php echo esc_attr($tpl_modal_id); ?>')" class="cz-tracking-link" style="margin-top:4px;width:100%;justify-content:center;background:transparent;border:none;cursor:pointer;">
+                                <span class="dashicons dashicons-art" style="font-size:13px;width:13px;height:13px;line-height:1;"></span>
+                                <?php esc_html_e( 'Live Customizer', 'customize-my-account-for-woocommerce' ); ?> <span style="font-size:10px;color:#a78bfa;font-weight:700;margin-left:4px;">PRO &#128274;</span>
+                            </button>
+                        </div>
                     </div>
                     <?php else: ?>
                     <div class="cz-group" data-tpl="<?php echo esc_attr($tpl_key); ?>">
@@ -842,6 +850,22 @@ a.wcmamtx_accordion_label_small
                                 <?php endforeach; ?>
                             </div>
                         </div>
+                        <?php
+                        $tpl_free_customizer_map = [
+                            'orders'     => [ 'page' => 'wcmamtx_orders_customizer',    'label' => __( 'Orders Live Customizer',    'customize-my-account-for-woocommerce' ), 'icon' => 'dashicons-cart' ],
+                            'downloads'  => [ 'page' => 'wcmamtx_downloads_customizer', 'label' => __( 'Downloads Live Customizer', 'customize-my-account-for-woocommerce' ), 'icon' => 'dashicons-download' ],
+                            'view_order' => [ 'page' => 'wcmamtx_view_order_customizer','label' => __( 'View Order Live Customizer','customize-my-account-for-woocommerce' ), 'icon' => 'dashicons-visibility' ],
+                        ];
+                        if ( isset( $tpl_free_customizer_map[ $tpl_key ] ) ) :
+                            $tpl_cz = $tpl_free_customizer_map[ $tpl_key ];
+                        ?>
+                        <div class="cz-field">
+                            <a href="<?php echo esc_url( admin_url( 'admin.php?page=' . $tpl_cz['page'] ) ); ?>" target="_blank" class="cz-tracking-link" style="margin-top:4px;width:100%;justify-content:center;">
+                                <span class="dashicons <?php echo esc_attr( $tpl_cz['icon'] ); ?>" style="font-size:13px;width:13px;height:13px;line-height:1;"></span>
+                                <?php echo esc_html( $tpl_cz['label'] ); ?>
+                            </a>
+                        </div>
+                        <?php endif; ?>
                     </div>
                     <?php endif; ?>
                     <?php endforeach; ?>

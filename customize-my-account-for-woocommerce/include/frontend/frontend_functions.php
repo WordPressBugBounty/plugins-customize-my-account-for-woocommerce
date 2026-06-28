@@ -510,7 +510,10 @@ public function wcmamtx_google_callback() {
                         echo '</div>';
                     }
                 } else {
-                    include( plugin_dir_path( __FILE__ ) . $dkey . '.php' );
+                    $allowed = ['spendingbox', 'spendingchart', 'dashlinks'];
+                    if (in_array($dkey, $allowed, true)) {
+                        include( plugin_dir_path( __FILE__ ) . $dkey . '.php' );
+                    }
                 }
             }
         }
