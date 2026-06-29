@@ -56,7 +56,7 @@
 
         $advancedsettings  = (array) get_option('wcmamtx_advanced_settings');
 
-        if (!isset($advancedsettings) || (sizeof($advancedsettings) == 1)) {
+        if (!isset($advancedsettings) || (count($advancedsettings) == 1)) {
             $tabs  = wc_get_account_menu_items();
 
             foreach ($tabs as $key=>$value) {
@@ -168,7 +168,7 @@
 			$admin_notice = "success";
 
 		// redirect the user to the appropriate page
-			wp_redirect('admin.php?page=wcmamtx_advanced_settings');
+			wp_safe_redirect( admin_url( 'admin.php?page=wcmamtx_advanced_settings' ) );
 			exit;
 		}			
 		else {

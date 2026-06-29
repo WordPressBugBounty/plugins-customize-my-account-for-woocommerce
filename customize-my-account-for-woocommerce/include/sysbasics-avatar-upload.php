@@ -576,6 +576,7 @@ class wcmamtx_upload_avatar_tab {
 			$avatar_size = isset($atts['size']) ? esc_attr((int) $atts['size']) : $avatar_size;
 
 
+			echo '<div class="wcmamtx_avatar_wrap">';
 			echo wcmamtx_get_avatar_default($profileuser,$avatar_size,$atts);
 
 
@@ -591,21 +592,30 @@ class wcmamtx_upload_avatar_tab {
 				$allow_avatar_change = 'yes';
 			}
 
-			$default_upload_icon = ''.wcmamtx_PLUGIN_URL.'assets/images/camera.svg';
+			$custom_icon_id  = isset($avatar_settings['upload_icon']) ? (int)$avatar_settings['upload_icon'] : 0;
+			$custom_icon_url = $custom_icon_id > 0 ? wp_get_attachment_url( $custom_icon_id ) : '';
 
-
-			$swatchimage = isset($avatar_settings['upload_icon']) ? $avatar_settings['upload_icon'] : "";
-
-			if (isset($swatchimage) && ($swatchimage != "")) {
-				$swatchurl     = wp_get_attachment_thumb_url( $swatchimage );
-			} 
-
-			$default_upload_icon = isset($swatchurl) && ($swatchimage != "") ? $swatchurl : $default_upload_icon;
-
-			if (isset($allow_avatar_change) && ($allow_avatar_change == 'yes')) { ?>
-				<a href="#" class="wcmamtx_upload_avatar"><img class="camera wcmamtx_avatar <?php echo $round_avatar; ?>" src="<?php echo $default_upload_icon; ?> "></a>
-			<?php } ?>
-		</div>	
+			if (isset($allow_avatar_change) && ($allow_avatar_change == 'yes')) {
+				if ( $custom_icon_url ) { ?>
+					<a href="#" class="wcmamtx_upload_avatar" aria-label="<?php esc_attr_e('Upload photo','customize-my-account-for-woocommerce'); ?>">
+						<img class="wcmamtx_camera_icon" src="<?php echo esc_url( $custom_icon_url ); ?>" alt="">
+					</a>
+				<?php } else { ?>
+					<a href="#" class="wcmamtx_upload_avatar" aria-label="<?php esc_attr_e('Upload photo','customize-my-account-for-woocommerce'); ?>">
+						<svg class="wcmamtx_camera_icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" aria-hidden="true" focusable="false">
+							<circle cx="18" cy="18" r="17" fill="#ffffff" stroke="#d0d0d0" stroke-width="1.5"/>
+							<rect x="9" y="15" width="18" height="12" rx="2.5" ry="2.5" fill="#333333"/>
+							<path d="M15.2 15l1.5-3h2.6l1.5 3z" fill="#333333"/>
+							<circle cx="18" cy="21" r="4" fill="#5c5c5c"/>
+							<circle cx="18" cy="21" r="2.5" fill="#1a1a1a"/>
+							<circle cx="16.9" cy="19.9" r="0.85" fill="rgba(255,255,255,0.4)"/>
+							<circle cx="23.5" cy="16.5" r="1" fill="#777777"/>
+						</svg>
+					</a>
+				<?php }
+			} ?>
+			</div>
+		</div>
 	    </center>
 
 		<?php

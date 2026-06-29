@@ -112,7 +112,7 @@ if (!is_array($wcmamtx_tabs)) {
     
 }
 
-if (!isset($wcmamtx_tabs) || (sizeof($wcmamtx_tabs) === 1) || isset($wcmamtx_tabs[0])) {
+if (!isset($wcmamtx_tabs) || (count($wcmamtx_tabs) === 1) || isset($wcmamtx_tabs[0])) {
     $wcmamtx_tabs = $items;
     
 }
@@ -205,7 +205,7 @@ if (isset($menu_position) && ($menu_position != '')) {
 
 if ($menu_shape == 'vertical') {
 
-    $wcmamtx_layout = (array) get_option( 'wcmamtx_layout' );
+    $wcmamtx_layout = wcmamtx_get_layout();
 
 
     
@@ -219,6 +219,9 @@ if ($menu_shape == 'vertical') {
 
 
     $nav_style = isset($wcmamtx_layout['nav_style']) ? $wcmamtx_layout['nav_style'] : wcmamtx_get_clean_design_theme_array();
+if ( ! is_string( $nav_style ) ) { $nav_style = '02'; }
+$nav_style = preg_replace( '/[^0-9a-zA-Z_-]/', '', basename( $nav_style ) );
+if ( $nav_style === '' ) { $nav_style = '02'; }
 
 
     

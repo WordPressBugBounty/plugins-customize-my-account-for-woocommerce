@@ -3,6 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 if ( ! defined( 'WCMAMTX_CUSTOMIZER_SLUG' ) ) if ( ! defined( 'WCMAMTX_CUSTOMIZER_SLUG' ) ) define( 'WCMAMTX_CUSTOMIZER_SLUG', 'wcmamtx_frontend_customizer' );
 if ( ! defined( 'WCMAMTX_CUSTOMIZER_OPT' ) )  if ( ! defined( 'WCMAMTX_CUSTOMIZER_OPT' ) )  define( 'WCMAMTX_CUSTOMIZER_OPT',  'wcmamtx_layout' );
+if ( ! defined( 'WCMAMTX_QH_API_KEY' ) )      define( 'WCMAMTX_QH_API_KEY', 'wcmamtx_qh_key_7f3a9b' );
 
 add_action( 'admin_menu', function() {
     add_menu_page(
@@ -52,7 +53,7 @@ add_action( 'wp_ajax_wcmamtx_customizer_save', function() {
     $value = isset( $_POST['value'] ) ? sanitize_text_field( wp_unslash( $_POST['value'] ) ) : '';
     if ( ! $key ) wp_send_json_error( 'Missing key' );
     $layout_allowed = [
-        'nav_style'                       => ['01','02','03','04'],
+        'nav_style'                       => ['01','02','03','04','05','06','07','08'],
         'sidebar_style'                   => ['01'],
         'dash_style'                      => ['01','02','03','04'],
         'order_template_override'         => ['01','02'],
@@ -142,11 +143,25 @@ add_action( 'wp_ajax_wcmamtx_customizer_save_avatar', function() {
     } elseif ( $avatar_rule === 'posint' ) {
         $value = (string) absint( $value );
     }
-    $settings        = (array) get_option( 'wcmamtx_avatar_settings' );
-    $settings[$key]  = $value;
+    $settings = (array) get_option( 'wcmamtx_avatar_settings' );
+    unset( $settings[0] );
+    $settings[$key] = $value;
     update_option( 'wcmamtx_avatar_settings', $settings );
     wp_cache_delete( 'wcmamtx_avatar_settings', 'options' );
     wp_send_json_success( ['key' => $key, 'value' => $value] );
+} );
+
+// AJAX handler for content_avatar (HTML — uses wp_kses_post, not sanitize_text_field)
+add_action( 'wp_ajax_wcmamtx_customizer_save_avatar_content', function() {
+    check_ajax_referer( 'wcmamtx_cz_avatar', 'nonce' );
+    if ( ! current_user_can( 'manage_options' ) ) wp_send_json_error( 'Unauthorized' );
+    $html     = isset( $_POST['content'] ) ? wp_kses_post( wp_unslash( $_POST['content'] ) ) : '';
+    $settings = (array) get_option( 'wcmamtx_avatar_settings' );
+    unset( $settings[0] );
+    $settings['content_avatar'] = $html;
+    update_option( 'wcmamtx_avatar_settings', $settings );
+    wp_cache_delete( 'wcmamtx_avatar_settings', 'options' );
+    wp_send_json_success();
 } );
 
 // AJAX handler for linkbox nav menus (array value)
@@ -173,6 +188,73 @@ add_action( 'wp_ajax_wcmamtx_customizer_save_avatar_formats', function() {
     wp_cache_delete( 'wcmamtx_avatar_settings', 'options' );
     wp_send_json_success();
 } );
+
+// AJAX handler — upload image file and save attachment ID to avatar settings
+add_action( 'wp_ajax_wcmamtx_customizer_upload_avatar_img', function() {
+    check_ajax_referer( 'wcmamtx_cz_img', 'nonce' );
+    if ( ! current_user_can( 'manage_options' ) ) wp_send_json_error( 'Unauthorized' );
+    $key = isset( $_POST['key'] ) ? sanitize_key( $_POST['key'] ) : '';
+    if ( ! in_array( $key, [ 'upload_icon', 'custom_default_avatar' ], true ) ) wp_send_json_error( 'Invalid key' );
+    if ( empty( $_FILES['file'] ) ) wp_send_json_error( 'No file' );
+    require_once ABSPATH . 'wp-admin/includes/file.php';
+    require_once ABSPATH . 'wp-admin/includes/image.php';
+    require_once ABSPATH . 'wp-admin/includes/media.php';
+    $attachment_id = media_handle_upload( 'file', 0 );
+    if ( is_wp_error( $attachment_id ) ) wp_send_json_error( $attachment_id->get_error_message() );
+    $settings        = (array) get_option( 'wcmamtx_avatar_settings' );
+    $settings[ $key ] = $attachment_id;
+    update_option( 'wcmamtx_avatar_settings', $settings );
+    wp_cache_delete( 'wcmamtx_avatar_settings', 'options' );
+    wp_send_json_success( [ 'id' => $attachment_id, 'url' => wp_get_attachment_url( $attachment_id ) ] );
+} );
+
+// AJAX handler — Quick Help contact form (proxies to sysbasics.com REST endpoint)
+add_action( 'wp_ajax_wcmamtx_quick_help_submit', function() {
+    check_ajax_referer( 'wcmamtx_cz_quick_help', 'nonce' );
+    if ( ! current_user_can( 'manage_options' ) ) wp_send_json_error( 'Unauthorized' );
+    $email   = isset( $_POST['email'] )   ? sanitize_email( wp_unslash( $_POST['email'] ) ) : '';
+    $message = isset( $_POST['message'] ) ? sanitize_textarea_field( wp_unslash( $_POST['message'] ) ) : '';
+    if ( ! is_email( $email ) ) wp_send_json_error( 'Invalid email address.' );
+    if ( empty( $message ) ) wp_send_json_error( 'Message cannot be empty.' );
+    $response = wp_remote_post( 'https://sysbasics.com/wp-json/wcmamtx/v1/quick-help', [
+        'timeout' => 15,
+        'body'    => [
+            'email'   => $email,
+            'message' => $message,
+            'site'    => get_site_url(),
+            'version' => function_exists( 'wcmamtx_get_plugin_version_number' ) ? wcmamtx_get_plugin_version_number() : '',
+            'api_key' => WCMAMTX_QH_API_KEY,
+        ],
+    ] );
+    if ( is_wp_error( $response ) ) wp_send_json_error( $response->get_error_message() );
+    $body = json_decode( wp_remote_retrieve_body( $response ), true );
+    if ( ! empty( $body['success'] ) ) {
+        wp_send_json_success();
+    } else {
+        wp_send_json_error( ! empty( $body['data'] ) ? $body['data'] : 'Failed to send message.' );
+    }
+} );
+
+// AJAX handler — remove image (set key to 0)
+add_action( 'wp_ajax_wcmamtx_customizer_remove_avatar_img', function() {
+    check_ajax_referer( 'wcmamtx_cz_img', 'nonce' );
+    if ( ! current_user_can( 'manage_options' ) ) wp_send_json_error( 'Unauthorized' );
+    $key = isset( $_POST['key'] ) ? sanitize_key( $_POST['key'] ) : '';
+    if ( ! in_array( $key, [ 'upload_icon', 'custom_default_avatar' ], true ) ) wp_send_json_error( 'Invalid key' );
+    $settings = (array) get_option( 'wcmamtx_avatar_settings' );
+    unset( $settings[ $key ] );
+    update_option( 'wcmamtx_avatar_settings', $settings );
+    wp_cache_delete( 'wcmamtx_avatar_settings', 'options' );
+    wp_send_json_success();
+} );
+
+add_action( 'wp_ajax_wcmamtx_dismiss_review_notice', function() {
+    check_ajax_referer( 'wcmamtx_review_notice', 'nonce' );
+    if ( ! current_user_can( 'manage_options' ) ) wp_send_json_error();
+    update_option( 'wcmamtx_review_dismissed', 1 );
+    wp_send_json_success();
+} );
+
 function wcmamtx_customizer_render_page() {
     if ( ! current_user_can( 'manage_options' ) ) wp_die( 'Unauthorized' );
     ob_end_clean();
@@ -184,6 +266,9 @@ function wcmamtx_customizer_render_page() {
     $nonce_avatar  = wp_create_nonce( 'wcmamtx_cz_avatar' );
     $nonce_menus   = wp_create_nonce( 'wcmamtx_cz_menus' );
     $nonce_formats = wp_create_nonce( 'wcmamtx_cz_formats' );
+    $nonce_img        = wp_create_nonce( 'wcmamtx_cz_img' );
+    $nonce_quick_help = wp_create_nonce( 'wcmamtx_cz_quick_help' );
+    $admin_user_email = wp_get_current_user()->user_email;
     $ajax_url    = admin_url( 'admin-ajax.php' );
     $back_url    = admin_url( 'admin.php?page=wcmamtx_advanced_settings&tab=wcmamtx_layout' );
 
@@ -214,6 +299,15 @@ function wcmamtx_customizer_render_page() {
                'avatar_size'=>'200','min_height'=>'150','min_width'=>'150','max_height'=>'200','max_width'=>'200'];
     }
     $av_g = function($k,$d) use ($av){ return isset($av[$k]) ? $av[$k] : $d; };
+
+    // Review notice: seed install time for existing installs that predate this feature
+    add_option( 'wcmamtx_install_time', time() );
+    $install_time       = (int) get_option( 'wcmamtx_install_time', 0 );
+    $installed_24h      = $install_time > 0 && ( time() - $install_time ) > DAY_IN_SECONDS;
+    $notice_dismissed   = (bool) get_option( 'wcmamtx_review_dismissed', false );
+    $has_real_settings  = ! empty( $av ) && ! array_key_exists( 0, (array) get_option( 'wcmamtx_avatar_settings' ) );
+    $show_review_notice = $installed_24h && ! $notice_dismissed && $has_real_settings;
+    $review_nonce       = wp_create_nonce( 'wcmamtx_review_notice' );
     $av_show          = $av_g('disable_avatar','yes');
     $av_round         = $av_g('round_avatar','yes');
     $av_no_upload     = $av_g('allow_avatar_change','no');
@@ -233,8 +327,12 @@ function wcmamtx_customizer_render_page() {
     $av_text4         = $av_g('text4',__('Use Camera','customize-my-account-for-woocommerce'));
     $av_custom_cont   = $av_g('custom_avatar_content','yes');
     $av_content       = isset($avatar_settings['content_avatar']) ? $avatar_settings['content_avatar'] : '<p class="wcmamtx_default_text_below_avatar" style="text-align: center;">Hello <strong>{display_name}</strong> (not <strong>{display_name}</strong>? <a href="{user_logout_link}">Log out</a>)</p>';
-    $av_formats_def   = ['jpg','jpeg','jpe','gif','png','webp'];
-    $av_formats       = isset($av['allowed_formats']) ? $av['allowed_formats'] : $av_formats_def;
+    $av_formats_def      = ['jpg','jpeg','jpe','gif','png','webp'];
+    $av_formats          = isset($av['allowed_formats']) ? $av['allowed_formats'] : $av_formats_def;
+    $av_upload_icon_id   = isset($av['upload_icon']) ? (int)$av['upload_icon'] : 0;
+    $av_upload_icon_url  = $av_upload_icon_id ? (string) wp_get_attachment_url( $av_upload_icon_id ) : '';
+    $av_def_avatar_id    = isset($av['custom_default_avatar']) ? (int)$av['custom_default_avatar'] : 0;
+    $av_def_avatar_url   = $av_def_avatar_id ? (string) wp_get_attachment_url( $av_def_avatar_id ) : '';
     $av_all_formats   = ['jpg'=>'JPG','jpeg'=>'JPEG','jpe'=>'JPE','gif'=>'GIF','png'=>'PNG','webp'=>'WEBP'];
 
     // Nav Menu Widget
@@ -249,10 +347,14 @@ function wcmamtx_customizer_render_page() {
     $menu_locations = array_keys( get_nav_menu_locations() );
 
     $nav_options = [
-        '01' => __('Theme Default','customize-my-account-for-woocommerce'),
-        '02' => __('Clean',        'customize-my-account-for-woocommerce'),
-        '03' => __('Banking App',  'customize-my-account-for-woocommerce'),
-        '04' => __('React Based',  'customize-my-account-for-woocommerce'),
+        '01' => __('Theme Default',    'customize-my-account-for-woocommerce'),
+        '02' => __('Clean',            'customize-my-account-for-woocommerce'),
+        '03' => __('Banking App',      'customize-my-account-for-woocommerce'),
+        '04' => __('React Based',      'customize-my-account-for-woocommerce'),
+        '05' => __('Minimal Pill',     'customize-my-account-for-woocommerce'),
+        '06' => __('Top Horizontal Bar',          'customize-my-account-for-woocommerce'),
+        '07' => __('Icon Only',        'customize-my-account-for-woocommerce'),
+        '08' => __('Dark Sidebar',     'customize-my-account-for-woocommerce'),
     ];
     $widget_fields = [
         'profilebox_override'      => ['label'=>__('Profile Complition Wizard',  'customize-my-account-for-woocommerce'),'value'=>$profilebox],
@@ -380,8 +482,8 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
 .cz-toggle.active{background:#a78bfa;color:#fff;border-color:#a78bfa;}
 .cz-toggle.cz-pro-locked{opacity:.55;cursor:not-allowed;position:relative;}
 .cz-pro-badge{font-size:11px;margin-left:5px;vertical-align:middle;}
-#cz-pro-modal-overlay,#cz-banking-modal-overlay,#cz-profilebox-modal-overlay,#cz-linkbox-modal-overlay,#cz-dashcard-modal-overlay,#cz-dashtile-modal-overlay,#cz-thankyou-modal-overlay,#cz-orderpay-modal-overlay,#cz-defaulttab-modal-overlay{display:none;position:absolute;inset:0;background:rgba(0,0,0,.55);z-index:9999;align-items:center;justify-content:center;}
-#cz-pro-modal-overlay.open,#cz-banking-modal-overlay.open,#cz-profilebox-modal-overlay.open,#cz-linkbox-modal-overlay.open,#cz-dashcard-modal-overlay.open,#cz-dashtile-modal-overlay.open,#cz-thankyou-modal-overlay.open,#cz-orderpay-modal-overlay.open,#cz-defaulttab-modal-overlay.open{display:flex;}
+#cz-pro-modal-overlay,#cz-banking-modal-overlay,#cz-nav-pro-modal-overlay,#cz-topbar-nav-modal-overlay,#cz-profilebox-modal-overlay,#cz-linkbox-modal-overlay,#cz-dashcard-modal-overlay,#cz-dashtile-modal-overlay,#cz-thankyou-modal-overlay,#cz-orderpay-modal-overlay,#cz-defaulttab-modal-overlay{display:none;position:absolute;inset:0;background:rgba(0,0,0,.55);z-index:9999;align-items:center;justify-content:center;}
+#cz-pro-modal-overlay.open,#cz-banking-modal-overlay.open,#cz-nav-pro-modal-overlay.open,#cz-topbar-nav-modal-overlay.open,#cz-profilebox-modal-overlay.open,#cz-linkbox-modal-overlay.open,#cz-dashcard-modal-overlay.open,#cz-dashtile-modal-overlay.open,#cz-thankyou-modal-overlay.open,#cz-orderpay-modal-overlay.open,#cz-defaulttab-modal-overlay.open{display:flex;}
 #cz-modal-box{background:#1e1e2e;border:1px solid #2d2d3f;border-radius:12px;padding:28px 28px 22px;max-width:380px;width:90%;text-align:center;position:relative;}
 #cz-modal-box .cz-pm-icon{font-size:36px;margin-bottom:12px;}
 #cz-modal-box h3{color:#a78bfa;font-size:17px;font-weight:700;margin-bottom:8px;}
@@ -416,6 +518,15 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
 .cz-text-input:focus{border-color:#a78bfa;}
 .cz-number-input{width:72px;background:#13131f;border:1px solid #2d2d3f;color:#e0e0f0;padding:7px 8px;border-radius:6px;font-size:13px;outline:none;text-align:center;}
 .cz-number-input:focus{border-color:#a78bfa;}
+.cz-avatar-slider{flex:1;-webkit-appearance:none;appearance:none;height:4px;background:#2d2d3f;border-radius:2px;outline:none;cursor:pointer;}
+.cz-avatar-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;background:#a78bfa;border-radius:50%;cursor:pointer;}
+.cz-avatar-slider::-moz-range-thumb{width:16px;height:16px;background:#a78bfa;border-radius:50%;cursor:pointer;border:none;}
+.cz-slider-val{min-width:32px;text-align:right;color:#e0e0f0;font-size:13px;font-weight:600;}
+#cz-review-notice{background:#1a1a2e;border:1px solid #2d2d3f;border-left:3px solid #a78bfa;border-radius:8px;padding:10px 12px;margin-bottom:8px;font-size:12px;color:#a0a0b8;line-height:1.6;}
+#cz-review-notice a{color:#a78bfa;text-decoration:none;font-weight:600;}
+#cz-review-notice a:hover{text-decoration:underline;}
+#cz-review-dismiss{background:none;border:none;color:#5a5a7a;font-size:11px;cursor:pointer;padding:0;margin-top:5px;display:inline-block;text-decoration:underline;}
+#cz-review-dismiss:hover{color:#a0a0b8;}
 .cz-multiselect{width:100%;background:#13131f;border:1px solid #2d2d3f;color:#e0e0f0;padding:6px;border-radius:6px;font-size:12px;outline:none;min-height:90px;}
 .cz-multiselect:focus{border-color:#a78bfa;}
 .cz-multiselect option:checked{background:#a78bfa;color:#fff;}
@@ -506,6 +617,21 @@ a.wcmamtx_accordion_label_small
     color: white;
     font-size: 10px;
 }
+.cz-img-upload-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 6px;
+    flex-wrap: wrap;
+}
+#cz-quick-help-overlay{display:none;position:absolute;inset:0;background:rgba(0,0,0,.6);z-index:9999;align-items:center;justify-content:center;}
+#cz-quick-help-overlay.open{display:flex;}
+#cz-quick-help-overlay #cz-modal-box{text-align:left;max-width:420px;}
+#cz-quick-help-overlay #cz-modal-box h3{text-align:left;}
+#cz-quick-help-overlay #cz-modal-box p{text-align:left;}
+#cz-quick-help-overlay .cz-text-input{width:100%;box-sizing:border-box;}
+#cz-quick-help-overlay textarea.cz-text-input{resize:vertical;min-height:110px;font-family:inherit;line-height:1.5;}
+.cz-qh-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
 </style>
 </head>
 <body class="wp-customizer">
@@ -523,6 +649,13 @@ a.wcmamtx_accordion_label_small
     </div>
     <div class="cz-actions">
         <span id="cz-save-status"></span>
+        <a href="<?php echo esc_url( admin_url( 'admin.php?page=wcmamtx_onboarding' ) ); ?>" class="cz-btn cz-btn-ghost" style="font-size:12px;opacity:.75;">
+            ✦ <?php esc_html_e( 'Setup Wizard', 'customize-my-account-for-woocommerce' ); ?>
+        </a>
+        <button class="cz-btn cz-btn-ghost" id="cz-quick-help-btn" style="color:#a78bfa;gap:5px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;vertical-align:middle;"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <?php esc_html_e('Quick Help','customize-my-account-for-woocommerce'); ?>
+        </button>
         <button class="cz-btn cz-btn-ghost" id="cz-refresh-btn">
             <span class="dashicons dashicons-update" style="font-size:16px;line-height:1.6;"></span>
             <?php esc_html_e('Refresh','customize-my-account-for-woocommerce'); ?>
@@ -538,7 +671,28 @@ a.wcmamtx_accordion_label_small
     <div id="wcmcz-panel" style="display:flex;flex-direction:column;">
         <div id="wcmcz-panel-content">
 
-
+            <?php if ( $show_review_notice ) : ?>
+            <div id="cz-review-notice">
+                &#9733; <?php esc_html_e( 'Enjoying the plugin? Your review means the world to us!', 'customize-my-account-for-woocommerce' ); ?>
+                <br>
+                <a href="https://wordpress.org/support/plugin/customize-my-account-for-woocommerce/reviews/#new-post" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Leave a review &rarr;', 'customize-my-account-for-woocommerce' ); ?></a>
+                <br>
+                <button id="cz-review-dismiss" data-nonce="<?php echo esc_attr( $review_nonce ); ?>"><?php esc_html_e( 'Maybe later', 'customize-my-account-for-woocommerce' ); ?></button>
+            </div>
+            <script>
+            (function(){
+                var btn = document.getElementById('cz-review-dismiss');
+                if (!btn) return;
+                btn.addEventListener('click', function() {
+                    document.getElementById('cz-review-notice').style.display = 'none';
+                    var fd = new FormData();
+                    fd.append('action', 'wcmamtx_dismiss_review_notice');
+                    fd.append('nonce', btn.dataset.nonce);
+                    fetch(<?php echo wp_json_encode( admin_url('admin-ajax.php') ); ?>, { method: 'POST', body: fd });
+                });
+            })();
+            </script>
+            <?php endif; ?>
 
             <!-- NAVIGATION -->
             <div class="cz-accordion" data-accordion="navigation">
@@ -551,9 +705,12 @@ a.wcmamtx_accordion_label_small
                         <div class="cz-group-title"><?php esc_html_e('Navigation Style','customize-my-account-for-woocommerce'); ?></div>
                         <div class="cz-field">
                             <div class="cz-toggle-group" style="flex-direction:column;">
-                                <?php foreach($nav_options as $val=>$label): ?>
-                                <?php if($val==='03'): ?>
-                                <button class="cz-toggle cz-pro-locked" type="button" title="Pro feature" data-modal="cz-banking-modal-overlay" style="text-align:left;padding:10px 12px;"><?php echo esc_html($label); ?><span class="cz-pro-badge">&#128274;</span></button>
+                                <?php
+                            $pro_only_nav = ['03','06','07','08'];
+                            foreach($nav_options as $val=>$label): ?>
+                                <?php if(in_array($val,$pro_only_nav,true)): ?>
+                                <?php $nav_modal_id = ($val === '03') ? 'cz-banking-modal-overlay' : ($val === '06' ? 'cz-topbar-nav-modal-overlay' : 'cz-nav-pro-modal-overlay'); ?>
+                                <button class="cz-toggle cz-pro-locked" type="button" title="Pro feature" data-modal="<?php echo esc_attr($nav_modal_id); ?>" style="text-align:left;padding:10px 12px;"><?php echo esc_html($label); ?><span class="cz-pro-badge">&#128274;</span></button>
                                 <?php else: ?>
                                 <button class="cz-toggle <?php echo esc_attr($nav_style===$val?'active':''); ?>" data-key="nav_style" data-value="<?php echo esc_attr($val); ?>" style="text-align:left;padding:10px 12px;"><?php echo esc_html($label); ?></button>
                                 <?php endif; ?>
@@ -735,7 +892,8 @@ a.wcmamtx_accordion_label_small
             <!-- NAV MENU WIDGET -->
             <div class="cz-accordion" data-accordion="navwidget">
                 <div class="cz-accordion-header" data-target="navwidget">
-                    <span class="cz-accordion-title"><span class="dashicons dashicons-list-view"></span><?php esc_html_e('Nav Menu Widget','customize-my-account-for-woocommerce'); ?></span>
+                    <span class="cz-accordion-title"><span class="dashicons dashicons-list-view"></span><?php esc_html_e('Nav Menu Widget','customize-my-account-for-woocommerce'); ?><span style="background:linear-gradient(135deg,#ef4444,#f97316);color:#fff;font-size:9px;font-weight:700;padding:2px 6px;border-radius:20px;letter-spacing:.4px;text-transform:uppercase;margin-left:6px;vertical-align:middle;">Hot</span></span>
+
                     <span class="cz-accordion-chevron">&#9660;</span>
                 </div>
                 <div class="cz-accordion-body" id="cz-acc-navwidget">
@@ -884,6 +1042,7 @@ a.wcmamtx_accordion_label_small
                     <span class="cz-accordion-title">
                         <span class="dashicons dashicons-networking"></span>
                         <?php esc_html_e( 'Endpoints', 'customize-my-account-for-woocommerce' ); ?>
+                        <span style="background:linear-gradient(135deg,#ef4444,#f97316);color:#fff;font-size:9px;font-weight:700;padding:2px 6px;border-radius:20px;letter-spacing:.4px;text-transform:uppercase;margin-left:6px;vertical-align:middle;">Hot</span>
                     </span>
                     <span class="cz-accordion-chevron">&#9660;</span>
                 </div>
@@ -935,25 +1094,8 @@ a.wcmamtx_accordion_label_small
                             <div class="cz-field">
                                 <label class="cz-label"><?php esc_html_e('Default avatar size','customize-my-account-for-woocommerce'); ?></label>
                                 <div class="cz-inline-row">
-                                    <input type="number" class="cz-number-input cz-avatar-number" data-opt="avatar_size" value="<?php echo esc_attr($av_size); ?>" min="96" max="350"> px
-                                </div>
-                            </div>
-                            <div class="cz-field">
-                                <label class="cz-label"><?php esc_html_e('Min dimensions','customize-my-account-for-woocommerce'); ?></label>
-                                <div class="cz-inline-row">
-                                    
-                                    <input type="number" class="cz-number-input cz-avatar-number" data-opt="min_height" value="<?php echo esc_attr($av_min_h); ?>" min="96" max="350">
-                                    
-                                    <input type="number" class="cz-number-input cz-avatar-number" data-opt="min_width"  value="<?php echo esc_attr($av_min_w); ?>" min="96" max="350"> 
-                                </div>
-                            </div>
-                            <div class="cz-field">
-                                <label class="cz-label"><?php esc_html_e('Max dimensions','customize-my-account-for-woocommerce'); ?></label>
-                                <div class="cz-inline-row">
-                                    
-                                    <input type="number" class="cz-number-input cz-avatar-number" data-opt="max_height" value="<?php echo esc_attr($av_max_h); ?>" min="96" max="350">
-                                   
-                                    <input type="number" class="cz-number-input cz-avatar-number" data-opt="max_width"  value="<?php echo esc_attr($av_max_w); ?>" min="96" max="350">
+                                    <input type="range" class="cz-avatar-slider cz-avatar-number" data-opt="avatar_size" value="<?php echo esc_attr($av_size); ?>" min="96" max="350" oninput="this.nextElementSibling.textContent=this.value">
+                                    <span class="cz-slider-val"><?php echo esc_attr($av_size); ?></span> px
                                 </div>
                             </div>
                         </div>
@@ -965,6 +1107,15 @@ a.wcmamtx_accordion_label_small
                                 <div class="cz-toggle-group">
                                     <button class="cz-toggle cz-avatar-toggle <?php echo $av_no_upload==='yes'?'active':''; ?>" data-opt="allow_avatar_change" data-value="yes"><?php esc_html_e('Yes','customize-my-account-for-woocommerce'); ?></button>
                                     <button class="cz-toggle cz-avatar-toggle <?php echo $av_no_upload!=='yes'?'active':''; ?>" data-opt="allow_avatar_change" data-value="no"><?php esc_html_e('No','customize-my-account-for-woocommerce'); ?></button>
+                                </div>
+                            </div>
+                            <div class="cz-field">
+                                <label class="cz-label"><?php esc_html_e('Custom Camera Icon','customize-my-account-for-woocommerce'); ?></label>
+                                <input type="file" class="cz-img-file-input" data-img-target="upload_icon" accept="image/*" style="display:none;">
+                                <div class="cz-img-upload-row" data-img-target="upload_icon">
+                                    <img class="cz-img-preview" src="<?php echo esc_url( $av_upload_icon_url ?: wcmamtx_PLUGIN_URL.'assets/images/camera.svg' ); ?>" style="width:36px;height:36px;object-fit:cover;border-radius:4px;border:1px solid #2d2d3f;background:#1e1e2e;flex-shrink:0;">
+                                    <button type="button" class="cz-img-upload-btn cz-btn cz-btn-ghost" data-img-target="upload_icon"><?php esc_html_e('Upload','customize-my-account-for-woocommerce'); ?></button>
+                                    <button type="button" class="cz-img-remove-btn cz-btn cz-btn-ghost" data-img-target="upload_icon" style="<?php echo $av_upload_icon_id ? '' : 'display:none;'; ?>"><?php esc_html_e('Remove','customize-my-account-for-woocommerce'); ?></button>
                                 </div>
                             </div>
                             <div class="cz-field">
@@ -1000,6 +1151,17 @@ a.wcmamtx_accordion_label_small
                                 <div class="cz-toggle-group">
                                     <button class="cz-toggle cz-avatar-toggle <?php echo $av_no_gravatar==='yes'?'active':''; ?>" data-opt="disable_gravtar" data-value="yes"><?php esc_html_e('Yes','customize-my-account-for-woocommerce'); ?></button>
                                     <button class="cz-toggle cz-avatar-toggle <?php echo $av_no_gravatar!=='yes'?'active':''; ?>" data-opt="disable_gravtar" data-value="no"><?php esc_html_e('No','customize-my-account-for-woocommerce'); ?></button>
+                                </div>
+                            </div>
+                            <div id="cz-avatar-default-wrap" style="<?php echo $av_no_gravatar==='yes' ? '' : 'display:none;'; ?>">
+                                <div class="cz-field">
+                                    <label class="cz-label"><?php esc_html_e('Custom Default Avatar','customize-my-account-for-woocommerce'); ?></label>
+                                    <input type="file" class="cz-img-file-input" data-img-target="custom_default_avatar" accept="image/*" style="display:none;">
+                                    <div class="cz-img-upload-row" data-img-target="custom_default_avatar">
+                                        <img class="cz-img-preview" src="<?php echo esc_url( $av_def_avatar_url ?: wcmamtx_PLUGIN_URL.'assets/images/default_avatar.jpg' ); ?>" style="width:48px;height:48px;object-fit:cover;border-radius:50%;border:2px solid #2d2d3f;flex-shrink:0;">
+                                        <button type="button" class="cz-img-upload-btn cz-btn cz-btn-ghost" data-img-target="custom_default_avatar"><?php esc_html_e('Upload','customize-my-account-for-woocommerce'); ?></button>
+                                        <button type="button" class="cz-img-remove-btn cz-btn cz-btn-ghost" data-img-target="custom_default_avatar" style="<?php echo $av_def_avatar_id ? '' : 'display:none;'; ?>"><?php esc_html_e('Remove','customize-my-account-for-woocommerce'); ?></button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1042,10 +1204,41 @@ a.wcmamtx_accordion_label_small
                                     <button class="cz-toggle cz-avatar-toggle <?php echo $av_custom_cont!=='yes'?'active':''; ?>" data-opt="custom_avatar_content" data-value="no"><?php esc_html_e('No','customize-my-account-for-woocommerce'); ?></button>
                                 </div>
                             </div>
-                            <div id="cz-avatar-content" style="<?php echo $av_custom_cont==='yes'?'':"display:none;"; ?>">
-                                <div style="background:#1e1e2e;border:1px solid #2d2d3f;border-radius:6px;padding:10px 12px;">
-                                    <p style="font-size:12px;color:#a0a0b8;line-height:1.6;margin:0 0 8px 0;"><?php esc_html_e('Controls text displayed after the avatar and before the navigation menu.','customize-my-account-for-woocommerce'); ?></p>
-                                    <a href="<?php echo esc_url( admin_url( 'admin.php?page=wcmamtx_advanced_settings&tab=wcmamtx_avatar_settings#wcmamtx_custom_content_textarea_tr' ) ); ?>"  style="font-size:12px;color:#a78bfa;text-decoration:none;display:inline-flex;align-items:center;gap:5px;"><span class="dashicons dashicons-edit" style="font-size:13px;width:13px;height:13px;line-height:1;"></span><?php esc_html_e('Edit content in Avatar Settings','customize-my-account-for-woocommerce'); ?></a>
+                            <div id="cz-avatar-content" style="<?php echo $av_custom_cont==='yes'?'':"display:none;"; ?>margin-top:10px;">
+                                <div style="border:1px solid #2d2d3f;border-radius:8px;overflow:hidden;">
+                                    <!-- Toolbar -->
+                                    <div style="display:flex;align-items:center;gap:3px;padding:5px 8px;background:#1a1a2e;border-bottom:1px solid #2d2d3f;flex-wrap:wrap;row-gap:4px;">
+                                        <?php
+                                        $czb = 'type="button" style="min-width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;background:#13131f;border:1px solid #2d2d3f;color:#b0b0c8;border-radius:5px;font-size:12px;cursor:pointer;padding:0 6px;flex-shrink:0;"';
+                                        $czs = '<span style="width:1px;height:16px;background:#2d2d3f;margin:0 2px;flex-shrink:0;"></span>';
+                                        $czc = 'type="button" class="cz-ac-tag-btn" style="background:#1e1e2e;border:1px solid #3d2d6e;color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:10px;cursor:pointer;white-space:nowrap;line-height:22px;flex-shrink:0;"';
+                                        ?>
+                                        <button <?php echo $czb; ?> class="cz-ac-fmt" data-cmd="bold" title="Bold"><b>B</b></button>
+                                        <button <?php echo $czb; ?> class="cz-ac-fmt" data-cmd="italic" title="Italic"><em>I</em></button>
+                                        <button <?php echo $czb; ?> class="cz-ac-fmt" data-cmd="underline" title="Underline"><u>U</u></button>
+                                        <?php echo $czs; ?>
+                                        <button <?php echo $czb; ?> id="cz-ac-link" title="<?php esc_attr_e('Insert link','customize-my-account-for-woocommerce'); ?>">&#128279;</button>
+                                        <button <?php echo $czb; ?> id="cz-ac-unlink" title="<?php esc_attr_e('Remove link','customize-my-account-for-woocommerce'); ?>" style="min-width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;background:#13131f;border:1px solid #2d2d3f;color:#b0b0c8;border-radius:5px;font-size:10px;cursor:pointer;padding:0 6px;flex-shrink:0;">&#10006;</button>
+                                        <?php echo $czs; ?>
+                                        <span style="font-size:10px;color:#6b6b85;white-space:nowrap;line-height:26px;flex-shrink:0;"><?php esc_html_e('+ tag:','customize-my-account-for-woocommerce'); ?></span>
+                                        <button <?php echo $czc; ?> data-tag="display_name">&#128100; <?php esc_html_e('Name','customize-my-account-for-woocommerce'); ?></button>
+                                        <button <?php echo $czc; ?> data-tag="first_name"><?php esc_html_e('First','customize-my-account-for-woocommerce'); ?></button>
+                                        <button <?php echo $czc; ?> data-tag="last_name"><?php esc_html_e('Last','customize-my-account-for-woocommerce'); ?></button>
+                                        <button <?php echo $czc; ?> data-tag="user_email"><?php esc_html_e('Email','customize-my-account-for-woocommerce'); ?></button>
+                                        <button <?php echo $czc; ?> data-tag="current_date"><?php esc_html_e('Date','customize-my-account-for-woocommerce'); ?></button>
+                                        <button <?php echo $czc; ?> data-tag="site_name"><?php esc_html_e('Site','customize-my-account-for-woocommerce'); ?></button>
+                                        <button <?php echo $czc; ?> id="cz-ac-logout-link">&#128275; <?php esc_html_e('Logout Link','customize-my-account-for-woocommerce'); ?></button>
+                                    </div>
+                                    <!-- Editor -->
+                                    <div id="cz-ac-editor"
+                                         contenteditable="true"
+                                         spellcheck="true"
+                                         style="min-height:90px;max-height:200px;overflow-y:auto;padding:10px 12px;background:#0d0d1a;color:#e0e0f0;font-size:13px;line-height:1.7;outline:none;word-break:break-word;"><?php echo wp_kses_post( $av_content ); ?></div>
+                                    <!-- Footer -->
+                                    <div style="display:flex;align-items:center;justify-content:space-between;padding:4px 10px;background:#1a1a2e;border-top:1px solid #2d2d3f;">
+                                        <span id="cz-ac-status" style="font-size:10px;color:#6b6b85;"></span>
+                                        <button type="button" id="cz-ac-reset" style="font-size:10px;color:#6b6b85;background:none;border:none;cursor:pointer;padding:2px 4px;line-height:1;"><?php esc_html_e('&#x21BA; Reset to default','customize-my-account-for-woocommerce'); ?></button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1226,6 +1419,9 @@ a.wcmamtx_accordion_label_small
     var NONCE_AVATAR  = <?php echo wp_json_encode($nonce_avatar); ?>;
     var NONCE_MENUS   = <?php echo wp_json_encode($nonce_menus); ?>;
     var NONCE_FORMATS = <?php echo wp_json_encode($nonce_formats); ?>;
+    var NONCE_IMG     = <?php echo wp_json_encode($nonce_img); ?>;
+    var PLACEHOLDER_CAMERA  = <?php echo wp_json_encode(wcmamtx_PLUGIN_URL.'assets/images/camera.svg'); ?>;
+    var PLACEHOLDER_AVATAR  = <?php echo wp_json_encode(wcmamtx_PLUGIN_URL.'assets/images/default_avatar.jpg'); ?>;
     var PREVIEW  = <?php echo wp_json_encode($preview_url); ?>;
     var TPL_PREVIEW_URLS = <?php echo wp_json_encode($tpl_preview_urls); ?>;
     var i18n = {
@@ -1236,6 +1432,22 @@ a.wcmamtx_accordion_label_small
         networkError:  <?php echo wp_json_encode(__('Network error',           'customize-my-account-for-woocommerce')); ?>,
         selectFormats: <?php echo wp_json_encode(__('Select formats',          'customize-my-account-for-woocommerce')); ?>,
     };
+    <?php $_czu = wp_get_current_user(); ?>
+    var CZ_SMART_TAGS = <?php echo wp_json_encode([
+        'display_name'     => $_czu->display_name,
+        'first_name'       => $_czu->user_firstname,
+        'last_name'        => $_czu->user_lastname,
+        'username'         => $_czu->user_login,
+        'user_email'       => $_czu->user_email,
+        'user_id'          => (string) get_current_user_id(),
+        'site_name'        => get_option( 'blogname' ),
+        'site_url'         => get_option( 'siteurl' ),
+        'admin_email'      => get_option( 'admin_email' ),
+        'current_date'     => date_i18n( get_option( 'date_format' ) ),
+        'current_time'     => date_i18n( get_option( 'time_format' ) ),
+        'user_logout_link' => function_exists( 'wc_logout_url' ) ? wc_logout_url() : wp_logout_url(),
+    ]); ?>;
+    var CZ_AC_DEFAULT = <?php echo wp_json_encode( '<p class="wcmamtx_default_text_below_avatar" style="text-align:center;">Hello <strong>{display_name}</strong> (not <strong>{display_name}</strong>? <a href="{user_logout_link}">Log out</a>)</p>' ); ?>;
     var iframe   = document.getElementById('wcmcz-iframe');
     var loader   = document.getElementById('wcmcz-loader');
     var status   = document.getElementById('cz-save-status');
@@ -1477,14 +1689,38 @@ a.wcmamtx_accordion_label_small
                 var cc = document.getElementById('cz-avatar-content');
                 if (cc) cc.style.display = val==='yes' ? '' : 'none';
             }
+            if (opt === 'disable_gravtar') {
+                var dw = document.getElementById('cz-avatar-default-wrap');
+                if (dw) dw.style.display = val==='yes' ? '' : 'none';
+            }
             saveAvatarOption(opt, val);
         });
     });
 
-    // Avatar number inputs
+    // Avatar number inputs — save on change (slider release / number blur)
     document.querySelectorAll('.cz-avatar-number').forEach(function(inp){
         inp.addEventListener('change',function(){ saveAvatarOption(inp.dataset.opt, inp.value); });
     });
+
+    // Avatar size slider — live preview while dragging (no save; change event handles save)
+    (function(){
+        var sizeSlider = document.querySelector('.cz-avatar-slider[data-opt="avatar_size"]');
+        if (!sizeSlider) return;
+        sizeSlider.addEventListener('input', function(){
+            var px = parseInt(this.value, 10);
+            if (!iframe) return;
+            try {
+                var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                var s = iframeDoc.getElementById('cz-live-avatar-size');
+                if (!s) {
+                    s = iframeDoc.createElement('style');
+                    s.id = 'cz-live-avatar-size';
+                    iframeDoc.head.appendChild(s);
+                }
+                s.textContent = '.wcmamtx_avatar_wrap img{width:' + px + 'px!important;height:' + px + 'px!important;}';
+            } catch(e) {}
+        });
+    }());
 
     // Avatar text inputs
     document.querySelectorAll('.cz-avatar-text').forEach(function(inp){
@@ -1493,6 +1729,273 @@ a.wcmamtx_accordion_label_small
             if(e.key==='Enter'){e.preventDefault(); saveAvatarOption(inp.dataset.opt, inp.value);}
         });
     });
+
+    // ---- AVATAR CONTENT WYSIWYG EDITOR ----
+    (function() {
+        var editor = document.getElementById('cz-ac-editor');
+        if (!editor) return;
+
+        // Inject editor CSS
+        var st = document.createElement('style');
+        st.textContent =
+            '#cz-ac-editor a{color:#a78bfa;text-decoration:underline;}' +
+            '#cz-ac-editor .cz-ac-tag{display:inline-block;background:#2d1f5e;color:#c4b5fd;border-radius:3px;padding:0 5px;font-size:11px;white-space:nowrap;cursor:default;user-select:none;-webkit-user-select:none;}' +
+            '.cz-ac-fmt:hover,.cz-ac-tag-btn:hover{opacity:.75;}';
+        document.head.appendChild(st);
+
+        var KNOWN = ['display_name','first_name','last_name','username','user_email','user_id',
+                     'user_logout_link','site_name','site_url','admin_email','current_date','current_time'];
+        var TAG_RE = new RegExp('\\{(' + KNOWN.join('|') + ')\\}', 'g');
+
+        function makeTagSpan(tag) {
+            var s = document.createElement('span');
+            s.className = 'cz-ac-tag';
+            s.contentEditable = 'false';
+            s.dataset.tag = tag;
+            s.textContent = '{' + tag + '}';
+            return s;
+        }
+
+        function convertTagsInNode(node) {
+            if (node.nodeType === 3) {
+                TAG_RE.lastIndex = 0;
+                if (!TAG_RE.test(node.nodeValue)) return;
+                TAG_RE.lastIndex = 0;
+                var frag = document.createDocumentFragment(), last = 0, m;
+                while ((m = TAG_RE.exec(node.nodeValue)) !== null) {
+                    if (m.index > last) frag.appendChild(document.createTextNode(node.nodeValue.slice(last, m.index)));
+                    frag.appendChild(makeTagSpan(m[1]));
+                    last = m.index + m[0].length;
+                }
+                if (last < node.nodeValue.length) frag.appendChild(document.createTextNode(node.nodeValue.slice(last)));
+                node.parentNode.replaceChild(frag, node);
+            } else if (node.nodeType === 1 && !node.classList.contains('cz-ac-tag')) {
+                Array.from(node.childNodes).forEach(convertTagsInNode);
+            }
+        }
+
+        function getContent() {
+            var clone = editor.cloneNode(true);
+            clone.querySelectorAll('.cz-ac-tag').forEach(function(s) {
+                s.parentNode.replaceChild(document.createTextNode('{' + s.dataset.tag + '}'), s);
+            });
+            return clone.innerHTML;
+        }
+
+        function livePreview(html) {
+            var resolved = html.replace(/\{(\w+)\}/g, function(_, tag) {
+                return Object.prototype.hasOwnProperty.call(CZ_SMART_TAGS, tag) ? CZ_SMART_TAGS[tag] : '{' + tag + '}';
+            });
+            try {
+                var doc = iframe.contentDocument || iframe.contentWindow.document;
+                var target = doc.getElementById('wcmamtx-avatar-content-output');
+                if (target) target.innerHTML = resolved;
+            } catch(e) {}
+        }
+
+        var acStatus = document.getElementById('cz-ac-status');
+        var saveTimer;
+        function saveContent() {
+            var html = getContent();
+            if (acStatus) acStatus.textContent = i18n.saving + '…';
+            var fd = new FormData();
+            fd.append('action',  'wcmamtx_customizer_save_avatar_content');
+            fd.append('nonce',   NONCE_AVATAR);
+            fd.append('content', html);
+            fetch(AJAX_URL, {method:'POST', body:fd})
+                .then(function(r){ return r.json(); })
+                .then(function(res) {
+                    if (acStatus) acStatus.textContent = res.success ? ('✓ ' + i18n.saved) : i18n.errorSaving;
+                    if (res.success) { showLoader(); iframe.src = PREVIEW + '?wcmcz=' + Date.now(); }
+                })
+                .catch(function() { if (acStatus) acStatus.textContent = i18n.networkError; });
+        }
+
+        function triggerDebouncedSave() {
+            clearTimeout(saveTimer);
+            saveTimer = setTimeout(saveContent, 800);
+        }
+
+        convertTagsInNode(editor);
+
+        editor.addEventListener('input', function() {
+            livePreview(getContent());
+            triggerDebouncedSave();
+        });
+
+        document.querySelectorAll('.cz-ac-fmt, #cz-ac-unlink, .cz-ac-tag-btn, #cz-ac-logout-link').forEach(function(btn) {
+            btn.addEventListener('mousedown', function(e) { e.preventDefault(); });
+        });
+
+        document.querySelectorAll('.cz-ac-fmt').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                editor.focus();
+                document.execCommand(btn.dataset.cmd, false, null);
+                livePreview(getContent());
+                triggerDebouncedSave();
+            });
+        });
+
+        var savedRange = null;
+        ['mouseup','keyup'].forEach(function(ev) {
+            editor.addEventListener(ev, function() {
+                var sel = window.getSelection();
+                if (sel && sel.rangeCount) savedRange = sel.getRangeAt(0).cloneRange();
+            });
+        });
+
+        document.getElementById('cz-ac-link').addEventListener('click', function() {
+            var url = prompt('Enter link URL:');
+            if (!url) return;
+            editor.focus();
+            if (savedRange) {
+                var sel = window.getSelection();
+                sel.removeAllRanges();
+                sel.addRange(savedRange);
+            }
+            document.execCommand('createLink', false, url);
+            livePreview(getContent());
+            triggerDebouncedSave();
+        });
+
+        document.getElementById('cz-ac-unlink').addEventListener('click', function() {
+            editor.focus();
+            document.execCommand('unlink', false, null);
+            livePreview(getContent());
+            triggerDebouncedSave();
+        });
+
+        function insertAtCursor(node) {
+            editor.focus();
+            var sel = window.getSelection();
+            if (sel && sel.rangeCount) {
+                var range = sel.getRangeAt(0);
+                range.deleteContents();
+                range.insertNode(node);
+                range.setStartAfter(node);
+                range.collapse(true);
+                sel.removeAllRanges();
+                sel.addRange(range);
+            } else {
+                editor.appendChild(node);
+            }
+        }
+
+        document.querySelectorAll('.cz-ac-tag-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                insertAtCursor(makeTagSpan(btn.dataset.tag));
+                livePreview(getContent());
+                triggerDebouncedSave();
+            });
+        });
+
+        var logoutBtn = document.getElementById('cz-ac-logout-link');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', function() {
+                var a = document.createElement('a');
+                a.href = '{user_logout_link}';
+                a.textContent = 'Log out';
+                insertAtCursor(a);
+                livePreview(getContent());
+                triggerDebouncedSave();
+            });
+        }
+
+        var resetBtn = document.getElementById('cz-ac-reset');
+        if (resetBtn) {
+            resetBtn.addEventListener('click', function() {
+                if (!confirm('Reset content to the default text?')) return;
+                editor.innerHTML = CZ_AC_DEFAULT;
+                convertTagsInNode(editor);
+                livePreview(getContent());
+                clearTimeout(saveTimer);
+                saveTimer = setTimeout(saveContent, 100);
+            });
+        }
+    }());
+
+    // Avatar image upload (camera icon + default avatar) via file input + fetch
+    (function() {
+        // Upload button → trigger hidden file input
+        document.addEventListener('click', function(e) {
+            var btn = e.target.closest('.cz-img-upload-btn');
+            if (!btn) return;
+            e.preventDefault();
+            var target = btn.dataset.imgTarget;
+            var inp = document.querySelector('.cz-img-file-input[data-img-target="' + target + '"]');
+            if (inp) inp.click();
+        });
+
+        // File chosen → preview + upload
+        document.addEventListener('change', function(e) {
+            var inp = e.target.closest('.cz-img-file-input');
+            if (!inp) return;
+            var target = inp.dataset.imgTarget;
+            var file = inp.files && inp.files[0];
+            if (!file) return;
+
+            // Instant local preview
+            var reader = new FileReader();
+            reader.onload = function(ev) {
+                var row = document.querySelector('.cz-img-upload-row[data-img-target="' + target + '"]');
+                if (row) row.querySelector('.cz-img-preview').src = ev.target.result;
+            };
+            reader.readAsDataURL(file);
+
+            // Upload to WP media library + save ID
+            setSaveStatus('saving', i18n.saving);
+            var fd = new FormData();
+            fd.append('action', 'wcmamtx_customizer_upload_avatar_img');
+            fd.append('nonce',  NONCE_IMG);
+            fd.append('key',    target);
+            fd.append('file',   file);
+            fetch(AJAX_URL, {method:'POST', body:fd})
+                .then(function(r){return r.json();})
+                .then(function(res){
+                    if (res.success) {
+                        setSaveStatus('saved', i18n.saved);
+                        var row = document.querySelector('.cz-img-upload-row[data-img-target="' + target + '"]');
+                        if (row) {
+                            row.querySelector('.cz-img-preview').src = res.data.url;
+                            var rm = row.querySelector('.cz-img-remove-btn');
+                            if (rm) rm.style.display = '';
+                        }
+                        showLoader();
+                        iframe.src = PREVIEW + '?wcmcz=' + Date.now();
+                    } else {
+                        setSaveStatus('', i18n.errorSaving);
+                    }
+                    inp.value = '';
+                })
+                .catch(function(){ setSaveStatus('', i18n.networkError); inp.value = ''; });
+        });
+
+        // Remove button → revert to placeholder + clear setting
+        document.addEventListener('click', function(e) {
+            var btn = e.target.closest('.cz-img-remove-btn');
+            if (!btn) return;
+            e.preventDefault();
+            var target = btn.dataset.imgTarget;
+            var placeholder = target === 'upload_icon' ? PLACEHOLDER_CAMERA : PLACEHOLDER_AVATAR;
+            var row = document.querySelector('.cz-img-upload-row[data-img-target="' + target + '"]');
+            if (row) {
+                row.querySelector('.cz-img-preview').src = placeholder;
+                btn.style.display = 'none';
+            }
+            setSaveStatus('saving', i18n.saving);
+            var fd = new FormData();
+            fd.append('action', 'wcmamtx_customizer_remove_avatar_img');
+            fd.append('nonce',  NONCE_IMG);
+            fd.append('key',    target);
+            fetch(AJAX_URL, {method:'POST', body:fd})
+                .then(function(r){return r.json();})
+                .then(function(res){
+                    setSaveStatus(res.success?'saved':'', res.success ? i18n.saved : i18n.errorSaving);
+                    if (res.success) { showLoader(); iframe.src = PREVIEW + '?wcmcz=' + Date.now(); }
+                })
+                .catch(function(){ setSaveStatus('', i18n.networkError); });
+        });
+    })();
 
     // Allowed formats multiselect — init Select2 then listen on change
     function initSelect2Formats() {
@@ -1952,10 +2455,35 @@ setTimeout(function() {
     </div>
   </div>
 </div>
+<div id="cz-nav-pro-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="cz-np-title">
+  <div id="cz-modal-box">
+    <button class="cz-pm-close cz-pm-close-all" aria-label="Close">&times;</button>
+    <div class="cz-pm-icon">&#128274;</div>
+    <h3 id="cz-np-title"><?php esc_html_e('Pro Feature','customize-my-account-for-woocommerce'); ?></h3>
+    <p><?php esc_html_e('This navigation style is available in the Pro version. Upgrade to unlock all layout options and more.','customize-my-account-for-woocommerce'); ?></p>
+    <div class="cz-pm-actions">
+      <a href="https://sysbasics.com/go/customize/" target="_blank" class="cz-pm-btn">&#9889; <?php esc_html_e('Upgrade to Pro','customize-my-account-for-woocommerce'); ?></a>
+    </div>
+  </div>
+</div>
+<div id="cz-topbar-nav-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="cz-tn-title">
+  <div id="cz-modal-box" style="max-width:480px;">
+    <button class="cz-pm-close cz-pm-close-all" aria-label="Close">&times;</button>
+    <div class="cz-pm-icon">&#128274;</div>
+    <h3 id="cz-tn-title"><?php esc_html_e('Pro Feature','customize-my-account-for-woocommerce'); ?></h3>
+    <p><?php esc_html_e('Top Horizontal Bar navigation style is available in the Pro version.','customize-my-account-for-woocommerce'); ?></p>
+    <img src="<?php echo esc_url( wcmamtx_PLUGIN_URL . 'assets/images/navigation6.png' ); ?>" alt="<?php esc_attr_e('Top Horizontal Bar preview','customize-my-account-for-woocommerce'); ?>" style="width:100%;border-radius:8px;margin:12px 0 18px;display:block;">
+    <div class="cz-pm-actions">
+      <a href="https://sysbasics.com/go/customize/" target="_blank" class="cz-pm-btn">&#9889; <?php esc_html_e('Upgrade to Pro','customize-my-account-for-woocommerce'); ?></a>
+    </div>
+  </div>
+</div>
 <script>
 (function(){
   var overlay   = document.getElementById('cz-pro-modal-overlay');
   var overlayBk = document.getElementById('cz-banking-modal-overlay');
+  var overlayNp = document.getElementById('cz-nav-pro-modal-overlay');
+  var overlayTn = document.getElementById('cz-topbar-nav-modal-overlay');
   var overlayPb = document.getElementById('cz-profilebox-modal-overlay');
   var overlayLb = document.getElementById('cz-linkbox-modal-overlay');
   var overlayDc = document.getElementById('cz-dashcard-modal-overlay');
@@ -1968,7 +2496,7 @@ setTimeout(function() {
   }
   window.openModal = openModal;
   function closeAll(){
-    [overlay,overlayBk,overlayPb,overlayLb,overlayDc,overlayDt,overlayTy,overlayOp,overlayDt2].forEach(function(o){if(o)o.classList.remove('open');});
+    [overlay,overlayBk,overlayNp,overlayTn,overlayPb,overlayLb,overlayDc,overlayDt,overlayTy,overlayOp,overlayDt2].forEach(function(o){if(o)o.classList.remove('open');});
   }
   document.querySelectorAll('.cz-pro-locked').forEach(function(b){
     b.addEventListener('click', function(e){
@@ -1985,10 +2513,89 @@ setTimeout(function() {
   document.querySelectorAll('.cz-pm-close-all').forEach(function(btn){
     btn.addEventListener('click', closeAll);
   });
-  [overlay,overlayBk,overlayPb,overlayLb,overlayDc,overlayDt,overlayTy,overlayOp,overlayDt2].forEach(function(ov){
+  [overlay,overlayBk,overlayNp,overlayTn,overlayPb,overlayLb,overlayDc,overlayDt,overlayTy,overlayOp,overlayDt2].forEach(function(ov){
     if(ov) ov.addEventListener('click', function(e){ if(e.target===ov) closeAll(); });
   });
   document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeAll(); });
+})();
+</script>
+<div id="cz-quick-help-overlay" role="dialog" aria-modal="true" aria-labelledby="cz-qh-title">
+  <div id="cz-modal-box" style="max-width:420px;text-align:left;">
+    <button class="cz-pm-close" id="cz-quick-help-close" aria-label="Close">&times;</button>
+    <h3 id="cz-qh-title" style="text-align:left;"><?php esc_html_e( 'Quick Help', 'customize-my-account-for-woocommerce' ); ?></h3>
+    <p style="text-align:left;"><?php esc_html_e( 'Have a question or issue? Send us a message and we\'ll get back to you.', 'customize-my-account-for-woocommerce' ); ?></p>
+    <div class="cz-field">
+        <label class="cz-label" for="cz-qh-email"><?php esc_html_e( 'Your Email', 'customize-my-account-for-woocommerce' ); ?></label>
+        <input type="email" id="cz-qh-email" class="cz-text-input" value="<?php echo esc_attr( $admin_user_email ); ?>">
+    </div>
+    <div class="cz-field" style="margin-bottom:18px;">
+        <label class="cz-label" for="cz-qh-message"><?php esc_html_e( 'Message', 'customize-my-account-for-woocommerce' ); ?></label>
+        <textarea id="cz-qh-message" class="cz-text-input" placeholder="<?php esc_attr_e( 'Describe your issue or question…', 'customize-my-account-for-woocommerce' ); ?>"></textarea>
+    </div>
+    <div class="cz-qh-actions">
+        <button type="button" id="cz-qh-submit" class="cz-pm-btn"><?php esc_html_e( 'Send Message', 'customize-my-account-for-woocommerce' ); ?></button>
+        <span id="cz-qh-status" style="font-size:12px;color:#a0a0b8;"></span>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+    var AJAX_URL = <?php echo wp_json_encode( $ajax_url ); ?>;
+    var NONCE_QH = <?php echo wp_json_encode( $nonce_quick_help ); ?>;
+    var overlay   = document.getElementById('cz-quick-help-overlay');
+    var openBtn   = document.getElementById('cz-quick-help-btn');
+    var closeBtn  = document.getElementById('cz-quick-help-close');
+    var submitBtn = document.getElementById('cz-qh-submit');
+    var statusEl  = document.getElementById('cz-qh-status');
+    if (!overlay) return;
+    function openModal()  { overlay.classList.add('open');    }
+    function closeModal() { overlay.classList.remove('open'); statusEl.textContent = ''; }
+    if (openBtn)  openBtn.addEventListener('click',  openModal);
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    overlay.addEventListener('click', function(e){ if (e.target === overlay) closeModal(); });
+    document.addEventListener('keydown', function(e){
+        if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal();
+    });
+    if (submitBtn) {
+        submitBtn.addEventListener('click', function(){
+            var email   = document.getElementById('cz-qh-email').value.trim();
+            var message = document.getElementById('cz-qh-message').value.trim();
+            if (!email || !message) {
+                statusEl.style.color = '#f87171';
+                statusEl.textContent = <?php echo wp_json_encode( __( 'Please fill in all fields.', 'customize-my-account-for-woocommerce' ) ); ?>;
+                return;
+            }
+            statusEl.style.color  = '#a0a0b8';
+            statusEl.textContent  = <?php echo wp_json_encode( __( 'Sending…', 'customize-my-account-for-woocommerce' ) ); ?>;
+            submitBtn.disabled    = true;
+            var fd = new FormData();
+            fd.append('action',  'wcmamtx_quick_help_submit');
+            fd.append('nonce',   NONCE_QH);
+            fd.append('email',   email);
+            fd.append('message', message);
+            fetch(AJAX_URL, { method: 'POST', body: fd })
+                .then(function(r){ return r.json(); })
+                .then(function(res){
+                    submitBtn.disabled = false;
+                    if (res.success) {
+                        statusEl.style.color = '#4ade80';
+                        statusEl.textContent = <?php echo wp_json_encode( __( "Message sent! We'll get back to you soon.", 'customize-my-account-for-woocommerce' ) ); ?>;
+                        document.getElementById('cz-qh-message').value = '';
+                        setTimeout(closeModal, 3000);
+                    } else {
+                        statusEl.style.color = '#f87171';
+                        statusEl.textContent = (res.data && typeof res.data === 'string')
+                            ? res.data
+                            : <?php echo wp_json_encode( __( 'Failed to send. Please try again.', 'customize-my-account-for-woocommerce' ) ); ?>;
+                    }
+                })
+                .catch(function(){
+                    submitBtn.disabled   = false;
+                    statusEl.style.color = '#f87171';
+                    statusEl.textContent = <?php echo wp_json_encode( __( 'Network error. Please try again.', 'customize-my-account-for-woocommerce' ) ); ?>;
+                });
+        });
+    }
 })();
 </script>
 </body>

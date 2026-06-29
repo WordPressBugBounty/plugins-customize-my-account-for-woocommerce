@@ -5,9 +5,11 @@ defined( 'ABSPATH' ) || exit;
 $notes = $order->get_customer_order_notes();
 
 
-$wcmamtx_layout = (array) get_option( 'wcmamtx_layout' );
+$wcmamtx_layout = wcmamtx_get_layout();
 
 $view_order_style = isset($wcmamtx_layout['view_order_style']) ? $wcmamtx_layout['view_order_style'] : "01";
+$view_order_style = preg_replace( '/[^0-9a-zA-Z_-]/', '', basename( (string) $view_order_style ) );
+if ( $view_order_style === '' ) { $view_order_style = '01'; }
 
 
 

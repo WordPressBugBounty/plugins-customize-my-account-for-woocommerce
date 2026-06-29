@@ -15,7 +15,7 @@ function wcmamtx_guest_dashboard_autolink_cb() {
 
     if ( ! empty( $existing ) ) {
         $page   = $existing[0];
-        $layout = (array) get_option( "wcmamtx_layout" );
+        $layout = wcmamtx_get_layout();
         $layout["guest_dashboard_page"] = $page->ID;
         update_option( "wcmamtx_layout", $layout );
         wp_send_json_success( array(
@@ -33,7 +33,7 @@ function wcmamtx_guest_dashboard_autolink_cb() {
     ) );
     if ( is_wp_error( $page_id ) ) wp_send_json_error( $page_id->get_error_message() );
 
-    $layout = (array) get_option( "wcmamtx_layout" );
+    $layout = wcmamtx_get_layout();
     $layout["guest_dashboard_page"] = $page_id;
     update_option( "wcmamtx_layout", $layout );
     wp_send_json_success( array(
@@ -54,7 +54,7 @@ function wcmamtx_guest_dashboard_redirect() {
     if ( ! $myaccount_page_id ) return;
     if ( ! is_page( $myaccount_page_id ) ) return;
 
-    $layout  = (array) get_option( "wcmamtx_layout" );
+    $layout  = wcmamtx_get_layout();
     $enabled = isset( $layout["guest_dashboard_enable"] ) ? $layout["guest_dashboard_enable"] : "02";
     $page_id = isset( $layout["guest_dashboard_page"] )   ? (int) $layout["guest_dashboard_page"] : 0;
 

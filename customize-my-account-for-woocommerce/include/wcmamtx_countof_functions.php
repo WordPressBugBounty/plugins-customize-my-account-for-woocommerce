@@ -391,9 +391,11 @@ if (!function_exists('wcmamtx_render_cpt_count_bubble_html')) {
 
 
 
-		$custom_post_type = isset($value['count_post_type']) ? isset($value['count_post_type']) : "";
+		$custom_post_type = isset($value['count_post_type']) ? $value['count_post_type'] : "";
 
-		$cpt_status = isset($value['cpt_status']) ? isset($value['cpt_status']) : "publish";
+		$cpt_status = isset($value['cpt_status']) ? $value['cpt_status'] : "publish";
+
+		$count_of = isset($value['count_of']) ? $value['count_of'] : "post_type";
 
 
 

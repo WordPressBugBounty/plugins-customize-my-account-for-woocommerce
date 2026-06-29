@@ -74,7 +74,7 @@ $frontend_url = get_permalink(get_option('woocommerce_myaccount_page_id'));
 
                 <?php
 
-                $wcmamtx_layout = (array) get_option( 'wcmamtx_layout' );
+                $wcmamtx_layout = wcmamtx_get_layout();
 
                 $google_client_id = isset( $wcmamtx_layout['google_client_id'] ) ? $wcmamtx_layout['google_client_id'] : '';
                 $google_client_secret = isset( $wcmamtx_layout['google_client_secret'] ) ? $wcmamtx_layout['google_client_secret'] : '';

@@ -3,7 +3,7 @@
     Plugin Name: SysBasics Customize My Account for WooCommerce
     Plugin URI: https://sysbasics.com
     Description: Easily customize the WooCommerce My Account page. Mobile Friendly User avatar, redesign the WooCommerce dashboard, manage menus, and apply premium styles for a better user experience.
-    Version: 4.4.11
+    Version: 4.4.12
     Author: SysBasics
     Author URI: https://sysbasics.com
     Domain Path: /languages
@@ -36,7 +36,7 @@ if ( !defined( 'pro_url' ) )
     define( 'pro_url', 'https://sysbasics.com/go/customize/' );
 
 if( !defined( 'wcmamtx_redirect_URL' ) )
-define( 'wcmamtx_redirect_URL',"admin.php?page=wcmamtx_advanced_settings&tab=wcmamtx_layout" );
+define( 'wcmamtx_redirect_URL',"admin.php?page=wcmamtx_frontend_customizer" );
 
 
 
@@ -105,6 +105,7 @@ if ( is_plugin_active( 'sysbasics-account-fields/sysbasics-account-fields.php' )
 
       //include the classes
     include dirname( __FILE__ ) . '/include/admin/admin_settings.php';
+    include dirname( __FILE__ ) . '/include/admin/onboarding.php';
     include dirname( __FILE__ ) . '/include/frontend/frontend_functions.php';
 include dirname( __FILE__ ) . '/include/frontend/guest_dashboard_hooks.php';
 
@@ -112,9 +113,12 @@ include dirname( __FILE__ ) . '/include/frontend/guest_dashboard_hooks.php';
     include dirname( __FILE__ ) . '/include/sysbasics-avatar-upload.php';
 
     
-    $wcmamtx_layout = (array) get_option('wcmamtx_layout');
+    $wcmamtx_layout = wcmamtx_get_layout();
 
     $nav_style = isset($wcmamtx_layout['nav_style']) ? $wcmamtx_layout['nav_style'] : wcmamtx_get_clean_design_theme_array();
+if ( ! is_string( $nav_style ) ) { $nav_style = '02'; }
+$nav_style = preg_replace( '/[^0-9a-zA-Z_-]/', '', basename( $nav_style ) );
+if ( $nav_style === '' ) { $nav_style = '02'; }
 
     if ($nav_style == "04") {
         include dirname( __FILE__ ) . '/react-myaccount/react-myaccount.php';
@@ -225,12 +229,14 @@ if (!function_exists('wcmamtx_plugin_add_settings_link')) {
 
         array_push( $links, $settings_link1 );
 
+        $wizard_link = '<a href="' . admin_url( 'admin.php?page=wcmamtx_onboarding' ) . '">' . esc_html__( 'Setup Wizard', 'customize-my-account-for-woocommerce' ) . '</a>';
+        array_push( $links, $wizard_link );
 
             $settings_link2 = '<a href="'.pro_url.'" style="color:green; font-weight:bold;">' . esc_html__( 'Upgrade to premium version','customize-my-account-for-woocommerce' ) . '</a>';
             array_push( $links, $settings_link2 );
-        
 
-        
+
+
         return $links;
     }
 }
@@ -356,8 +362,7 @@ if (!function_exists('wcmamtx_plugin_activation_hook')) {
 
         // Don't forget to exit() because wp_redirect doesn't exit automatically
         add_option('wcmamtx_do_activation_redirect', true);
-        
-        
+        add_option('wcmamtx_install_time', time());
 
 
     }
@@ -386,13 +391,14 @@ if (!function_exists('wcmamtx_admin_plugin_redirect')) {
         if (get_option('wcmamtx_do_activation_redirect', false)) {
             delete_option('wcmamtx_do_activation_redirect');
 
-            
+            /* Send new installs to the onboarding wizard; returning installs
+               (where onboarding was already completed) go straight to settings. */
+            if ( ! get_option( 'wcmamtx_onboarding_completed' ) ) {
+                wp_safe_redirect( admin_url( 'admin.php?page=wcmamtx_onboarding' ) );
+            } else {
+                wp_safe_redirect( admin_url( wcmamtx_redirect_URL ) );
+            }
 
-           
-            wp_redirect("".wcmamtx_redirect_URL."");
-           
-           
-            //wp_redirect() does not exit automatically and should almost always be followed by exit.
             exit;
         }
 
@@ -400,14 +406,4 @@ if (!function_exists('wcmamtx_admin_plugin_redirect')) {
 
 }
 
-function wcmamtx_upload_avatar_tab_uninstall() {
-    $wcmamtx_upload_avatar_tab = new wcmamtx_upload_avatar_tab;
-    $users = get_users();
-
-    foreach ( $users as $user )
-        $wcmamtx_upload_avatar_tab->avatar_delete( $user->user_id );
-
-    delete_option( 'wcmamtx_upload_avatar_tab_caps' );
-}
-register_uninstall_hook( __FILE__, 'wcmamtx_upload_avatar_tab_uninstall' );
 ?>

@@ -278,7 +278,7 @@ global $wp_roles;
                                 $additional_settings  = (array) get_option('syscmafwpl_additional_settings');
                                 $additional_settings  = array_filter($additional_settings);
 
-                                if (isset($additional_settings) && (sizeof($additional_settings) >= 1)) { 
+                                if (isset($additional_settings) && (count($additional_settings) >= 1)) { 
                                     $conditional_fields_dropdown = $additional_settings;
                                 } else {
                                     $conditional_fields_dropdown = array();

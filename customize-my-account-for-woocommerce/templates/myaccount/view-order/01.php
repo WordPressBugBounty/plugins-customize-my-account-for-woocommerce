@@ -156,9 +156,11 @@ function custom_view_order_again_button( $order ) {
 
     <?php if ( $order && $order->has_downloadable_item() && $order->is_download_permitted() ) {
 
-        $wcmamtx_layout = (array) get_option( 'wcmamtx_layout' );
+        $wcmamtx_layout = wcmamtx_get_layout();
 
         $download_style = isset($wcmamtx_layout['download_style']) ? $wcmamtx_layout['download_style'] : "01";
+$download_style = preg_replace( '/[^0-9a-zA-Z_-]/', '', basename( (string) $download_style ) );
+if ( $download_style === '' ) { $download_style = '01'; }
 
         $woocommerce_path = WC()->plugin_path();
 

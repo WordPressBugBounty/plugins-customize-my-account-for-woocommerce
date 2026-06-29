@@ -8,14 +8,22 @@
 
     	<div class="wcmamtx-card-body">
 
-    		<select class="wcmamtx_layout_navigation_select" name="<?php  echo esc_html__($this->wcmamtx_layout_page); ?>[nav_style]" style="display: none;">			
-    			<option value="01" vpreview="" gtext="<?php echo esc_html__('Theme inherited (default)','customize-my-account-for-woocommerce'); ?>"  <?php if (isset($nav_style) && ($nav_style == 01)) { echo 'selected'; } ?>></option> 
+    		<select class="wcmamtx_layout_navigation_select" name="<?php  echo esc_html__($this->wcmamtx_layout_page); ?>[nav_style]" style="display: none;">
+    			<option value="01" vpreview="" gtext="<?php echo esc_html__('Theme inherited (default)','customize-my-account-for-woocommerce'); ?>"  <?php if (isset($nav_style) && ($nav_style == 01)) { echo 'selected'; } ?>></option>
     			<option value="02" vpreview="" gtext="<?php echo esc_html__('Clean','customize-my-account-for-woocommerce'); ?>"  <?php if (isset($nav_style) && ($nav_style == 02)) { echo 'selected'; } ?>></option>
-    			
-    			<option value="03" vpreview="https://www.sysbasics.com/wp-content/uploads/2026/06/screen-capture-2.webm" gtext="<?php echo esc_html__('Banking App','customize-my-account-for-woocommerce'); ?>"  <?php if (isset($nav_style) && ($nav_style == 03)) { echo 'selected'; } ?> disabled></option> 
 
-                <option value="04" vpreview="" gtext="<?php echo esc_html__('React Based','customize-my-account-for-woocommerce'); ?>"  <?php if (isset($nav_style) && ($nav_style == 04)) { echo 'selected'; } ?> ></option> 
-    			
+    			<option value="03" vpreview="https://www.sysbasics.com/wp-content/uploads/2026/06/screen-capture-2.webm" gtext="<?php echo esc_html__('Banking App','customize-my-account-for-woocommerce'); ?>"  <?php if (isset($nav_style) && ($nav_style == 03)) { echo 'selected'; } ?> disabled></option>
+
+                <option value="04" vpreview="" gtext="<?php echo esc_html__('React Based','customize-my-account-for-woocommerce'); ?>"  <?php if (isset($nav_style) && ($nav_style == 04)) { echo 'selected'; } ?> ></option>
+
+                <option value="05" vpreview="" gtext="<?php echo esc_html__('Minimal Pill','customize-my-account-for-woocommerce'); ?>"  <?php if (isset($nav_style) && ($nav_style === '05')) { echo 'selected'; } ?> ></option>
+
+                <option value="06" vpreview="" gtext="<?php echo esc_html__('Top Bar (Pro)','customize-my-account-for-woocommerce'); ?>"  <?php if (isset($nav_style) && ($nav_style === '06')) { echo 'selected'; } ?> disabled></option>
+
+                <option value="07" vpreview="" gtext="<?php echo esc_html__('Icon Only (Pro)','customize-my-account-for-woocommerce'); ?>"  <?php if (isset($nav_style) && ($nav_style === '07')) { echo 'selected'; } ?> disabled></option>
+
+                <option value="08" vpreview="" gtext="<?php echo esc_html__('Dark Sidebar (Pro)','customize-my-account-for-woocommerce'); ?>"  <?php if (isset($nav_style) && ($nav_style === '08')) { echo 'selected'; } ?> disabled></option>
+
     		</select>
 
     		<a href="#" class="wcmamtx_template_override_a">

@@ -335,18 +335,7 @@ class wcmamtx_add_settings_page_class {
 
 		    	wp_enqueue_script( 'wcmamtxadmin', ''.wcmamtx_PLUGIN_URL.'assets/js/admin.js',array('jquery-ui-accordion'), '1.0.0', true );
 
-		    } else if (isset($current_tab) && ($current_tab == "wcmamtx_wizard_settings")) {
-
-                wp_enqueue_style( 'wcmamtx-bdwizard', ''.wcmamtx_PLUGIN_URL.'assets/css/bd-wizard.css');
-
-                
-
-                wp_enqueue_script( 'wcmamtxsteps', ''.wcmamtx_PLUGIN_URL.'assets/js/jquery.steps.min.js',array('wcmtx_steps_jquery'), '1.0.0', true );
-
-                wp_enqueue_script( 'wcmamtxstepsbdwizard', ''.wcmamtx_PLUGIN_URL.'assets/js/bd-wizard.js',array('wcmtx_steps_jquery'), '1.0.0', true );
-               
-
-            } 
+		    }  
 
             if (isset($current_tab) && ($current_tab == "wcmamtx_layout")) {
 
@@ -519,16 +508,6 @@ class wcmamtx_add_settings_page_class {
         
         //User avatar tab
 
-        $this->wcmamtx_plugin_settings_tab[$this->wcmamtx_avatar_settings_page] = esc_html__( 'Avatar' ,'customize-my-account-for-woocommerce');
-
-        register_setting( $this->wcmamtx_avatar_settings_page, $this->wcmamtx_avatar_settings_page );
-
-        add_settings_section( 'wcmamtx_avatar_section', '', '', $this->wcmamtx_avatar_settings_page );
-
-        add_settings_field( 'avatar_option', '', array( $this, 'wcmamtx_avatar_page' ), $this->wcmamtx_avatar_settings_page, 'wcmamtx_avatar_section' );
-
-        
- 
         /*
         
         $this->wcmamtx_plugin_settings_tab[$this->wcmamtx_plugin_options_key]    = esc_html__( 'Elementor Templates' ,'customize-my-account-for-woocommerce');
@@ -588,9 +567,6 @@ class wcmamtx_add_settings_page_class {
     }
 
 
-    public function wcmamtx_avatar_page() {
-        include ('forms/avatar_form.php');
-    }
 
 
 
@@ -852,6 +828,20 @@ class wcmamtx_add_settings_page_class {
 
                             <button type="button" class="btn btn-secondary bulk" data-dismiss="modal"><?php echo esc_html__( 'Close' ,'customize-my-account-for-woocommerce'); ?></button>
 
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="wcmamtx_upgrade_modal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content" style="border-radius:10px;overflow:hidden;">
+                        <div class="modal-body" style="text-align:center;padding:36px 28px 28px;">
+                            <div style="font-size:40px;margin-bottom:12px;">&#128274;</div>
+                            <h4 style="margin:0 0 10px;font-size:18px;"><?php esc_html_e('Pro Feature','customize-my-account-for-woocommerce'); ?></h4>
+                            <p style="color:#666;font-size:14px;margin:0 0 24px;line-height:1.6;"><?php esc_html_e('This style is available in the Pro version of Customize My Account for WooCommerce.','customize-my-account-for-woocommerce'); ?></p>
+                            <a href="https://sysbasics.com/go/customize/" target="_blank" class="button button-primary" style="margin-right:8px;text-decoration:none;">&#9889; <?php esc_html_e('Upgrade to Pro','customize-my-account-for-woocommerce'); ?></a>
+                            <button type="button" class="button" data-dismiss="modal"><?php esc_html_e('Close','customize-my-account-for-woocommerce'); ?></button>
                         </div>
                     </div>
                 </div>

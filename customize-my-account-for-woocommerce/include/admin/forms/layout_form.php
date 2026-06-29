@@ -1,7 +1,7 @@
 <?php 
 
 
-$wcmamtx_layout = (array) get_option( 'wcmamtx_layout' );
+$wcmamtx_layout = wcmamtx_get_layout();
 
 
 if (array_key_exists(0, $wcmamtx_layout)) {
@@ -16,25 +16,38 @@ if (array_key_exists(0, $wcmamtx_layout)) {
 
 
 $nav_style = isset($wcmamtx_layout['nav_style']) ? $wcmamtx_layout['nav_style'] : wcmamtx_get_clean_design_theme_array();
+if ( ! is_string( $nav_style ) ) { $nav_style = '02'; }
+$nav_style = preg_replace( '/[^0-9a-zA-Z_-]/', '', basename( $nav_style ) );
+if ( $nav_style === '' ) { $nav_style = '02'; }
 
 $dash_style = isset($wcmamtx_layout['dash_style']) ? $wcmamtx_layout['dash_style'] : "01";
+$dash_style = preg_replace( '/[^0-9a-zA-Z_-]/', '', basename( (string) $dash_style ) );
+if ( $dash_style === '' ) { $dash_style = '01'; }
 $sidebar_style = isset($wcmamtx_layout['sidebar_style']) ? $wcmamtx_layout['sidebar_style'] : "01";
 
 $order_style = isset($wcmamtx_layout['order_style']) ? $wcmamtx_layout['order_style'] : "01";
+$order_style = preg_replace( '/[^0-9a-zA-Z_-]/', '', basename( (string) $order_style ) );
+if ( $order_style === '' ) { $order_style = '01'; }
 $order_template_override = isset($wcmamtx_layout['order_template_override']) ? $wcmamtx_layout['order_template_override'] : "01";
 
 $download_style = isset($wcmamtx_layout['download_style']) ? $wcmamtx_layout['download_style'] : "01";
+$download_style = preg_replace( '/[^0-9a-zA-Z_-]/', '', basename( (string) $download_style ) );
+if ( $download_style === '' ) { $download_style = '01'; }
 
 $download_template_override = isset($wcmamtx_layout['download_template_override']) ? $wcmamtx_layout['download_template_override'] : "01";
 
 $dashlink_layout_override = isset($wcmamtx_layout['dashlink_layout_override']) ? $wcmamtx_layout['dashlink_layout_override'] : "01";
 
 $view_order_style = isset($wcmamtx_layout['view_order_style']) ? $wcmamtx_layout['view_order_style'] : "01";
+$view_order_style = preg_replace( '/[^0-9a-zA-Z_-]/', '', basename( (string) $view_order_style ) );
+if ( $view_order_style === '' ) { $view_order_style = '01'; }
 
 $view_order_template_override = isset($wcmamtx_layout['view_order_template_override']) ? $wcmamtx_layout['view_order_template_override'] : "01";
 
 
 $thankyou_style = isset($wcmamtx_layout['thankyou_style']) ? $wcmamtx_layout['thankyou_style'] : "01";
+$thankyou_style = preg_replace( '/[^0-9a-zA-Z_-]/', '', basename( (string) $thankyou_style ) );
+if ( $thankyou_style === '' ) { $thankyou_style = '01'; }
 
 $thankyou_template_override = isset($wcmamtx_layout['thankyou_template_override']) ? $wcmamtx_layout['thankyou_template_override'] : "01";
 
@@ -47,6 +60,8 @@ $profilebox_override = isset($wcmamtx_layout['profilebox_override']) ? $wcmamtx_
 $profilebox_style = isset($wcmamtx_layout['profilebox_style']) ? $wcmamtx_layout['profilebox_style'] : "02";
 
 $orderpay_style = isset($wcmamtx_layout['orderpay_style']) ? $wcmamtx_layout['orderpay_style'] : "01";
+$orderpay_style = preg_replace( '/[^0-9a-zA-Z_-]/', '', basename( (string) $orderpay_style ) );
+if ( $orderpay_style === '' ) { $orderpay_style = '01'; }
 
 $orderpay_template_override = isset($wcmamtx_layout['orderpay_template_override']) ? $wcmamtx_layout['orderpay_template_override'] : "01";
 

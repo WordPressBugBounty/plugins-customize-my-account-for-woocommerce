@@ -10,9 +10,11 @@
 
 defined( 'ABSPATH' ) || exit;
 
-$wcmamtx_layout = (array) get_option( 'wcmamtx_layout' );
+$wcmamtx_layout = wcmamtx_get_layout();
 
 $order_style = isset($wcmamtx_layout['order_style']) ? $wcmamtx_layout['order_style'] : "01";
+$order_style = preg_replace( '/[^0-9a-zA-Z_-]/', '', basename( (string) $order_style ) );
+if ( $order_style === '' ) { $order_style = '01'; }
 
 
 

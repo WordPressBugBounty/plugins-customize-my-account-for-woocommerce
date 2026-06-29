@@ -19,9 +19,11 @@
 
 defined( 'ABSPATH' ) || exit;
 
-$wcmamtx_layout = (array) get_option( 'wcmamtx_layout' );
+$wcmamtx_layout = wcmamtx_get_layout();
 
 $thankyou_style = isset($wcmamtx_layout['thankyou_style']) ? $wcmamtx_layout['thankyou_style'] : "01";
+$thankyou_style = preg_replace( '/[^0-9a-zA-Z_-]/', '', basename( (string) $thankyou_style ) );
+if ( $thankyou_style === '' ) { $thankyou_style = '01'; }
 
 
 

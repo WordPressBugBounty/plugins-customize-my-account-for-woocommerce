@@ -35,7 +35,7 @@ add_action( 'wp_ajax_wcmamtx_vo_customizer_save', function() {
     // Only allow keys relevant to view-order
     $allowed = [ 'view_order_template_override', 'view_order_style' ];
     if ( ! in_array( $key, $allowed, true ) ) wp_send_json_error( 'Key not allowed' );
-    $layout         = (array) get_option( 'wcmamtx_layout' );
+    $layout         = wcmamtx_get_layout();
     $layout[ $key ] = $value;
     update_option( 'wcmamtx_layout', $layout );
     wp_cache_delete( 'wcmamtx_layout', 'options' );
@@ -48,7 +48,7 @@ function wcmamtx_vo_customizer_render_page() {
     ob_end_clean();
     ob_start();
 
-    $layout      = (array) get_option( 'wcmamtx_layout' );
+    $layout      = wcmamtx_get_layout();
     $g           = fn( $k, $d ) => isset( $layout[ $k ] ) ? $layout[ $k ] : $d;
 
     $nonce       = wp_create_nonce( 'wcmamtx_vo_customizer_nonce' );

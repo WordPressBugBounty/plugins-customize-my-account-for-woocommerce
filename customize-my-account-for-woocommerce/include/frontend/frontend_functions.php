@@ -104,7 +104,7 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
             return;
         }
 
-        $wcmamtx_layout = (array) get_option('wcmamtx_layout');
+        $wcmamtx_layout = wcmamtx_get_layout();
 
 
         $spending_layout_override  = isset($wcmamtx_layout['spending_layout_override'])  ? $wcmamtx_layout['spending_layout_override']  : '02';
@@ -161,7 +161,7 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
             update_option('wcmamtx_flush_rewrite_cache_required',"no");
         }
 
-        $wcmamtx_layout = (array) get_option('wcmamtx_layout');
+        $wcmamtx_layout = wcmamtx_get_layout();
 
         $nav_header_widget_text = isset($wcmamtx_layout['nav_header_widget_text']) ? $wcmamtx_layout['nav_header_widget_text'] : esc_html__('My Account','customize-my-account-for-woocommerce');
 
@@ -264,7 +264,7 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
 
     $avatar_html       = wcmamtx_get_avatar_default($profileuser,$avatar_size,$atts,$nav_widget);
 
-    $wcmamtx_layout        = (array) get_option('wcmamtx_layout');
+    $wcmamtx_layout        = wcmamtx_get_layout();
     $nav_header_widget_text = isset($wcmamtx_layout['nav_header_widget_text'])
     ? esc_html($wcmamtx_layout['nav_header_widget_text'])
     : esc_html__('My Account', 'customize-my-account-for-woocommerce');
@@ -358,7 +358,7 @@ public function wcmamtx_google_callback() {
 
             $args = array(
                 'id'    => 'wcmamtx_customize_myaccount', // Unique ID for your link
-                'title' =>  esc_html__('My account live customizer','customize-my-account-for-woocommerce'), // The text that will appear in the admin bar
+                'title' =>  esc_html__('Live My Account Customizer','customize-my-account-for-woocommerce'), // The text that will appear in the admin bar
                 'href'  => ''.admin_url().'admin.php?page=wcmamtx_frontend_customizer', // The URL the link will point to
                 'meta'  => array(
                     'class'  => 'wcmamtx_customize_myaccount-class', // Custom CSS class
@@ -390,7 +390,7 @@ public function wcmamtx_google_callback() {
 
     public function wcmamtx_add_myaccount_links() { 
 
-        $wcmamtx_layout = (array) get_option( 'wcmamtx_layout' );
+        $wcmamtx_layout = wcmamtx_get_layout();
 
         if ( ! is_user_logged_in() ) {
             return;
@@ -644,7 +644,7 @@ public function wcmamtx_google_callback() {
 
                 global $wp_query;
 
-                if (!isset($advanced_settings) || (sizeof($advanced_settings) == 1)) {
+                if (!isset($advanced_settings) || (count($advanced_settings) == 1)) {
                     $tabs = wc_get_account_menu_items();
                 } else {
                     $tabs = $advanced_settings;
@@ -782,7 +782,7 @@ public function wcmamtx_google_callback() {
             return;
         }
 
-        if (!isset($wcmamtx_tabs) || (sizeof($wcmamtx_tabs) == 1)) {
+        if (!isset($wcmamtx_tabs) || (count($wcmamtx_tabs) == 1)) {
             return;
         } 
 
@@ -839,7 +839,7 @@ public function wcmamtx_google_callback() {
 
 
 
-        $wcmamtx_layout = (array) get_option( 'wcmamtx_layout' );
+        $wcmamtx_layout = wcmamtx_get_layout();
 
        
 
@@ -978,11 +978,15 @@ public function wcmamtx_google_callback() {
                 break;
 
                 case "local":
-                $default_pic = ''.wcmamtx_PLUGIN_URL.'assets/images/default_avatar.jpg';
+                $custom_def_id = isset($avatar_settings['custom_default_avatar']) ? (int)$avatar_settings['custom_default_avatar'] : 0;
+                $custom_default_url = $custom_def_id > 0 ? wp_get_attachment_url($custom_def_id) : '';
+                $default_pic = !empty($custom_default_url) ? $custom_default_url : wcmamtx_PLUGIN_URL.'assets/images/default_avatar.jpg';
                 break;
 
                 default:
-                $default_pic = ''.wcmamtx_PLUGIN_URL.'assets/images/default_avatar.jpg';
+                $custom_def_id = isset($avatar_settings['custom_default_avatar']) ? (int)$avatar_settings['custom_default_avatar'] : 0;
+                $custom_default_url = $custom_def_id > 0 ? wp_get_attachment_url($custom_def_id) : '';
+                $default_pic = !empty($custom_default_url) ? $custom_default_url : wcmamtx_PLUGIN_URL.'assets/images/default_avatar.jpg';
                 break;
             }
 
@@ -1092,7 +1096,7 @@ public function wcmamtx_google_callback() {
         	return $items;
         }
 
-        if (!isset($wcmamtx_tabs) || (sizeof($wcmamtx_tabs) == 1)) {
+        if (!isset($wcmamtx_tabs) || (count($wcmamtx_tabs) == 1)) {
             return $items;
         } else {
         	$new_ordered_array = $this->wcmamtx_reoder_array($wcmamtx_tabs,$items);
@@ -1213,7 +1217,7 @@ public function wcmamtx_google_callback() {
             return;
         }
 
-        if (!isset($wcmamtx_tabs) || (sizeof($wcmamtx_tabs) == 1)) {
+        if (!isset($wcmamtx_tabs) || (count($wcmamtx_tabs) == 1)) {
             return;
         } else {
             
@@ -1365,7 +1369,7 @@ public function wcmamtx_google_callback() {
             return $url;
         }
 
-        if (!isset($wcmamtx_tabs) || (sizeof($wcmamtx_tabs) == 1)) {
+        if (!isset($wcmamtx_tabs) || (count($wcmamtx_tabs) == 1)) {
             return $url;
         }
 
@@ -1450,7 +1454,13 @@ public function wcmamtx_google_callback() {
         ob_start();
         $login_url      = wc_get_page_permalink( 'myaccount' );
         $plugin_url     = wcmamtx_PLUGIN_URL;
-        $wcmamtx_layout = (array) get_option( 'wcmamtx_layout' );
+        $wcmamtx_layout = wcmamtx_get_layout();
+
+        // Resolve guest avatar: use custom default avatar if admin uploaded one
+        $_av_settings       = (array) get_option( 'wcmamtx_avatar_settings' );
+        $_custom_def_id     = isset( $_av_settings['custom_default_avatar'] ) ? (int) $_av_settings['custom_default_avatar'] : 0;
+        $_custom_def_url    = $_custom_def_id > 0 ? wp_get_attachment_url( $_custom_def_id ) : '';
+        $guest_avatar_src   = $_custom_def_url ?: ( $plugin_url . 'assets/images/default_avatar.jpg' );
         $default_style  = isset( $wcmamtx_layout['style'] ) ? $wcmamtx_layout['style'] : '01';
         $guest_cta_text = ! empty( $wcmamtx_layout['guest_cta_text'] ) ? $wcmamtx_layout['guest_cta_text'] : __( 'Login to View and Manage Your Orders', 'customize-my-account-for-woocommerce' );
 
@@ -1516,7 +1526,7 @@ public function wcmamtx_google_callback() {
             <nav class="wcmamtx-guest-sidebar woocommerce-MyAccount-navigation wsmt_extra_navclass">
                 <div class="wcmamtx-guest-avatar-wrap">
                     <div class="wcmamtx-guest-avatar">
-                        <img src="<?php echo esc_url( $plugin_url . 'assets/images/default_avatar.jpg' ); ?>"
+                        <img src="<?php echo esc_url( $guest_avatar_src ); ?>"
                              alt="<?php esc_attr_e( 'Guest', 'customize-my-account-for-woocommerce' ); ?>"
                              class="wcmamtx-guest-avatar-img" />
                     </div>

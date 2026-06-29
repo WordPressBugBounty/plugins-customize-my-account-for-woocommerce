@@ -2,6 +2,16 @@
 
 include('wcmamtx_countof_functions.php');
 
+if ( ! function_exists( 'wcmamtx_get_layout' ) ) {
+    function wcmamtx_get_layout() {
+        static $cache = null;
+        if ( $cache === null ) {
+            $cache = (array) get_option( 'wcmamtx_layout' );
+        }
+        return $cache;
+    }
+}
+
 // Social login functions starts
 
 /**
@@ -200,7 +210,7 @@ if (!function_exists('wcmamtx_get_account_menu_items')) {
         }
     }
 
-    if (!isset($wcmamtx_tabs) || (sizeof($wcmamtx_tabs) == 1)) {
+    if (!isset($wcmamtx_tabs) || (count($wcmamtx_tabs) == 1)) {
 
         $wcmamtx_tabs = $items;
 
@@ -351,7 +361,7 @@ if (!function_exists('wcmamtx_get_nav_widget_array_show_only_loggedin')) {
 
     function wcmamtx_get_nav_widget_array_show_only_loggedin() {
 
-        $wcmamtx_layout = (array) get_option( 'wcmamtx_layout' );
+        $wcmamtx_layout = wcmamtx_get_layout();
 
         if (array_key_exists(0, $wcmamtx_layout)) {
 
@@ -360,8 +370,6 @@ if (!function_exists('wcmamtx_get_nav_widget_array_show_only_loggedin')) {
             return in_array((string) wp_get_theme(), $supported_themes, true)
             ? 'no'
             : 'yes';
-
-            return "no";
 
 
         }
@@ -392,21 +400,7 @@ if (!function_exists('wcmamtx_get_user_ip')) {
 
 
 	function wcmamtx_get_user_ip() {
-    // Check for shared internet/ISP IP
-		if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
-			$ip = $_SERVER['HTTP_CLIENT_IP'];
-		}
-    // Check for IPs passing through proxies
-		elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-        // HTTP_X_FORWARDED_FOR can be a comma-separated list; the first one is the client
-			$ip_list = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
-			$ip = trim($ip_list[0]);
-		}
-    // Default to remote address
-		else {
-			$ip = $_SERVER['REMOTE_ADDR'];
-		}
-		return $ip;
+		return isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '';
 	}
 
 }
@@ -593,7 +587,7 @@ if (!function_exists('wcmamtx_get_google_login_url')) {
     function wcmamtx_get_google_login_url() {
 
 
-        $wcmamtx_layout = (array) get_option( 'wcmamtx_layout' );
+        $wcmamtx_layout = wcmamtx_get_layout();
 
         $client_id = isset( $wcmamtx_layout['google_client_id'] ) ? $wcmamtx_layout['google_client_id'] : '';
 
@@ -621,7 +615,7 @@ if (!function_exists('wcmamtx_get_google_token')) {
 
     function wcmamtx_get_google_token($code) {
 
-        $wcmamtx_layout = (array) get_option( 'wcmamtx_layout' );
+        $wcmamtx_layout = wcmamtx_get_layout();
 
         $client_id = isset( $wcmamtx_layout['google_client_id'] ) ? $wcmamtx_layout['google_client_id'] : '';
         $client_secret = isset( $wcmamtx_layout['google_client_secret'] ) ? $wcmamtx_layout['google_client_secret'] : '';
@@ -772,19 +766,8 @@ if (!function_exists('wcmamtx_get_avatar_default')) {
         
 
         if (($modal_popup == null) && ($nav_widget == null)) {
-            $min_height = (isset($avatar_settings['min_height']) ) ? $avatar_settings['min_height'] : '150';
-            $min_width = (isset($avatar_settings['min_width']) ) ? $avatar_settings['min_width'] : '150';
-
-            $min_height = (isset($atts['min_height']) ) ? esc_attr((int) $atts['min_height'])  : $min_height;
-            $min_width = (isset($atts['min_width']) ) ? esc_attr((int) $atts['min_width'])  : $min_width;
-
-            $max_height = (isset($avatar_settings['max_height']) ) ? $avatar_settings['max_height'] : '200';
-            $max_width = (isset($avatar_settings['max_width']) ) ? $avatar_settings['max_width'] : '200';
-
-            $max_height = (isset($atts['max_height']) ) ? esc_attr((int) $atts['max_height'])  : $max_height;
-            $max_width = (isset($atts['max_width']) ) ? esc_attr((int) $atts['max_width'])  : $max_width;
-
-            $args['extra_attr'] = 'style="min-height: '.$min_height.'px; min-width: '.$min_width.'px; max-height: '.$max_height.'px; max-width: '.$max_width.'px;"';
+            $size = (int) $avatar_size;
+            $args['extra_attr'] = 'style="width:'.$size.'px;height:'.$size.'px;border-radius:50%;object-fit:cover;"';
         }
 
         $modal_popup_class =  "";
@@ -804,16 +787,22 @@ if (!function_exists('wcmamtx_get_avatar_default')) {
 
             $default_avatar = get_avatar($profileuser->ID ,$avatar_size,$default_value, $alt, $args);
         } else if ($default_source == "local")  {
-            $args['alt'] = ''.wcmamtx_PLUGIN_URL.'assets/images/default_avatar.jpg';
-            $url = ''.wcmamtx_PLUGIN_URL.'assets/images/default_avatar.jpg';
+            $custom_def_id = isset($avatar_settings['custom_default_avatar']) ? (int)$avatar_settings['custom_default_avatar'] : 0;
+            $url = $custom_def_id > 0 ? (string) wp_get_attachment_url( $custom_def_id ) : '';
+            if ( empty( $url ) ) {
+                $url = ''.wcmamtx_PLUGIN_URL.'assets/images/default_avatar.jpg';
+            }
+            $args['alt'] = $url;
             $alt = $args['alt'];
             $default_avatar = sprintf(
-                "<img src='%s' srcset='%s'  height='%d' width='%d' %d class='avatar $modal_popup_class avatar-$avatar_size photo' />",
+                "<img src='%s' srcset='%s' height='%d' width='%d' %s class='avatar %s avatar-%d photo' />",
                 esc_url( $url ),
                 esc_url( $url ) . ' 2x',
                 (int) $avatar_size,
                 (int) $avatar_size,
-                $args['extra_attr']
+                $args['extra_attr'],
+                esc_attr( $modal_popup_class ),
+                (int) $avatar_size
             );
 
         }
@@ -985,7 +974,8 @@ if (!function_exists('wcmamtx_parse_smart_tag_function')) {
                     case 'billing_company':
                     case 'shipping_company':
                         if ( is_user_logged_in() ) {
-                            $meta_prefix  = ( 'billing_address' === $other_tag ) ? 'billing_' : 'shipping_';
+                            $meta_prefix  = ( 'billing_company' === $other_tag ) ? 'billing_' : 'shipping_';
+                            $user_id      = get_current_user_id();
                             $company_name = get_user_meta( $user_id, $meta_prefix . 'company', true );
 
                             if ( empty( $company_name ) ) {
@@ -1256,7 +1246,7 @@ if (!function_exists('load_wcmamtx_optional_class')) {
 
 
 
-          if ((sizeof($advancedsettings) != 1)) {
+          if ((count($advancedsettings) != 1)) {
 
              foreach ($tabs as $ikey=>$ivalue) {
 
@@ -1289,7 +1279,7 @@ if (!function_exists('load_wcmamtx_optional_class')) {
 
 
 
-        if (!isset($advancedsettings) || (sizeof($advancedsettings) == 1)) {
+        if (!isset($advancedsettings) || (count($advancedsettings) == 1)) {
          $default_class = "wcmamtx_one_time_save";
 
         } else {
@@ -1301,7 +1291,7 @@ if (!function_exists('load_wcmamtx_optional_class')) {
 
     if ($current_tab == "wcmamtx_layout") {
 
-        $wcmamtx_layout = (array) get_option( 'wcmamtx_layout' );
+        $wcmamtx_layout = wcmamtx_get_layout();
 
         if (array_key_exists(0, $wcmamtx_layout)) {
 
@@ -1696,7 +1686,7 @@ if ( ! function_exists( 'wcmamtx_get_my_account_menu_plain_li' ) ) {
             $wcmamtx_tabs = $items;
         }
 
-        if (!isset($wcmamtx_tabs) || (sizeof($wcmamtx_tabs) == 1)) {
+        if (!isset($wcmamtx_tabs) || (count($wcmamtx_tabs) == 1)) {
             $wcmamtx_tabs = $items;
         }
 
@@ -2156,7 +2146,7 @@ if (!function_exists('wcmamtx_get_account_menu_group_html')) {
 
 			$matches   = wcmamtx_get_child_li($all_keys, $key); 
         	
-			if (sizeof($matches) > 0) { 
+			if (count($matches) > 0) { 
 				foreach ($matches as $mkey=>$mvalue) {
 
 					$mkey  = isset($mvalue['endpoint_key']) ? $mvalue['endpoint_key'] : $mkey;
@@ -2241,7 +2231,7 @@ if (!function_exists('wcmamtx_get_account_menu_group_html')) {
             
 			
 
-			if (sizeof($matches) > 0) { ?>
+			if (count($matches) > 0) { ?>
 				<ul class="wcmamtx_sub_level" style="<?php if ($openclose == "open") { echo 'display:block;'; } else { echo 'display:none;'; } ?>">
 					<?php
 					foreach ($matches as $mkey=>$mvalue) {
@@ -2370,7 +2360,7 @@ if ( ! function_exists( 'wcmamtx_get_my_account_menu' ) ) {
 			$wcmamtx_tabs = $items;
 		}
 
-		if (!isset($wcmamtx_tabs) || (sizeof($wcmamtx_tabs) == 1)) {
+		if (!isset($wcmamtx_tabs) || (count($wcmamtx_tabs) == 1)) {
 			$wcmamtx_tabs = $items;
 		}
 
@@ -2525,7 +2515,7 @@ if ( ! function_exists( 'wcmamtx_get_my_account_menu' ) ) {
 
 
 
-					if (sizeof($matches) > 0) { 
+					if (count($matches) > 0) { 
 						$out .='<ul class="wcmamtx_sub_level" style="display:none;">';
 
 						foreach ($matches as $mkey=>$mvalue) {

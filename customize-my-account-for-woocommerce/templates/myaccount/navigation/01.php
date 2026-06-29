@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly.
 }
 
-$wcmamtx_layout = (array) get_option( 'wcmamtx_layout' );
+$wcmamtx_layout = wcmamtx_get_layout();
 
 $sidebar_style = "01";
 
@@ -63,11 +63,11 @@ if ($sidebar_style == "02") {
 
         $editor_content_avatar = wcmamtx_parse_smart_tag_function($editor_content_avatar);
 
-        echo $editor_content_avatar;
+        echo '<div id="wcmamtx-avatar-content-output">' . wp_kses_post( $editor_content_avatar ) . '</div>';
 
     }
 
-    $wcmamtx_layout = (array) get_option( 'wcmamtx_layout' );
+    $wcmamtx_layout = wcmamtx_get_layout();
 
     $default_style = isset($wcmamtx_layout['style']) ? $wcmamtx_layout['style'] : "01";
 

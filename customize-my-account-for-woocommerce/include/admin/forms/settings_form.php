@@ -59,7 +59,7 @@ $frontend_menu_items = get_option('wcmamtx_frontend_items');
 
 
 
-if ((sizeof($advancedsettings) != 1)) {
+if ((count($advancedsettings) != 1)) {
 
   foreach ($tabs as $ikey=>$ivalue) {
 
@@ -104,7 +104,7 @@ if ((sizeof($advancedsettings) != 1)) {
                     $custom_endpoint_index = 0;
 
 
-                    if ((sizeof($advancedsettings) != 1)) {
+                    if ((count($advancedsettings) != 1)) {
 
                         foreach($advancedsettings as $gtkey=>$gtvalue) {
 
@@ -149,7 +149,7 @@ if ((sizeof($advancedsettings) != 1)) {
                     }
      
 
-      if (!isset($advancedsettings) || (sizeof($advancedsettings) == 1)) {
+      if (!isset($advancedsettings) || (count($advancedsettings) == 1)) {
         ?>
         <ol class="accordion wcmamtx-accordion" style="display:none;">
             <?php

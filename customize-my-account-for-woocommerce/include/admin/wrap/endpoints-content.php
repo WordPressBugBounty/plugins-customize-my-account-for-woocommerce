@@ -180,9 +180,11 @@ $default_color_font = '#334155';
 
 <?php 
 
-$wcmamtx_layout = (array) get_option( 'wcmamtx_layout' );
+$wcmamtx_layout = wcmamtx_get_layout();
 
 $dash_style = isset($wcmamtx_layout['dash_style']) ? $wcmamtx_layout['dash_style'] : "01";
+$dash_style = preg_replace( '/[^0-9a-zA-Z_-]/', '', basename( (string) $dash_style ) );
+if ( $dash_style === '' ) { $dash_style = '01'; }
 
 if ($dash_style == 02) {
 
