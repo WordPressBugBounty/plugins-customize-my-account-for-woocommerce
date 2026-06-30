@@ -10,6 +10,7 @@
         nav_style:                          '02',
         spending_layout_override:           '01',
         dashlink_layout_override:           '01',
+        avatar_show:                        'yes',
         order_template_override:            '01',
         navigationwidget_layout_override:   '01',
         widget_menu_location:               ''
@@ -241,7 +242,7 @@
             switch (key) {
                 case 'spending': cfg.spending_layout_override = on ? '01' : '02'; break;
                 case 'dashlinks': cfg.dashlink_layout_override = on ? '01' : '02'; break;
-                case 'avatar': break;
+                case 'avatar': cfg.avatar_show = on ? 'yes' : 'no'; break;
                 case 'orders': cfg.order_template_override = on ? '01' : '02'; break;
                 case 'nav_widget':
                     cfg.navigationwidget_layout_override = on ? '01' : '02';

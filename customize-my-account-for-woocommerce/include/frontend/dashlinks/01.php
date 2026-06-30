@@ -124,7 +124,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
                ?>
 
-               <a href="<?php echo wcmamtx_get_account_endpoint_url( $key ); ?>" class="wcmtx_def1-card <?php echo esc_attr( $key ); ?>"  style="color:<?php echo $default_color_font; ?>;">
+               <?php if ( isset( $guest_modal_popup ) && $guest_modal_popup === 'yes' ) : ?>
+               <a href="#" class="wcmtx_def1-card <?php echo esc_attr( $key ); ?> wcmamtx-guest-popup-trigger" data-redirect-url="<?php echo esc_url( wcmamtx_get_account_endpoint_url( $key ) ); ?>" style="color:<?php echo $default_color_font; ?>;">
+               <?php else : ?>
+               <a href="<?php echo wcmamtx_get_account_endpoint_url( $key ); ?>" class="wcmtx_def1-card <?php echo esc_attr( $key ); ?>" style="color:<?php echo $default_color_font; ?>;">
+               <?php endif; ?>
                 <?php 
 
                     $style_dsh = 'style="color:'.$default_desc_color.' !important;"';

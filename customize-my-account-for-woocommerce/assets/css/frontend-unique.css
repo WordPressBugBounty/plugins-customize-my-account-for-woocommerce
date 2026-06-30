@@ -57,40 +57,144 @@ li.woocommerce-MyAccount-navigation-link {
 
 /* custom login and register css */
 
-.wcmamtx_custom_login_register .wc-auth-container {
-    min-height: 100px;
+/* ── Main page: two-column split layout ── */
+
+.wcmamtx_custom_login_register.wc-auth-container {
     display: flex;
-    justify-content: center;
+    align-items: stretch;
+    background: #f4f6fb;
+    padding: 0;
+}
+
+.wcmamtx_custom_login_register .wc-auth-split {
+    display: flex;
+    width: 100%;
+}
+
+/* LEFT panel */
+.wcmamtx_custom_login_register .wc-auth-left {
+    flex: 0 0 42%;
+    background: linear-gradient(145deg, #667eea 0%, #764ba2 100%);
+    display: flex;
     align-items: center;
-    background:
-    linear-gradient(135deg,#667eea,#764ba2);
-    padding: 30px;
+    justify-content: center;
+    padding: 32px 48px;
+    position: relative;
+    overflow: hidden;
+}
+
+.wcmamtx_custom_login_register .wc-auth-left-inner {
+    position: relative;
+    z-index: 2;
+    color: #fff;
+    max-width: 360px;
+}
+
+/* animated shimmer headline */
+.wcmamtx_custom_login_register .wc-auth-animated-headline {
+    font-size: 38px;
+    font-weight: 800;
+    line-height: 1.18;
+    margin: 0 0 18px;
+    background: linear-gradient(
+        90deg,
+        #fff 0%,
+        #e0d7ff 20%,
+        #fff 40%,
+        #c4b5fd 60%,
+        #fff 80%,
+        #e0d7ff 100%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: wcmamtx-shimmer 14s linear infinite;
+}
+
+@keyframes wcmamtx-shimmer {
+    0%   { background-position: 200% center; }
+    100% { background-position: -200% center; }
+}
+
+.wcmamtx_custom_login_register .wc-auth-left-subtitle {
+    font-size: 15px;
+    line-height: 1.7;
+    color: rgba(255,255,255,.78);
+    margin: 0 0 36px;
+}
+
+/* frosted-glass badge */
+.wcmamtx_custom_login_register .wc-auth-cta-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,.15);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,.25);
+    border-radius: 50px;
+    padding: 10px 20px;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+}
+
+/* decorative blobs */
+.wcmamtx_custom_login_register .wc-auth-blob {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+}
+.wcmamtx_custom_login_register .wc-auth-blob-1 {
+    width: 300px;
+    height: 300px;
+    bottom: -80px;
+    right: -80px;
+    background: rgba(255,255,255,.06);
+}
+.wcmamtx_custom_login_register .wc-auth-blob-2 {
+    width: 170px;
+    height: 170px;
+    top: -45px;
+    left: -45px;
+    background: rgba(255,255,255,.06);
+}
+.wcmamtx_custom_login_register .wc-auth-blob-3 {
+    width: 70px;
+    height: 70px;
+    top: 50%;
+    right: 28px;
+    background: rgba(255,255,255,.09);
+    animation: wcmamtx-float 4s ease-in-out infinite;
+}
+
+@keyframes wcmamtx-float {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-14px); }
+}
+
+/* RIGHT panel */
+.wcmamtx_custom_login_register .wc-auth-right {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 40px;
+    background: #f4f6fb;
 }
 
 .wcmamtx_custom_login_register .wc-auth-card {
-    margin-left: 30%;
     width: 100%;
-    max-width: 40%;
+    max-width: 440px;
     background: #fff;
     border-radius: 20px;
     padding: 40px;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, .15);
+    box-shadow: 0 8px 32px rgba(102,126,234,.1);
 }
 
-.wcmamtx_custom_login_register .wc-auth-header {
-    text-align: center;
-    margin-bottom: 30px;
-}
 
-.wcmamtx_custom_login_register .wc-auth-header h2 {
-    margin-bottom: 8px;
-    font-size: 32px;
-}
-
-.wcmamtx_custom_login_register .wc-auth-header p {
-    color: #777;
-}
-
+/* ── Tabs ── */
 .wcmamtx_custom_login_register .wc-auth-tabs {
     display: flex;
     border-radius: 50px;
@@ -107,6 +211,9 @@ li.woocommerce-MyAccount-navigation-link {
     font-weight: 600;
     font-size: 12px;
     margin-right: 10px;
+    background: transparent;
+    color: #555;
+    transition: background .2s, color .2s;
 }
 
 .wcmamtx_custom_login_register .wc-tab-btn.active {
@@ -122,6 +229,7 @@ li.woocommerce-MyAccount-navigation-link {
     display: block;
 }
 
+/* ── Form groups (floating label style) ── */
 .wcmamtx_custom_login_register .form-group {
     position: relative;
     margin-bottom: 22px;
@@ -168,11 +276,7 @@ li.woocommerce-MyAccount-navigation-link {
     color: white;
     font-size: 16px;
     font-weight: 600;
-    background: linear-gradient(
-        135deg,
-        #6c63ff,
-        #8a6dff
-    );
+    background: linear-gradient(135deg, #6c63ff, #8a6dff);
 }
 
 .wcmamtx_custom_login_register .auth-btn:hover {
@@ -201,6 +305,24 @@ li.woocommerce-MyAccount-navigation-link {
     right: 15px;
     top: 18px;
     cursor: pointer;
+}
+
+/* ── Responsive: stack vertically on smaller screens ── */
+@media (max-width: 768px) {
+    .wcmamtx_custom_login_register .wc-auth-split {
+        flex-direction: column;
+        min-height: unset;
+    }
+    .wcmamtx_custom_login_register .wc-auth-left {
+        flex: none;
+        padding: 24px 28px;
+    }
+    .wcmamtx_custom_login_register .wc-auth-right {
+        padding: 24px 20px;
+    }
+    .wcmamtx_custom_login_register .wc-auth-card {
+        padding: 24px 20px;
+    }
 }
 
 
@@ -295,6 +417,51 @@ div.wcmamtx_login_boxes .google-login-btn:active {
 }
 
 div.wcmamtx_login_boxes .google-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+div.wcmamtx_login_boxes .facebook-login-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+
+    width: 100%;
+    height: 58px;
+
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+
+    color: #111827;
+    font-size: 15px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition: all .25s ease;
+
+    box-shadow:
+        0 1px 3px rgba(0,0,0,.08);
+}
+
+div.wcmamtx_login_boxes .facebook-login-btn:hover {
+    background: #f9fafb;
+    border-color: #d1d5db;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,.08);
+}
+
+div.wcmamtx_login_boxes .facebook-login-btn:active {
+    transform: translateY(0);
+}
+
+div.wcmamtx_login_boxes .facebook-icon {
     display: flex;
     align-items: center;
     justify-content: center;

@@ -3,7 +3,7 @@
     Plugin Name: SysBasics Customize My Account for WooCommerce
     Plugin URI: https://sysbasics.com
     Description: Easily customize the WooCommerce My Account page. Mobile Friendly User avatar, redesign the WooCommerce dashboard, manage menus, and apply premium styles for a better user experience.
-    Version: 4.4.12
+    Version: 4.4.13
     Author: SysBasics
     Author URI: https://sysbasics.com
     Domain Path: /languages
@@ -122,6 +122,11 @@ if ( $nav_style === '' ) { $nav_style = '02'; }
 
     if ($nav_style == "04") {
         include dirname( __FILE__ ) . '/react-myaccount/react-myaccount.php';
+        include dirname( __FILE__ ) . '/include/wcmamtx-shipment-tracking/rma-address-fix.php';
+        include dirname( __FILE__ ) . '/include/wcmamtx-shipment-tracking/rma-endpoint-url-fix.php';
+        include dirname( __FILE__ ) . '/include/wcmamtx-shipment-tracking/rma-billing-address.php';
+        include dirname( __FILE__ ) . '/include/wcmamtx-shipment-tracking/rma-save-address.php';
+        include dirname( __FILE__ ) . '/include/wcmamtx-shipment-tracking/rma-icon-fix.php';
     }
 
 

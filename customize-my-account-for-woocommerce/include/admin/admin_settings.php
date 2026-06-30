@@ -223,8 +223,8 @@ class wcmamtx_add_settings_page_class {
 	  
       $post_type_array = array('elementor_library');
 	  // you can use WP_Query, query_posts() or get_posts() here - it doesn't matter
-	  $search_results  = new WP_Query( array( 
-		's'                   => sanitize_text_field($_GET['q']), // the search query
+	  $search_results  = new WP_Query( array(
+		's'                   => isset( $_GET['q'] ) ? sanitize_text_field( wp_unslash( $_GET['q'] ) ) : '',
 		'post_status'         => 'publish', // if you don't want drafts to be returned
 		'ignore_sticky_posts' => 1,
 		'post_type'           => $post_type_array
@@ -267,21 +267,15 @@ class wcmamtx_add_settings_page_class {
 
 
 	public function restore_my_account_tabs() {
-	    if ( current_user_can('manage_options') ) {
-
-	    	if ( !wp_verify_nonce($_POST['nonce'], 'wcmamtx_nonce') ){ 
-				die(); 
-			}
-	        delete_option( $this->wcmamtx_notices_settings_page );
-
-            update_option('wcmamtx_flush_rewrite_cache_required',"yes");
-
-            delete_option('wcmamtx_endpoint_allowed_to_add');
-            delete_option('wcmamtx_groups_allowed_to_add');
-            
-            
-        } 
-	   die();
+        check_ajax_referer( 'wcmamtx_nonce', 'nonce' );
+        if ( ! current_user_can( 'manage_options' ) ) {
+            wp_send_json_error( 'Unauthorized' );
+        }
+        delete_option( $this->wcmamtx_notices_settings_page );
+        update_option( 'wcmamtx_flush_rewrite_cache_required', 'yes' );
+        delete_option( 'wcmamtx_endpoint_allowed_to_add' );
+        delete_option( 'wcmamtx_groups_allowed_to_add' );
+        wp_send_json_success();
 	}
 
 

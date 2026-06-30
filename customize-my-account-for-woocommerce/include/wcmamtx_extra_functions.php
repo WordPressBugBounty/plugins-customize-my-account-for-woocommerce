@@ -2,6 +2,139 @@
 
 include('wcmamtx_countof_functions.php');
 
+if ( ! function_exists( 'wcmamtx_login_page_inline_css' ) ) {
+    function wcmamtx_login_page_inline_css() {
+        if ( ! is_page( wc_get_page_id( 'myaccount' ) ) ) return;
+        if ( ! function_exists( 'wcmamtx_get_layout' ) ) return;
+        $layout = wcmamtx_get_layout();
+        if ( empty( $layout['formlogin_layout_override'] ) || $layout['formlogin_layout_override'] !== '01' ) return;
+
+        $grad_start  = sanitize_hex_color( $layout['login_page_gradient_start'] ?? '' ) ?: '#667eea';
+        $grad_end    = sanitize_hex_color( $layout['login_page_gradient_end']   ?? '' ) ?: '#764ba2';
+        $bg_image    = ! empty( $layout['login_page_bg_image'] ) ? $layout['login_page_bg_image'] : '';
+        $bg_size_raw = ! empty( $layout['login_page_bg_size'] )  ? $layout['login_page_bg_size']  : 'cover';
+        $bg_size     = ( $bg_size_raw === 'cover' || empty( $bg_size_raw ) ) ? 'cover' : ( absint( $bg_size_raw ) . '%' );
+        $text_color  = sanitize_hex_color( $layout['login_page_text_color'] ?? '' ) ?: '';
+        $badge_bg    = sanitize_hex_color( $layout['login_page_badge_bg']    ?? '' ) ?: '';
+
+        $css = '';
+
+        if ( $bg_image ) {
+            $css .= '.wc-auth-left{background:url(' . esc_url( $bg_image ) . ') center/' . $bg_size . ' no-repeat ' . $grad_start . '!important;}';
+        } else {
+            $css .= '.wc-auth-left{background:linear-gradient(135deg,' . $grad_start . ' 0%,' . $grad_end . ' 100%)!important;}';
+        }
+
+        if ( $text_color ) {
+            $css .= '.wc-auth-animated-headline{background:none!important;-webkit-text-fill-color:' . $text_color . '!important;color:' . $text_color . '!important;animation:none!important;}';
+            $css .= '.wc-auth-left-subtitle{color:' . $text_color . '!important;}';
+            $css .= '.wc-auth-cta-badge{color:' . $text_color . '!important;}';
+        }
+
+        if ( $badge_bg ) {
+            $css .= '.wc-auth-cta-badge{background:' . $badge_bg . '!important;border-color:' . $badge_bg . '!important;}';
+        }
+
+        if ( $css ) {
+            echo '<style id="wcmamtx-lp-css">' . wp_strip_all_tags( $css ) . '</style>';
+        }
+    }
+    add_action( 'wp_head', 'wcmamtx_login_page_inline_css', 1 );
+}
+
+if ( ! function_exists( 'wcmamtx_ajax_login_handler' ) ) {
+    function wcmamtx_ajax_login_handler() {
+        if ( ! check_ajax_referer( 'woocommerce-login', 'woocommerce-login-nonce', false ) ) {
+            wp_send_json_error( [ 'message' => __( 'Security check failed.', 'woocommerce' ) ] );
+        }
+
+        $username = isset( $_POST['username'] ) ? sanitize_user( wp_unslash( trim( $_POST['username'] ) ) ) : '';
+        $password = isset( $_POST['password'] ) ? wp_unslash( $_POST['password'] ) : '';
+        $remember = ! empty( $_POST['rememberme'] );
+        $redirect = isset( $_POST['redirect'] ) ? wp_sanitize_redirect( wp_unslash( $_POST['redirect'] ) ) : wc_get_page_permalink( 'myaccount' );
+
+        if ( empty( $username ) ) {
+            wp_send_json_error( [ 'message' => __( 'Username or email is required.', 'woocommerce' ) ] );
+        }
+        if ( empty( $password ) ) {
+            wp_send_json_error( [ 'message' => __( 'Password is required.', 'woocommerce' ) ] );
+        }
+
+        if ( is_email( $username ) ) {
+            $user_by_email = get_user_by( 'email', $username );
+            if ( $user_by_email ) {
+                $username = $user_by_email->user_login;
+            }
+        }
+
+        $user = wp_signon( [
+            'user_login'    => $username,
+            'user_password' => $password,
+            'remember'      => $remember,
+        ], is_ssl() );
+
+        if ( is_wp_error( $user ) ) {
+            wp_send_json_error( [ 'message' => wp_strip_all_tags( $user->get_error_message() ) ] );
+        }
+
+        $redirect = apply_filters( 'woocommerce_login_redirect', $redirect, $user );
+        wp_send_json_success( [ 'redirect' => $redirect ] );
+    }
+    add_action( 'wp_ajax_nopriv_wcmamtx_ajax_login', 'wcmamtx_ajax_login_handler' );
+}
+
+if ( ! function_exists( 'wcmamtx_ajax_register_handler' ) ) {
+    function wcmamtx_ajax_register_handler() {
+        if ( ! check_ajax_referer( 'woocommerce-register', 'woocommerce-register-nonce', false ) ) {
+            wp_send_json_error( [ 'message' => __( 'Security check failed.', 'woocommerce' ) ] );
+        }
+
+        $username = isset( $_POST['username'] ) ? sanitize_user( wp_unslash( trim( $_POST['username'] ) ) ) : '';
+        $email    = isset( $_POST['email'] )    ? sanitize_email( wp_unslash( $_POST['email'] ) )          : '';
+        $password = isset( $_POST['password'] ) ? wp_unslash( $_POST['password'] )                         : '';
+
+        if ( empty( $email ) || ! is_email( $email ) ) {
+            wp_send_json_error( [ 'message' => __( 'Please provide a valid email address.', 'woocommerce' ) ] );
+        }
+
+        $user_id = wc_create_new_customer( $email, $username, $password );
+
+        if ( is_wp_error( $user_id ) ) {
+            wp_send_json_error( [ 'message' => wp_strip_all_tags( $user_id->get_error_message() ) ] );
+        }
+
+        wp_set_current_user( $user_id );
+        wp_set_auth_cookie( $user_id, true );
+
+        $redirect = apply_filters( 'woocommerce_registration_redirect', wc_get_page_permalink( 'myaccount' ) );
+        wp_send_json_success( [ 'redirect' => $redirect ] );
+    }
+    add_action( 'wp_ajax_nopriv_wcmamtx_ajax_register', 'wcmamtx_ajax_register_handler' );
+}
+
+if ( ! function_exists( 'wcmamtx_ajax_lost_password_handler' ) ) {
+    function wcmamtx_ajax_lost_password_handler() {
+        if ( ! check_ajax_referer( 'lost_password', 'woocommerce-lost-password-nonce', false ) ) {
+            wp_send_json_error( [ 'message' => __( 'Security check failed.', 'woocommerce' ) ] );
+        }
+
+        $user_login = isset( $_POST['user_login'] ) ? sanitize_text_field( wp_unslash( $_POST['user_login'] ) ) : '';
+
+        if ( empty( $user_login ) ) {
+            wp_send_json_error( [ 'message' => __( 'Please enter your username or email address.', 'woocommerce' ) ] );
+        }
+
+        $result = retrieve_password( $user_login );
+
+        if ( is_wp_error( $result ) ) {
+            wp_send_json_error( [ 'message' => wp_strip_all_tags( $result->get_error_message() ) ] );
+        }
+
+        wp_send_json_success( [ 'message' => __( 'Password reset email sent. Please check your inbox.', 'woocommerce' ) ] );
+    }
+    add_action( 'wp_ajax_nopriv_wcmamtx_ajax_lost_password', 'wcmamtx_ajax_lost_password_handler' );
+}
+
 if ( ! function_exists( 'wcmamtx_get_layout' ) ) {
     function wcmamtx_get_layout() {
         static $cache = null;
@@ -638,7 +771,7 @@ if (!function_exists('wcmamtx_get_google_token')) {
             true
         );
 
-        return $body['access_token'];
+        return isset( $body['access_token'] ) ? $body['access_token'] : '';
     }
 
 }
@@ -672,16 +805,21 @@ if (!function_exists('wcmamtx_login_or_create_user')) {
 
     function wcmamtx_login_or_create_user($social_user) {
 
-        $email = sanitize_email(
-            $social_user['email']
-        );
+        if ( empty( $social_user['email'] ) ) {
+            wp_safe_redirect( wc_get_page_permalink( 'myaccount' ) );
+            exit;
+        }
 
-        $user = get_user_by(
-            'email',
-            $email
-        );
+        $email = sanitize_email( $social_user['email'] );
 
-        if (!$user) {
+        if ( ! is_email( $email ) ) {
+            wp_safe_redirect( wc_get_page_permalink( 'myaccount' ) );
+            exit;
+        }
+
+        $user = get_user_by( 'email', $email );
+
+        if ( ! $user ) {
 
             $password = wp_generate_password();
 
@@ -695,28 +833,92 @@ if (!function_exists('wcmamtx_login_or_create_user')) {
                 $password
             );
 
-            $user = get_user_by(
-                'id',
-                $user_id
-            );
+            if ( is_wp_error( $user_id ) ) {
+                wp_safe_redirect( wc_get_page_permalink( 'myaccount' ) );
+                exit;
+            }
+
+            $user = get_user_by( 'id', $user_id );
         }
 
-        wp_set_current_user(
-            $user->ID
-        );
+        wp_set_current_user( $user->ID );
 
-        wp_set_auth_cookie(
-            $user->ID,
-            true
-        );
+        wp_set_auth_cookie( $user->ID, true );
 
-        wp_safe_redirect(
-            wc_get_page_permalink('myaccount')
-        );
+        wp_safe_redirect( wc_get_page_permalink( 'myaccount' ) );
 
         exit;
     }
 }
+
+if (!function_exists('wcmamtx_get_facebook_login_url')) {
+
+    function wcmamtx_get_facebook_login_url() {
+
+        $wcmamtx_layout = wcmamtx_get_layout();
+
+        $app_id = isset( $wcmamtx_layout['facebook_app_id'] ) ? $wcmamtx_layout['facebook_app_id'] : '';
+
+        $state = wcmamtx_generate_state();
+
+        $params = [
+            'client_id'     => $app_id,
+            'redirect_uri'  => home_url('/?wcmamtx-social=facebook'),
+            'state'         => $state,
+            'scope'         => 'email',
+        ];
+
+        return add_query_arg(
+            $params,
+            'https://www.facebook.com/v19.0/dialog/oauth'
+        );
+    }
+
+}
+
+
+if (!function_exists('wcmamtx_get_facebook_token')) {
+
+    function wcmamtx_get_facebook_token($code) {
+
+        $wcmamtx_layout = wcmamtx_get_layout();
+
+        $app_id     = isset( $wcmamtx_layout['facebook_app_id'] )     ? $wcmamtx_layout['facebook_app_id']     : '';
+        $app_secret = isset( $wcmamtx_layout['facebook_app_secret'] ) ? $wcmamtx_layout['facebook_app_secret'] : '';
+
+        $url = add_query_arg( [
+            'client_id'     => $app_id,
+            'redirect_uri'  => home_url('/?wcmamtx-social=facebook'),
+            'client_secret' => $app_secret,
+            'code'          => $code,
+        ], 'https://graph.facebook.com/v19.0/oauth/access_token' );
+
+        $response = wp_remote_get( $url );
+
+        $body = json_decode( wp_remote_retrieve_body( $response ), true );
+
+        return isset( $body['access_token'] ) ? $body['access_token'] : '';
+    }
+
+}
+
+
+if (!function_exists('wcmamtx_get_facebook_user')) {
+
+    function wcmamtx_get_facebook_user($token) {
+
+        $url = add_query_arg( [
+            'fields'       => 'id,name,email',
+            'access_token' => $token,
+        ], 'https://graph.facebook.com/me' );
+
+        $response = wp_remote_get( $url );
+
+        return json_decode( wp_remote_retrieve_body( $response ), true );
+    }
+
+}
+
 
 // Social login functions ends
 

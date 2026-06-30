@@ -106,6 +106,30 @@ $frontend_url = get_permalink(get_option('woocommerce_myaccount_page_id'));
                 </div>
                 <?php } ?>
 
+                <?php
+                $facebook_app_id     = isset( $wcmamtx_layout['facebook_app_id'] )     ? $wcmamtx_layout['facebook_app_id']     : '';
+                $facebook_app_secret = isset( $wcmamtx_layout['facebook_app_secret'] ) ? $wcmamtx_layout['facebook_app_secret'] : '';
+
+                if ( $facebook_app_id !== '' && $facebook_app_secret !== '' ) {
+                ?>
+                <div class="social-login-wrapper">
+
+                    <a href="<?php echo esc_url( wcmamtx_get_facebook_login_url() ); ?>"
+                     class="facebook-login-btn">
+
+                        <span class="facebook-icon">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="#1877F2">
+                                <path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.97h-1.513c-1.491 0-1.956.93-1.956 1.883v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/>
+                            </svg>
+                        </span>
+
+                        <span><?php esc_html_e( 'Login with Facebook', 'customize-my-account-for-woocommerce' ); ?></span>
+
+                    </a>
+
+                </div>
+                <?php } ?>
+
 
 
             <?php do_action( 'woocommerce_login_form_end' ); ?>

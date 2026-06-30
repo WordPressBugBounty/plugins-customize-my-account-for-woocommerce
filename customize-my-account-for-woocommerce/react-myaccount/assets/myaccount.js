@@ -468,15 +468,13 @@ role: 'navigation',
 'aria-label': 'My account navigation'
 },
 React.createElement('div', { className: 'rma-user-card' },
-avatarUrl
-? React.createElement('img', { src: avatarUrl, alt: userName, className: 'rma-avatar', loading: 'lazy' })
-: React.createElement('div', { className: 'rma-avatar rma-avatar-initials' },
-(userName.charAt(0) || 'U').toUpperCase()
-),
-React.createElement('div', { className: 'rma-user-info' },
-React.createElement('div', { className: 'rma-user-name' }, userName),
-userEmail && React.createElement('div', { className: 'rma-user-email' }, userEmail)
-)
+data.avatarHtml
+? React.createElement('div', { className: 'rma-avatar-widget', dangerouslySetInnerHTML: { __html: data.avatarHtml } })
+: (avatarUrl
+  ? React.createElement('img', { src: avatarUrl, alt: userName, className: 'rma-avatar', loading: 'lazy' })
+  : React.createElement('div', { className: 'rma-avatar rma-avatar-initials' },
+    (userName.charAt(0) || 'U').toUpperCase()
+    ))
 ),
 React.createElement('ul', { className: 'rma-nav-list', role: 'list' },
 mainItems.map(function (item) {

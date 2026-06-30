@@ -88,6 +88,14 @@ function wcmamtx_onboarding_save_handler() {
 
     update_option( 'wcmamtx_layout', $layout );
 
+    /* --- avatar setting (wcmamtx_avatar_settings) --- */
+    if ( isset( $data['avatar_show'] ) ) {
+        $val             = $data['avatar_show'] === 'yes' ? 'yes' : 'no';
+        $avatar_settings = (array) get_option( 'wcmamtx_avatar_settings', [] );
+        $avatar_settings['disable_avatar'] = $val;
+        update_option( 'wcmamtx_avatar_settings', $avatar_settings );
+    }
+
     wp_send_json_success( [ 'message' => 'Settings saved.' ] );
 }
 

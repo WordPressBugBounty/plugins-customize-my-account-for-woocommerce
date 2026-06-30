@@ -78,6 +78,7 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
      add_action( 'admin_bar_menu', array( $this, 'register_custom_menu_link' ),999);
 
      add_action('init',array( $this, 'wcmamtx_google_callback' ));
+     add_action('init',array( $this, 'wcmamtx_facebook_callback' ));
 
      add_action( 'wp_nav_menu_items', array( $this, 'wcmamtx_add_menu_items' ), 10, 2 );
 
@@ -199,12 +200,31 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
 
             $nav_header_widget_text_logout = isset($wcmamtx_layout['nav_header_widget_text_logout']) ? $wcmamtx_layout['nav_header_widget_text_logout'] : wcmamtx_get_nav_logout_default_text();
 
+            $navwidget_loggedout_popup = isset($wcmamtx_layout['navwidget_loggedout_popup']) ? $wcmamtx_layout['navwidget_loggedout_popup'] : 'no';
 
-            $Menu_link  = '<li class="menu-item wcmamtx_menu wcmamtx_menu_logged_out2">';
-            $Menu_link .= '<a href="' . esc_url( $frontend_url ) . '" class="wcmamtx-login-btn">';
-            $Menu_link .= '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
-            $Menu_link .= '<span class="wcmamtxx_nav_header_widget_text_logout">' . esc_html( $nav_header_widget_text_logout ) . '</span>';
-            $Menu_link .= '</a></li>';
+            $guest_page_id   = isset($wcmamtx_layout['guest_dashboard_page']) ? (int) $wcmamtx_layout['guest_dashboard_page'] : 0;
+            $current_page_id = (int) get_queried_object_id();
+            $on_auth_page    = is_account_page() || ( $guest_page_id > 0 && $current_page_id === $guest_page_id );
+
+            if ( $navwidget_loggedout_popup === 'yes' && ! $on_auth_page ) {
+                $Menu_link  = '<li class="menu-item wcmamtx_menu wcmamtx_menu_logged_out2">';
+                $Menu_link .= '<a href="#" class="wcmamtx-login-btn wcmamtx-nav-popup-trigger">';
+                $Menu_link .= '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
+                $Menu_link .= '<span class="wcmamtxx_nav_header_widget_text_logout">' . esc_html( $nav_header_widget_text_logout ) . '</span>';
+                $Menu_link .= '</a></li>';
+
+                static $wcmamtx_nav_popup_injected = false;
+                if ( ! $wcmamtx_nav_popup_injected ) {
+                    $wcmamtx_nav_popup_injected = true;
+                    add_action( 'wp_footer', 'wcmamtx_nav_popup_modal_render', 99 );
+                }
+            } else {
+                $Menu_link  = '<li class="menu-item wcmamtx_menu wcmamtx_menu_logged_out2">';
+                $Menu_link .= '<a href="' . esc_url( $frontend_url ) . '" class="wcmamtx-login-btn">';
+                $Menu_link .= '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
+                $Menu_link .= '<span class="wcmamtxx_nav_header_widget_text_logout">' . esc_html( $nav_header_widget_text_logout ) . '</span>';
+                $Menu_link .= '</a></li>';
+            }
 
             $items .= $Menu_link;
 
@@ -329,20 +349,93 @@ if (!class_exists('wcmamtx_add_frontend_class')) {
 
 public function wcmamtx_google_callback() {
 
-        if (
-            empty($_GET['wcmamtx-social']) ||
-            $_GET['wcmamtx-social'] !== 'google'
-        ) {
+        if ( empty( $_GET['wcmamtx-social'] ) || $_GET['wcmamtx-social'] !== 'google' ) {
             return;
         }
 
-        $code = sanitize_text_field($_GET['code']);
+        if ( ! empty( $_GET['error'] ) ) {
+            wp_safe_redirect( wc_get_page_permalink( 'myaccount' ) );
+            exit;
+        }
 
-        $token = wcmamtx_get_google_token($code);
+        if ( empty( $_GET['code'] ) || empty( $_GET['state'] ) ) {
+            wp_safe_redirect( wc_get_page_permalink( 'myaccount' ) );
+            exit;
+        }
 
-        $user = wcmamtx_get_google_user($token);
+        $state = sanitize_text_field( $_GET['state'] );
+        $transient_key = 'wcmamtx_oauth_' . $state;
 
-        wcmamtx_login_or_create_user($user);
+        if ( ! get_transient( $transient_key ) ) {
+            wp_safe_redirect( wc_get_page_permalink( 'myaccount' ) );
+            exit;
+        }
+
+        delete_transient( $transient_key );
+
+        $code  = wp_unslash( $_GET['code'] );
+        $token = wcmamtx_get_google_token( $code );
+
+        if ( empty( $token ) ) {
+            wp_safe_redirect( wc_get_page_permalink( 'myaccount' ) );
+            exit;
+        }
+
+        $user = wcmamtx_get_google_user( $token );
+
+        if ( empty( $user ) || ! is_array( $user ) ) {
+            wp_safe_redirect( wc_get_page_permalink( 'myaccount' ) );
+            exit;
+        }
+
+        wcmamtx_login_or_create_user( $user );
+
+        exit;
+    }
+
+
+    public function wcmamtx_facebook_callback() {
+
+        if ( empty( $_GET['wcmamtx-social'] ) || $_GET['wcmamtx-social'] !== 'facebook' ) {
+            return;
+        }
+
+        if ( ! empty( $_GET['error'] ) ) {
+            wp_safe_redirect( wc_get_page_permalink( 'myaccount' ) );
+            exit;
+        }
+
+        if ( empty( $_GET['code'] ) || empty( $_GET['state'] ) ) {
+            wp_safe_redirect( wc_get_page_permalink( 'myaccount' ) );
+            exit;
+        }
+
+        $state = sanitize_text_field( $_GET['state'] );
+        $transient_key = 'wcmamtx_oauth_' . $state;
+
+        if ( ! get_transient( $transient_key ) ) {
+            wp_safe_redirect( wc_get_page_permalink( 'myaccount' ) );
+            exit;
+        }
+
+        delete_transient( $transient_key );
+
+        $code  = wp_unslash( $_GET['code'] );
+        $token = wcmamtx_get_facebook_token( $code );
+
+        if ( empty( $token ) ) {
+            wp_safe_redirect( wc_get_page_permalink( 'myaccount' ) );
+            exit;
+        }
+
+        $user = wcmamtx_get_facebook_user( $token );
+
+        if ( empty( $user ) || ! is_array( $user ) ) {
+            wp_safe_redirect( wc_get_page_permalink( 'myaccount' ) );
+            exit;
+        }
+
+        wcmamtx_login_or_create_user( $user );
 
         exit;
     }
@@ -1462,7 +1555,8 @@ public function wcmamtx_google_callback() {
         $_custom_def_url    = $_custom_def_id > 0 ? wp_get_attachment_url( $_custom_def_id ) : '';
         $guest_avatar_src   = $_custom_def_url ?: ( $plugin_url . 'assets/images/default_avatar.jpg' );
         $default_style  = isset( $wcmamtx_layout['style'] ) ? $wcmamtx_layout['style'] : '01';
-        $guest_cta_text = ! empty( $wcmamtx_layout['guest_cta_text'] ) ? $wcmamtx_layout['guest_cta_text'] : __( 'Login to View and Manage Your Orders', 'customize-my-account-for-woocommerce' );
+        $guest_cta_text    = ! empty( $wcmamtx_layout['guest_cta_text'] ) ? $wcmamtx_layout['guest_cta_text'] : __( 'Login to View and Manage Your Orders', 'customize-my-account-for-woocommerce' );
+        $guest_modal_popup = isset( $wcmamtx_layout['guest_modal_popup'] ) ? $wcmamtx_layout['guest_modal_popup'] : 'no';
 
         // Build nav items: skip logout, separater, heading, hidden
         $wcmamtx_tabs_raw = (array) get_option( 'wcmamtx_advanced_settings' );
@@ -1531,8 +1625,11 @@ public function wcmamtx_google_callback() {
                              class="wcmamtx-guest-avatar-img" />
                     </div>
                     <p class="wcmamtx-guest-text-above"><?php
-                        // Wrap the entire CTA text in a single login link
-                        echo '<a href="' . esc_url( add_query_arg( 'skip_guest_dashboard', 'yes', $login_url ) ) . '">';
+                        if ( $guest_modal_popup === 'yes' ) {
+                            echo '<a href="#" class="wcmamtx-guest-popup-trigger" data-redirect-url="' . esc_url( wc_get_page_permalink( 'myaccount' ) ) . '">';
+                        } else {
+                            echo '<a href="' . esc_url( add_query_arg( 'skip_guest_dashboard', 'yes', $login_url ) ) . '">';
+                        }
                         echo esc_html( $guest_cta_text );
                         echo '</a>';
                     ?></p>
@@ -1544,7 +1641,11 @@ public function wcmamtx_google_callback() {
                         $icon_source = isset( $value['icon_source'] ) ? $value['icon_source'] : 'default';
                     ?>
                         <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--<?php echo esc_attr( $key ); ?>">
+                            <?php if ( $guest_modal_popup === 'yes' ) : ?>
+                            <a href="#" class="woocommerce-MyAccount-navigation-link_a wcmamtx-guest-popup-trigger" data-redirect-url="<?php echo esc_url( $key === 'dashboard' ? $login_url : wc_get_account_endpoint_url( $key ) ); ?>">
+                            <?php else : ?>
                             <a href="<?php echo esc_url( $key === 'dashboard' ? $login_url : wc_get_account_endpoint_url( $key ) ); ?>" class="woocommerce-MyAccount-navigation-link_a">
+                            <?php endif; ?>
                                 <?php wcmamtx_get_account_menu_li_icon_html( $icon_source, $value, $key, '' ); ?>
                                 <span class="wcmamtx_sticky_icon_name"><?php echo esc_html( $label ); ?></span>
                             </a>
@@ -1603,9 +1704,172 @@ public function wcmamtx_google_callback() {
             </div>
         </div><!-- /.wcmamtx-guest-dashboard -->
         <?php
+
+        if ( $guest_modal_popup === 'yes' ) {
+            static $wcmamtx_free_guest_popup_injected = false;
+            if ( ! $wcmamtx_free_guest_popup_injected ) {
+                $wcmamtx_free_guest_popup_injected = true;
+                add_action( 'wp_footer', 'wcmamtx_free_guest_popup_modal_render', 99 );
+            }
+        }
+
         return ob_get_clean();
     }
    }
+}
+
+function wcmamtx_free_guest_popup_modal_render( $auto_open = false ) {
+    static $wcmamtx_free_guest_modal_done = false;
+    if ( $wcmamtx_free_guest_modal_done ) {
+        if ( $auto_open ) {
+            echo '<script>document.addEventListener("DOMContentLoaded",function(){var o=document.getElementById("wcmamtx-guest-login-overlay");if(o){o.classList.add("active");document.body.style.overflow="hidden";}});</script>';
+        }
+        return;
+    }
+    $wcmamtx_free_guest_modal_done = true;
+
+    $plugin_template = WP_PLUGIN_DIR . '/customize-my-account-for-woocommerce/templates/myaccount/form-login.php';
+    $child_override  = get_stylesheet_directory() . '/wcmamtx_template/form-login.php';
+    $tpl = file_exists( $child_override ) ? $child_override : $plugin_template;
+    ob_start();
+    if ( file_exists( $tpl ) ) {
+        include $tpl;
+    }
+    $form_html = ob_get_clean();
+    ?>
+    <div id="wcmamtx-guest-login-overlay" role="dialog" aria-modal="true" aria-label="<?php esc_attr_e( 'Login / Register', 'customize-my-account-for-woocommerce' ); ?>">
+        <div id="wcmamtx-guest-login-box">
+            <button id="wcmamtx-guest-login-close" aria-label="<?php esc_attr_e( 'Close', 'customize-my-account-for-woocommerce' ); ?>">&times;</button>
+            <?php echo $form_html; ?>
+        </div>
+    </div>
+    <style>
+    #wcmamtx-guest-login-overlay{display:none;position:fixed;inset:0;z-index:999999;background:rgba(0,0,0,.55);align-items:center;justify-content:center;padding:20px;box-sizing:border-box;}
+    #wcmamtx-guest-login-overlay.active{display:flex;}
+    #wcmamtx-guest-login-box{position:relative;width:100%;max-width:520px;max-height:90vh;overflow-y:auto;border-radius:18px;overflow:hidden;background:#fff;}
+    #wcmamtx-nav-login-close{position:absolute;top:24px;right:12px;z-index:10;background:#484545;border:none;color:white;width:30px;height:30px;border-radius:15px;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;}
+    #wcmamtx-guest-login-close:hover{background:rgba(0,0,0,.15);}
+    #wcmamtx-guest-login-box .wc-auth-left{display:none!important;}
+    #wcmamtx-guest-login-box .wc-auth-split{display:block!important;border-radius:0;box-shadow:none;min-height:0;}
+    #wcmamtx-guest-login-box .wc-auth-right{padding:32px;background:#fff;}
+    #wcmamtx-guest-login-box .wc-auth-card{background:transparent;border-radius:0;padding:0;box-shadow:none;margin:0;max-width:100%!important;}
+    #wcmamtx-guest-login-box button.show-password-input {display: none !important;}
+    </style>
+    <script>
+    (function(){
+        var overlay  = document.getElementById('wcmamtx-guest-login-overlay');
+        var closeBtn = document.getElementById('wcmamtx-guest-login-close');
+        function openModal(){ overlay.classList.add('active'); document.body.style.overflow='hidden'; }
+        function closeModal(){ overlay.classList.remove('active'); document.body.style.overflow=''; }
+        var defaultRedirect = '<?php echo esc_js( wc_get_page_permalink( 'myaccount' ) ); ?>';
+        document.querySelectorAll('.wcmamtx-guest-popup-trigger').forEach(function(t){
+            t.addEventListener('click',function(e){
+                e.preventDefault();
+                var redirectUrl = t.dataset.redirectUrl || defaultRedirect;
+                overlay.querySelectorAll('form').forEach(function(form){
+                    var r = form.querySelector('input[name="redirect"]');
+                    if (!r) { r = document.createElement('input'); r.type='hidden'; r.name='redirect'; form.appendChild(r); }
+                    r.value = redirectUrl;
+                });
+                openModal();
+            });
+        });
+        overlay.addEventListener('click',function(e){ if(e.target===overlay) closeModal(); });
+        closeBtn.addEventListener('click', closeModal);
+        document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeModal(); });
+        var tabs     = overlay.querySelectorAll('.wc-tab-btn');
+        var contents = overlay.querySelectorAll('.wc-tab-content');
+        tabs.forEach(function(tab){
+            tab.addEventListener('click',function(){
+                tabs.forEach(function(b){ b.classList.remove('active'); });
+                contents.forEach(function(c){ c.classList.remove('active'); });
+                tab.classList.add('active');
+                if(tab.dataset.tab){
+                    var panel = overlay.querySelector('#'+tab.dataset.tab);
+                    if(panel) panel.classList.add('active');
+                }
+            });
+        });
+        <?php if ( $auto_open ) : ?>
+        openModal();
+        <?php endif; ?>
+        wcmamtxBindAjaxLogin(overlay, '<?php echo esc_js( admin_url( 'admin-ajax.php' ) ); ?>');
+    })();
+    </script>
+    <?php
+}
+
+add_action( 'wp_footer', function() {
+    if ( is_user_logged_in() ) return;
+    if ( ! is_account_page() ) return;
+    $wcmamtx_layout    = wcmamtx_get_layout();
+    $guest_modal_popup = isset( $wcmamtx_layout['guest_modal_popup'] ) ? $wcmamtx_layout['guest_modal_popup'] : 'no';
+    if ( $guest_modal_popup !== 'yes' ) return;
+    $on_endpoint = false;
+    foreach ( WC()->query->get_query_vars() as $key => $value ) {
+        if ( is_wc_endpoint_url( $key ) ) { $on_endpoint = true; break; }
+    }
+    if ( ! $on_endpoint ) return;
+    wcmamtx_free_guest_popup_modal_render( true );
+}, 99 );
+
+function wcmamtx_nav_popup_modal_render() {
+    $plugin_template = WP_PLUGIN_DIR . '/customize-my-account-for-woocommerce/templates/myaccount/form-login.php';
+    $child_override   = get_stylesheet_directory() . '/wcmamtx_template/form-login.php';
+    $tpl = file_exists( $child_override ) ? $child_override : $plugin_template;
+    ob_start();
+    if ( file_exists( $tpl ) ) {
+        include $tpl;
+    }
+    $form_html = ob_get_clean();
+    ?>
+    <div id="wcmamtx-nav-login-overlay" role="dialog" aria-modal="true" aria-label="<?php esc_attr_e( 'Login / Register', 'customize-my-account-for-woocommerce' ); ?>">
+        <div id="wcmamtx-nav-login-box">
+            <button id="wcmamtx-nav-login-close" aria-label="<?php esc_attr_e( 'Close', 'customize-my-account-for-woocommerce' ); ?>">&times;</button>
+            <?php echo $form_html; ?>
+        </div>
+    </div>
+    <style>
+    #wcmamtx-nav-login-overlay{display:none;position:fixed;inset:0;z-index:999999;background:rgba(0,0,0,.55);align-items:center;justify-content:center;padding:20px;box-sizing:border-box;}
+    #wcmamtx-nav-login-overlay.active{display:flex;}
+    #wcmamtx-nav-login-box{position:relative;width:100%;max-width:520px;max-height:90vh;overflow-y:auto;border-radius:18px;overflow:hidden;background:#fff;}
+    #wcmamtx-nav-login-close{position:absolute;top:12px;right:12px;z-index:10;background:rgba(0,0,0,.08);border:none;color:#555;width:30px;height:30px;border-radius:50%;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;}
+    #wcmamtx-nav-login-close:hover{background:rgba(0,0,0,.15);}
+    #wcmamtx-nav-login-box .wc-auth-left{display:none!important;}
+    #wcmamtx-nav-login-box .wc-auth-split{display:block!important;border-radius:0;box-shadow:none;min-height:0;}
+    #wcmamtx-nav-login-box .wc-auth-right{padding:32px;background:#fff;}
+    #wcmamtx-nav-login-box .wc-auth-card{background:transparent;border-radius:0;padding:0;box-shadow:none;margin:0;max-width:100%!important;}
+    #wcmamtx-nav-login-box button.show-password-input{display:none;}
+    </style>
+    <script>
+    (function(){
+        var overlay  = document.getElementById('wcmamtx-nav-login-overlay');
+        var closeBtn = document.getElementById('wcmamtx-nav-login-close');
+        function openModal(){ overlay.classList.add('active'); document.body.style.overflow='hidden'; }
+        function closeModal(){ overlay.classList.remove('active'); document.body.style.overflow=''; }
+        document.querySelectorAll('.wcmamtx-nav-popup-trigger').forEach(function(t){
+            t.addEventListener('click',function(e){ e.preventDefault(); openModal(); });
+        });
+        overlay.addEventListener('click',function(e){ if(e.target===overlay) closeModal(); });
+        closeBtn.addEventListener('click', closeModal);
+        document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeModal(); });
+        var tabs     = overlay.querySelectorAll('.wc-tab-btn');
+        var contents = overlay.querySelectorAll('.wc-tab-content');
+        tabs.forEach(function(tab){
+            tab.addEventListener('click',function(){
+                tabs.forEach(function(b){ b.classList.remove('active'); });
+                contents.forEach(function(c){ c.classList.remove('active'); });
+                tab.classList.add('active');
+                if(tab.dataset.tab){
+                    var panel = overlay.querySelector('#'+tab.dataset.tab);
+                    if(panel) panel.classList.add('active');
+                }
+            });
+        });
+        wcmamtxBindAjaxLogin(overlay, '<?php echo esc_js( admin_url( 'admin-ajax.php' ) ); ?>');
+    })();
+    </script>
+    <?php
 }
 
 new wcmamtx_add_frontend_class();

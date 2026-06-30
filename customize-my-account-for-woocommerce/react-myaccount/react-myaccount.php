@@ -7,6 +7,29 @@ define( 'RMA_DIR',     plugin_dir_path( __FILE__ ) );
 define( 'RMA_URL',     plugin_dir_url( __FILE__ ) );
 
 /* ---------------------------------------------------------------
+   0. Avatar URL helper — mirrors wcmamtx_get_avatar_default() logic
+      so the React nav respects the plugin's avatar settings:
+      - local uploaded avatar via get_avatar_data filter (automatic)
+      - "disable Gravatar" setting + custom default avatar
+--------------------------------------------------------------- */
+function rma_resolve_avatar_url( $user_id ) {
+    $url = get_avatar_url( $user_id, [ 'size' => 80 ] );
+
+    $avatar_settings = (array) get_option( 'wcmamtx_avatar_settings' );
+    if (
+        isset( $avatar_settings['disable_gravtar'] ) &&
+        'yes' === $avatar_settings['disable_gravtar'] &&
+        false !== strpos( $url, 'gravatar.com' )
+    ) {
+        $custom_def_id = isset( $avatar_settings['custom_default_avatar'] ) ? (int) $avatar_settings['custom_default_avatar'] : 0;
+        $custom_url    = $custom_def_id > 0 ? (string) wp_get_attachment_url( $custom_def_id ) : '';
+        $url           = $custom_url ?: wcmamtx_PLUGIN_URL . 'assets/images/default_avatar.jpg';
+    }
+
+    return $url;
+}
+
+/* ---------------------------------------------------------------
    1. Enqueue assets on My Account page
 --------------------------------------------------------------- */
 add_action( 'wp_enqueue_scripts', function () {
@@ -43,12 +66,35 @@ add_action( 'wp_enqueue_scripts', function () {
 
     }
 
+    global $wcmamtx_upload_avatar_tab;
+    $avatar_html = ( is_object( $wcmamtx_upload_avatar_tab ) && method_exists( $wcmamtx_upload_avatar_tab, 'wcmamtx_shortcode' ) )
+        ? $wcmamtx_upload_avatar_tab->wcmamtx_shortcode( [] )
+        : '';
+
+    // Append custom avatar content — mirrors default logic in nav 02/05
+    $_avatar_settings = (array) get_option( 'wcmamtx_avatar_settings' );
+    if ( ! isset( $_avatar_settings['disable_avatar'] ) ) {
+        $_avatar_settings['custom_avatar_content'] = 'yes';
+    }
+    $_fresh = (array) get_option( 'wcmamtx_avatar_settings' );
+    if ( array_key_exists( 'custom_avatar_content', $_fresh ) ) {
+        $_avatar_settings['custom_avatar_content'] = $_fresh['custom_avatar_content'];
+    }
+    if ( isset( $_avatar_settings['custom_avatar_content'] ) && 'yes' === $_avatar_settings['custom_avatar_content'] ) {
+        $editor_content_avatar = isset( $_avatar_settings['content_avatar'] )
+            ? $_avatar_settings['content_avatar']
+            : '<p class="wcmamtx_default_text_below_avatar" style="text-align: center;">Hello <strong>{display_name}</strong> (not <strong>{display_name}</strong>? <a href="{user_logout_link}">Log out</a>)</p>';
+        $editor_content_avatar = wcmamtx_parse_smart_tag_function( $editor_content_avatar );
+        $avatar_html .= '<div id="wcmamtx-avatar-content-output">' . wp_kses_post( $editor_content_avatar ) . '</div>';
+    }
+
     wp_localize_script( 'rma-app', 'rmaData', [
         'menuItems'    => $menu_with_urls,
         'currentPath'  => isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '',
         'userName'     => $current_user->display_name,
         'userEmail'    => $current_user->user_email,
-        'avatarUrl'    => get_avatar_url( $current_user->ID, [ 'size' => 80 ] ),
+        'avatarUrl'    => rma_resolve_avatar_url( $current_user->ID ),
+        'avatarHtml'   => $avatar_html,
         'ajaxUrl'      => admin_url( 'admin-ajax.php' ),
         'nonce'        => wp_create_nonce( 'rma_nonce' ),
         'myaccountUrl' => trailingslashit( get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ) ),

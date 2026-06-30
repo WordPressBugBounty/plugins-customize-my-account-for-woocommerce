@@ -47,10 +47,8 @@
 
 /* ---- User card ---- */
 .rma-user-card {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 22px 20px;
+  display: block;
+  padding: 0;
   color: black;
 }
 
@@ -73,24 +71,21 @@
   letter-spacing: -.02em;
 }
 
-.rma-user-info { min-width: 0; }
-
-.rma-user-name {
-  font-size: 15px;
-  font-weight: 700;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  letter-spacing: -.01em;
+/* Full-width avatar widget */
+.rma-avatar-widget {
+  width: 100%;
 }
-
-.rma-user-email {
-  font-size: 12px;
-  opacity: .78;
-  margin-top: 2px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.rma-avatar-widget center {
+  width: 100% !important;
+  max-width: 100% !important;
+  display: block;
+}
+.rma-avatar-widget .wcmamtx_upload_div {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+.rma-avatar-widget #wcmamtx-avatar-content-output {
+  padding: 12px 16px 8px;
 }
 
 /* ---- Nav list ---- */

@@ -93,6 +93,25 @@ add_action( 'wp_ajax_wcmamtx_customizer_save', function() {
         'shortcode2_dashboard_priority'   => 'priority',
         'guest_dashboard_enable'          => ['01','02'],
         'guest_dashboard_page'            => 'posint',
+        'guest_modal_popup'               => ['yes','no'],
+        'popup_login_enable'              => ['01','02'],
+        'navwidget_loggedout_popup'       => ['yes','no'],
+        'formlogin_layout_override'       => ['01','02'],
+        'google_social_login'             => ['yes','no'],
+        'google_client_id'                => 'text',
+        'google_client_secret'            => 'text',
+        'facebook_social_login'           => ['yes','no'],
+        'facebook_app_id'                 => 'text',
+        'facebook_app_secret'             => 'text',
+        'login_page_headline'             => 'text',
+        'login_page_subtitle'             => 'text',
+        'login_page_badge_text'           => 'text',
+        'login_page_gradient_start'       => 'color',
+        'login_page_gradient_end'         => 'color',
+        'login_page_bg_image'             => 'url',
+        'login_page_bg_size'             => 'text',
+        'login_page_text_color'           => 'color',
+        'login_page_badge_bg'             => 'color',
     ];
     if ( ! array_key_exists( $key, $layout_allowed ) ) wp_send_json_error( 'Invalid key' );
     $layout_rule = $layout_allowed[$key];
@@ -103,12 +122,124 @@ add_action( 'wp_ajax_wcmamtx_customizer_save', function() {
         if ( empty( $value ) ) wp_send_json_error( 'Invalid value' );
     } elseif ( $layout_rule === 'menuint' ) {
         $value = (string) absint( $value );
+    } elseif ( $layout_rule === 'color' ) {
+        $value = sanitize_hex_color( $value );
+        if ( $value === null ) wp_send_json_error( 'Invalid color' );
+    } elseif ( $layout_rule === 'url' ) {
+        $value = esc_url_raw( wp_unslash( $value ) );
     }
     $layout        = (array) get_option( WCMAMTX_CUSTOMIZER_OPT );
     $layout[$key]  = $value;
     update_option( WCMAMTX_CUSTOMIZER_OPT, $layout );
     wp_cache_delete( WCMAMTX_CUSTOMIZER_OPT, 'options' );
     wp_send_json_success( ['key' => $key, 'value' => $value] );
+} );
+
+add_action( 'wp_ajax_wcmamtx_customizer_save_bulk', function() {
+    check_ajax_referer( 'wcmamtx_cz_layout', 'nonce' );
+    if ( ! current_user_can( 'manage_options' ) ) wp_send_json_error( 'Unauthorized' );
+    $pairs = isset( $_POST['pairs'] ) ? json_decode( wp_unslash( $_POST['pairs'] ), true ) : null;
+    if ( ! is_array( $pairs ) ) wp_send_json_error( 'Invalid pairs' );
+    $layout_allowed = [
+        'nav_style'                       => ['01','02','03','04','05','06','07','08'],
+        'sidebar_style'                   => ['01'],
+        'dash_style'                      => ['01','02','03','04'],
+        'order_template_override'         => ['01','02'],
+        'order_style'                     => ['01','02'],
+        'download_template_override'      => ['01','02'],
+        'download_style'                  => ['01','02'],
+        'view_order_template_override'    => ['01','02'],
+        'view_order_style'                => ['01','02'],
+        'thankyou_template_override'      => ['01','02'],
+        'thankyou_style'                  => ['01','02'],
+        'orderpay_template_override'      => ['01','02'],
+        'orderpay_style'                  => ['01','02'],
+        'nav_header_widget'               => ['yes','no'],
+        'show_only_logged_in'             => ['yes','no'],
+        'navwidget_disable_avatar'        => ['yes','no'],
+        'navwidget_disable_username'      => ['yes','no'],
+        'navigationwidget_layout_override'=> ['01','02'],
+        'spending_layout_override'        => ['01','02'],
+        'spendingchart_override'          => ['01','02'],
+        'dashlink_layout_override'        => ['01','02'],
+        'profilebox_override'             => ['01','02'],
+        'dashlink_box_override'           => ['01','02'],
+        'spendingbox_dashboard_priority'  => 'priority',
+        'spendingchart_dashboard_priority'=> 'priority',
+        'dashlinks_dashboard_priority'    => 'priority',
+        'profilebox_dashboard_priority'   => 'priority',
+        'linkbox_dashboard_priority'      => 'priority',
+        'nav_header_widget_text'          => 'text',
+        'nav_header_widget_text_logout'   => 'text',
+        'widget_menu_location'            => 'menuint',
+        'shipment_tracking_override'      => ['01','02'],
+        'shortcode1_override'             => ['01','02'],
+        'shortcode2_override'             => ['01','02'],
+        'shortcode1_value'                => 'text',
+        'shortcode2_value'                => 'text',
+        'shortcode1_dashboard_priority'   => 'priority',
+        'shortcode2_dashboard_priority'   => 'priority',
+        'guest_dashboard_enable'          => ['01','02'],
+        'guest_dashboard_page'            => 'posint',
+        'guest_modal_popup'               => ['yes','no'],
+        'popup_login_enable'              => ['01','02'],
+        'navwidget_loggedout_popup'       => ['yes','no'],
+        'formlogin_layout_override'       => ['01','02'],
+        'google_social_login'             => ['yes','no'],
+        'google_client_id'                => 'text',
+        'google_client_secret'            => 'text',
+        'facebook_social_login'           => ['yes','no'],
+        'facebook_app_id'                 => 'text',
+        'facebook_app_secret'             => 'text',
+        'login_page_headline'             => 'text',
+        'login_page_subtitle'             => 'text',
+        'login_page_badge_text'           => 'text',
+        'login_page_gradient_start'       => 'color',
+        'login_page_gradient_end'         => 'color',
+        'login_page_bg_image'             => 'url',
+        'login_page_bg_size'              => 'text',
+        'login_page_text_color'           => 'color',
+        'login_page_badge_bg'             => 'color',
+    ];
+    $layout = (array) get_option( WCMAMTX_CUSTOMIZER_OPT );
+    foreach ( $pairs as $pair ) {
+        $key       = isset( $pair['key'] )   ? sanitize_key( $pair['key'] )   : '';
+        $raw_value = isset( $pair['value'] )  ? $pair['value']                 : '';
+        $value     = sanitize_text_field( wp_unslash( $raw_value ) );
+        if ( ! $key || ! array_key_exists( $key, $layout_allowed ) ) continue;
+        $rule = $layout_allowed[ $key ];
+        if ( is_array( $rule ) ) {
+            if ( ! in_array( $value, $rule, true ) ) continue;
+        } elseif ( $rule === 'priority' ) {
+            $value = (string) absint( $value );
+            if ( empty( $value ) ) continue;
+        } elseif ( $rule === 'menuint' || $rule === 'posint' ) {
+            $value = (string) absint( $value );
+        } elseif ( $rule === 'color' ) {
+            $value = sanitize_hex_color( $value );
+            if ( $value === null ) continue;
+        } elseif ( $rule === 'url' ) {
+            $value = esc_url_raw( wp_unslash( $raw_value ) );
+        }
+        $layout[ $key ] = $value;
+    }
+    update_option( WCMAMTX_CUSTOMIZER_OPT, $layout );
+    wp_cache_delete( WCMAMTX_CUSTOMIZER_OPT, 'options' );
+    wp_send_json_success();
+} );
+
+add_action( 'wp_ajax_wcmamtx_upload_login_bg', function() {
+    check_ajax_referer( 'wcmamtx_cz_layout', 'nonce' );
+    if ( ! current_user_can( 'manage_options' ) ) wp_send_json_error( 'Unauthorized' );
+    if ( ! function_exists( 'media_handle_upload' ) ) {
+        require_once ABSPATH . 'wp-admin/includes/file.php';
+        require_once ABSPATH . 'wp-admin/includes/media.php';
+        require_once ABSPATH . 'wp-admin/includes/image.php';
+    }
+    if ( empty( $_FILES['file'] ) ) wp_send_json_error( 'No file uploaded' );
+    $id = media_handle_upload( 'file', 0 );
+    if ( is_wp_error( $id ) ) wp_send_json_error( $id->get_error_message() );
+    wp_send_json_success( [ 'url' => wp_get_attachment_url( $id ) ] );
 } );
 
 add_action( 'wp_ajax_wcmamtx_customizer_save_avatar', function() {
@@ -279,9 +410,27 @@ function wcmamtx_customizer_render_page() {
     $dash_style    = $g('dash_style',               '01');
     $profilebox    = $g('profilebox_override',      '02');
     $dashlinks     = $g('dashlink_layout_override', '01');
-    $guest_enable  = $g('guest_dashboard_enable', '02');
-    $guest_page_id = (int) $g('guest_dashboard_page', 0);
-    $all_pages_cz  = get_pages( array( 'post_status' => 'publish', 'sort_column' => 'post_title' ) );
+    $guest_enable              = $g('guest_dashboard_enable', '02');
+    $guest_modal_popup         = $g('guest_modal_popup',         'no');
+    $guest_page_id             = (int) $g('guest_dashboard_page', 0);
+    $popup_login_enable        = $g('popup_login_enable', '02');
+    $formlogin_layout_override = $g('formlogin_layout_override', '02');
+    $google_client_id          = $g('google_client_id', '');
+    $google_client_secret      = $g('google_client_secret', '');
+    $google_social_login       = $g('google_social_login', $google_client_id !== '' ? 'yes' : 'no');
+    $facebook_app_id           = $g('facebook_app_id', '');
+    $facebook_app_secret       = $g('facebook_app_secret', '');
+    $facebook_social_login     = $g('facebook_social_login', $facebook_app_id !== '' ? 'yes' : 'no');
+    $login_page_headline       = $g( 'login_page_headline', '' );
+    $login_page_subtitle       = $g( 'login_page_subtitle', '' );
+    $login_page_badge_text     = $g( 'login_page_badge_text', '' );
+    $login_page_gradient_start = $g( 'login_page_gradient_start', '#667eea' );
+    $login_page_gradient_end   = $g( 'login_page_gradient_end', '#764ba2' );
+    $login_page_bg_image       = $g( 'login_page_bg_image', '' );
+    $login_page_bg_size        = $g( 'login_page_bg_size', 'cover' );
+    $login_page_text_color     = $g( 'login_page_text_color', '' );
+    $login_page_badge_bg       = $g( 'login_page_badge_bg', '' );
+    $all_pages_cz              = get_pages( array( 'post_status' => 'publish', 'sort_column' => 'post_title' ) );
     $spending      = $g('spending_layout_override', '01');
     $spendingchart = $g('spendingchart_override',   '01');
     $dashlink_box  = $g('dashlink_box_override',    '02');
@@ -342,8 +491,9 @@ function wcmamtx_customizer_render_page() {
     $nw_text_in    = $g('nav_header_widget_text',          'My Account');
     $nw_text_out   = $g('nav_header_widget_text_logout',   'Log In');
     $nw_logged_in  = $g('show_only_logged_in',             'no');
-    $nw_dis_avatar = $g('navwidget_disable_avatar',        'no');
-    $nw_dis_user   = $g('navwidget_disable_username',      'no');
+    $nw_dis_avatar       = $g('navwidget_disable_avatar',        'no');
+    $nw_dis_user         = $g('navwidget_disable_username',      'no');
+    $nw_loggedout_popup  = $g('navwidget_loggedout_popup',       'no');
     $menu_locations = array_keys( get_nav_menu_locations() );
 
     $nav_options = [
@@ -353,7 +503,6 @@ function wcmamtx_customizer_render_page() {
         '04' => __('React Based',      'customize-my-account-for-woocommerce'),
         '05' => __('Minimal Pill',     'customize-my-account-for-woocommerce'),
         '06' => __('Top Horizontal Bar',          'customize-my-account-for-woocommerce'),
-        '07' => __('Icon Only',        'customize-my-account-for-woocommerce'),
         '08' => __('Dark Sidebar',     'customize-my-account-for-woocommerce'),
     ];
     $widget_fields = [
@@ -642,6 +791,10 @@ a.wcmamtx_accordion_label_small
     <span class="cz-logo">
         <span class="dashicons dashicons-art"></span>
         <?php esc_html_e('SysBasics My Account Customizer','customize-my-account-for-woocommerce'); ?>
+        <a href="<?php echo esc_url( admin_url() ); ?>" target="_blank" rel="noopener" class="cz-btn cz-btn-ghost" style="font-size:11px;padding:2px 8px;opacity:.75;margin-left:6px;gap:4px;" title="<?php esc_attr_e( 'Go to WP Admin', 'customize-my-account-for-woocommerce' ); ?>">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            <?php esc_html_e( 'WP Admin', 'customize-my-account-for-woocommerce' ); ?>
+        </a>
     </span>
     <div class="cz-device-btns">
         <button data-device="desktop" class="active" title="<?php esc_attr_e('Desktop','customize-my-account-for-woocommerce'); ?>"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></button>
@@ -721,7 +874,7 @@ a.wcmamtx_accordion_label_small
                     <div id="cz-react-nav-notice" style="display:<?php echo esc_attr($nav_style==='04'?'block':'none'); ?>;margin-top:8px;background:#2a1f3d;border:1px solid #7c3aed;border-radius:6px;padding:10px 12px;">
                         <p style="font-size:12px;color:#c4b5fd;line-height:1.7;margin:0;">
                             <span style="font-size:14px;margin-right:6px;">&#9888;</span>
-                            <?php echo wp_kses( __( 'This will fully replace your WooCommerce My Account page with a React based navigation system. <strong>User avatar is currently not supported.</strong> If you experience any third party plugin JavaScript getting broken, consider switching back to any of the other available navigation styles.', 'customize-my-account-for-woocommerce' ), ['strong'=>[]] ); ?>
+                            <?php echo wp_kses( __( 'This will fully replace your WooCommerce My Account page with a React based navigation system.If you experience any third party plugin JavaScript getting broken, consider switching back to any of the other available navigation styles.', 'customize-my-account-for-woocommerce' ), ['strong'=>[]] ); ?>
                         </p>
                     </div>
                 </div>
@@ -945,6 +1098,14 @@ a.wcmamtx_accordion_label_small
                                 <button class="cz-toggle <?php echo $nw_dis_user==='yes'?'active':''; ?>" data-key="navwidget_disable_username" data-value="yes"><?php esc_html_e('Yes','customize-my-account-for-woocommerce'); ?></button>
                                 <button class="cz-toggle <?php echo $nw_dis_user!=='yes'?'active':''; ?>" data-key="navwidget_disable_username" data-value="no"><?php esc_html_e('No','customize-my-account-for-woocommerce'); ?></button>
                             </div>
+                        </div>
+                        <div class="cz-field" id="cz-nw-popup-field" style="<?php echo $nw_logged_in === 'yes' ? 'display:none;' : ''; ?>padding-top:10px;border-top:1px solid rgba(255,255,255,0.06);margin-top:6px;">
+                            <label class="cz-label"><?php esc_html_e('Enable login/register popup form','customize-my-account-for-woocommerce'); ?></label>
+                            <div class="cz-toggle-group">
+                                <button class="cz-toggle <?php echo $nw_loggedout_popup==='yes'?'active':''; ?>" data-key="navwidget_loggedout_popup" data-value="yes"><?php esc_html_e('Yes','customize-my-account-for-woocommerce'); ?></button>
+                                <button class="cz-toggle <?php echo $nw_loggedout_popup!=='yes'?'active':''; ?>" data-key="navwidget_loggedout_popup" data-value="no"><?php esc_html_e('No','customize-my-account-for-woocommerce'); ?></button>
+                            </div>
+                            <p style="font-size:10px;color:#6b6b85;margin-top:5px;line-height:1.5;"><?php esc_html_e('Opens the login &amp; register form in a popup when the guest nav button is clicked.','customize-my-account-for-woocommerce'); ?></p>
                         </div>
                     </div>
                 </div>
@@ -1250,8 +1411,27 @@ a.wcmamtx_accordion_label_small
                 </div><!-- /accordion-body avatar -->
             </div><!-- /accordion avatar -->
 
-
-
+            <!-- MY ACCOUNT FIELDS (addon upsell) -->
+            <div class="cz-accordion" data-accordion="myaccountfields">
+                <div class="cz-accordion-header" data-target="myaccountfields">
+                    <span class="cz-accordion-title">
+                        <span class="dashicons dashicons-forms"></span>
+                        <?php esc_html_e( 'My Account Fields', 'customize-my-account-for-woocommerce' ); ?>
+                    </span>
+                    <span class="cz-accordion-chevron">&#9660;</span>
+                </div>
+                <div class="cz-accordion-body" id="cz-acc-myaccountfields">
+                    <div class="cz-group">
+                        <p style="font-size:12px;color:#c4c4d4;line-height:1.7;margin:0 0 14px;">
+                            <?php esc_html_e( 'To manage your my account and user registration fields consider buying this addon', 'customize-my-account-for-woocommerce' ); ?>
+                        </p>
+                        <a href="https://www.sysbasics.com/product/woocommerce-my-account-fields/" target="_blank" rel="noopener"
+                           style="display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;font-size:12px;font-weight:700;padding:8px 16px;border-radius:8px;text-decoration:none;letter-spacing:.3px;transition:opacity .18s;">
+                            <?php esc_html_e( 'Get My Account Fields', 'customize-my-account-for-woocommerce' ); ?> &rarr;
+                        </a>
+                    </div>
+                </div>
+            </div><!-- /accordion myaccountfields -->
 
             <!-- GUEST DASHBOARD -->
             <div class="cz-accordion" data-accordion="guestdashboard">
@@ -1320,13 +1500,177 @@ a.wcmamtx_accordion_label_small
                                     <?php esc_html_e('Guest Dashboard Live Customizer','customize-my-account-for-woocommerce'); ?>
                                 </a>
                             </div>
-                            
+
+                            <div class="cz-field" style="margin-top:8px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.06);">
+                                <label class="cz-label"><?php esc_html_e('Enable modal popup login','customize-my-account-for-woocommerce'); ?></label>
+                                <div class="cz-toggle-group">
+                                    <button class="cz-toggle <?php echo $guest_modal_popup==='yes'?'active':''; ?>" data-key="guest_modal_popup" data-value="yes"><?php esc_html_e('Yes','customize-my-account-for-woocommerce'); ?></button>
+                                    <button class="cz-toggle <?php echo $guest_modal_popup!=='yes'?'active':''; ?>" data-key="guest_modal_popup" data-value="no"><?php esc_html_e('No','customize-my-account-for-woocommerce'); ?></button>
+                                </div>
+                                <p style="font-size:10px;color:#6b6b85;margin-top:5px;line-height:1.5;"><?php esc_html_e('Replaces login links on the guest dashboard with a popup login/register form.','customize-my-account-for-woocommerce'); ?></p>
+                            </div>
 
                         </div><!-- /#cz-guest-subopts -->
                     </div>
                 </div><!-- /.cz-accordion-body -->
                 <?php do_action('wcmamtx_customizer_section_guestdashboard'); ?>
             </div><!-- /.accordion guestdashboard -->
+
+            <!-- LOGIN & REGISTER -->
+            <div class="cz-accordion" data-accordion="loginregister">
+                <div class="cz-accordion-header" data-target="loginregister">
+                    <span class="cz-accordion-title"><span class="dashicons dashicons-lock"></span><?php esc_html_e( 'Login &amp; Register', 'customize-my-account-for-woocommerce' ); ?></span>
+                    <span class="cz-accordion-chevron">&#9660;</span>
+                </div>
+                <div class="cz-accordion-body" id="cz-acc-loginregister">
+                    <div class="cz-group">
+                        <div class="cz-field">
+                            <label class="cz-label"><?php esc_html_e( 'Enable Custom Login &amp; Register Page', 'customize-my-account-for-woocommerce' ); ?></label>
+                            <div class="cz-toggle-group">
+                                <button class="cz-toggle formlogin-toggle <?php echo $formlogin_layout_override === '01' ? 'active' : ''; ?>" data-key="formlogin_layout_override" data-value="01"><?php esc_html_e( 'Enable', 'customize-my-account-for-woocommerce' ); ?></button>
+                                <button class="cz-toggle formlogin-toggle <?php echo $formlogin_layout_override !== '01' ? 'active' : ''; ?>" data-key="formlogin_layout_override" data-value="02"><?php esc_html_e( 'Disable', 'customize-my-account-for-woocommerce' ); ?></button>
+                            </div>
+                        </div>
+                        <div id="cz-login-register-fields" style="<?php echo $formlogin_layout_override === '01' ? '' : 'display:none;'; ?>">
+                            <div class="cz-field" style="margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.06);">
+                                <label class="cz-label"><?php esc_html_e( 'Google Social Login', 'customize-my-account-for-woocommerce' ); ?></label>
+                                <div class="cz-toggle-group">
+                                    <button class="cz-toggle google-social-toggle <?php echo $google_social_login === 'yes' ? 'active' : ''; ?>" data-key="google_social_login" data-value="yes"><?php esc_html_e( 'Enable', 'customize-my-account-for-woocommerce' ); ?></button>
+                                    <button class="cz-toggle google-social-toggle <?php echo $google_social_login !== 'yes' ? 'active' : ''; ?>" data-key="google_social_login" data-value="no"><?php esc_html_e( 'Disable', 'customize-my-account-for-woocommerce' ); ?></button>
+                                </div>
+                            </div>
+                            <div id="cz-google-fields" style="<?php echo $google_social_login === 'yes' ? '' : 'display:none;'; ?>">
+                                <div class="cz-field">
+                                    <label class="cz-label"><?php esc_html_e( 'Google Client ID', 'customize-my-account-for-woocommerce' ); ?></label>
+                                    <input type="text" class="cz-text-input" data-key="google_client_id" value="<?php echo esc_attr( $google_client_id ); ?>" placeholder="xxxxxxxx.apps.googleusercontent.com">
+                                </div>
+                                <div class="cz-field">
+                                    <label class="cz-label"><?php esc_html_e( 'Google Client Secret', 'customize-my-account-for-woocommerce' ); ?></label>
+                                    <input type="text" class="cz-text-input" data-key="google_client_secret" value="<?php echo esc_attr( $google_client_secret ); ?>" autocomplete="off" placeholder="GOCSPX-...">
+                                </div>
+                                <div class="cz-field">
+                                    <label class="cz-label"><?php esc_html_e( 'Redirect URL', 'customize-my-account-for-woocommerce' ); ?></label>
+                                    <code style="display:block;background:#0d0d1a;border:1px solid #2d2d3f;border-radius:6px;padding:8px;font-size:11px;color:#86efac;word-break:break-all;line-height:1.5;"><?php echo esc_url( home_url( '/?wcmamtx-social=google' ) ); ?></code>
+                                    <p style="font-size:10px;color:#6b6b85;margin-top:5px;line-height:1.5;"><?php esc_html_e( 'Add this as an authorized redirect URI in Google Cloud Console.', 'customize-my-account-for-woocommerce' ); ?></p>
+                                </div>
+                            </div>
+                            <div class="cz-field" style="margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.06);">
+                                <label class="cz-label"><?php esc_html_e( 'Facebook Social Login', 'customize-my-account-for-woocommerce' ); ?></label>
+                                <div class="cz-toggle-group">
+                                    <button class="cz-toggle facebook-social-toggle <?php echo $facebook_social_login === 'yes' ? 'active' : ''; ?>" data-key="facebook_social_login" data-value="yes"><?php esc_html_e( 'Enable', 'customize-my-account-for-woocommerce' ); ?></button>
+                                    <button class="cz-toggle facebook-social-toggle <?php echo $facebook_social_login !== 'yes' ? 'active' : ''; ?>" data-key="facebook_social_login" data-value="no"><?php esc_html_e( 'Disable', 'customize-my-account-for-woocommerce' ); ?></button>
+                                </div>
+                            </div>
+                            <div id="cz-facebook-fields" style="<?php echo $facebook_social_login === 'yes' ? '' : 'display:none;'; ?>">
+                                <div class="cz-field">
+                                    <label class="cz-label"><?php esc_html_e( 'Facebook App ID', 'customize-my-account-for-woocommerce' ); ?></label>
+                                    <input type="text" class="cz-text-input" data-key="facebook_app_id" value="<?php echo esc_attr( $facebook_app_id ); ?>" placeholder="123456789012345">
+                                </div>
+                                <div class="cz-field">
+                                    <label class="cz-label"><?php esc_html_e( 'Facebook App Secret', 'customize-my-account-for-woocommerce' ); ?></label>
+                                    <input type="text" class="cz-text-input" data-key="facebook_app_secret" value="<?php echo esc_attr( $facebook_app_secret ); ?>" autocomplete="off" placeholder="abcdef1234567890...">
+                                </div>
+                                <div class="cz-field">
+                                    <label class="cz-label"><?php esc_html_e( 'Redirect URL', 'customize-my-account-for-woocommerce' ); ?></label>
+                                    <code style="display:block;background:#0d0d1a;border:1px solid #2d2d3f;border-radius:6px;padding:8px;font-size:11px;color:#86efac;word-break:break-all;line-height:1.5;"><?php echo esc_url( home_url( '/?wcmamtx-social=facebook' ) ); ?></code>
+                                    <p style="font-size:10px;color:#6b6b85;margin-top:5px;line-height:1.5;"><?php esc_html_e( 'Add this as a Valid OAuth Redirect URI in your Facebook App settings.', 'customize-my-account-for-woocommerce' ); ?></p>
+                                </div>
+                            </div>
+                            <div class="cz-field" style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.06);">
+                                <a href="#" class="cz-template-override-toggle" style="font-size:12px;color:#a78bfa;text-decoration:none;"><?php esc_html_e( 'Template Override From Child Theme ?', 'customize-my-account-for-woocommerce' ); ?></a>
+                                <div class="cz-template-override-info" style="display:none;margin-top:8px;">
+                                    <p style="font-size:11px;color:#6b6b85;line-height:1.6;"><?php esc_html_e( 'Copy the template from:', 'customize-my-account-for-woocommerce' ); ?></p>
+                                    <code style="display:block;background:#0d0d1a;border:1px solid #2d2d3f;border-radius:5px;padding:6px 8px;font-size:10px;color:#a78bfa;word-break:break-all;margin:4px 0;"><?php echo esc_html( wcmamtx_PLUGIN_URL . 'templates/myaccount/form-login.php' ); ?></code>
+                                    <p style="font-size:11px;color:#6b6b85;line-height:1.6;margin-top:4px;"><?php esc_html_e( 'Into your child theme at:', 'customize-my-account-for-woocommerce' ); ?></p>
+                                    <code style="display:block;background:#0d0d1a;border:1px solid #2d2d3f;border-radius:5px;padding:6px 8px;font-size:10px;color:#a78bfa;word-break:break-all;margin-top:4px;"><?php echo esc_html( get_stylesheet_directory() . '/wcmamtx_template/form-login.php' ); ?></code>
+                                </div>
+                            </div>
+                            <!-- Login Page Designer -->
+                            <div class="cz-field" style="margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.06);">
+                                <button type="button" id="cz-login-page-design-btn" style="display:flex;align-items:center;gap:8px;width:100%;padding:10px 14px;background:linear-gradient(135deg,<?php echo esc_attr( $login_page_gradient_start ); ?> 0%,<?php echo esc_attr( $login_page_gradient_end ); ?> 100%);border:none;border-radius:8px;color:#fff;font-size:12px;font-weight:600;cursor:pointer;letter-spacing:.3px;text-align:left;">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                                    <?php esc_html_e( 'Customize Login Page Design', 'customize-my-account-for-woocommerce' ); ?>
+                                    <svg id="cz-login-design-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="margin-left:auto;transition:transform .2s;flex-shrink:0;"><path d="M6 9l6 6 6-6"/></svg>
+                                </button>
+                            </div>
+                            <div id="cz-login-designer" data-ajax="<?php echo esc_url( $ajax_url ); ?>" data-nonce="<?php echo esc_attr( $nonce_layout ); ?>" data-saving="<?php echo esc_attr( __( 'Saving', 'customize-my-account-for-woocommerce' ) ); ?>" data-saved="<?php echo esc_attr( __( 'Saved', 'customize-my-account-for-woocommerce' ) ); ?>" style="display:none;margin-top:2px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:8px;padding:14px;">
+                                <div style="font-size:10px;color:#6b6b85;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px;"><?php esc_html_e( 'Live Preview', 'customize-my-account-for-woocommerce' ); ?></div>
+                                <div id="cz-lp-left-preview" style="background:linear-gradient(135deg,<?php echo esc_attr( $login_page_gradient_start ); ?> 0%,<?php echo esc_attr( $login_page_gradient_end ); ?> 100%);border-radius:8px;padding:18px 14px;display:flex;align-items:center;justify-content:center;min-height:110px;margin-bottom:14px;">
+                                    <div style="text-align:center;max-width:100%;">
+                                        <div id="cz-lp-preview-headline" style="font-size:13px;font-weight:700;color:#fff;margin-bottom:6px;line-height:1.4;word-break:break-word;"><?php echo esc_html( $login_page_headline ?: __( 'Everything you need, in one place.', 'customize-my-account-for-woocommerce' ) ); ?></div>
+                                        <div id="cz-lp-preview-subtitle" style="font-size:9px;color:rgba(255,255,255,.8);margin-bottom:8px;line-height:1.5;word-break:break-word;"><?php echo esc_html( $login_page_subtitle ?: __( 'Track orders, manage addresses, download purchases — your account is your command centre.', 'customize-my-account-for-woocommerce' ) ); ?></div>
+                                        <div id="cz-lp-preview-badge" style="display:inline-flex;align-items:center;gap:4px;background:<?php echo esc_attr( $login_page_badge_bg ?: 'rgba(255,255,255,.15)' ); ?>;border:1px solid rgba(255,255,255,.25);border-radius:50px;padding:3px 9px;font-size:8px;color:#fff;">
+                                            <svg width="8" height="8" viewBox="0 0 24 24" fill="white"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                                            <span id="cz-lp-preview-badge-text"><?php echo esc_html( $login_page_badge_text ?: __( 'Trusted by thousands of shoppers', 'customize-my-account-for-woocommerce' ) ); ?></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="cz-field">
+                                    <label class="cz-label"><?php esc_html_e( 'Headline', 'customize-my-account-for-woocommerce' ); ?></label>
+                                    <input type="text" class="cz-lp-field" data-key="login_page_headline" data-preview="cz-lp-preview-headline" data-default="<?php echo esc_attr( __( 'Everything you need, in one place.', 'customize-my-account-for-woocommerce' ) ); ?>" value="<?php echo esc_attr( $login_page_headline ); ?>" placeholder="<?php esc_attr_e( 'Everything you need, in one place.', 'customize-my-account-for-woocommerce' ); ?>" style="width:100%;box-sizing:border-box;padding:7px 10px;background:#0d0d1a;border:1px solid #2d2d3f;border-radius:6px;color:#fff;font-size:12px;outline:none;">
+                                </div>
+                                <div class="cz-field">
+                                    <label class="cz-label"><?php esc_html_e( 'Subtitle', 'customize-my-account-for-woocommerce' ); ?></label>
+                                    <input type="text" class="cz-lp-field" data-key="login_page_subtitle" data-preview="cz-lp-preview-subtitle" data-default="<?php echo esc_attr( __( 'Track orders, manage addresses, download purchases — your account is your command centre.', 'customize-my-account-for-woocommerce' ) ); ?>" value="<?php echo esc_attr( $login_page_subtitle ); ?>" placeholder="<?php esc_attr_e( 'Track orders, manage addresses...', 'customize-my-account-for-woocommerce' ); ?>" style="width:100%;box-sizing:border-box;padding:7px 10px;background:#0d0d1a;border:1px solid #2d2d3f;border-radius:6px;color:#fff;font-size:12px;outline:none;">
+                                </div>
+                                <div class="cz-field">
+                                    <label class="cz-label"><?php esc_html_e( 'Badge Text', 'customize-my-account-for-woocommerce' ); ?></label>
+                                    <input type="text" class="cz-lp-field" data-key="login_page_badge_text" data-badge-preview="cz-lp-preview-badge-text" data-default="<?php echo esc_attr( __( 'Trusted by thousands of shoppers', 'customize-my-account-for-woocommerce' ) ); ?>" value="<?php echo esc_attr( $login_page_badge_text ); ?>" placeholder="<?php esc_attr_e( 'Trusted by thousands of shoppers', 'customize-my-account-for-woocommerce' ); ?>" style="width:100%;box-sizing:border-box;padding:7px 10px;background:#0d0d1a;border:1px solid #2d2d3f;border-radius:6px;color:#fff;font-size:12px;outline:none;">
+                                </div>
+                                <div class="cz-field">
+                                    <label class="cz-label"><?php esc_html_e( 'Panel Gradient', 'customize-my-account-for-woocommerce' ); ?></label>
+                                    <div style="display:flex;gap:10px;align-items:flex-end;">
+                                        <div style="flex:1;">
+                                            <label style="font-size:10px;color:#6b6b85;display:block;margin-bottom:4px;"><?php esc_html_e( 'From', 'customize-my-account-for-woocommerce' ); ?></label>
+                                            <input type="color" class="cz-lp-color" data-key="login_page_gradient_start" value="<?php echo esc_attr( $login_page_gradient_start ); ?>" style="width:100%;height:34px;border:1px solid #2d2d3f;border-radius:6px;padding:2px 4px;background:#0d0d1a;cursor:pointer;">
+                                        </div>
+                                        <div style="flex:1;">
+                                            <label style="font-size:10px;color:#6b6b85;display:block;margin-bottom:4px;"><?php esc_html_e( 'To', 'customize-my-account-for-woocommerce' ); ?></label>
+                                            <input type="color" class="cz-lp-color" data-key="login_page_gradient_end" value="<?php echo esc_attr( $login_page_gradient_end ); ?>" style="width:100%;height:34px;border:1px solid #2d2d3f;border-radius:6px;padding:2px 4px;background:#0d0d1a;cursor:pointer;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Background Image -->
+                                <div class="cz-field" style="border-top:1px solid rgba(255,255,255,.06);margin-top:12px;padding-top:12px;">
+                                    <label class="cz-label"><?php esc_html_e( 'Background Image', 'customize-my-account-for-woocommerce' ); ?></label>
+                                    <div id="cz-lp-bg-thumb" style="display:<?php echo $login_page_bg_image ? '' : 'none'; ?>;border-radius:6px;overflow:hidden;height:64px;margin-bottom:8px;<?php if ( $login_page_bg_image ) { $_bsize = ( ! $login_page_bg_size || $login_page_bg_size === 'cover' ) ? 'cover' : esc_attr( $login_page_bg_size ) . '%'; echo 'background:url(' . esc_url( $login_page_bg_image ) . ') center/' . $_bsize . ' no-repeat #1a1a2e;'; } ?>position:relative;">
+                                        <button type="button" id="cz-lp-bg-remove" style="position:absolute;top:4px;right:4px;width:20px;height:20px;background:rgba(0,0,0,.65);border:none;border-radius:50%;cursor:pointer;color:#fff;font-size:14px;line-height:1;display:flex;align-items:center;justify-content:center;">&times;</button>
+                                    </div>
+                                    <label id="cz-lp-bg-upload-btn" style="display:flex;align-items:center;justify-content:center;gap:6px;padding:8px;background:#0d0d1a;border:1px dashed rgba(167,139,250,.4);border-radius:6px;cursor:pointer;font-size:11px;color:#a78bfa;" data-uploading="<?php echo esc_attr( __( 'Uploading…', 'customize-my-account-for-woocommerce' ) ); ?>" data-choose="<?php echo esc_attr( __( 'Choose Image', 'customize-my-account-for-woocommerce' ) ); ?>">
+                                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                                        <span id="cz-lp-bg-upload-label"><?php esc_html_e( 'Choose Image', 'customize-my-account-for-woocommerce' ); ?></span>
+                                        <input type="file" id="cz-lp-bg-file" accept="image/jpeg,image/png,image/gif,image/webp" style="display:none;">
+                                    </label>
+                                    <div id="cz-lp-bg-size-wrap" style="display:<?php echo $login_page_bg_image ? '' : 'none'; ?>;margin-top:10px;">
+                                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                                            <label style="font-size:10px;color:#6b6b85;"><?php esc_html_e( 'Image Size', 'customize-my-account-for-woocommerce' ); ?></label>
+                                            <span id="cz-lp-bg-size-label" style="font-size:10px;color:#a78bfa;font-weight:600;"><?php echo ( ! $login_page_bg_size || $login_page_bg_size === 'cover' ) ? esc_html__( 'Fill', 'customize-my-account-for-woocommerce' ) : esc_html( $login_page_bg_size ) . '%'; ?></span>
+                                        </div>
+                                        <input type="range" id="cz-lp-bg-size-range" min="0" max="200" step="10" value="<?php echo ( ! $login_page_bg_size || $login_page_bg_size === 'cover' ) ? '0' : esc_attr( $login_page_bg_size ); ?>" style="width:100%;accent-color:#a78bfa;cursor:pointer;">
+                                        <div style="display:flex;justify-content:space-between;font-size:9px;color:#6b6b85;margin-top:3px;">
+                                            <span><?php esc_html_e( 'Fill', 'customize-my-account-for-woocommerce' ); ?></span>
+                                            <span>200%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Text Colour -->
+                                <div class="cz-field" style="border-top:1px solid rgba(255,255,255,.06);margin-top:12px;padding-top:12px;">
+                                    <label class="cz-label"><?php esc_html_e( 'Text Colour', 'customize-my-account-for-woocommerce' ); ?></label>
+                                    <input type="color" id="cz-lp-text-color" data-key="login_page_text_color" value="<?php echo esc_attr( $login_page_text_color ?: '#ffffff' ); ?>" style="width:100%;height:34px;border:1px solid #2d2d3f;border-radius:6px;padding:2px 4px;background:#0d0d1a;cursor:pointer;">
+                                </div>
+                                <!-- Badge Button Background -->
+                                <div class="cz-field" style="margin-top:10px;">
+                                    <label class="cz-label"><?php esc_html_e( 'Badge Background', 'customize-my-account-for-woocommerce' ); ?></label>
+                                    <input type="color" id="cz-lp-badge-bg" data-key="login_page_badge_bg" value="<?php echo esc_attr( $login_page_badge_bg ?: '#ffffff29' ); ?>" style="width:100%;height:34px;border:1px solid #2d2d3f;border-radius:6px;padding:2px 4px;background:#0d0d1a;cursor:pointer;">
+                                </div>
+                                <div style="text-align:right;margin-top:8px;">
+                                    <button type="button" id="cz-lp-reset" style="font-size:10px;color:#6b6b85;background:none;border:none;cursor:pointer;padding:2px 0;text-decoration:underline;"><?php esc_html_e( 'Reset to defaults', 'customize-my-account-for-woocommerce' ); ?></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /accordion loginregister -->
 
                 <!-- OTHER TOOLS -->
                 <div class="cz-accordion" data-accordion="othertools">
@@ -2354,6 +2698,267 @@ setTimeout(function() {
         window.initLinkBoxSelect2();
     }
 }, 0);
+
+// Login & Register: toggle show/hide Google credentials panel
+document.querySelectorAll('.formlogin-toggle').forEach(function(btn){
+    btn.addEventListener('click', function(){
+        var fields = document.getElementById('cz-login-register-fields');
+        if (fields) fields.style.display = btn.dataset.value === '01' ? '' : 'none';
+    });
+});
+
+document.querySelectorAll('[data-key="show_only_logged_in"]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+        var field = document.getElementById('cz-nw-popup-field');
+        if (field) field.style.display = btn.dataset.value === 'no' ? '' : 'none';
+    });
+});
+
+document.querySelectorAll('.google-social-toggle').forEach(function(btn){
+    btn.addEventListener('click', function(){
+        var fields = document.getElementById('cz-google-fields');
+        if (fields) fields.style.display = btn.dataset.value === 'yes' ? '' : 'none';
+    });
+});
+
+document.querySelectorAll('.facebook-social-toggle').forEach(function(btn){
+    btn.addEventListener('click', function(){
+        var fields = document.getElementById('cz-facebook-fields');
+        if (fields) fields.style.display = btn.dataset.value === 'yes' ? '' : 'none';
+    });
+});
+
+document.querySelectorAll('.cz-template-override-toggle').forEach(function(link){
+    link.addEventListener('click', function(e){
+        e.preventDefault();
+        var info = link.nextElementSibling;
+        if (info) info.style.display = info.style.display === 'none' ? '' : 'none';
+    });
+});
+
+// Login Page Designer
+(function(){
+    var designBtn  = document.getElementById('cz-login-page-design-btn');
+    var designPanel = document.getElementById('cz-login-designer');
+    var chevron    = document.getElementById('cz-login-design-chevron');
+    var previewBox = document.getElementById('cz-lp-left-preview');
+
+    var lpStatusEl  = document.getElementById('cz-save-status');
+    var lpSaveTimer;
+    function lpSetStatus(state, text) {
+        if (!lpStatusEl) return;
+        lpStatusEl.className = state;
+        lpStatusEl.textContent = text;
+        clearTimeout(lpSaveTimer);
+        if (state === 'saved') lpSaveTimer = setTimeout(function(){ lpStatusEl.textContent = ''; lpStatusEl.className = ''; }, 3000);
+    }
+    function lpSave(key, value) {
+        if (!designPanel) return;
+        lpSetStatus('saving', designPanel.getAttribute('data-saving'));
+        var fd = new FormData();
+        fd.append('action', 'wcmamtx_customizer_save');
+        fd.append('nonce',  designPanel.getAttribute('data-nonce'));
+        fd.append('key',    key);
+        fd.append('value',  value);
+        fetch(designPanel.getAttribute('data-ajax'), {method:'POST', body:fd, credentials:'same-origin'})
+            .then(function(r){ return r.json(); })
+            .then(function(res){ lpSetStatus(res.success ? 'saved' : '', res.success ? designPanel.getAttribute('data-saved') : ''); })
+            .catch(function(){ lpSetStatus('', ''); });
+    }
+    function lpSaveBulk(pairs) {
+        if (!designPanel) return;
+        lpSetStatus('saving', designPanel.getAttribute('data-saving'));
+        var fd = new FormData();
+        fd.append('action', 'wcmamtx_customizer_save_bulk');
+        fd.append('nonce',  designPanel.getAttribute('data-nonce'));
+        fd.append('pairs',  JSON.stringify(pairs));
+        fetch(designPanel.getAttribute('data-ajax'), {method:'POST', body:fd, credentials:'same-origin'})
+            .then(function(r){ return r.json(); })
+            .then(function(res){ lpSetStatus(res.success ? 'saved' : '', res.success ? designPanel.getAttribute('data-saved') : ''); })
+            .catch(function(){ lpSetStatus('', ''); });
+    }
+
+    if (designBtn && designPanel) {
+        designBtn.addEventListener('click', function(){
+            var open = designPanel.style.display !== 'none';
+            designPanel.style.display = open ? 'none' : '';
+            if (chevron) chevron.style.transform = open ? '' : 'rotate(180deg)';
+        });
+    }
+
+    var bgThumb    = document.getElementById('cz-lp-bg-thumb');
+    var bgSizeWrap = document.getElementById('cz-lp-bg-size-wrap');
+    var bgSizeRange= document.getElementById('cz-lp-bg-size-range');
+    var bgSizeLbl  = document.getElementById('cz-lp-bg-size-label');
+    var bgUploadBtn= document.getElementById('cz-lp-bg-upload-btn');
+    var bgUploadLbl= document.getElementById('cz-lp-bg-upload-label');
+    var bgFile     = document.getElementById('cz-lp-bg-file');
+    var bgRemove   = document.getElementById('cz-lp-bg-remove');
+
+    function getBgUrl() {
+        if (!bgThumb || bgThumb.style.display === 'none') return '';
+        var m = bgThumb.style.background.match(/url\(["']?([^"')]+)["']?\)/);
+        return m ? m[1] : '';
+    }
+    function applyBgToPreview(url, sizeVal) {
+        if (!previewBox) return;
+        if (url) {
+            var cssSize = (!sizeVal || sizeVal === '0') ? 'cover' : (sizeVal + '%');
+            previewBox.style.background = 'url(' + url + ') center/' + cssSize + ' no-repeat #1a1a2e';
+        } else {
+            updateGradientPreview();
+        }
+    }
+    function updateGradientPreview(){
+        if (getBgUrl()) return; // image overrides gradient
+        var s = document.querySelector('.cz-lp-color[data-key="login_page_gradient_start"]');
+        var e = document.querySelector('.cz-lp-color[data-key="login_page_gradient_end"]');
+        var grad = 'linear-gradient(135deg,' + (s ? s.value : '#667eea') + ' 0%,' + (e ? e.value : '#764ba2') + ' 100%)';
+        if (previewBox) previewBox.style.background = grad;
+        if (designBtn) designBtn.style.background = grad;
+    }
+    // Init preview if image already stored
+    (function(){ var u = getBgUrl(); if (u && bgSizeRange) applyBgToPreview(u, bgSizeRange.value); })();
+
+    document.querySelectorAll('.cz-lp-field').forEach(function(inp){
+        inp.addEventListener('input', function(){
+            var val = inp.value || inp.getAttribute('data-default');
+            var pid = inp.getAttribute('data-preview');
+            var bid = inp.getAttribute('data-badge-preview');
+            if (pid) { var el = document.getElementById(pid); if (el) el.textContent = val; }
+            if (bid) { var el2 = document.getElementById(bid); if (el2) el2.textContent = val; }
+        });
+        inp.addEventListener('blur', function(){
+            lpSave(inp.getAttribute('data-key'), inp.value);
+        });
+        inp.addEventListener('keydown', function(e){
+            if (e.key === 'Enter'){ e.preventDefault(); lpSave(inp.getAttribute('data-key'), inp.value); }
+        });
+    });
+
+    document.querySelectorAll('.cz-lp-color').forEach(function(inp){
+        inp.addEventListener('input', updateGradientPreview);
+        inp.addEventListener('change', function(){
+            updateGradientPreview();
+            lpSave(inp.getAttribute('data-key'), inp.value);
+        });
+    });
+
+    // Background image upload
+    if (bgFile) {
+        bgFile.addEventListener('change', function(){
+            var file = bgFile.files[0];
+            if (!file || !designPanel) return;
+            if (bgUploadLbl) bgUploadLbl.textContent = bgUploadBtn ? bgUploadBtn.getAttribute('data-uploading') : '…';
+            lpSetStatus('saving', designPanel.getAttribute('data-saving'));
+            var fd = new FormData();
+            fd.append('action', 'wcmamtx_upload_login_bg');
+            fd.append('nonce',  designPanel.getAttribute('data-nonce'));
+            fd.append('file',   file);
+            fetch(designPanel.getAttribute('data-ajax'), {method:'POST', body:fd, credentials:'same-origin'})
+                .then(function(r){ return r.json(); })
+                .then(function(res){
+                    if (bgUploadLbl) bgUploadLbl.textContent = bgUploadBtn ? bgUploadBtn.getAttribute('data-choose') : 'Choose Image';
+                    bgFile.value = '';
+                    if (res.success) {
+                        var url = res.data.url;
+                        var sizeVal = bgSizeRange ? bgSizeRange.value : '0';
+                        var cssSize = (!sizeVal || sizeVal === '0') ? 'cover' : (sizeVal + '%');
+                        if (bgThumb) { bgThumb.style.background = 'url(' + url + ') center/' + cssSize + ' no-repeat #1a1a2e'; bgThumb.style.display = ''; }
+                        if (bgSizeWrap) bgSizeWrap.style.display = '';
+                        applyBgToPreview(url, sizeVal);
+                        lpSave('login_page_bg_image', url);
+                        lpSetStatus('saved', designPanel.getAttribute('data-saved'));
+                    } else {
+                        lpSetStatus('', '');
+                    }
+                })
+                .catch(function(){ if (bgUploadLbl && bgUploadBtn) bgUploadLbl.textContent = bgUploadBtn.getAttribute('data-choose'); bgFile.value = ''; lpSetStatus('',''); });
+        });
+    }
+
+    if (bgRemove) {
+        bgRemove.addEventListener('click', function(){
+            if (bgThumb) bgThumb.style.display = 'none';
+            if (bgSizeWrap) bgSizeWrap.style.display = 'none';
+            applyBgToPreview('', '');
+            lpSave('login_page_bg_image', '');
+        });
+    }
+
+    if (bgSizeRange) {
+        bgSizeRange.addEventListener('input', function(){
+            var v = bgSizeRange.value;
+            if (bgSizeLbl) bgSizeLbl.textContent = (v == '0') ? '<?php echo esc_js( __( 'Fill', 'customize-my-account-for-woocommerce' ) ); ?>' : v + '%';
+            var cssSize = (v == '0') ? 'cover' : (v + '%');
+            if (bgThumb) bgThumb.style.backgroundSize = cssSize;
+            var url = getBgUrl();
+            if (url) applyBgToPreview(url, v);
+        });
+        bgSizeRange.addEventListener('change', function(){
+            var v = bgSizeRange.value;
+            lpSave('login_page_bg_size', v == '0' ? 'cover' : v);
+        });
+    }
+
+    // Text colour picker
+    var textColorPicker = document.getElementById('cz-lp-text-color');
+    function applyPreviewTextColor(color) {
+        if (!previewBox) return;
+        previewBox.querySelectorAll('#cz-lp-preview-headline,#cz-lp-preview-subtitle,#cz-lp-preview-badge-text').forEach(function(el){
+            el.style.color = color;
+            el.style.webkitTextFillColor = color;
+        });
+    }
+    if (textColorPicker) {
+        applyPreviewTextColor(textColorPicker.value);
+        textColorPicker.addEventListener('input', function(){ applyPreviewTextColor(textColorPicker.value); });
+        textColorPicker.addEventListener('change', function(){ lpSave('login_page_text_color', textColorPicker.value); });
+    }
+
+    // Badge background picker
+    var badgeBgPicker  = document.getElementById('cz-lp-badge-bg');
+    var previewBadge   = document.getElementById('cz-lp-preview-badge');
+    if (badgeBgPicker) {
+        badgeBgPicker.addEventListener('input', function(){
+            if (previewBadge) previewBadge.style.background = badgeBgPicker.value;
+        });
+        badgeBgPicker.addEventListener('change', function(){
+            lpSave('login_page_badge_bg', badgeBgPicker.value);
+        });
+    }
+
+    var resetBtn = document.getElementById('cz-lp-reset');
+    if (resetBtn) {
+        resetBtn.addEventListener('click', function(){
+            var pairs = [];
+            document.querySelectorAll('.cz-lp-field').forEach(function(inp){
+                inp.value = '';
+                var def = inp.getAttribute('data-default');
+                var pid = inp.getAttribute('data-preview');
+                var bid = inp.getAttribute('data-badge-preview');
+                if (pid) { var el = document.getElementById(pid); if (el) el.textContent = def; }
+                if (bid) { var el2 = document.getElementById(bid); if (el2) el2.textContent = def; }
+                pairs.push({key: inp.getAttribute('data-key'), value: ''});
+            });
+            var defaults = { login_page_gradient_start: '#667eea', login_page_gradient_end: '#764ba2' };
+            document.querySelectorAll('.cz-lp-color').forEach(function(inp){
+                var defVal = defaults[inp.getAttribute('data-key')] || '#667eea';
+                inp.value = defVal;
+                pairs.push({key: inp.getAttribute('data-key'), value: defVal});
+            });
+            if (bgThumb) bgThumb.style.display = 'none';
+            if (bgSizeWrap) bgSizeWrap.style.display = 'none';
+            pairs.push({key: 'login_page_bg_image', value: ''});
+            if (textColorPicker) { textColorPicker.value = '#ffffff'; applyPreviewTextColor('#ffffff'); }
+            pairs.push({key: 'login_page_text_color', value: ''});
+            if (badgeBgPicker) { badgeBgPicker.value = '#ffffff29'; if (previewBadge) previewBadge.style.background = 'rgba(255,255,255,.15)'; }
+            pairs.push({key: 'login_page_badge_bg', value: ''});
+            lpSaveBulk(pairs);
+            updateGradientPreview();
+        });
+    }
+})();
 </script>
 <div id="cz-defaulttab-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="cz-dtab-title">
   <div id="cz-modal-box">

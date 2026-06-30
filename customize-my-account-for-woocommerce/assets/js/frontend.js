@@ -105,7 +105,7 @@ var $vas = jQuery.noConflict();
 
 
 
-        $vas('.wcmamtx_upload_avatar').on('click', function(event) {
+        $vas(document).on('click', '.wcmamtx_upload_avatar', function(event) {
             event.preventDefault();
             $vas('#mywcmamtx_modal').show();
             $vas('#mywcmamtx_modal_webcam').hide();
@@ -113,7 +113,7 @@ var $vas = jQuery.noConflict();
             return false;
         });
 
-       $vas('.wcmamtx_modal_trigger_webcam').on('click', function(event) {
+       $vas(document).on('click', '.wcmamtx_modal_trigger_webcam', function(event) {
             event.preventDefault();
             $vas('#mywcmamtx_modal_webcam').show();
        $vas('#mywcmamtx_modal').hide();
@@ -157,24 +157,24 @@ var $vas = jQuery.noConflict();
        
     
 
-      $vas('.wcmamtx_modal_close').on('click', function() {
+      $vas(document).on('click', '.wcmamtx_modal_close', function() {
           $vas('#mywcmamtx_modal').hide();
           $vas('#custom-file-uploader').show();
           $vas('#crop-avatar').hide();
       });
 
-      $vas('.wcmamtx_modal_close_webcam').on('click', function() {
+      $vas(document).on('click', '.wcmamtx_modal_close_webcam', function() {
           $vas('#mywcmamtx_modal_webcam').hide();
       });
         
    
 
 
-   $vas('.wcmamtx_modal_trigger_upload').on('click', function() {
+   $vas(document).on('click', '.wcmamtx_modal_trigger_upload', function() {
       $vas('#wcmamtx_wp-user-file').trigger('click');
     });
 
-   $vas('.wcmamtx_restore_default_link').on('click', function(event) {
+   $vas(document).on('click', '.wcmamtx_restore_default_link', function(event) {
         event.preventDefault();
 
         $vas('#wcmamtx_upload_response').text(wcmamtxfrontend.restoring_text);
@@ -269,12 +269,31 @@ var $vas = jQuery.noConflict();
 
 
           let cropper;
-   
 
+   $vas(document).on('click', '#crop-avatar', function() {
+    const canvas = cropper.getCroppedCanvas({
+        width: 300,
+        height: 300
+    });
+    canvas.toBlob(function(blob) {
+        let formData = new FormData();
+        formData.append('security', wcmamtxfrontend.nonce);
+        formData.append('action', 'wcmam_save_avatar');
+        formData.append('avatar', blob, 'avatar.png');
+        $vas.ajax({
+            url: wcmamtxfrontend.ajax_url,
+            method: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                location.reload();
+            }
+        });
+    });
+   });
 
-
-
-   $vas('#wcmamtx_wp-user-file').on('change', function() {
+   $vas(document).on('change', '#wcmamtx_wp-user-file', function() {
         var fileInput = $vas('#wcmamtx_wp-user-file')[0].files[0];
         if (!fileInput) {
             alert(wcmamtxfrontend.file_text);
@@ -397,48 +416,6 @@ var $vas = jQuery.noConflict();
 
         }
 
-        $vas('#crop-avatar').on('click', function() {
-
-
-
-    const canvas = cropper.getCroppedCanvas({
-        width: 300,
-        height: 300
-    });
-
-    canvas.toBlob(function(blob) {
-
-        let formData = new FormData();
-
-        formData.append('security', wcmamtxfrontend.nonce);
-
-        formData.append(
-            'action',
-            'wcmam_save_avatar'
-        );
-
-        formData.append(
-            'avatar',
-            blob,
-            'avatar.png'
-        );
-
-        $vas.ajax({
-            url: wcmamtxfrontend.ajax_url,
-            method: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function(response) {
-
-                location.reload();
-
-            }
-        });
-
-    });
-
-});
     });
 
 
