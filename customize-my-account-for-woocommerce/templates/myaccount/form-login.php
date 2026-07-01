@@ -26,10 +26,10 @@ $_lp_badge    = !empty( $_wcmamtx_layout['login_page_badge_text'] ) ? $_wcmamtx_
             <div class="wc-auth-blob wc-auth-blob-3"></div>
             <div class="wc-auth-left-inner">
                 <h2 class="wc-auth-animated-headline"><?php echo esc_html( $_lp_headline ?: __( 'Everything you need, in one place.', 'customize-my-account-for-woocommerce' ) ); ?></h2>
-                <p class="wc-auth-left-subtitle"><?php echo esc_html( $_lp_subtitle ?: __( 'Track orders, manage addresses, download purchases — your account is your command centre.', 'customize-my-account-for-woocommerce' ) ); ?></p>
+                <p class="wc-auth-left-subtitle"><?php echo esc_html( $_lp_subtitle ?: __( 'Track orders, manage addresses, manage your account details — your account is your command centre.', 'customize-my-account-for-woocommerce' ) ); ?></p>
                 <div class="wc-auth-cta-badge">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="white"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                    <?php echo esc_html( $_lp_badge ?: __( 'Trusted by thousands of shoppers', 'customize-my-account-for-woocommerce' ) ); ?>
+                    <?php echo esc_html( $_lp_badge ?: __( 'Sign in to get started', 'customize-my-account-for-woocommerce' ) ); ?>
                 </div>
             </div>
         </div>
@@ -70,11 +70,17 @@ $_lp_badge    = !empty( $_wcmamtx_layout['login_page_badge_text'] ) ? $_wcmamtx_
 
                         <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
                             <label for="username"><?php esc_html_e( 'Username or email address', 'customize-my-account-for-woocommerce' ); ?>&nbsp;<span class="required" aria-hidden="true">*</span><span class="screen-reader-text"><?php esc_html_e( 'Required', 'customize-my-account-for-woocommerce' ); ?></span></label>
-                            <input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="username" id="username" autocomplete="username" value="<?php echo ( ! empty( $_POST['username'] ) && is_string( $_POST['username'] ) ) ? esc_attr( wp_unslash( $_POST['username'] ) ) : ''; ?>" required aria-required="true" /><?php // @codingStandardsIgnoreLine ?>
+                            <span class="wcmamtx-input-wrap">
+                                <svg class="wcmamtx-input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                                <input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="username" id="username" autocomplete="username" value="<?php echo ( ! empty( $_POST['username'] ) && is_string( $_POST['username'] ) ) ? esc_attr( wp_unslash( $_POST['username'] ) ) : ''; ?>" required aria-required="true" /><?php // @codingStandardsIgnoreLine ?>
+                            </span>
                         </p>
                         <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
                             <label for="password"><?php esc_html_e( 'Password', 'customize-my-account-for-woocommerce' ); ?>&nbsp;<span class="required" aria-hidden="true">*</span><span class="screen-reader-text"><?php esc_html_e( 'Required', 'customize-my-account-for-woocommerce' ); ?></span></label>
-                            <input class="woocommerce-Input woocommerce-Input--text input-text" type="password" name="password" id="password" autocomplete="current-password" required aria-required="true" />
+                            <span class="wcmamtx-input-wrap">
+                                <svg class="wcmamtx-input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                                <input class="woocommerce-Input woocommerce-Input--text input-text" type="password" name="password" id="password" autocomplete="current-password" required aria-required="true" />
+                            </span>
                         </p>
 
                         <?php do_action( 'woocommerce_login_form' ); ?>
@@ -96,8 +102,9 @@ $_lp_badge    = !empty( $_wcmamtx_layout['login_page_badge_text'] ) ? $_wcmamtx_
 
                         $google_client_id     = isset( $wcmamtx_layout['google_client_id'] )     ? $wcmamtx_layout['google_client_id']     : '';
                         $google_client_secret = isset( $wcmamtx_layout['google_client_secret'] ) ? $wcmamtx_layout['google_client_secret'] : '';
+                        $google_social_login  = isset( $wcmamtx_layout['google_social_login'] )  ? $wcmamtx_layout['google_social_login']  : 'no';
 
-                        if ( $google_client_id !== '' && $google_client_secret !== '' ) { ?>
+                        if ( $google_social_login === 'yes' && $google_client_id !== '' && $google_client_secret !== '' ) { ?>
                         <div class="social-login-wrapper">
                             <a href="<?php echo esc_url( wcmamtx_get_google_login_url() ); ?>" class="google-login-btn">
                                 <span class="google-icon">
@@ -114,10 +121,11 @@ $_lp_badge    = !empty( $_wcmamtx_layout['login_page_badge_text'] ) ? $_wcmamtx_
                         <?php } ?>
 
                         <?php
-                        $facebook_app_id     = isset( $wcmamtx_layout['facebook_app_id'] )     ? $wcmamtx_layout['facebook_app_id']     : '';
-                        $facebook_app_secret = isset( $wcmamtx_layout['facebook_app_secret'] ) ? $wcmamtx_layout['facebook_app_secret'] : '';
+                        $facebook_app_id      = isset( $wcmamtx_layout['facebook_app_id'] )      ? $wcmamtx_layout['facebook_app_id']      : '';
+                        $facebook_app_secret  = isset( $wcmamtx_layout['facebook_app_secret'] )  ? $wcmamtx_layout['facebook_app_secret']  : '';
+                        $facebook_social_login = isset( $wcmamtx_layout['facebook_social_login'] ) ? $wcmamtx_layout['facebook_social_login'] : 'no';
 
-                        if ( $facebook_app_id !== '' && $facebook_app_secret !== '' ) { ?>
+                        if ( $facebook_social_login === 'yes' && $facebook_app_id !== '' && $facebook_app_secret !== '' ) { ?>
                         <div class="social-login-wrapper">
                             <a href="<?php echo esc_url( wcmamtx_get_facebook_login_url() ); ?>" class="facebook-login-btn">
                                 <span class="facebook-icon">
@@ -148,19 +156,28 @@ $_lp_badge    = !empty( $_wcmamtx_layout['login_page_badge_text'] ) ? $_wcmamtx_
                             <?php if ( 'no' === get_option( 'woocommerce_registration_generate_username' ) ) : ?>
                                 <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
                                     <label for="reg_username"><?php esc_html_e( 'Username', 'customize-my-account-for-woocommerce' ); ?>&nbsp;<span class="required" aria-hidden="true">*</span><span class="screen-reader-text"><?php esc_html_e( 'Required', 'customize-my-account-for-woocommerce' ); ?></span></label>
-                                    <input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="username" id="reg_username" autocomplete="username" value="<?php echo ( ! empty( $_POST['username'] ) ) ? esc_attr( wp_unslash( $_POST['username'] ) ) : ''; ?>" required aria-required="true" /><?php // @codingStandardsIgnoreLine ?>
+                                    <span class="wcmamtx-input-wrap">
+                                        <svg class="wcmamtx-input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
+                                        <input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="username" id="reg_username" autocomplete="username" value="<?php echo ( ! empty( $_POST['username'] ) ) ? esc_attr( wp_unslash( $_POST['username'] ) ) : ''; ?>" required aria-required="true" /><?php // @codingStandardsIgnoreLine ?>
+                                    </span>
                                 </p>
                             <?php endif; ?>
 
                             <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
                                 <label for="reg_email"><?php esc_html_e( 'Email address', 'customize-my-account-for-woocommerce' ); ?>&nbsp;<span class="required" aria-hidden="true">*</span><span class="screen-reader-text"><?php esc_html_e( 'Required', 'customize-my-account-for-woocommerce' ); ?></span></label>
-                                <input type="email" class="woocommerce-Input woocommerce-Input--text input-text" name="email" id="reg_email" autocomplete="email" value="<?php echo ( ! empty( $_POST['email'] ) ) ? esc_attr( wp_unslash( $_POST['email'] ) ) : ''; ?>" required aria-required="true" /><?php // @codingStandardsIgnoreLine ?>
+                                <span class="wcmamtx-input-wrap">
+                                    <svg class="wcmamtx-input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                                    <input type="email" class="woocommerce-Input woocommerce-Input--text input-text" name="email" id="reg_email" autocomplete="email" value="<?php echo ( ! empty( $_POST['email'] ) ) ? esc_attr( wp_unslash( $_POST['email'] ) ) : ''; ?>" required aria-required="true" /><?php // @codingStandardsIgnoreLine ?>
+                                </span>
                             </p>
 
                             <?php if ( 'no' === get_option( 'woocommerce_registration_generate_password' ) ) : ?>
                                 <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
                                     <label for="reg_password"><?php esc_html_e( 'Password', 'customize-my-account-for-woocommerce' ); ?>&nbsp;<span class="required" aria-hidden="true">*</span><span class="screen-reader-text"><?php esc_html_e( 'Required', 'customize-my-account-for-woocommerce' ); ?></span></label>
-                                    <input type="password" class="woocommerce-Input woocommerce-Input--text input-text" name="password" id="reg_password" autocomplete="new-password" required aria-required="true" />
+                                    <span class="wcmamtx-input-wrap">
+                                        <svg class="wcmamtx-input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                                        <input type="password" class="woocommerce-Input woocommerce-Input--text input-text" name="password" id="reg_password" autocomplete="new-password" required aria-required="true" />
+                                    </span>
                                 </p>
                             <?php else : ?>
                                 <p><?php esc_html_e( 'A link to set a new password will be sent to your email address.', 'customize-my-account-for-woocommerce' ); ?></p>
@@ -193,7 +210,10 @@ $_lp_badge    = !empty( $_wcmamtx_layout['login_page_badge_text'] ) ? $_wcmamtx_
 
                         <p class="woocommerce-form-row woocommerce-form-row--first form-row form-row-first">
                             <label for="user_login"><?php esc_html_e( 'Username or email', 'customize-my-account-for-woocommerce' ); ?>&nbsp;<span class="required" aria-hidden="true">*</span><span class="screen-reader-text"><?php esc_html_e( 'Required', 'customize-my-account-for-woocommerce' ); ?></span></label>
-                            <input class="wcmamtx_reset_password_input woocommerce-Input woocommerce-Input--text input-text" type="text" name="user_login" id="user_login" autocomplete="username" required aria-required="true" />
+                            <span class="wcmamtx-input-wrap">
+                                <svg class="wcmamtx-input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                                <input class="wcmamtx_reset_password_input woocommerce-Input woocommerce-Input--text input-text" type="text" name="user_login" id="user_login" autocomplete="username" required aria-required="true" />
+                            </span>
                         </p>
 
                         <div class="clear"></div>

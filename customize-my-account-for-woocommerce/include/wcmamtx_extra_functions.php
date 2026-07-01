@@ -4,7 +4,7 @@ include('wcmamtx_countof_functions.php');
 
 if ( ! function_exists( 'wcmamtx_login_page_inline_css' ) ) {
     function wcmamtx_login_page_inline_css() {
-        if ( ! is_page( wc_get_page_id( 'myaccount' ) ) ) return;
+        if ( is_admin() ) return;
         if ( ! function_exists( 'wcmamtx_get_layout' ) ) return;
         $layout = wcmamtx_get_layout();
         if ( empty( $layout['formlogin_layout_override'] ) || $layout['formlogin_layout_override'] !== '01' ) return;

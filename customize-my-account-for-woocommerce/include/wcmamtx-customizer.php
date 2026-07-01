@@ -1598,10 +1598,10 @@ a.wcmamtx_accordion_label_small
                                 <div id="cz-lp-left-preview" style="background:linear-gradient(135deg,<?php echo esc_attr( $login_page_gradient_start ); ?> 0%,<?php echo esc_attr( $login_page_gradient_end ); ?> 100%);border-radius:8px;padding:18px 14px;display:flex;align-items:center;justify-content:center;min-height:110px;margin-bottom:14px;">
                                     <div style="text-align:center;max-width:100%;">
                                         <div id="cz-lp-preview-headline" style="font-size:13px;font-weight:700;color:#fff;margin-bottom:6px;line-height:1.4;word-break:break-word;"><?php echo esc_html( $login_page_headline ?: __( 'Everything you need, in one place.', 'customize-my-account-for-woocommerce' ) ); ?></div>
-                                        <div id="cz-lp-preview-subtitle" style="font-size:9px;color:rgba(255,255,255,.8);margin-bottom:8px;line-height:1.5;word-break:break-word;"><?php echo esc_html( $login_page_subtitle ?: __( 'Track orders, manage addresses, download purchases — your account is your command centre.', 'customize-my-account-for-woocommerce' ) ); ?></div>
+                                        <div id="cz-lp-preview-subtitle" style="font-size:9px;color:rgba(255,255,255,.8);margin-bottom:8px;line-height:1.5;word-break:break-word;"><?php echo esc_html( $login_page_subtitle ?: __( 'Track orders, manage addresses, manage your account details — your account is your command centre.', 'customize-my-account-for-woocommerce' ) ); ?></div>
                                         <div id="cz-lp-preview-badge" style="display:inline-flex;align-items:center;gap:4px;background:<?php echo esc_attr( $login_page_badge_bg ?: 'rgba(255,255,255,.15)' ); ?>;border:1px solid rgba(255,255,255,.25);border-radius:50px;padding:3px 9px;font-size:8px;color:#fff;">
                                             <svg width="8" height="8" viewBox="0 0 24 24" fill="white"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                                            <span id="cz-lp-preview-badge-text"><?php echo esc_html( $login_page_badge_text ?: __( 'Trusted by thousands of shoppers', 'customize-my-account-for-woocommerce' ) ); ?></span>
+                                            <span id="cz-lp-preview-badge-text"><?php echo esc_html( $login_page_badge_text ?: __( 'Sign in to get started', 'customize-my-account-for-woocommerce' ) ); ?></span>
                                         </div>
                                     </div>
                                 </div>
@@ -1611,11 +1611,11 @@ a.wcmamtx_accordion_label_small
                                 </div>
                                 <div class="cz-field">
                                     <label class="cz-label"><?php esc_html_e( 'Subtitle', 'customize-my-account-for-woocommerce' ); ?></label>
-                                    <input type="text" class="cz-lp-field" data-key="login_page_subtitle" data-preview="cz-lp-preview-subtitle" data-default="<?php echo esc_attr( __( 'Track orders, manage addresses, download purchases — your account is your command centre.', 'customize-my-account-for-woocommerce' ) ); ?>" value="<?php echo esc_attr( $login_page_subtitle ); ?>" placeholder="<?php esc_attr_e( 'Track orders, manage addresses...', 'customize-my-account-for-woocommerce' ); ?>" style="width:100%;box-sizing:border-box;padding:7px 10px;background:#0d0d1a;border:1px solid #2d2d3f;border-radius:6px;color:#fff;font-size:12px;outline:none;">
+                                    <input type="text" class="cz-lp-field" data-key="login_page_subtitle" data-preview="cz-lp-preview-subtitle" data-default="<?php echo esc_attr( __( 'Track orders, manage addresses, manage your account details — your account is your command centre.', 'customize-my-account-for-woocommerce' ) ); ?>" value="<?php echo esc_attr( $login_page_subtitle ); ?>" placeholder="<?php esc_attr_e( 'Track orders, manage addresses...', 'customize-my-account-for-woocommerce' ); ?>" style="width:100%;box-sizing:border-box;padding:7px 10px;background:#0d0d1a;border:1px solid #2d2d3f;border-radius:6px;color:#fff;font-size:12px;outline:none;">
                                 </div>
                                 <div class="cz-field">
                                     <label class="cz-label"><?php esc_html_e( 'Badge Text', 'customize-my-account-for-woocommerce' ); ?></label>
-                                    <input type="text" class="cz-lp-field" data-key="login_page_badge_text" data-badge-preview="cz-lp-preview-badge-text" data-default="<?php echo esc_attr( __( 'Trusted by thousands of shoppers', 'customize-my-account-for-woocommerce' ) ); ?>" value="<?php echo esc_attr( $login_page_badge_text ); ?>" placeholder="<?php esc_attr_e( 'Trusted by thousands of shoppers', 'customize-my-account-for-woocommerce' ); ?>" style="width:100%;box-sizing:border-box;padding:7px 10px;background:#0d0d1a;border:1px solid #2d2d3f;border-radius:6px;color:#fff;font-size:12px;outline:none;">
+                                    <input type="text" class="cz-lp-field" data-key="login_page_badge_text" data-badge-preview="cz-lp-preview-badge-text" data-default="<?php echo esc_attr( __( 'Sign in to get started', 'customize-my-account-for-woocommerce' ) ); ?>" value="<?php echo esc_attr( $login_page_badge_text ); ?>" placeholder="<?php esc_attr_e( 'Sign in to get started', 'customize-my-account-for-woocommerce' ); ?>" style="width:100%;box-sizing:border-box;padding:7px 10px;background:#0d0d1a;border:1px solid #2d2d3f;border-radius:6px;color:#fff;font-size:12px;outline:none;">
                                 </div>
                                 <div class="cz-field">
                                     <label class="cz-label"><?php esc_html_e( 'Panel Gradient', 'customize-my-account-for-woocommerce' ); ?></label>
@@ -1668,6 +1668,16 @@ a.wcmamtx_accordion_label_small
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="cz-group" style="padding-top:10px;border-top:1px solid rgba(255,255,255,0.06);">
+                        <div class="cz-group-title"><span class="dashicons dashicons-forms" style="font-size:13px;width:13px;height:13px;vertical-align:middle;margin-right:4px;"></span><?php esc_html_e( 'Registration Fields Editor', 'customize-my-account-for-woocommerce' ); ?></div>
+                        <p style="font-size:12px;color:#c4c4d4;line-height:1.7;margin:0 0 14px;">
+                            <?php esc_html_e( 'To manage your my account and user registration fields consider buying this addon', 'customize-my-account-for-woocommerce' ); ?>
+                        </p>
+                        <a href="https://www.sysbasics.com/product/woocommerce-my-account-fields/" target="_blank" rel="noopener"
+                           style="display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;font-size:12px;font-weight:700;padding:8px 16px;border-radius:8px;text-decoration:none;letter-spacing:.3px;transition:opacity .18s;">
+                            <?php esc_html_e( 'Get My Account Fields', 'customize-my-account-for-woocommerce' ); ?> &rarr;
+                        </a>
                     </div>
                 </div>
             </div><!-- /accordion loginregister -->

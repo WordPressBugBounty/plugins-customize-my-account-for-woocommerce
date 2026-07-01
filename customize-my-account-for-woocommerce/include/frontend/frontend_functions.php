@@ -1738,22 +1738,26 @@ function wcmamtx_free_guest_popup_modal_render( $auto_open = false ) {
     $form_html = ob_get_clean();
     ?>
     <div id="wcmamtx-guest-login-overlay" role="dialog" aria-modal="true" aria-label="<?php esc_attr_e( 'Login / Register', 'customize-my-account-for-woocommerce' ); ?>">
-        <div id="wcmamtx-guest-login-box">
+        <div id="wcmamtx-guest-login-wrap">
             <button id="wcmamtx-guest-login-close" aria-label="<?php esc_attr_e( 'Close', 'customize-my-account-for-woocommerce' ); ?>">&times;</button>
-            <?php echo $form_html; ?>
+            <div id="wcmamtx-guest-login-box">
+                <?php echo $form_html; ?>
+            </div>
         </div>
     </div>
     <style>
-    #wcmamtx-guest-login-overlay{display:none;position:fixed;inset:0;z-index:999999;background:rgba(0,0,0,.55);align-items:center;justify-content:center;padding:20px;box-sizing:border-box;}
+    #wcmamtx-guest-login-overlay{display:none;position:fixed;inset:0;z-index:999999;background:rgba(0,0,0,.55);align-items:center;justify-content:center;padding:24px 20px;box-sizing:border-box;}
     #wcmamtx-guest-login-overlay.active{display:flex;}
-    #wcmamtx-guest-login-box{position:relative;width:100%;max-width:520px;max-height:90vh;overflow-y:auto;border-radius:18px;overflow:hidden;background:#fff;}
-    #wcmamtx-nav-login-close{position:absolute;top:24px;right:12px;z-index:10;background:#484545;border:none;color:white;width:30px;height:30px;border-radius:15px;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;}
-    #wcmamtx-guest-login-close:hover{background:rgba(0,0,0,.15);}
-    #wcmamtx-guest-login-box .wc-auth-left{display:none!important;}
-    #wcmamtx-guest-login-box .wc-auth-split{display:block!important;border-radius:0;box-shadow:none;min-height:0;}
-    #wcmamtx-guest-login-box .wc-auth-right{padding:32px;background:#fff;}
+    #wcmamtx-guest-login-wrap{position:relative;width:100%;max-width:880px;}
+    #wcmamtx-guest-login-box{max-height:90vh;overflow-y:auto;overflow-x:hidden;border-radius:0;background:#fff;box-shadow:0 20px 60px rgba(0,0,0,.25);}
+    #wcmamtx-guest-login-close{position:absolute;top:-14px;right:-14px;z-index:10;background:#fff;border:2px solid #e0e0e0;color:#555;width:32px!important;height:32px!important;min-width:32px;min-height:32px;border-radius:50%!important;font-size:18px;cursor:pointer;display:flex!important;align-items:center;justify-content:center;line-height:1;padding:0!important;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,.15);}
+    #wcmamtx-guest-login-close:hover{background:#f5f5f5;}
+    #wcmamtx-guest-login-box .wc-auth-container{margin-top:0;margin-bottom:0;}
+    #wcmamtx-guest-login-box .wc-auth-left{flex:0 0 50%;}
+    #wcmamtx-guest-login-box .wc-auth-split{border-radius:0;box-shadow:none;min-height:0;}
+    #wcmamtx-guest-login-box .wc-auth-right{align-items:flex-start;justify-content:flex-start;}
     #wcmamtx-guest-login-box .wc-auth-card{background:transparent;border-radius:0;padding:0;box-shadow:none;margin:0;max-width:100%!important;}
-    #wcmamtx-guest-login-box button.show-password-input {display: none !important;}
+    #wcmamtx-guest-login-box button.show-password-input{display:none!important;}
     </style>
     <script>
     (function(){
@@ -1824,22 +1828,26 @@ function wcmamtx_nav_popup_modal_render() {
     $form_html = ob_get_clean();
     ?>
     <div id="wcmamtx-nav-login-overlay" role="dialog" aria-modal="true" aria-label="<?php esc_attr_e( 'Login / Register', 'customize-my-account-for-woocommerce' ); ?>">
-        <div id="wcmamtx-nav-login-box">
+        <div id="wcmamtx-nav-login-wrap">
             <button id="wcmamtx-nav-login-close" aria-label="<?php esc_attr_e( 'Close', 'customize-my-account-for-woocommerce' ); ?>">&times;</button>
-            <?php echo $form_html; ?>
+            <div id="wcmamtx-nav-login-box">
+                <?php echo $form_html; ?>
+            </div>
         </div>
     </div>
     <style>
-    #wcmamtx-nav-login-overlay{display:none;position:fixed;inset:0;z-index:999999;background:rgba(0,0,0,.55);align-items:center;justify-content:center;padding:20px;box-sizing:border-box;}
+    #wcmamtx-nav-login-overlay{display:none;position:fixed;inset:0;z-index:999999;background:rgba(0,0,0,.55);align-items:center;justify-content:center;padding:24px 20px;box-sizing:border-box;}
     #wcmamtx-nav-login-overlay.active{display:flex;}
-    #wcmamtx-nav-login-box{position:relative;width:100%;max-width:520px;max-height:90vh;overflow-y:auto;border-radius:18px;overflow:hidden;background:#fff;}
-    #wcmamtx-nav-login-close{position:absolute;top:12px;right:12px;z-index:10;background:rgba(0,0,0,.08);border:none;color:#555;width:30px;height:30px;border-radius:50%;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;}
-    #wcmamtx-nav-login-close:hover{background:rgba(0,0,0,.15);}
-    #wcmamtx-nav-login-box .wc-auth-left{display:none!important;}
-    #wcmamtx-nav-login-box .wc-auth-split{display:block!important;border-radius:0;box-shadow:none;min-height:0;}
-    #wcmamtx-nav-login-box .wc-auth-right{padding:32px;background:#fff;}
+    #wcmamtx-nav-login-wrap{position:relative;width:100%;max-width:880px;}
+    #wcmamtx-nav-login-box{max-height:90vh;overflow-y:auto;overflow-x:hidden;border-radius:0;background:#fff;box-shadow:0 20px 60px rgba(0,0,0,.25);}
+    #wcmamtx-nav-login-close{position:absolute;top:-14px;right:-14px;z-index:10;background:#fff;border:2px solid #e0e0e0;color:#555;width:32px!important;height:32px!important;min-width:32px;min-height:32px;border-radius:50%!important;font-size:18px;cursor:pointer;display:flex!important;align-items:center;justify-content:center;line-height:1;padding:0!important;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,.15);}
+    #wcmamtx-nav-login-close:hover{background:#f5f5f5;}
+    #wcmamtx-nav-login-box .wc-auth-container{margin-top:0;margin-bottom:0;}
+    #wcmamtx-nav-login-box .wc-auth-left{flex:0 0 50%;}
+    #wcmamtx-nav-login-box .wc-auth-split{border-radius:0;box-shadow:none;min-height:0;}
+    #wcmamtx-nav-login-box .wc-auth-right{align-items:flex-start;justify-content:flex-start;}
     #wcmamtx-nav-login-box .wc-auth-card{background:transparent;border-radius:0;padding:0;box-shadow:none;margin:0;max-width:100%!important;}
-    #wcmamtx-nav-login-box button.show-password-input{display:none;}
+    #wcmamtx-nav-login-box button.show-password-input{display:none!important;}
     </style>
     <script>
     (function(){

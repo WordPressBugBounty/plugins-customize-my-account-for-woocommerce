@@ -128,7 +128,65 @@ function wcmamtxBindAjaxLogin(overlay, ajaxUrl) {
     }
 }
 
+function wcmamtxAutoInputIcons() {
+    var SVG = {
+        person:   '<circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 1 0-16 0"/>',
+        email:    '<rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>',
+        lock:     '<rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
+        phone:    '<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.14 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16.92z"/>',
+        location: '<path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/>',
+        globe:    '<circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/>',
+        building: '<rect width="16" height="20" x="4" y="2" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01M16 6h.01M12 6h.01M12 10h.01M12 14h.01M16 10h.01M16 14h.01M8 10h.01M8 14h.01"/>',
+        calendar: '<rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/>',
+        hash:     '<line x1="4" x2="20" y1="9" y2="9"/><line x1="4" x2="20" y1="15" y2="15"/><line x1="10" x2="8" y1="3" y2="21"/><line x1="16" x2="14" y1="3" y2="21"/>',
+        list:     '<line x1="8" x2="21" y1="6" y2="6"/><line x1="8" x2="21" y1="12" y2="12"/><line x1="8" x2="21" y1="18" y2="18"/><line x1="3" x2="3.01" y1="6" y2="6"/><line x1="3" x2="3.01" y1="12" y2="12"/><line x1="3" x2="3.01" y1="18" y2="18"/>',
+    };
+
+    function pickIcon(el) {
+        var isSelect = el.tagName === 'SELECT';
+        var type = isSelect ? 'select' : (el.type || 'text');
+        var hint = ((el.name || '') + ' ' + (el.id || '') + ' ' + (el.placeholder || '')).toLowerCase();
+
+        if (type === 'password')                                         return 'lock';
+        if (type === 'email'   || /email/.test(hint))                   return 'email';
+        if (type === 'tel'     || /phone|mobile|tel/.test(hint))        return 'phone';
+        if (type === 'date'    || /\bdate\b|birth|dob/.test(hint))      return 'calendar';
+        if (type === 'number'  || /\b(qty|quantity|age|count)\b/.test(hint)) return 'hash';
+        if (/address|street|city|suburb|postcode|zip/.test(hint))       return 'location';
+        if (/country|nation/.test(hint))                                 return 'globe';
+        if (/company|organi[sz]ation|business/.test(hint))              return 'building';
+        if (type === 'url'     || /website|url/.test(hint))             return 'globe';
+        if (type === 'select')                                           return 'list';
+        if (/\b(name|user|first|last)\b/.test(hint))                    return 'person';
+        return 'person';
+    }
+
+    function makeSvg(key) {
+        return '<svg class="wcmamtx-input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + SVG[key] + '</svg>';
+    }
+
+    var selector = '.wcmamtx_custom_login_register input[type="text"],'
+        + '.wcmamtx_custom_login_register input[type="email"],'
+        + '.wcmamtx_custom_login_register input[type="password"],'
+        + '.wcmamtx_custom_login_register input[type="tel"],'
+        + '.wcmamtx_custom_login_register input[type="number"],'
+        + '.wcmamtx_custom_login_register input[type="url"],'
+        + '.wcmamtx_custom_login_register input[type="date"],'
+        + '.wcmamtx_custom_login_register select';
+
+    document.querySelectorAll(selector).forEach(function (el) {
+        if (el.closest('.wcmamtx-input-wrap')) return;
+        var wrap = document.createElement('span');
+        wrap.className = 'wcmamtx-input-wrap';
+        wrap.innerHTML = makeSvg(pickIcon(el));
+        el.parentNode.insertBefore(wrap, el);
+        wrap.appendChild(el);
+    });
+}
+
 document.addEventListener("DOMContentLoaded", function () {
+
+    wcmamtxAutoInputIcons();
 
     const tabs = document.querySelectorAll(".wc-tab-btn");
     const contents = document.querySelectorAll(".wc-tab-content");
