@@ -1161,9 +1161,18 @@ public function wcmamtx_google_callback() {
 
             wp_enqueue_style( 'wcmamtx-frontend-unique', ''.wcmamtx_PLUGIN_URL.'assets/css/frontend-unique.css' );
             wp_enqueue_script( 'wcmamtx-frontend-unique', ''.wcmamtx_PLUGIN_URL.'assets/js/frontend-unique.js',array('jquery'),$version );
+            wp_localize_script( 'wcmamtx-frontend-unique', 'wcmamtxAdminBar', [
+                'phrases' => [
+                    __( 'Live My Account Customizer', 'customize-my-account-for-woocommerce' ),
+                    __( 'Drag & Drop Builder',        'customize-my-account-for-woocommerce' ),
+                    __( 'Design Login Page',          'customize-my-account-for-woocommerce' ),
+                    __( 'Style Navigation',           'customize-my-account-for-woocommerce' ),
+                    __( 'My Account Designer',        'customize-my-account-for-woocommerce' ),
+                ],
+            ] );
 
-        
-		
+
+
    
 	}
 
@@ -1753,9 +1762,12 @@ function wcmamtx_free_guest_popup_modal_render( $auto_open = false ) {
     #wcmamtx-guest-login-close{position:absolute;top:-14px;right:-14px;z-index:10;background:#fff;border:2px solid #e0e0e0;color:#555;width:32px!important;height:32px!important;min-width:32px;min-height:32px;border-radius:50%!important;font-size:18px;cursor:pointer;display:flex!important;align-items:center;justify-content:center;line-height:1;padding:0!important;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,.15);}
     #wcmamtx-guest-login-close:hover{background:#f5f5f5;}
     #wcmamtx-guest-login-box .wc-auth-container{margin-top:0;margin-bottom:0;}
-    #wcmamtx-guest-login-box .wc-auth-left{flex:0 0 50%;}
+    #wcmamtx-guest-login-box .wc-auth-left{flex:0 0 50%;padding:16px 32px;}
     #wcmamtx-guest-login-box .wc-auth-split{border-radius:0;box-shadow:none;min-height:0;}
-    #wcmamtx-guest-login-box .wc-auth-right{align-items:flex-start;justify-content:flex-start;}
+    #wcmamtx-guest-login-box .wc-auth-right{align-items:flex-start;justify-content:flex-start;padding:20px 32px;}
+    #wcmamtx-guest-login-box .wc-auth-animated-headline{font-size:26px;margin-bottom:10px;}
+    #wcmamtx-guest-login-box .wc-auth-left-subtitle{font-size:13px;margin-bottom:18px;}
+    #wcmamtx-guest-login-box .wc-auth-cta-badge{font-size:12px;padding:7px 16px;}
     #wcmamtx-guest-login-box .wc-auth-card{background:transparent;border-radius:0;padding:0;box-shadow:none;margin:0;max-width:100%!important;}
     #wcmamtx-guest-login-box button.show-password-input{display:none!important;}
     </style>
@@ -1843,9 +1855,12 @@ function wcmamtx_nav_popup_modal_render() {
     #wcmamtx-nav-login-close{position:absolute;top:-14px;right:-14px;z-index:10;background:#fff;border:2px solid #e0e0e0;color:#555;width:32px!important;height:32px!important;min-width:32px;min-height:32px;border-radius:50%!important;font-size:18px;cursor:pointer;display:flex!important;align-items:center;justify-content:center;line-height:1;padding:0!important;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,.15);}
     #wcmamtx-nav-login-close:hover{background:#f5f5f5;}
     #wcmamtx-nav-login-box .wc-auth-container{margin-top:0;margin-bottom:0;}
-    #wcmamtx-nav-login-box .wc-auth-left{flex:0 0 50%;}
+    #wcmamtx-nav-login-box .wc-auth-left{flex:0 0 50%;padding:16px 32px;}
     #wcmamtx-nav-login-box .wc-auth-split{border-radius:0;box-shadow:none;min-height:0;}
-    #wcmamtx-nav-login-box .wc-auth-right{align-items:flex-start;justify-content:flex-start;}
+    #wcmamtx-nav-login-box .wc-auth-right{align-items:flex-start;justify-content:flex-start;padding:20px 32px;}
+    #wcmamtx-nav-login-box .wc-auth-animated-headline{font-size:26px;margin-bottom:10px;}
+    #wcmamtx-nav-login-box .wc-auth-left-subtitle{font-size:13px;margin-bottom:18px;}
+    #wcmamtx-nav-login-box .wc-auth-cta-badge{font-size:12px;padding:7px 16px;}
     #wcmamtx-nav-login-box .wc-auth-card{background:transparent;border-radius:0;padding:0;box-shadow:none;margin:0;max-width:100%!important;}
     #wcmamtx-nav-login-box button.show-password-input{display:none!important;}
     </style>

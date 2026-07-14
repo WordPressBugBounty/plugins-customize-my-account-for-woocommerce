@@ -590,6 +590,8 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
 .cz-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 16px;border-radius:6px;border:none;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;text-decoration:none;}
 .cz-btn-ghost{background:transparent;color:#a0a0b8;border:1px solid #2d2d3f;}
 .cz-btn-ghost:hover{color:#fff;border-color:#555;}
+.cz-actions a.cz-btn-ghost{background:rgba(34,197,94,.18);color:#86efac;border-color:rgba(34,197,94,.4);box-shadow:0 0 8px rgba(34,197,94,.1);}
+.cz-actions a.cz-btn-ghost:hover{background:rgba(34,197,94,.3);color:#dcfce7;border-color:rgba(34,197,94,.7);box-shadow:0 0 14px rgba(34,197,94,.25);}
 .cz-btn-success{background:#22c55e;color:#fff;}
 .cz-btn-success:hover{background:#16a34a;}
 .cz-device-btns{display:flex;gap:6px;}
@@ -802,7 +804,7 @@ a.wcmamtx_accordion_label_small
     </div>
     <div class="cz-actions">
         <span id="cz-save-status"></span>
-        <a href="<?php echo esc_url( admin_url( 'admin.php?page=wcmamtx_onboarding' ) ); ?>" class="cz-btn cz-btn-ghost" style="font-size:12px;opacity:.75;">
+        <a href="<?php echo esc_url( admin_url( 'admin.php?page=wcmamtx_onboarding' ) ); ?>" class="cz-btn cz-btn-ghost" style="font-size:12px;">
             ✦ <?php esc_html_e( 'Setup Wizard', 'customize-my-account-for-woocommerce' ); ?>
         </a>
         <button class="cz-btn cz-btn-ghost" id="cz-quick-help-btn" style="color:#a78bfa;gap:5px;">

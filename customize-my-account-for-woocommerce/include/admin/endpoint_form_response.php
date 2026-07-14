@@ -2,11 +2,20 @@
 		if( isset( $_POST['wcmamtx_add_endpoint_nonce'] ) && wp_verify_nonce( $_POST['wcmamtx_add_endpoint_nonce'], 'wcmamtx_nonce_hidden') ) {
 
 		
-		
+		if (!current_user_can( 'manage_woocommerce' )) {
+            return;
+        }
 			
 
 		if (isset($_POST['nds']['row_type'])) {
-			$row_type     = sanitize_text_field($_POST['nds']['row_type']);
+			$row_type     = sanitize_text_field( wp_unslash( $_POST['nds']['row_type'] ) );
+
+			// Restrict row_type to the known-good enum before it is stored/used.
+			$wcmamtx_allowed_row_types = array( 'endpoint', 'link', 'group', 'separater', 'heading' );
+
+			if ( ! in_array( $row_type, $wcmamtx_allowed_row_types, true ) ) {
+				$row_type = 'endpoint';
+			}
 		}
 		
         if (isset($_POST['nds']['label']) && ($row_type != "separater")) {

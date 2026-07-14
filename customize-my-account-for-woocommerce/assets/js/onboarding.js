@@ -13,7 +13,9 @@
         avatar_show:                        'yes',
         order_template_override:            '01',
         navigationwidget_layout_override:   '01',
-        widget_menu_location:               ''
+        widget_menu_location:               '',
+        formlogin_layout_override:          '01',
+        navwidget_loggedout_popup:          'yes'
     };
 
     /* ── helpers ─────────────────────────────────────────────── */
@@ -249,6 +251,8 @@
                     $('#wcmamtx-ob-navwidget-opts').toggle(on);
                     $('#wcmamtx-ob-navwidget-main').toggleClass('wcmamtx-ob__toggle-card--on', on);
                     break;
+                case 'formlogin': cfg.formlogin_layout_override = on ? '01' : '02'; break;
+                case 'nav_popup': cfg.navwidget_loggedout_popup  = on ? 'yes' : 'no'; break;
             }
         });
 

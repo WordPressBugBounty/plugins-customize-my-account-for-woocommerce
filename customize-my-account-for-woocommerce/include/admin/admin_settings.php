@@ -1120,7 +1120,7 @@ class wcmamtx_add_settings_page_class {
    
         ?>
 
-            <li keyvalue="<?php echo $key; ?>" litype="<?php if (isset($wcmamtx_type)) { echo  $wcmamtx_type; } ?>" class="<?php if (isset($value['show']) && ($value['show'] == "no"))  { echo "wcmamtx_disabled"; } ?> wcmamtx_endpoint <?php echo $key; ?> <?php if (isset($value['wcmamtx_type']) && ($value['wcmamtx_type'] == "group")) { echo 'group'; } ?> <?php if (preg_match('/\b'.$key.'\b/', $core_fields )) { echo "core"; } ?>">
+            <li keyvalue="<?php echo esc_attr( $key ); ?>" litype="<?php if (isset($wcmamtx_type)) { echo esc_attr( $wcmamtx_type ); } ?>" class="<?php if (isset($value['show']) && ($value['show'] == "no"))  { echo "wcmamtx_disabled"; } ?> wcmamtx_endpoint <?php echo esc_attr( $key ); ?> <?php if (isset($value['wcmamtx_type']) && ($value['wcmamtx_type'] == "group")) { echo 'group'; } ?> <?php if (preg_match('/\b'.$key.'\b/', $core_fields )) { echo "core"; } ?>">
 
                 <?php $this->get_main_li_content($key,$name,$core_fields,$value,$old_value,$third_party); ?>
 
@@ -1147,7 +1147,7 @@ class wcmamtx_add_settings_page_class {
 		}
         
         ?>
-        <li keyvalue="<?php echo $key; ?>" litype="<?php if (isset($value['wcmamtx_type'])) { echo  $value['wcmamtx_type']; } ?>" class="<?php if (isset($value['show']) && ($value['show'] == "no"))  { echo "wcmamtx_disabled"; } ?> wcmamtx_endpoint <?php echo $key; ?> <?php if (isset($value['wcmamtx_type']) && ($value['wcmamtx_type'] == "group")) { echo 'group'; } ?> <?php if (preg_match('/\b'.$key.'\b/', $core_fields )) { echo "core"; } ?>">
+        <li keyvalue="<?php echo esc_attr( $key ); ?>" litype="<?php if (isset($value['wcmamtx_type'])) { echo esc_attr( $value['wcmamtx_type'] ); } ?>" class="<?php if (isset($value['show']) && ($value['show'] == "no"))  { echo "wcmamtx_disabled"; } ?> wcmamtx_endpoint <?php echo esc_attr( $key ); ?> <?php if (isset($value['wcmamtx_type']) && ($value['wcmamtx_type'] == "group")) { echo 'group'; } ?> <?php if (preg_match('/\b'.$key.'\b/', $core_fields )) { echo "core"; } ?>">
 
             <?php $this->get_main_order_content($key,$name,$core_fields,$value,$old_value,$third_party); ?>
 
@@ -1171,7 +1171,7 @@ class wcmamtx_add_settings_page_class {
 		}
         
         ?>
-        <li keyvalue="<?php echo $key; ?>" litype="<?php if (isset($value['wcmamtx_type'])) { echo  $value['wcmamtx_type']; } ?>" class="<?php if (isset($value['show']) && ($value['show'] == "no"))  { echo "wcmamtx_disabled"; } ?> wcmamtx_endpoint <?php echo $key; ?> <?php if (isset($value['wcmamtx_type']) && ($value['wcmamtx_type'] == "group")) { echo 'group'; } ?> <?php if (preg_match('/\b'.$key.'\b/', $core_fields )) { echo "core"; } ?>">
+        <li keyvalue="<?php echo esc_attr( $key ); ?>" litype="<?php if (isset($value['wcmamtx_type'])) { echo esc_attr( $value['wcmamtx_type'] ); } ?>" class="<?php if (isset($value['show']) && ($value['show'] == "no"))  { echo "wcmamtx_disabled"; } ?> wcmamtx_endpoint <?php echo esc_attr( $key ); ?> <?php if (isset($value['wcmamtx_type']) && ($value['wcmamtx_type'] == "group")) { echo 'group'; } ?> <?php if (preg_match('/\b'.$key.'\b/', $core_fields )) { echo "core"; } ?>">
 
             <?php $this->get_main_order_actions($key,$name,$core_fields,$value,$old_value,$third_party); ?>
 

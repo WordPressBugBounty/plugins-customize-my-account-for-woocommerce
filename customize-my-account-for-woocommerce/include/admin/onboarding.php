@@ -74,6 +74,8 @@ function wcmamtx_onboarding_save_handler() {
         'navigationwidget_layout_override',
         'widget_menu_location',
         'navwidget_disable_username',
+        'formlogin_layout_override',
+        'navwidget_loggedout_popup',
     ];
     foreach ( $layout_keys as $k ) {
         if ( isset( $data[ $k ] ) ) {
@@ -329,6 +331,30 @@ function wcmamtx_render_onboarding_page() {
                             </div>
                             <label class="wcmamtx-ob__sw" title="<?php esc_attr_e( 'Toggle order cards', 'customize-my-account-for-woocommerce' ); ?>">
                                 <input type="checkbox" data-key="orders" checked>
+                                <span class="wcmamtx-ob__sw-track"></span>
+                            </label>
+                        </div>
+
+                        <div class="wcmamtx-ob__toggle-card wcmamtx-ob__toggle-card--on">
+                            <div class="wcmamtx-ob__toggle-ic">🔐</div>
+                            <div class="wcmamtx-ob__toggle-info">
+                                <h3><?php esc_html_e( 'Custom Login &amp; Register Form', 'customize-my-account-for-woocommerce' ); ?></h3>
+                                <p><?php esc_html_e( 'Replace the default login page with a modern split layout including animated branding and social login support.', 'customize-my-account-for-woocommerce' ); ?></p>
+                            </div>
+                            <label class="wcmamtx-ob__sw" title="<?php esc_attr_e( 'Toggle custom login form', 'customize-my-account-for-woocommerce' ); ?>">
+                                <input type="checkbox" data-key="formlogin" checked>
+                                <span class="wcmamtx-ob__sw-track"></span>
+                            </label>
+                        </div>
+
+                        <div class="wcmamtx-ob__toggle-card wcmamtx-ob__toggle-card--on">
+                            <div class="wcmamtx-ob__toggle-ic">🪟</div>
+                            <div class="wcmamtx-ob__toggle-info">
+                                <h3><?php esc_html_e( 'Menu Login Popup', 'customize-my-account-for-woocommerce' ); ?></h3>
+                                <p><?php esc_html_e( 'Opens the login &amp; register form in a popup when menu login link is clicked.', 'customize-my-account-for-woocommerce' ); ?></p>
+                            </div>
+                            <label class="wcmamtx-ob__sw" title="<?php esc_attr_e( 'Toggle nav widget login popup', 'customize-my-account-for-woocommerce' ); ?>">
+                                <input type="checkbox" data-key="nav_popup" checked>
                                 <span class="wcmamtx-ob__sw-track"></span>
                             </label>
                         </div>

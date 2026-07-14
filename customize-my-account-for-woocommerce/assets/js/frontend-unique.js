@@ -188,6 +188,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
     wcmamtxAutoInputIcons();
 
+    (function() {
+        var el = document.querySelector('#wp-admin-bar-wcmamtx_customize_myaccount > .ab-item');
+        if (!el) return;
+        var phrases = (window.wcmamtxAdminBar && window.wcmamtxAdminBar.phrases)
+            ? window.wcmamtxAdminBar.phrases
+            : ['Live My Account Customizer'];
+        var span = document.createElement('span');
+        span.style.cssText = 'transition:opacity .2s ease;display:inline;';
+        span.textContent = phrases[0];
+        Array.from(el.childNodes).forEach(function(n) { if (n.nodeType === 3) el.removeChild(n); });
+        el.appendChild(span);
+        var idx = 0;
+        setInterval(function() {
+            idx = (idx + 1) % phrases.length;
+            span.style.opacity = '0';
+            setTimeout(function() { span.textContent = phrases[idx]; span.style.opacity = '1'; }, 200);
+        }, 2500);
+    })();
+
     const tabs = document.querySelectorAll(".wc-tab-btn");
     const contents = document.querySelectorAll(".wc-tab-content");
 

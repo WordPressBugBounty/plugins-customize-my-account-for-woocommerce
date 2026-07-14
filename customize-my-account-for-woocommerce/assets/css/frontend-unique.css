@@ -48,7 +48,7 @@ li.woocommerce-MyAccount-navigation-link {
     display: none !important;
 }
 #wpadminbar #wp-admin-bar-wcmamtx_customize_myaccount>.ab-item:before {
-    content: "\f540" / '';
+    content: "\f545" / '';
     top: 2px;
 }
 .woocommerce-account h1.entry-title {
@@ -345,7 +345,26 @@ li.woocommerce-MyAccount-navigation-link {
     }
     .wcmamtx_custom_login_register .wc-auth-left {
         flex: none;
-        padding: 24px 28px;
+        padding: 16px 20px;
+        min-height: unset;
+    }
+    .wcmamtx_custom_login_register .wc-auth-left-inner {
+        margin-top: 8px;
+        margin-bottom: 8px;
+        max-width: 100%;
+    }
+    .wcmamtx_custom_login_register .wc-auth-animated-headline {
+        font-size: 22px;
+        margin-bottom: 8px;
+    }
+    .wcmamtx_custom_login_register .wc-auth-left-subtitle {
+        font-size: 12px;
+        margin-bottom: 14px;
+        line-height: 1.5;
+    }
+    .wcmamtx_custom_login_register .wc-auth-cta-badge {
+        font-size: 11px;
+        padding: 6px 14px;
     }
     .wcmamtx_custom_login_register .wc-auth-right {
         padding: 24px 20px;
@@ -646,6 +665,21 @@ li.wcmamtx_menu_logged_in > ul.sub-menu li a:hover {
     color: #000 !important;
 }
 
+/* ── Mobile: popup fits wc-auth-split height, overlay scrolls ── */
+@media (max-width: 768px) {
+    #wcmamtx-guest-login-overlay,
+    #wcmamtx-nav-login-overlay {
+        align-items: flex-start;
+        overflow-y: auto;
+        padding: 40px 12px;
+    }
+    #wcmamtx-guest-login-box,
+    #wcmamtx-nav-login-box {
+        max-height: none;
+        overflow-y: visible;
+    }
+}
+
 /* ── Mobile: hide name stack to save space ── */
 @media (max-width: 768px) {
     .wcmamtx-nav-user-info {
@@ -854,5 +888,22 @@ span.wcmamtxx_nav_header_widget_text_logout {
 }
 
 li#wp-admin-bar-wcmamtx_customize_myaccount {
-    background-color:green !important;
+    background: linear-gradient(135deg, #7c3aed, #a855f7) !important;
+    box-shadow: 0 0 10px rgba(167,139,250,.6);
+    animation: wcmamtx-bar-pulse 2.5s ease-in-out infinite;
+}
+li#wp-admin-bar-wcmamtx_customize_myaccount > .ab-item {
+    color: #fff !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.3px;
+}
+li#wp-admin-bar-wcmamtx_customize_myaccount:hover {
+    background: linear-gradient(135deg, #6d28d9, #9333ea) !important;
+}
+li#wp-admin-bar-wcmamtx_customize_myaccount:hover > .ab-item {
+    color: #fff !important;
+}
+@keyframes wcmamtx-bar-pulse {
+    0%, 100% { box-shadow: 0 0 8px rgba(167,139,250,.5); }
+    50%       { box-shadow: 0 0 18px rgba(167,139,250,.9); }
 }

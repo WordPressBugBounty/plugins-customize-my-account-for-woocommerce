@@ -39,11 +39,11 @@ global $wp_roles;
     			<?php if (preg_match('/\b'.$key.'\b/', $core_fields )) { ?>
 
     				
-    				<input type="checkbox" <?php if ($key == "order-actions") { echo 'disabled="disabled"'; } ?> class="wcmamtx_accordion_onoff" parentkey="<?php echo $key; ?>"  <?php if (isset($value['show']) && ($value['show'] != "no"))  { echo "checked"; } elseif (!isset($value['show'])) { echo 'checked';} ?>>
+    				<input type="checkbox" <?php if ($key == "order-actions") { echo 'disabled="disabled"'; } ?> class="wcmamtx_accordion_onoff" parentkey="<?php echo esc_attr( $key ); ?>"  <?php if (isset($value['show']) && ($value['show'] != "no"))  { echo "checked"; } elseif (!isset($value['show'])) { echo 'checked';} ?>>
 
     			    
 
-    				<input type="hidden" class="<?php echo $key; ?>_hidden_checkbox" value='<?php if (isset($value['show']) && ($value['show'] == "no")) { echo "no"; } else { echo 'yes';} ?>' name='wcmamtx_order_settings[<?php echo $key; ?>][show]'>
+    				<input type="hidden" class="<?php echo esc_attr( $key ); ?>_hidden_checkbox" value='<?php if (isset($value['show']) && ($value['show'] == "no")) { echo "no"; } else { echo 'yes';} ?>' name='wcmamtx_order_settings[<?php echo esc_attr( $key ); ?>][show]'>
 
     			<?php } else { 
 
@@ -53,18 +53,18 @@ global $wp_roles;
                       }
 
     				?>
-    				<span type="removeicon" parentkey="<?php echo $key; ?>" class="dashicons dashicons-trash wcmamtx_accordion_remove"></span>
+    				<span type="removeicon" parentkey="<?php echo esc_attr( $key ); ?>" class="dashicons dashicons-trash wcmamtx_accordion_remove"></span>
     			<?php } ?>
     		</div>
 
-    		<span class="dashicons dashicons-menu-alt "></span><?php if (isset($name) && ($name != "")) { echo $name; } else if ($key == "order-actions") { echo esc_html__('Actions','customize-my-account-for-woocommerce'); } ?>
+    		<span class="dashicons dashicons-menu-alt "></span><?php if (isset($name) && ($name != "")) { echo esc_html( $name ); } else if ($key == "order-actions") { echo esc_html__('Actions','customize-my-account-for-woocommerce'); } ?>
     		<span class="wcmamtx_type_label">
     			<?php echo esc_html__('Column','customize-my-account-for-woocommerce'); ?>
     		</span>
 
     	</h3>
 
-        <div class="<?php echo $wcmamtx_type; ?>_accordion_content">
+        <div class="<?php echo esc_attr( $wcmamtx_type ); ?>_accordion_content">
 
         	<table class="wcmamtx_table widefat">
 
@@ -76,8 +76,8 @@ global $wp_roles;
         				</td>
         				<td>
         					<p><?php  echo esc_html__('This is third party endpoint.Some features may not work.','customize-my-account-for-woocommerce'); ?></p>
-        					<input type="hidden" name="wcmamtx_order_settings[<?php echo $key; ?>][third_party]" value="yes">
-        					<input type="hidden" name="wcmamtx_order_settings[<?php echo $key; ?>][endpoint_name]" value="<?php if (isset($name)) { echo $name; } ?>">
+        					<input type="hidden" name="wcmamtx_order_settings[<?php echo esc_attr( $key ); ?>][third_party]" value="yes">
+        					<input type="hidden" name="wcmamtx_order_settings[<?php echo esc_attr( $key ); ?>][endpoint_name]" value="<?php if (isset($name)) { echo esc_attr( $name ); } ?>">
         				</td>
 
         			</tr>
@@ -86,15 +86,15 @@ global $wp_roles;
 
                 
 
-            	<input type="hidden" class="wcmamtx_accordion_input" name="wcmamtx_order_settings[<?php echo $key; ?>][endpoint_key]" value="<?php if (isset($value['endpoint_key'])) { echo $value['endpoint_key']; } else { echo $key; } ?>">
+            	<input type="hidden" class="wcmamtx_accordion_input" name="wcmamtx_order_settings[<?php echo esc_attr( $key ); ?>][endpoint_key]" value="<?php if (isset($value['endpoint_key'])) { echo esc_attr( $value['endpoint_key'] ); } else { echo esc_attr( $key ); } ?>">
 
 
                
 
         
-                <input type="hidden" name="wcmamtx_order_settings[<?php echo $key; ?>][wcmamtx_type]" value="<?php echo $wcmamtx_type; ?>">
+                <input type="hidden" name="wcmamtx_order_settings[<?php echo esc_attr( $key ); ?>][wcmamtx_type]" value="<?php echo esc_attr( $wcmamtx_type ); ?>">
 
-                <input type="hidden" name="wcmamtx_order_settings[<?php echo $key; ?>][parent]" class="wcmamtx_parent_field" value="<?php echo $wcmamtx_parent; ?>">
+                <input type="hidden" name="wcmamtx_order_settings[<?php echo esc_attr( $key ); ?>][parent]" class="wcmamtx_parent_field" value="<?php echo esc_attr( $wcmamtx_parent ); ?>">
 
                 <?php if (!isset($third_party) && ($key != "order-actions")) { ?>
 
@@ -104,7 +104,7 @@ global $wp_roles;
                     </td>
                     <td>
                        
-                        <input type="text" class="wcmamtx_accordion_input" name="wcmamtx_order_settings[<?php echo $key; ?>][endpoint_name]" value="<?php if (isset($value['endpoint_name'])) { echo $value['endpoint_name']; } elseif ($key != "order-actions") { echo $value; } ?>">
+                        <input type="text" class="wcmamtx_accordion_input" name="wcmamtx_order_settings[<?php echo esc_attr( $key ); ?>][endpoint_name]" value="<?php if (isset($value['endpoint_name'])) { echo esc_attr( $value['endpoint_name'] ); } elseif ($key != "order-actions") { echo esc_attr( is_scalar( $value ) ? $value : '' ); } ?>">
                     </td>
             
                 </tr>
@@ -142,7 +142,7 @@ global $wp_roles;
                 		</td>
                 		<td>
 
-                			<select class="wcmamtx_value_select" name="wcmamtx_order_settings[<?php echo $key; ?>][value]">
+                			<select class="wcmamtx_value_select" name="wcmamtx_order_settings[<?php echo esc_attr( $key ); ?>][value]">
                 				<option value="">
                 					<?php  echo esc_html__('Chose an Option','customize-my-account-for-woocommerce'); ?>
                 						
@@ -169,7 +169,7 @@ global $wp_roles;
                            <label class="wcmamtx_accordion_label"><?php  echo esc_html__('Key','customize-my-account-for-woocommerce'); ?></label>
                        </td>
                        <td>
-                        <input type="text" class="wcmamtx_accordion_input" name="wcmamtx_order_settings[<?php echo $key; ?>][custom_key]" value="<?php if (isset($value['custom_key'])) { echo $value['custom_key']; } else { echo $key; } ?>">
+                        <input type="text" class="wcmamtx_accordion_input" name="wcmamtx_order_settings[<?php echo esc_attr( $key ); ?>][custom_key]" value="<?php if (isset($value['custom_key'])) { echo esc_attr( $value['custom_key'] ); } else { echo esc_attr( $key ); } ?>">
                         </td>
 
                     </tr>
@@ -179,7 +179,7 @@ global $wp_roles;
                            <label class="wcmamtx_accordion_label"><?php  echo esc_html__('Checkout Field','customize-my-account-for-woocommerce'); ?></label>
                         </td>
                         <td>
-                            <select class="checkout_field_rule_parentfield" name="wcmamtx_order_settings[<?php echo $key; ?>][custom_key]">
+                            <select class="checkout_field_rule_parentfield" name="wcmamtx_order_settings[<?php echo esc_attr( $key ); ?>][custom_key]">
                                 
                                 
                                 <optgroup label="<?php echo esc_html__( 'Billing Fields' ,'customize-my-account-for-woocommerce'); ?>">

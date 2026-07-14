@@ -84,7 +84,7 @@
 </ul>
 
 
-<nav class="woocommerce-MyAccount-navigation wsmt_extra_navclass <?php echo $menu_position_extra_class; ?>">
+<nav class="woocommerce-MyAccount-navigation wsmt_extra_navclass <?php echo isset( $menu_position_extra_class ) ? esc_attr( $menu_position_extra_class ) : ''; ?>">
 
     <?php
 

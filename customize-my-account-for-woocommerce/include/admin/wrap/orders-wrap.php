@@ -39,11 +39,11 @@ $third_party = isset($value['third_party']) ? $value['third_party'] : $third_par
      <?php if (preg_match('/\b'.$key.'\b/', $core_fields )) { ?>
 
         
-        <input type="checkbox" <?php if ($key == "order-actions") { echo 'disabled="disabled"'; } ?> class="wcmamtx_accordion_onoff" parentkey="<?php echo $key; ?>"  <?php if (isset($value['show']) && ($value['show'] != "no"))  { echo "checked"; } elseif (!isset($value['show'])) { echo 'checked';} ?>>
+        <input type="checkbox" <?php if ($key == "order-actions") { echo 'disabled="disabled"'; } ?> class="wcmamtx_accordion_onoff" parentkey="<?php echo esc_attr( $key ); ?>"  <?php if (isset($value['show']) && ($value['show'] != "no"))  { echo "checked"; } elseif (!isset($value['show'])) { echo 'checked';} ?>>
 
         
 
-        <input type="hidden" class="<?php echo $key; ?>_hidden_checkbox" value='<?php if (isset($value['show']) && ($value['show'] == "no")) { echo "no"; } else { echo 'yes';} ?>' name='wcmamtx_order_actions[<?php echo $key; ?>][show]'>
+        <input type="hidden" class="<?php echo esc_attr( $key ); ?>_hidden_checkbox" value='<?php if (isset($value['show']) && ($value['show'] == "no")) { echo "no"; } else { echo 'yes';} ?>' name='wcmamtx_order_actions[<?php echo esc_attr( $key ); ?>][show]'>
 
     <?php } else { 
 
@@ -53,18 +53,18 @@ $third_party = isset($value['third_party']) ? $value['third_party'] : $third_par
     }
 
     ?>
-    <span type="removeicon" parentkey="<?php echo $key; ?>" class="dashicons dashicons-trash wcmamtx_accordion_remove"></span>
+    <span type="removeicon" parentkey="<?php echo esc_attr( $key ); ?>" class="dashicons dashicons-trash wcmamtx_accordion_remove"></span>
 <?php } ?>
 </div>
 
-<span class="dashicons dashicons-menu-alt "></span><?php if (isset($name) && ($name != "")) { echo $name; } else if ($key == "order-actions") { echo esc_html__('Actions','customize-my-account-for-woocommerce'); } ?>
+<span class="dashicons dashicons-menu-alt "></span><?php if (isset($name) && ($name != "")) { echo esc_html( $name ); } else if ($key == "order-actions") { echo esc_html__('Actions','customize-my-account-for-woocommerce'); } ?>
 <span class="wcmamtx_type_label">
  <?php echo esc_html__('Order Action','customize-my-account-for-woocommerce'); ?>
 </span>
 
 </h3>
 
-<div class="<?php echo $wcmamtx_type; ?>_accordion_content">
+<div class="<?php echo esc_attr( $wcmamtx_type ); ?>_accordion_content">
 
    <table class="wcmamtx_table widefat">
 
@@ -76,8 +76,8 @@ $third_party = isset($value['third_party']) ? $value['third_party'] : $third_par
             </td>
             <td>
                <p><?php  echo esc_html__('This is third party endpoint.Some features may not work.','customize-my-account-for-woocommerce'); ?></p>
-               <input type="hidden" name="wcmamtx_order_actions[<?php echo $key; ?>][third_party]" value="yes">
-               <input type="hidden" name="wcmamtx_order_actions[<?php echo $key; ?>][endpoint_name]" value="<?php if (isset($name)) { echo $name; } ?>">
+               <input type="hidden" name="wcmamtx_order_actions[<?php echo esc_attr( $key ); ?>][third_party]" value="yes">
+               <input type="hidden" name="wcmamtx_order_actions[<?php echo esc_attr( $key ); ?>][endpoint_name]" value="<?php if (isset($name)) { echo esc_attr( $name ); } ?>">
            </td>
 
        </tr>
@@ -86,15 +86,15 @@ $third_party = isset($value['third_party']) ? $value['third_party'] : $third_par
 
    
 
-   <input type="hidden" class="wcmamtx_accordion_input" name="wcmamtx_order_actions[<?php echo $key; ?>][endpoint_key]" value="<?php if (isset($value['endpoint_key'])) { echo $value['endpoint_key']; } else { echo $key; } ?>">
+   <input type="hidden" class="wcmamtx_accordion_input" name="wcmamtx_order_actions[<?php echo esc_attr( $key ); ?>][endpoint_key]" value="<?php if (isset($value['endpoint_key'])) { echo esc_attr( $value['endpoint_key'] ); } else { echo esc_attr( $key ); } ?>">
 
 
    
 
    
-   <input type="hidden" name="wcmamtx_order_actions[<?php echo $key; ?>][wcmamtx_type]" value="<?php echo $wcmamtx_type; ?>">
+   <input type="hidden" name="wcmamtx_order_actions[<?php echo esc_attr( $key ); ?>][wcmamtx_type]" value="<?php echo esc_attr( $wcmamtx_type ); ?>">
 
-   <input type="hidden" name="wcmamtx_order_actions[<?php echo $key; ?>][parent]" class="wcmamtx_parent_field" value="<?php echo $wcmamtx_parent; ?>">
+   <input type="hidden" name="wcmamtx_order_actions[<?php echo esc_attr( $key ); ?>][parent]" class="wcmamtx_parent_field" value="<?php echo esc_attr( $wcmamtx_parent ); ?>">
 
    <?php if (!isset($third_party) && ($key != "order-actions")) { ?>
 
@@ -104,7 +104,7 @@ $third_party = isset($value['third_party']) ? $value['third_party'] : $third_par
         </td>
         <td>
          
-            <input type="text" class="wcmamtx_accordion_input" name="wcmamtx_order_actions[<?php echo $key; ?>][endpoint_name]" value="<?php if (isset($value['endpoint_name'])) { echo $value['endpoint_name']; } elseif ($key != "order-actions") { echo $value; } ?>">
+            <input type="text" class="wcmamtx_accordion_input" name="wcmamtx_order_actions[<?php echo esc_attr( $key ); ?>][endpoint_name]" value="<?php if (isset($value['endpoint_name'])) { echo esc_attr( $value['endpoint_name'] ); } elseif ($key != "order-actions") { echo esc_attr( is_scalar( $value ) ? $value : '' ); } ?>">
         </td>
         
     </tr>
@@ -133,8 +133,8 @@ $third_party = isset($value['third_party']) ? $value['third_party'] : $third_par
 </td>
 <td>
  
-    <input type="text" class="wcmamtx_accordion_input" name="wcmamtx_order_actions[<?php echo $key; ?>][action_url]" value="<?php if (isset($value['action_url'])) { echo $value['action_url']; } else {
-        echo ''.site_url().'/?order_id={orderid}&trekking={your_custom_meta_key}';
+    <input type="text" class="wcmamtx_accordion_input" name="wcmamtx_order_actions[<?php echo esc_attr( $key ); ?>][action_url]" value="<?php if (isset($value['action_url'])) { echo esc_attr( $value['action_url'] ); } else {
+        echo esc_attr( site_url().'/?order_id={orderid}&trekking={your_custom_meta_key}' );
     } ?>" size="100">
 </td>
 </tr>
@@ -168,20 +168,20 @@ $third_party = isset($value['third_party']) ? $value['third_party'] : $third_par
         <div class="wcmamtx_icon_settings_div">
             
             <div class="form-check wcmamtx_icon_checkbox">
-                <input class="form-check-input wcmamtx_icon_source_radio" type="radio" name="wcmamtx_order_actions[<?php echo $key; ?>][icon_source]"  value="noicon" <?php if (($icon_source != "custom") || ($icon_source == "dashicon")) { echo 'checked'; } ?>>
+                <input class="form-check-input wcmamtx_icon_source_radio" type="radio" name="wcmamtx_order_actions[<?php echo esc_attr( $key ); ?>][icon_source]"  value="noicon" <?php if (($icon_source != "custom") || ($icon_source == "dashicon")) { echo 'checked'; } ?>>
                 <label class="form-check-label wcmamtx_icon_checkbox_label">
                     <?php  echo esc_html__('No Icon','customize-my-account-for-woocommerce'); ?>
                 </label>
             </div>
             <div class="form-check wcmamtx_icon_checkbox">
-                <input class="form-check-input wcmamtx_icon_source_radio" type="radio" name="wcmamtx_order_actions[<?php echo $key; ?>][icon_source]"  value="custom" <?php if ($icon_source == "custom") { echo 'checked'; } ?>>
+                <input class="form-check-input wcmamtx_icon_source_radio" type="radio" name="wcmamtx_order_actions[<?php echo esc_attr( $key ); ?>][icon_source]"  value="custom" <?php if ($icon_source == "custom") { echo 'checked'; } ?>>
                 <label class="form-check-label wcmamtx_icon_checkbox_label">
                     <?php  echo esc_html__('Font Awesome Icon','customize-my-account-for-woocommerce'); ?>
                 </label>
             </div>
 
             <div class="form-check wcmamtx_icon_checkbox">
-                <input class="form-check-input wcmamtx_icon_source_radio" type="radio" name="wcmamtx_order_actions[<?php echo $key; ?>][icon_source]"  value="dashicon" <?php if ($icon_source == "dashicon") { echo 'checked'; } ?>>
+                <input class="form-check-input wcmamtx_icon_source_radio" type="radio" name="wcmamtx_order_actions[<?php echo esc_attr( $key ); ?>][icon_source]"  value="dashicon" <?php if ($icon_source == "dashicon") { echo 'checked'; } ?>>
                 <label class="form-check-label wcmamtx_icon_checkbox_label">
                     <?php  echo esc_html__('Dashicon','customize-my-account-for-woocommerce'); ?>
                 </label>
@@ -197,7 +197,7 @@ $third_party = isset($value['third_party']) ? $value['third_party'] : $third_par
     </td>
     <td>
 
-        <input type="text" class="wcmamtx_iconpicker icon-class-input" name="wcmamtx_order_actions[<?php echo $key; ?>][icon]" value="<?php if (isset($value['icon'])) { echo $value['icon']; } ?>">
+        <input type="text" class="wcmamtx_iconpicker icon-class-input" name="wcmamtx_order_actions[<?php echo esc_attr( $key ); ?>][icon]" value="<?php if (isset($value['icon'])) { echo esc_attr( $value['icon'] ); } ?>">
         <button type="button" class="btn btn-primary picker-button"><?php  echo esc_html__('Chose Font Awesome Icon','customize-my-account-for-woocommerce'); ?></button>
     </td>
     
@@ -209,8 +209,8 @@ $third_party = isset($value['third_party']) ? $value['third_party'] : $third_par
     </td>
     <td>
 
-        <input class="regular-text " id="dashicons_picker_example_<?php echo $key; ?>" type="text" name="wcmamtx_order_actions[<?php echo $key; ?>][dashicon]" value="<?php if (isset($value['dashicon'])) { echo $value['dashicon']; } ?>" />
-        <input class="button dashicons-picker" type="button" value="<?php  echo esc_html__('Chose Dashicon','customize-my-account-for-woocommerce'); ?>" data-target="#dashicons_picker_example_<?php echo $key; ?>" />
+        <input class="regular-text " id="dashicons_picker_example_<?php echo esc_attr( $key ); ?>" type="text" name="wcmamtx_order_actions[<?php echo esc_attr( $key ); ?>][dashicon]" value="<?php if (isset($value['dashicon'])) { echo esc_attr( $value['dashicon'] ); } ?>" />
+        <input class="button dashicons-picker" type="button" value="<?php  echo esc_html__('Chose Dashicon','customize-my-account-for-woocommerce'); ?>" data-target="#dashicons_picker_example_<?php echo esc_attr( $key ); ?>" />
 
     </td>
     

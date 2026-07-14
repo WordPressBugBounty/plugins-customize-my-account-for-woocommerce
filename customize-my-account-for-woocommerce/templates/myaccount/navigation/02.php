@@ -14,7 +14,7 @@ if ($sidebar_style == "02") {
 }
 
 ?>
-<nav class="wcmam-nav wcmam-style-1 <?php echo $extra_nav_sidebar_class; ?> <?php echo $menu_position_extra_class; ?>">
+<nav class="wcmam-nav wcmam-style-1 <?php echo esc_attr( $extra_nav_sidebar_class ); ?> <?php echo isset( $menu_position_extra_class ) ? esc_attr( $menu_position_extra_class ) : ''; ?>">
 
     <?php
 
@@ -184,7 +184,7 @@ if ($sidebar_style == "02") {
 
 
 
-                            <a class="woocommerce-MyAccount-navigation-link_a <?php echo wcmamtx_get_account_menu_item_classes( $key , $value ); ?> <?php echo  $wcmamtx_type; ?> <?php echo $extraclass; ?> <?php if ($icon_source == "custom") { echo $icon_extra_class; } ?>"  href="<?php echo wcmamtx_get_account_endpoint_url( $key ); ?>" <?php if (isset($wcmamtx_type) && ($wcmamtx_type == "link") && (isset($value['link_targetblank'])) && ($value['link_targetblank'] == 01) ) { echo 'target="_blank"'; } ?>>
+                            <a class="woocommerce-MyAccount-navigation-link_a <?php echo esc_attr( wcmamtx_get_account_menu_item_classes( $key , $value ) ); ?> <?php echo esc_attr( $wcmamtx_type ); ?> <?php echo esc_attr( $extraclass ); ?> <?php if ($icon_source == "custom") { echo esc_attr( $icon_extra_class ); } ?>"  href="<?php echo esc_url( wcmamtx_get_account_endpoint_url( $key ) ); ?>" <?php if (isset($wcmamtx_type) && ($wcmamtx_type == "link") && (isset($value['link_targetblank'])) && ($value['link_targetblank'] == 01) ) { echo 'target="_blank"'; } ?>>
                                 <?php wcmamtx_get_account_menu_li_icon_html($icon_source,$value,$key); ?>
                                 <span class="wcmamtx_sticky_icon_name">
                                     <?php echo esc_html( $name ); ?>

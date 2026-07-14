@@ -14,7 +14,7 @@ if ($sidebar_style == "02") {
 }
 
 ?>
-<nav class="woocommerce-MyAccount-navigation wsmt_extra_navclass <?php echo $extra_nav_sidebar_class; ?> <?php echo $menu_position_extra_class; ?>">
+<nav class="woocommerce-MyAccount-navigation wsmt_extra_navclass <?php echo isset( $extra_nav_sidebar_class ) ? esc_attr( $extra_nav_sidebar_class ) : ''; ?> <?php echo isset( $menu_position_extra_class ) ? esc_attr( $menu_position_extra_class ) : ''; ?>">
 
     <?php
 
@@ -73,7 +73,7 @@ if ($sidebar_style == "02") {
 
     ?>
    
-	<ul class="wcmamtx_vertical style_<?php echo $default_style; ?>">
+	<ul class="wcmamtx_vertical style_<?php echo esc_attr( $default_style ); ?>">
 		<?php foreach ( $wcmamtx_tabs as $key => $value ) { 
 
 
